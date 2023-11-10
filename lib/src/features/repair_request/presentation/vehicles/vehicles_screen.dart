@@ -1,0 +1,84 @@
+import 'package:bato_mechanic/src/common_widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/constants/test_vehicles.dart';
+import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_categories/vehicle_category_screen_controller.dart';
+import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen_controller.dart';
+import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../managers/values_manager.dart';
+import '../../application/vechicle_category_service.dart';
+
+class VehiclesScreen extends ConsumerWidget {
+  const VehiclesScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedCategory =
+        ref.watch(vehicleCategoryServiceProvider).selectedVehicleCategory;
+    final vehiclesValue =
+        ref.watch(fetchVehiclesProvider(selectedCategory!.id.toString()));
+    return Scaffold(
+        body: AsyncValueWidget(
+      value: vehiclesValue,
+      data: (vehicles) => SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 200,
+              ),
+              Text(
+                'Select your vehicle to repair',
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+              GridView.builder(
+                shrinkWrap: true,
+                itemCount: vehicles.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () {
+                    ref
+                        .read(vehiclesScreenControllerProvider.notifier)
+                        .setSelectedVehicle(vehicles[index]);
+                    context.goNamed(appRoute.parts.name);
+                  },
+                  child: Card(
+                    margin: const EdgeInsets.all(AppMargin.m8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppMargin.m8),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Image.network(
+                            //   vehicles[index].image,
+                            //   // width: 100,
+                            // ),
+                            Image.asset(
+                              vehicles[index].image,
+                              // width: 100,
+                            ),
+                            Flexible(
+                              child: Text(
+                                vehicles[index].name,
+                                style: Theme.of(context).textTheme.displaySmall,
+                              ),
+                            ),
+                          ]),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ));
+  }
+}

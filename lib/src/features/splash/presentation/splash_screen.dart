@@ -1,0 +1,85 @@
+import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
+import 'package:bato_mechanic/src/features/auth/application/user_service.dart';
+import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
+import 'package:bato_mechanic/src/features/splash/presentation/splash_screen_controller.dart';
+import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../repair_request/domain/vehicle_repair_request.dart';
+
+class SplashScreen extends ConsumerStatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends ConsumerState<SplashScreen>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final isLoggedIn = ref.watch(userServiceProvider).currentUser != null;
+      if (!isLoggedIn) {
+        if (mounted) context.goNamed(appRoute.login.name);
+        return;
+      } else {
+        if (mounted) context.goNamed(appRoute.trackMechanic.name);
+        return;
+      }
+
+      ref
+          .read(splashScreenControllerProvider)
+          .hasRepairRequest("1")
+          .then((value) {
+        if (value) {
+          VehicleRepairRequest? repairRequest =
+              ref.read(repairRequestControllerProvider).repairRequest;
+
+          if (repairRequest != null) {
+            if (repairRequest.status ==
+                VehicleRepairRequestStatus.WAITING_FOR_MECHANIC) {
+              if (mounted) context.goNamed(appRoute.trackMechanic.name);
+              return;
+            }
+            if (mounted) context.goNamed(appRoute.repairProgress.name);
+            return;
+          }
+        }
+        if (mounted) context.goNamed(appRoute.categories.name);
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.amberAccent[200],
+      body: const Center(
+        child: CircularProgressIndicator(color: Colors.white),
+      ),
+    );
+    // return Scaffold(
+    //   backgroundColor: Colors.amberAccent[200],
+    //   body: userRepairRequestsValue.when(
+    //     data: (hasRequest) {
+    //       if (hasRequest) {
+    //         context.goNamed(appRoute.trackMechanic.name);
+    //       }
+    //       return Container();
+    //     },
+    //     error: (error, st) {
+    //       return Container();
+    //     },
+    //     loading: () => const Center(
+    //       child: CircularProgressIndicator(color: Colors.white),
+    //     ),
+    //   ),
+    // );
+  }
+}

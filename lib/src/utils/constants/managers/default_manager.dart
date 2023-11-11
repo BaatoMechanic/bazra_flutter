@@ -3,7 +3,7 @@ import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 class DefaultManager {
   // Button sizes
   static const double buttonHeight = AppHeight.h18;
-  static const double buttonRadius = AppRadius.r8;
+  static const double buttonRadius = AppRadius.r4;
   static const double buttonWidth = AppWidth.h125;
   static const double buttonElevation = 4.0;
 
@@ -28,10 +28,10 @@ class DefaultManager {
   static const double spaceBtwInputFields = AppRadius.r16;
 
   // Card sizes
-  static const double cardRadiusLg = AppRadius.r16;
-  static const double cardRadiusMd = AppRadius.r12;
+  static const double cardRadiusLg = AppRadius.r18;
+  static const double cardRadiusMd = AppRadius.r16;
   static const double cardRadiusSm = AppRadius.r14;
-  static const double cardRadiusXs = AppRadius.r16;
+  static const double cardRadiusXs = AppRadius.r12;
   static const double cardElevation = 2.0;
 
   // Image carousel height

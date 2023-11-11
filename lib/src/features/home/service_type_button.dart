@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/features/home/tips_carousel.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
@@ -19,31 +20,26 @@ class ServiceTypeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              // color: ColorManager.primaryOpacity70,
-              color: ThemeColor.primary.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(AppRadius.r12),
-            ),
-            child: IconButton(
-              onPressed: () {},
-              icon: icon,
-              color: Colors.white,
-            ),
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: ThemeColor.primary,
+            borderRadius: BorderRadius.circular(DefaultManager.cardRadiusXs),
           ),
-          const SizedBox(
-            height: AppHeight.h4,
+          child: IconButton(
+            onPressed: () {},
+            icon: icon,
           ),
-          Text(
-            name,
-            style: Theme.of(context).textTheme.headlineSmall,
-          )
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: AppHeight.h4,
+        ),
+        Text(
+          name,
+          style: Theme.of(context).textTheme.bodyLarge,
+        )
+      ],
     );
   }
 }

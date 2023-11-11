@@ -1,4 +1,6 @@
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
+import 'package:bato_mechanic/src/utils/theme/widget_themes/icon_button_theme.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/text_selection_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -16,12 +18,15 @@ class BaatoAppTheme {
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: 'Poppins',
+    // fontFamily: 'Poppins',
+    fontFamily: FontConstants.fontFamily,
     disabledColor: ThemeColor.grey,
     brightness: Brightness.light,
     primaryColor: ThemeColor.primary,
     primaryColorDark: ColorManager.primaryShade20,
     textTheme: BaatoTextTheme.lightTextTheme,
+    textSelectionTheme: BaatoTextSelectionTheme.lightTextSelectionTheme,
+    inputDecorationTheme: BaatoInputDecorationTheme.lightInputDecorationTheme,
     chipTheme: BaatoChipTheme.lightChipTheme,
     scaffoldBackgroundColor: ThemeColor.white,
     appBarTheme: BaatoAppBarTheme.lightAppBarTheme,
@@ -29,18 +34,20 @@ class BaatoAppTheme {
     bottomSheetTheme: BaatoBottomSheetTheme.lightBottomSheetTheme,
     elevatedButtonTheme: BaatoElevatedButtonTheme.lightElevatedButtonTheme,
     outlinedButtonTheme: BaatoOutlinedButtonTheme.lightOutlinedButtonTheme,
-    inputDecorationTheme: BaatoInputDecorationTheme.lightInputDecorationTheme,
+    iconButtonTheme: BaatoIconButtonTheme.lightIconButtonTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: 'Poppins',
+    // fontFamily: 'Poppins',
+    fontFamily: FontConstants.fontFamily,
     disabledColor: ThemeColor.grey,
     brightness: Brightness.dark,
     primaryColor: ThemeColor.primary,
     primaryColorDark: ColorManager.primaryShade20,
     textTheme: BaatoTextTheme.darkTextTheme,
-    textSelectionTheme: BaatoTextSelectionTheme.lightTextSelectionTheme,
+    textSelectionTheme: BaatoTextSelectionTheme.darkTextSelectionTheme,
+    inputDecorationTheme: BaatoInputDecorationTheme.darkInputDecorationTheme,
     chipTheme: BaatoChipTheme.darkChipTheme,
     scaffoldBackgroundColor: ThemeColor.black,
     appBarTheme: BaatoAppBarTheme.darkAppBarTheme,
@@ -48,6 +55,6 @@ class BaatoAppTheme {
     bottomSheetTheme: BaatoBottomSheetTheme.darkBottomSheetTheme,
     elevatedButtonTheme: BaatoElevatedButtonTheme.darkElevatedButtonTheme,
     outlinedButtonTheme: BaatoOutlinedButtonTheme.darkOutlinedButtonTheme,
-    inputDecorationTheme: BaatoInputDecorationTheme.darkInputDecorationTheme,
+    iconButtonTheme: BaatoIconButtonTheme.darkIconButtonTheme,
   );
 }

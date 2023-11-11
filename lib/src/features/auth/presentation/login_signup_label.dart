@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/constants/managers/color_manager.dart';
@@ -37,7 +38,6 @@ class LoginSignUpLabel extends StatelessWidget {
                   Text(
                     labelText,
                     style: TextStyle(
-                        // color: Color(0xfff79c4f),
                         color: Theme.of(context).primaryColor,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
@@ -50,6 +50,9 @@ class LoginSignUpLabel extends StatelessWidget {
             splashColor: ColorManager.primary,
             onTap: onPressed,
             child: Container(
+              margin: const EdgeInsets.symmetric(
+                vertical: AppMargin.m12,
+              ),
               alignment: Alignment.bottomCenter,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +68,6 @@ class LoginSignUpLabel extends StatelessWidget {
                   Text(
                     labelText,
                     style: TextStyle(
-                        // color: Color(0xfff79c4f),
                         color: Theme.of(context).primaryColor,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),

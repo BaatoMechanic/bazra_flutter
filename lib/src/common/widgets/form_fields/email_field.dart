@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/constants/managers/color_manager.dart';
 import '../../../utils/constants/managers/values_manager.dart';
+import '../../../utils/validators/validation.dart';
 
 class EmailField extends StatelessWidget {
   EmailField({
@@ -26,16 +27,18 @@ class EmailField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           if (title != null)
             Text(
               title!,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
             ),
           const SizedBox(
             height: 10,
@@ -94,19 +97,20 @@ class EmailField extends StatelessWidget {
               : TextFormField(
                   focusNode: focusNode,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Please enter your email address';
-                    }
-                    // Check if the entered email has the right format
-                    if (!RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
-                    // Return null if the entered email is valid
-                    return null;
-                  },
+                  validator: (value) => AppValidator.validateEmail(value),
+                  // validator: (value) {
+                  //   if (value == null || value.trim().isEmpty) {
+                  //     return 'Please enter your email address';
+                  //   }
+                  //   // Check if the entered email has the right format
+                  //   if (!RegExp(
+                  //           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                  //       .hasMatch(value)) {
+                  //     return 'Please enter a valid email address';
+                  //   }
+                  //   // Return null if the entered email is valid
+                  //   return null;
+                  // },
                   textInputAction: nextFocusNode != null
                       ? TextInputAction.done
                       : TextInputAction.next,

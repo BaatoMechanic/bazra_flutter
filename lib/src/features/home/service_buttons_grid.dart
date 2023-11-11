@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../managers/values_manager.dart';
+import '../../utils/constants/managers/values_manager.dart';
 import 'service_type_button.dart';
 
 class ServiceButtonsGrid extends StatelessWidget {

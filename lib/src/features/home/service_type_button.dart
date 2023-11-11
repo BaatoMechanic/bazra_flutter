@@ -2,10 +2,10 @@
 import 'package:bato_mechanic/src/features/home/tips_carousel.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
-import '../../managers/color_manager.dart';
-import '../../managers/values_manager.dart';
+import '../../utils/constants/managers/color_manager.dart';
+import '../../utils/constants/managers/values_manager.dart';
 
 class ServiceTypeButton extends StatelessWidget {
   const ServiceTypeButton({
@@ -25,7 +25,8 @@ class ServiceTypeButton extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: ColorManager.primaryOpacity70,
+              // color: ColorManager.primaryOpacity70,
+              color: ThemeColor.primary.withOpacity(0.5),
               borderRadius: BorderRadius.circular(AppRadius.r12),
             ),
             child: IconButton(

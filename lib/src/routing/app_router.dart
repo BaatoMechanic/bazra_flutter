@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:bato_mechanic/src/data_types/string_or_audio.dart';
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen.dart';
 import 'package:bato_mechanic/src/features/authentication/presentation/authentication_screen.dart';
@@ -24,7 +24,7 @@ import 'package:bato_mechanic/src/features/support_chat/presentation/support_cha
 import 'package:go_router/go_router.dart';
 
 import '../../temp.dart';
-import '../common_widgets/inplace_carousel_widget.dart';
+import '../common/widgets/inplace_carousel_widget.dart';
 import '../features/repair_request/presentation/vehicle_categories/vehicle_category_screen.dart';
 
 enum appRoute {
@@ -71,10 +71,10 @@ GoRouter goRouter() {
         path: '/',
         name: appRoute.splash.name,
         // builder: (context, state) => const SplashScreen(),
-        builder: (context, state) => RepairProgressScreen(
-          repairSteps: repairSteps,
-        ),
-        // builder: (context, state) => HomeScreen(),
+        // builder: (context, state) => RepairProgressScreen(
+        //   repairSteps: repairSteps,
+        // ),
+        builder: (context, state) => LoginScreen(),
         // builder: (context, state) => const TrackMechanicScreen(),
 
         // builder: (context, state) => VehicleCategoryScreen(),

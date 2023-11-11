@@ -1,5 +1,5 @@
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/auth/application/user_service.dart';
+import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
 import 'package:bato_mechanic/src/features/splash/presentation/splash_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';

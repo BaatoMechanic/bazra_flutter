@@ -4,7 +4,7 @@ import 'package:bato_mechanic/src/features/repair_request/data/repair_request_re
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../managers/color_manager.dart';
+import '../../../../utils/constants/managers/color_manager.dart';
 import 'fake_repair_request_repository.dart';
 
 abstract class RepairRequestRepository {

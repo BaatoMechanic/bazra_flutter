@@ -1,11 +1,11 @@
-import 'package:bato_mechanic/src/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/extensions/int_extensions.dart';
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/managers/color_manager.dart';
-import 'package:bato_mechanic/src/managers/values_manager.dart';
+import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common_widgets/customer_review_widget.dart';
+import '../../../common/widgets/customer_review_widget.dart';
 
 class MechanicProfileScreen extends StatelessWidget {
   const MechanicProfileScreen({super.key});
@@ -134,7 +134,7 @@ class MechanicProfileScreen extends StatelessWidget {
                     // style: Theme.of(context).elevatedButtonTheme.style,
                     style: ButtonStyle(
                       foregroundColor: MaterialStatePropertyAll(
-                          ColorManager.blackWithOpacity),
+                          ThemeColor.black.withOpacity(0.5)),
                     ),
                     onPressed: () {},
                     icon: const Icon(Icons.send),

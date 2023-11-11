@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/vehicle_part_repository/vehicle_parts_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/vehicle_repository/vehicle_repository.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';

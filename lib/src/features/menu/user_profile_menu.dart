@@ -1,10 +1,10 @@
-import 'package:bato_mechanic/src/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
-import '../../common_widgets/butons/submit_button.dart';
-import '../../managers/color_manager.dart';
-import '../../managers/values_manager.dart';
+import '../../common/widgets/butons/submit_button.dart';
+import '../../utils/constants/managers/color_manager.dart';
+import '../../utils/constants/managers/values_manager.dart';
 
 class UserProfileMenu extends StatelessWidget {
   UserProfileMenu({super.key});

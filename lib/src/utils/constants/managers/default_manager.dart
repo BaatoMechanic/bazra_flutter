@@ -1,43 +1,45 @@
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
+
 class DefaultManager {
   // Button sizes
-  static const double buttonHeight = 18.0;
-  static const double buttonRadius = 12.0;
-  static const double buttonWidth = 120.0;
+  static const double buttonHeight = AppHeight.h18;
+  static const double buttonRadius = AppRadius.r8;
+  static const double buttonWidth = AppWidth.h125;
   static const double buttonElevation = 4.0;
 
   // AppBar height
-  static const double appBarHeight = 56.0;
+  static const double appBarHeight = AppHeight.h50;
 
   // Default spacing between sections
-  static const double defaultSpace = 24.0;
-  static const double spaceBtwItems = 16.0;
-  static const double spaceBtwSections = 32.0;
+  static const double defaultSpace = AppMargin.m20;
+  static const double spaceBtwItems = AppMargin.m16;
+  static const double spaceBtwSections = AppMargin.m30;
 
   // Border radius
-  static const double borderRadiusSm = 4.0;
-  static const double borderRadiusMd = 8.0;
-  static const double borderRadiusLg = 12.0;
+  static const double borderRadiusSm = AppRadius.r4;
+  static const double borderRadiusMd = AppRadius.r8;
+  static const double borderRadiusLg = AppRadius.r12;
 
   // Divider height
-  static const double dividerHeight = 1.0;
+  static const double dividerHeight = AppHeight.h2;
 
   // Input field
-  static const double inputFieldRadius = 12.0;
-  static const double spaceBtwInputFields = 16.0;
+  static const double inputFieldRadius = AppRadius.r12;
+  static const double spaceBtwInputFields = AppRadius.r16;
 
   // Card sizes
-  static const double cardRadiusLg = 16.0;
-  static const double cardRadiusMd = 12.0;
-  static const double cardRadiusSm = 10.0;
-  static const double cardRadiusXs = 6.0;
+  static const double cardRadiusLg = AppRadius.r16;
+  static const double cardRadiusMd = AppRadius.r12;
+  static const double cardRadiusSm = AppRadius.r14;
+  static const double cardRadiusXs = AppRadius.r16;
   static const double cardElevation = 2.0;
 
   // Image carousel height
-  static const double imageCarouselHeight = 200.0;
+  static const double imageCarouselHeight = AppHeight.h200;
 
   // Loading indicator size
-  static const double loadingIndicatorSize = 36.0;
+  static const double loadingIndicatorSize = AppHeight.h36;
 
   // Grid view spacing
-  static const double gridViewSpacing = 16.0;
+  static const double gridViewSpacing = AppMargin.m16;
 }

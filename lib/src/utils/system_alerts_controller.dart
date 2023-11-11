@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
-import 'toast_helper.dart';
+import 'helpers/toast_helper.dart';
 
 class SystemAlertState {
   final bool loading;

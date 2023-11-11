@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:bato_mechanic/src/features/auth/application/user_service.dart';
+import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/auth/data/auth_repository.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';

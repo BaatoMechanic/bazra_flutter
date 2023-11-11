@@ -1,9 +1,10 @@
 import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:bato_mechanic/src/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 
-import 'src/managers/theme_manager.dart';
+import 'src/utils/constants/managers/theme_manager_back.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,7 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: goRouter(),
-      theme: ThemeManager.lightTheme,
+      theme: BaatoAppTheme.lightTheme,
+      darkTheme: BaatoAppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       title: 'Bato Mechanic',
     );
   }

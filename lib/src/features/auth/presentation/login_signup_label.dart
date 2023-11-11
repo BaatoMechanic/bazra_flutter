@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../../../managers/color_manager.dart';
+import '../../../utils/constants/managers/color_manager.dart';
 
 class LoginSignUpLabel extends StatelessWidget {
   const LoginSignUpLabel({

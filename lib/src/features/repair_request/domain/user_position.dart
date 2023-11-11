@@ -4,7 +4,7 @@ import 'dart:ffi';
 
 import 'package:geolocator/geolocator.dart';
 
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
 UserPosition userPositionFromJson(String str) =>
     UserPosition.fromJson(json.decode(str));

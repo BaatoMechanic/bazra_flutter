@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:bato_mechanic/src/common_widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/common_widgets/billing_info_widget.dart';
-import 'package:bato_mechanic/src/common_widgets/pay_bottom_sheet_widget.dart';
-import 'package:bato_mechanic/src/common_widgets/butons/esewa_button.dart';
-import 'package:bato_mechanic/src/common_widgets/butons/khalti_button.dart';
-import 'package:bato_mechanic/src/common_widgets/butons/pay_button.dart';
-import 'package:bato_mechanic/src/common_widgets/butons/submit_button.dart';
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/features/auth/application/user_service.dart';
+import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/common/widgets/billing_info_widget.dart';
+import 'package:bato_mechanic/src/common/widgets/pay_bottom_sheet_widget.dart';
+import 'package:bato_mechanic/src/common/widgets/butons/esewa_button.dart';
+import 'package:bato_mechanic/src/common/widgets/butons/khalti_button.dart';
+import 'package:bato_mechanic/src/common/widgets/butons/pay_button.dart';
+import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/location_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
@@ -18,11 +18,11 @@ import 'package:bato_mechanic/src/features/repair_request/presentation/request_m
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/search_map/search_map_widget_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen_controller.dart';
-import 'package:bato_mechanic/src/managers/color_manager.dart';
-import 'package:bato_mechanic/src/managers/values_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/date_utils.dart';
-import 'package:bato_mechanic/src/utils/toast_helper.dart';
+import 'package:bato_mechanic/src/utils/foramtters/date_formatter.dart';
+import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
@@ -31,8 +31,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../../../../common_widgets/flutter_map_utils/control_buttons/control_buttons.dart';
-import '../../../../common_widgets/flutter_map_utils/scale_layer/scale_layer_plugin_option.dart';
+import '../../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
+import '../../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
 import '../../../auth/domain/user.dart';
 
 class TrackMechanicScreen extends ConsumerStatefulWidget {
@@ -248,10 +248,12 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                             style: const TextStyle(color: Colors.black),
                             children: <TextSpan>[
                               TextSpan(
-                                text: formatMinutesToGeneric(ref
-                                    .read(trackMechanicScreenControllerProvider
-                                        .notifier)
-                                    .getEstimateArrivalTime()),
+                                text: BaatoDateFormatter.formatMinutesToGeneric(
+                                    ref
+                                        .read(
+                                            trackMechanicScreenControllerProvider
+                                                .notifier)
+                                        .getEstimateArrivalTime()),
                                 style: const TextStyle(
                                   color: Colors.orange,
                                   fontWeight: FontWeight.bold,
@@ -376,7 +378,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
       Text(
         'Please pay baato kharcha to continue the process',
         style: Theme.of(context).textTheme.labelSmall!.copyWith(
-              color: ColorManager.error,
+              color: ThemeColor.error,
               fontStyle: FontStyle.italic,
             ),
       ),
@@ -384,7 +386,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
           label: "Pay baato kharcha",
           onPressed: () {
             showModalBottomSheet(
-              backgroundColor: ColorManager.transparent,
+              backgroundColor: ThemeColor.transparent,
               context: context,
               builder: (context) => PayBottomSheetWidget(
                 children: const [

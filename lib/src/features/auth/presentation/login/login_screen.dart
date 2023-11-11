@@ -1,19 +1,20 @@
-import 'package:bato_mechanic/src/common_widgets/butons/facebook_button.dart';
-import 'package:bato_mechanic/src/common_widgets/butons/google_button.dart';
-import 'package:bato_mechanic/src/common_widgets/form_fields/email_field.dart';
-import 'package:bato_mechanic/src/common_widgets/form_fields/divider_field.dart';
-import 'package:bato_mechanic/src/common_widgets/form_fields/id_field.dart';
-import 'package:bato_mechanic/src/extensions/async_value_extensions.dart';
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/common/widgets/butons/facebook_button.dart';
+import 'package:bato_mechanic/src/common/widgets/butons/google_button.dart';
+import 'package:bato_mechanic/src/common/widgets/form_fields/email_field.dart';
+import 'package:bato_mechanic/src/common/widgets/form_fields/divider_field.dart';
+import 'package:bato_mechanic/src/common/widgets/form_fields/id_field.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
+import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/auth/application/user_service.dart';
+import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen_controller.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login_signup_label.dart';
-import 'package:bato_mechanic/src/common_widgets/butons/submit_button.dart';
-import 'package:bato_mechanic/src/common_widgets/form_fields/password_field.dart';
-import 'package:bato_mechanic/src/managers/values_manager.dart';
+import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/common/widgets/form_fields/password_field.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/toast_helper.dart';
+import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -76,12 +77,18 @@ class LoginScreen extends ConsumerWidget {
                       controller: _idController,
                       focusNode: _emailFocusNode,
                     ),
+                    const SizedBox(
+                      height: DefaultManager.defaultSpace,
+                    ),
                     PasswordField(
                       title: "Password".hardcoded(),
                       labelText: "Password".hardcoded(),
                       hintText: "Enter your password".hardcoded(),
                       controller: _passwordController,
                       focusNode: _passwordFocusNode,
+                    ),
+                    const SizedBox(
+                      height: AppHeight.h30,
                     ),
                     SubmitButton(
                       showSpinner: state.isLoading,

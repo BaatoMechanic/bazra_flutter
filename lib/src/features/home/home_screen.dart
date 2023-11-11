@@ -1,11 +1,11 @@
-import 'package:bato_mechanic/src/common_widgets/inplace_carousel_widget.dart';
-import 'package:bato_mechanic/src/common_widgets/recent_repair_container_widget.dart';
-import 'package:bato_mechanic/src/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
+import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
+import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/home/tips_carousel.dart';
 import 'package:bato_mechanic/src/features/menu/user_profile_menu.dart';
-import 'package:bato_mechanic/src/managers/color_manager.dart';
-import 'package:bato_mechanic/src/managers/values_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'service_buttons_grid.dart';

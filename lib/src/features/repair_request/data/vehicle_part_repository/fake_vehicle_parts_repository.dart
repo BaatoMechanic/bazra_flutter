@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 
-import '../../../../constants/test_parts.dart';
+import '../../../../utils/constants/test_parts.dart';
 import '../../domain/vehicle_part.dart';
 import 'vehicle_parts_repository.dart';
 

@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../managers/api_values_manager.dart';
-import '../../../../managers/strings_manager.dart';
-import '../../../../managers/values_manager.dart';
+import '../../../../utils/constants/managers/api_values_manager.dart';
+import '../../../../utils/constants/managers/strings_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../../utils/model_utils.dart';
 import 'repair_request_repository.dart';
 import 'package:http/http.dart' as http;

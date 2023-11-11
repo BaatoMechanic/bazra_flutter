@@ -1,7 +1,7 @@
-import 'package:bato_mechanic/src/common_widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/constants/test_categories.dart';
-import 'package:bato_mechanic/src/extensions/async_value_extensions.dart';
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/utils/constants/test_categories.dart';
+import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/vechicle_category_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/vehicle_category_repository/vehicle_category_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_categories/vehicle_category_screen_controller.dart';
@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../managers/values_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
 
 // class VehicleCategoryScreen extends StatelessWidget {
 class VehicleCategoryScreen extends ConsumerWidget {

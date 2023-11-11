@@ -1,7 +1,7 @@
-import 'package:bato_mechanic/src/common_widgets/recent_repair_container_widget.dart';
-import 'package:bato_mechanic/src/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/managers/values_manager.dart';
+import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
+import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
 class RecentRepairsList extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:bato_mechanic/src/common_widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/constants/test_vehicles.dart';
+import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/utils/constants/test_vehicles.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_categories/vehicle_category_screen_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../managers/values_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
 import '../../application/vechicle_category_service.dart';
 
 class VehiclesScreen extends ConsumerWidget {

@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:bato_mechanic/src/common_widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/extensions/async_value_extensions.dart';
-import 'package:bato_mechanic/src/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
+import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -15,7 +15,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../../utils/toast_helper.dart';
+import '../../../../utils/helpers/toast_helper.dart';
 import '../search_map/map_search_widget.dart';
 
 class RequestMechanicScreen extends ConsumerStatefulWidget {

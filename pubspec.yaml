@@ -68,7 +68,7 @@ flutter:
     - assets/
     - assets/icons/
     - assets/images/
-    - assets/audio/
+    - assets/audios/
     - assets/images/vehicle/bike.png
     - assets/images/vehicle/car.png
     - assets/images/vehicle/bus.png

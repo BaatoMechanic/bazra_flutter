@@ -5,8 +5,8 @@ import 'package:bato_mechanic/src/features/repair_request/data/map_repository/re
 
 import 'package:http/http.dart' as http;
 
-import '../../../../managers/strings_manager.dart';
-import '../../../../managers/values_manager.dart';
+import '../../../../utils/constants/managers/strings_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../../utils/model_utils.dart';
 
 class FakeRequestMechanicMapRepository implements RequestMechanicMapRepository {

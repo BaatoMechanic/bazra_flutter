@@ -5,7 +5,7 @@ import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 
-import '../../../../managers/api_values_manager.dart';
+import '../../../../utils/constants/managers/api_values_manager.dart';
 import 'repair_request_repository.dart';
 
 class FakeRepairRequestRepository implements RepairRequestRepository {

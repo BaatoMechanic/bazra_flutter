@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:bato_mechanic/src/common_widgets/audio_widget.dart';
-import 'package:bato_mechanic/src/common_widgets/butons/submit_button.dart';
-import 'package:bato_mechanic/src/data_types/string_or_audio.dart';
-import 'package:bato_mechanic/src/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/common/widgets/audio_widget.dart';
+import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
+import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
-import 'package:bato_mechanic/src/managers/values_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

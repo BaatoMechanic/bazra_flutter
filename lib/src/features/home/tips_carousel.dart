@@ -1,9 +1,9 @@
-import 'package:bato_mechanic/src/common_widgets/inplace_carousel_widget.dart';
-import 'package:bato_mechanic/src/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
+import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:flutter/material.dart';
 
-import '../../managers/color_manager.dart';
-import '../../managers/values_manager.dart';
+import '../../utils/constants/managers/color_manager.dart';
+import '../../utils/constants/managers/values_manager.dart';
 
 const String title = 'Best Mechanic Tips';
 
@@ -34,8 +34,8 @@ class TipsCarousel extends StatelessWidget {
                   item['tip'],
                   textAlign: TextAlign.justify,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: ColorManager.blackWithOpacity,
-                      ),
+                      // color: ColorManager.blackWithOpacity,
+                      color: ThemeColor.black.withOpacity(0.5)),
                 ),
               ),
               SizedBox(
@@ -50,7 +50,7 @@ class TipsCarousel extends StatelessWidget {
         .toList();
     return Container(
       decoration: BoxDecoration(
-        color: ColorManager.lightestGrey,
+        color: ThemeColor.grey,
         borderRadius: BorderRadius.circular(
           AppRadius.r12,
         ),

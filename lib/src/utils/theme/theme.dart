@@ -1,6 +1,7 @@
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/icon_button_theme.dart';
+import 'package:bato_mechanic/src/utils/theme/widget_themes/icon_theme.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/text_selection_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,7 @@ class BaatoAppTheme {
     bottomSheetTheme: BaatoBottomSheetTheme.lightBottomSheetTheme,
     elevatedButtonTheme: BaatoElevatedButtonTheme.lightElevatedButtonTheme,
     outlinedButtonTheme: BaatoOutlinedButtonTheme.lightOutlinedButtonTheme,
+    iconTheme: BaatoIconTheme.lightIconTheme,
     iconButtonTheme: BaatoIconButtonTheme.lightIconButtonTheme,
   );
 
@@ -55,6 +57,7 @@ class BaatoAppTheme {
     bottomSheetTheme: BaatoBottomSheetTheme.darkBottomSheetTheme,
     elevatedButtonTheme: BaatoElevatedButtonTheme.darkElevatedButtonTheme,
     outlinedButtonTheme: BaatoOutlinedButtonTheme.darkOutlinedButtonTheme,
+    iconTheme: BaatoIconTheme.darkIconTheme,
     iconButtonTheme: BaatoIconButtonTheme.darkIconButtonTheme,
   );
 }

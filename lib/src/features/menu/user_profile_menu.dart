@@ -55,7 +55,7 @@ class UserProfileMenu extends StatelessWidget {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
                 horizontal: AppPadding.p20, vertical: AppPadding.p45),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +67,6 @@ class UserProfileMenu extends StatelessWidget {
                       radius: AppHeight.h30,
                       child: Image.asset(
                         'assets/images/no-profile.png'.hardcoded(),
-                        // width: AppHeight.h50,
                         width: 50,
                       ),
                     ),
@@ -80,7 +79,7 @@ class UserProfileMenu extends StatelessWidget {
                         children: [
                           Text(
                             'Krishna Rimal',
-                            style: Theme.of(context).textTheme.displaySmall,
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           SizedBox(
                             height: AppHeight.h12,
@@ -140,10 +139,7 @@ class ProfileTilesSection extends StatelessWidget {
       children: [
         Text(
           sectionTitle,
-          style: Theme.of(context).textTheme.displaySmall,
-        ),
-        const SizedBox(
-          height: AppHeight.h12,
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
         ...tiles
       ],

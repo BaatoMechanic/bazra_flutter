@@ -1,5 +1,6 @@
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
+import 'package:bato_mechanic/src/utils/theme/widget_themes/card_theme.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/icon_button_theme.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/icon_theme.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/text_selection_theme.dart';
@@ -37,6 +38,7 @@ class BaatoAppTheme {
     outlinedButtonTheme: BaatoOutlinedButtonTheme.lightOutlinedButtonTheme,
     iconTheme: BaatoIconTheme.lightIconTheme,
     iconButtonTheme: BaatoIconButtonTheme.lightIconButtonTheme,
+    cardTheme: BaatoCardTheme.lightCardTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -59,5 +61,6 @@ class BaatoAppTheme {
     outlinedButtonTheme: BaatoOutlinedButtonTheme.darkOutlinedButtonTheme,
     iconTheme: BaatoIconTheme.darkIconTheme,
     iconButtonTheme: BaatoIconButtonTheme.darkIconButtonTheme,
+    cardTheme: BaatoCardTheme.darkCardTheme,
   );
 }

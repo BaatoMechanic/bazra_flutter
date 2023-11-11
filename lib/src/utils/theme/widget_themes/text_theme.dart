@@ -9,6 +9,21 @@ class BaatoTextTheme {
 
   /// Customizable Light Text Theme
   static TextTheme lightTextTheme = TextTheme(
+    displayLarge: const TextStyle().copyWith(
+      fontSize: FontSize.s28,
+      fontWeight: FontWeight.bold,
+      color: ThemeColor.dark,
+    ),
+    displayMedium: const TextStyle().copyWith(
+      fontSize: FontSize.s24,
+      fontWeight: FontWeight.bold,
+      color: ThemeColor.dark,
+    ),
+    displaySmall: const TextStyle().copyWith(
+      fontSize: FontSize.s20,
+      fontWeight: FontWeight.bold,
+      color: ThemeColor.dark,
+    ),
     headlineLarge: const TextStyle().copyWith(
       fontSize: FontSize.s18,
       fontWeight: FontWeight.bold,
@@ -73,6 +88,21 @@ class BaatoTextTheme {
 
   /// Customizable Dark Text Theme
   static TextTheme darkTextTheme = TextTheme(
+    displayLarge: const TextStyle().copyWith(
+      fontSize: FontSize.s28,
+      fontWeight: FontWeight.bold,
+      color: ThemeColor.light,
+    ),
+    displayMedium: const TextStyle().copyWith(
+      fontSize: FontSize.s24,
+      fontWeight: FontWeight.bold,
+      color: ThemeColor.light,
+    ),
+    displaySmall: const TextStyle().copyWith(
+      fontSize: FontSize.s20,
+      fontWeight: FontWeight.bold,
+      color: ThemeColor.light,
+    ),
     headlineLarge: const TextStyle().copyWith(
       fontSize: FontSize.s18,
       fontWeight: FontWeight.bold,

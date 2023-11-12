@@ -17,47 +17,47 @@ import '../../utils/helpers/helper_functions.dart';
 class UserProfileMenu extends StatelessWidget {
   UserProfileMenu({super.key});
 
-  List<ProfileTile> profileTiles = [
-    ProfileTile(
+  List<MenuTile> profileTiles = [
+    MenuTile(
       leadingIcon: Icons.settings,
       title: 'Manage data',
       onPressed: (BuildContext context, WidgetRef ref) {},
     ),
-    ProfileTile(
+    MenuTile(
       leadingIcon: Icons.home,
       title: 'Manage Profile',
       onPressed: (BuildContext context, WidgetRef ref) {},
     ),
-    ProfileTile(
+    MenuTile(
       leadingIcon: Icons.person,
       title: 'Profile',
       onPressed: (BuildContext context, WidgetRef ref) {},
     ),
-    ProfileTile(
+    MenuTile(
       leadingIcon: Icons.settings,
-      title: 'Actice Repair',
+      title: 'Active Repair',
       onPressed: (BuildContext context, WidgetRef ref) =>
           context.goNamed(appRoute.repairProgress.name),
     ),
-    ProfileTile(
+    MenuTile(
       leadingIcon: Icons.settings,
       title: 'Recent Repairs',
       onPressed: (BuildContext context, WidgetRef ref) =>
           context.goNamed(appRoute.recentRepairs.name),
     ),
-    ProfileTile(
+    MenuTile(
       leadingIcon: Icons.settings,
       title: 'Settings',
       onPressed: (BuildContext context, WidgetRef ref) {},
     ),
   ];
-  List<ProfileTile> settingsTiles = [
-    ProfileTile(
+  List<MenuTile> settingsTiles = [
+    MenuTile(
       leadingIcon: Icons.notification_important,
       title: 'Notifications',
       onPressed: (BuildContext context, WidgetRef ref) {},
     ),
-    ProfileTile(
+    MenuTile(
       leadingIcon: Icons.dark_mode,
       title: 'Dark mode',
       onPressed: (BuildContext ctx, WidgetRef ref) {
@@ -110,22 +110,54 @@ class UserProfileMenu extends StatelessWidget {
             ctx, [darkTile, lightTile, systemTile]);
       },
     ),
-    ProfileTile(
+    MenuTile(
       leadingIcon: Icons.miscellaneous_services,
       title: 'Misc',
       onPressed: (BuildContext context, WidgetRef ref) {},
     ),
   ];
-  List<ProfileTile> connectTiles = [
-    ProfileTile(
+  List<MenuTile> connectTiles = [
+    MenuTile(
       leadingIcon: Icons.feedback,
       title: 'Feedback',
       onPressed: (BuildContext context, WidgetRef ref) =>
           context.goNamed(appRoute.feedback.name),
     ),
-    ProfileTile(
-      leadingIcon: Icons.chat,
+    MenuTile(
+      leadingIcon: Icons.wechat,
       title: 'Chat Support',
+      onPressed: (BuildContext context, WidgetRef ref) =>
+          context.goNamed(appRoute.supportChat.name),
+    ),
+  ];
+  List<MenuTile> moreTiles = [
+    MenuTile(
+        leadingIcon: Icons.notifications,
+        title: 'Notifications',
+        onPressed: (BuildContext context, WidgetRef ref) {}
+        // context.goNamed(appRoute.feedback.name),
+        ),
+    MenuTile(
+      leadingIcon: Icons.warning,
+      title: 'About',
+      onPressed: (BuildContext context, WidgetRef ref) =>
+          context.goNamed(appRoute.supportChat.name),
+    ),
+    MenuTile(
+      leadingIcon: Icons.report,
+      title: 'Rrport an issue',
+      onPressed: (BuildContext context, WidgetRef ref) =>
+          context.goNamed(appRoute.supportChat.name),
+    ),
+    MenuTile(
+      leadingIcon: Icons.policy,
+      title: 'Privacy Policy',
+      onPressed: (BuildContext context, WidgetRef ref) =>
+          context.goNamed(appRoute.supportChat.name),
+    ),
+    MenuTile(
+      leadingIcon: Icons.key,
+      title: 'Terms and Conditions',
       onPressed: (BuildContext context, WidgetRef ref) =>
           context.goNamed(appRoute.supportChat.name),
     ),
@@ -185,18 +217,20 @@ class UserProfileMenu extends StatelessWidget {
                 const SizedBox(
                   height: AppHeight.h30,
                 ),
-                ProfileTilesSection(
-                    sectionTitle: 'Profile', tiles: profileTiles),
+                MenuTilesSection(sectionTitle: 'Profile', tiles: profileTiles),
                 const SizedBox(
                   height: AppHeight.h30,
                 ),
-                ProfileTilesSection(
+                MenuTilesSection(
                     sectionTitle: 'Settings', tiles: settingsTiles),
                 const SizedBox(
                   height: AppHeight.h30,
                 ),
-                ProfileTilesSection(
-                    sectionTitle: 'Connect', tiles: connectTiles),
+                MenuTilesSection(sectionTitle: 'More', tiles: moreTiles),
+                const SizedBox(
+                  height: AppHeight.h30,
+                ),
+                MenuTilesSection(sectionTitle: 'Connect', tiles: connectTiles),
                 const SizedBox(
                   height: AppHeight.h30,
                 ),
@@ -210,15 +244,15 @@ class UserProfileMenu extends StatelessWidget {
   }
 }
 
-class ProfileTilesSection extends StatelessWidget {
-  ProfileTilesSection({
+class MenuTilesSection extends StatelessWidget {
+  MenuTilesSection({
     Key? key,
     required this.tiles,
     required this.sectionTitle,
   }) : super(key: key);
 
   String sectionTitle;
-  List<ProfileTile> tiles;
+  List<MenuTile> tiles;
   @override
   Widget build(BuildContext context) {
     final bool isDarkTheme = HelperFunctions.isDarkMode(context);
@@ -243,8 +277,8 @@ class ProfileTilesSection extends StatelessWidget {
   }
 }
 
-class ProfileTile extends ConsumerWidget {
-  ProfileTile({
+class MenuTile extends ConsumerWidget {
+  MenuTile({
     Key? key,
     required this.title,
     required this.leadingIcon,

@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/common/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
@@ -6,6 +7,7 @@ import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import 'package:bato_mechanic/src/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../common/widgets/butons/submit_button.dart';
 import '../../utils/constants/managers/color_manager.dart';
@@ -96,6 +98,14 @@ class UserProfileMenu extends StatelessWidget {
       onPressed: (BuildContext context, WidgetRef ref) {},
     ),
   ];
+  List<ProfileTile> connectTiles = [
+    ProfileTile(
+      leadingIcon: Icons.feedback,
+      title: 'Feedback',
+      onPressed: (BuildContext context, WidgetRef ref) =>
+          context.goNamed(appRoute.feedback.name),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +168,11 @@ class UserProfileMenu extends StatelessWidget {
                 ),
                 ProfileTilesSection(
                     sectionTitle: 'Settings', tiles: settingsTiles),
+                const SizedBox(
+                  height: AppHeight.h30,
+                ),
+                ProfileTilesSection(
+                    sectionTitle: 'Connect', tiles: connectTiles),
                 const SizedBox(
                   height: AppHeight.h30,
                 ),

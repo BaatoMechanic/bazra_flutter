@@ -48,13 +48,16 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  SearchBar(
-                    controller: _searchTextController,
-                    focusNode: _searchFocusNode,
-                    leading: Icon(Icons.search),
-                    onChanged: (value) {
-                      _searchTextController.text = value;
-                    },
+                  SizedBox(
+                    height: AppHeight.h40,
+                    child: SearchBar(
+                      controller: _searchTextController,
+                      focusNode: _searchFocusNode,
+                      leading: Icon(Icons.search),
+                      onChanged: (value) {
+                        _searchTextController.text = value;
+                      },
+                    ),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: AppPadding.p24),

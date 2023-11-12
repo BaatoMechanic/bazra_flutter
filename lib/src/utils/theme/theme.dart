@@ -74,6 +74,6 @@ class BaatoAppTheme {
     iconButtonTheme: BaatoIconButtonTheme.darkIconButtonTheme,
     cardTheme: BaatoCardTheme.darkCardTheme,
     sliderTheme: BaatoSliderTheme.darkSliderTheme,
-    searchBarTheme: BaatoSearchBarTheme.lightSearchBarTheme,
+    searchBarTheme: BaatoSearchBarTheme.darkSearchBarTheme,
   );
 }

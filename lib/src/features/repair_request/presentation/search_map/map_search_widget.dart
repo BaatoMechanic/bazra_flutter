@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bato_mechanic/src/features/repair_request/presentation/search_map/search_map_widget_controller.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
@@ -230,16 +231,18 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
         ),
         child: Column(
           children: [
-            TextFormField(
+            SearchBar(
               controller: searchController,
               focusNode: searchFocusNode,
-              decoration: InputDecoration(
-                hintText: 'Enter place name',
-                fillColor: Colors.white,
-                filled: true,
-                border: inputBorder,
-                focusedBorder: inputFocusBorder,
-                suffixIcon: IconButton(
+              hintText: 'Enter place name',
+              backgroundColor:
+                  MaterialStatePropertyAll<Color>(ThemeColor.light),
+              trailing: [
+                IconButton(
+                  style: const ButtonStyle().copyWith(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        ThemeColor.transparent),
+                  ),
                   onPressed: () {
                     searchController.clear();
 
@@ -249,7 +252,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                     Icons.clear,
                   ),
                 ),
-              ),
+              ],
               onChanged: (String value) {
                 if (debounce?.isActive ?? false) {
                   debounce?.cancel();
@@ -270,6 +273,47 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                 });
               },
             ),
+
+            // TextFormField(
+            //   controller: searchController,
+            //   focusNode: searchFocusNode,
+            //   decoration: InputDecoration(
+            //     hintText: 'Enter place name',
+            //     fillColor: Colors.white,
+            //     filled: true,
+            //     border: inputBorder,
+            //     focusedBorder: inputFocusBorder,
+            //     suffixIcon: IconButton(
+            //       onPressed: () {
+            //         searchController.clear();
+
+            //         options = [];
+            //       },
+            //       icon: const Icon(
+            //         Icons.clear,
+            //       ),
+            //     ),
+            //   ),
+            //   onChanged: (String value) {
+            //     if (debounce?.isActive ?? false) {
+            //       debounce?.cancel();
+            //     }
+
+            //     debounce = Timer(const Duration(milliseconds: 20), () async {
+            //       //   var response =
+            //       //       await mapSearchWidgetViewModel.getSearchLocations(
+            //       //           mapSearchWidgetViewModel.searchController.text);
+
+            //       //   options = response
+            //       //       .map((e) => OSMdata(
+            //       //           displayname: e['display_name'],
+            //       //           latitude: double.parse(e['lat']),
+            //       //           longitude: double.parse(e['lon'])))
+            //       //       .toList()
+            //       //       .cast<OSMdata>();
+            //     });
+            //   },
+            // ),
             _buildListView(),
           ],
         ),
@@ -288,7 +332,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
         child: ElevatedButton(
           onPressed: () {},
           child: Text('Select this location'.hardcoded()),
-          style: ButtonStyle().copyWith(
+          style: const ButtonStyle().copyWith(
             // foregroundColor: isDarkTheme
             //     ? MaterialStatePropertyAll<Color>(ThemeColor.black)
             //     : null,

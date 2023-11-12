@@ -74,8 +74,8 @@ GoRouter goRouter() {
         // builder: (context, state) => RepairProgressScreen(
         //   repairSteps: repairSteps,
         // ),
-        // builder: (context, state) => VehicleCategoryScreen(),
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) => RequestMechanicScreen(),
+        // builder: (context, state) => HomeScreen(),
 
         // builder: (context, state) => VehicleCategoryScreen(),
       ),
@@ -92,7 +92,7 @@ GoRouter goRouter() {
       GoRoute(
         path: '/home',
         name: appRoute.home.name,
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) => HomeScreen(),
       ),
       GoRoute(
         path: '/track_mechanic',

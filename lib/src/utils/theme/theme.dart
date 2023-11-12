@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:bato_mechanic/src/utils/theme/widget_themes/searchbar_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,6 +48,7 @@ class BaatoAppTheme {
     iconButtonTheme: BaatoIconButtonTheme.lightIconButtonTheme,
     cardTheme: BaatoCardTheme.lightCardTheme,
     sliderTheme: BaatoSliderTheme.lightSliderTheme,
+    searchBarTheme: BaatoSearchBarTheme.lightSearchBarTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -72,5 +74,6 @@ class BaatoAppTheme {
     iconButtonTheme: BaatoIconButtonTheme.darkIconButtonTheme,
     cardTheme: BaatoCardTheme.darkCardTheme,
     sliderTheme: BaatoSliderTheme.darkSliderTheme,
+    searchBarTheme: BaatoSearchBarTheme.lightSearchBarTheme,
   );
 }

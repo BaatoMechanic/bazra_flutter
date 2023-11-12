@@ -75,10 +75,11 @@ class RequestMechanicScreenController
         ref.read(vehicleCategoryServiceProvider).selectedVehicleCategory;
     final selectedPart =
         ref.read(vehiclePartsServiceProvider).selectedVehiclePart;
-    final result = await AsyncValue.guard(() => ref
-        .watch(mechanicServiceProvider)
-        .fetchRecommendedMechanics(
-            selectedCategory!.id.toString(), selectedPart!.id.toString()));
+    final result = await AsyncValue.guard(
+        () => ref.watch(mechanicServiceProvider).fetchRecommendedMechanics(
+            // selectedCategory!.id.toString(), selectedPart!.id.toString()));
+            "1",
+            "1"));
     // .fetchRecommendedMechanics("1", "1"));
     state = state.copyWith(value: result);
     if (result.hasValue) {

@@ -18,7 +18,8 @@ class MyApp extends ConsumerWidget {
       routerConfig: goRouter(),
       theme: BaatoAppTheme.lightTheme,
       darkTheme: BaatoAppTheme.darkTheme,
-      themeMode: ref.watch(themeModeProvider),
+      themeMode: ThemeMode.system,
+      // themeMode: ref.watch(themeModeProvider),
       title: 'Bato Mechanic',
     );
   }

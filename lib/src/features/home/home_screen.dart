@@ -12,7 +12,10 @@ import 'service_buttons_grid.dart';
 import 'service_type_button.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  TextEditingController _searchTextController = TextEditingController();
+  FocusNode _searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +48,13 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: AppHeight.h40,
-                    child: TextFormField(),
+                  SearchBar(
+                    controller: _searchTextController,
+                    focusNode: _searchFocusNode,
+                    leading: Icon(Icons.search),
+                    onChanged: (value) {
+                      _searchTextController.text = value;
+                    },
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: AppPadding.p24),

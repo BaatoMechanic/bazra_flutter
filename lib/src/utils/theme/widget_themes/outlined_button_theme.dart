@@ -1,3 +1,5 @@
+import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/style_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/managers/color_manager.dart';
@@ -11,10 +13,12 @@ class BaatoOutlinedButtonTheme {
   static final lightOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       elevation: 0,
-      foregroundColor: ThemeColor.dark,
-      side: const BorderSide(color: ThemeColor.borderPrimary),
-      textStyle: const TextStyle(
-          fontSize: 16, color: ThemeColor.black, fontWeight: FontWeight.w600),
+      foregroundColor: ThemeColor.primary,
+      side: const BorderSide(color: ThemeColor.primary),
+      textStyle: getMediumStyle().copyWith(
+        color: ThemeColor.primary,
+        fontSize: FontSize.s14,
+      ),
       padding: const EdgeInsets.symmetric(
           vertical: DefaultManager.buttonHeight, horizontal: 20),
       shape: RoundedRectangleBorder(

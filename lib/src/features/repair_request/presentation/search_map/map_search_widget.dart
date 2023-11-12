@@ -1,5 +1,9 @@
 import 'dart:async';
 import 'package:bato_mechanic/src/features/repair_request/presentation/search_map/search_map_widget_controller.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -274,6 +278,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   }
 
   Widget _buildSelectButton() {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
@@ -282,7 +287,13 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
         ),
         child: ElevatedButton(
           onPressed: () {},
-          child: const Text('Select this location'),
+          child: Text('Select this location'.hardcoded()),
+          style: ButtonStyle().copyWith(
+            // foregroundColor: isDarkTheme
+            //     ? MaterialStatePropertyAll<Color>(ThemeColor.black)
+            //     : null,
+            foregroundColor: MaterialStatePropertyAll<Color>(ThemeColor.black),
+          ),
         ),
       ),
     );

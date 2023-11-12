@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 
@@ -15,6 +16,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../../common/widgets/form_fields/description_field.dart';
 import '../../../../utils/helpers/toast_helper.dart';
 import '../search_map/map_search_widget.dart';
 
@@ -99,14 +101,10 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                 ),
               ),
               const SizedBox(height: 8),
-              TextFormField(
-                controller: _issueTextController,
+              DescriptionField(
+                textController: _issueTextController,
                 focusNode: _issueTextFocusNode,
-                decoration: const InputDecoration(
-                  hintText: 'Describe the issue',
-                  border: OutlineInputBorder(),
-                ),
-                maxLines: 5,
+                hintText: 'Describe the issue',
               ),
               const SizedBox(height: 16),
               const Text(
@@ -123,7 +121,10 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                     onPressed: ref
                         .read(requestMechanicScreenControllerProvider.notifier)
                         .pickImages,
-                    child: const Text('Add Photos'),
+                    child: Text(
+                      'Add Photos',
+                      style: TextStyle().copyWith(color: ThemeColor.dark),
+                    ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -201,8 +202,14 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
               ElevatedButton(
                 onPressed: _pickVideo,
                 child: _videoController != null
-                    ? const Text('Change Video')
-                    : const Text('Add Video'),
+                    ? Text(
+                        'Change Video',
+                        style: TextStyle().copyWith(color: ThemeColor.dark),
+                      )
+                    : Text(
+                        'Add Video',
+                        style: TextStyle().copyWith(color: ThemeColor.dark),
+                      ),
               ),
               if (_videoController != null)
                 ClipRRect(
@@ -376,7 +383,10 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                     }
                   });
                 },
-                child: const Text('Request for a mechanic'),
+                child: Text(
+                  'Request for a mechanic',
+                  style: TextStyle().copyWith(color: ThemeColor.dark),
+                ),
               ),
             ],
           ),

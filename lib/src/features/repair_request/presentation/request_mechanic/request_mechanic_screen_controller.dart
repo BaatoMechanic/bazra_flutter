@@ -81,7 +81,11 @@ class RequestMechanicScreenController
             selectedCategory!.id.toString(), selectedPart!.id.toString()));
     // .fetchRecommendedMechanics("1", "1"));
     state = state.copyWith(value: result);
-    return result.value ?? [];
+    if (result.hasValue) {
+      return result.value!;
+    } else {
+      return [];
+    }
   }
 
   Future<void> pickImages() async {

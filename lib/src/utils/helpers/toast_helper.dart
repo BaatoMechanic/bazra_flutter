@@ -1,3 +1,5 @@
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
@@ -183,6 +185,48 @@ class ToastHelper {
                   ),
                 ],
               ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static showCenterAlertWithOptions(BuildContext ctx, List<Widget> options) {
+    showGeneralDialog(
+      barrierDismissible: false,
+      barrierLabel: 'Center alert dismissed',
+      context: ctx,
+      pageBuilder: (ctx, a1, a2) {
+        return Container();
+      },
+      transitionBuilder: (ctx, a1, a2, child) {
+        var curve = Curves.easeInOut.transform(a1.value);
+        return Transform.scale(
+          scale: curve,
+          child: AlertDialog(
+            backgroundColor: ThemeColor.primary,
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text(
+                  'Close'.hardcoded(),
+                  style: Theme.of(ctx).textTheme.bodyLarge,
+                ),
+              ),
+            ],
+            actionsPadding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+                vertical: AppPadding.p4, horizontal: AppPadding.p4),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [...options],
             ),
           ),
         );

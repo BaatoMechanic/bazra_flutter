@@ -1,6 +1,11 @@
+import 'package:bato_mechanic/src/common/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../common/widgets/butons/submit_button.dart';
 import '../../utils/constants/managers/color_manager.dart';
@@ -14,39 +19,81 @@ class UserProfileMenu extends StatelessWidget {
     ProfileTile(
       leadingIcon: Icons.settings,
       title: 'Manage data',
-      onPressed: () {},
+      onPressed: (BuildContext context, WidgetRef ref) {},
     ),
     ProfileTile(
       leadingIcon: Icons.home,
       title: 'Manage Profile',
-      onPressed: () {},
+      onPressed: (BuildContext context, WidgetRef ref) {},
     ),
     ProfileTile(
       leadingIcon: Icons.person,
       title: 'Profile',
-      onPressed: () {},
+      onPressed: (BuildContext context, WidgetRef ref) {},
     ),
     ProfileTile(
       leadingIcon: Icons.settings,
       title: 'Settings',
-      onPressed: () {},
+      onPressed: (BuildContext context, WidgetRef ref) {},
     ),
   ];
   List<ProfileTile> settingsTiles = [
     ProfileTile(
       leadingIcon: Icons.notification_important,
       title: 'Notifications',
-      onPressed: () {},
+      onPressed: (BuildContext context, WidgetRef ref) {},
     ),
     ProfileTile(
       leadingIcon: Icons.dark_mode,
       title: 'Dark mode',
-      onPressed: () {},
+      onPressed: (BuildContext ctx, WidgetRef ref) {
+        final darkTile = ListTile(
+            title: Text(
+              'Dark mode',
+              style: const TextStyle().copyWith(
+                fontSize: FontSize.s16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onTap: () {
+              ref
+                  .read(userSettingsRepositoryProvider)
+                  .setThemeMode(ThemeMode.dark);
+              return;
+            });
+
+        final lightTile = ListTile(
+            title: Text(
+              'Light mode',
+              style: const TextStyle().copyWith(
+                fontSize: FontSize.s16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onTap: () {
+              ref
+                  .read(userSettingsRepositoryProvider)
+                  .setThemeMode(ThemeMode.light);
+              return;
+            });
+
+        ToastHelper.showCenterAlertWithOptions(ctx, [darkTile, lightTile]);
+        // final themeMode =
+        //     ref.read(userSettingsRepositoryProvider).getThemeMode();
+        // if (themeMode == ThemeMode.dark) {
+        //   ref
+        //       .read(userSettingsRepositoryProvider)
+        //       .setThemeMode(ThemeMode.light);
+        //   return;
+        // }
+        // ref.read(userSettingsRepositoryProvider).setThemeMode(ThemeMode.dark);
+        // return;
+      },
     ),
     ProfileTile(
       leadingIcon: Icons.miscellaneous_services,
       title: 'Misc',
-      onPressed: () {},
+      onPressed: (BuildContext context, WidgetRef ref) {},
     ),
   ];
 
@@ -82,7 +129,7 @@ class UserProfileMenu extends StatelessWidget {
                             'Krishna Rimal',
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: AppHeight.h12,
                           ),
                           Text(
@@ -137,8 +184,8 @@ class ProfileTilesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return Container(
-      padding: EdgeInsets.all(AppPadding.p8),
-      decoration: BoxDecoration().copyWith(
+      padding: const EdgeInsets.all(AppPadding.p8),
+      decoration: const BoxDecoration().copyWith(
         color:
             isDarkTheme ? ThemeColor.darkContainer : ColorManager.primaryTint90,
         borderRadius: BorderRadius.circular(AppRadius.r12),
@@ -157,7 +204,7 @@ class ProfileTilesSection extends StatelessWidget {
   }
 }
 
-class ProfileTile extends StatelessWidget {
+class ProfileTile extends ConsumerWidget {
   ProfileTile({
     Key? key,
     required this.title,
@@ -169,10 +216,10 @@ class ProfileTile extends StatelessWidget {
   String title;
   IconData leadingIcon;
   IconData trailingIcon;
-  Function() onPressed;
+  Function(BuildContext ctx, WidgetRef ref) onPressed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return ListTile(
       contentPadding: EdgeInsets.zero,
@@ -190,7 +237,7 @@ class ProfileTile extends StatelessWidget {
       ),
       trailing: IconButton(
         iconSize: AppSize.s20,
-        onPressed: () {},
+        onPressed: () => onPressed(context, ref),
         icon: Icon(
           Icons.arrow_forward_ios,
           size: AppSize.s14,

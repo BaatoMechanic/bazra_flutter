@@ -52,7 +52,7 @@ enum appRoute {
 final repairSteps = [
   RepairStep(
       name: 'Inception',
-      detail: AudioData(File('audio/sample_audio.mp3')),
+      detail: AudioData(File('audios/sample_audio.mp3')),
       status: 'Completed',
       report: RepairStepReport(reportFields: [])),
   RepairStep(
@@ -74,8 +74,8 @@ GoRouter goRouter() {
         // builder: (context, state) => RepairProgressScreen(
         //   repairSteps: repairSteps,
         // ),
-        builder: (context, state) => RequestMechanicScreen(),
-        // builder: (context, state) => const TrackMechanicScreen(),
+        // builder: (context, state) => VehicleCategoryScreen(),
+        builder: (context, state) => const HomeScreen(),
 
         // builder: (context, state) => VehicleCategoryScreen(),
       ),

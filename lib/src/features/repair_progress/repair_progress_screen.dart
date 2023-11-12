@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:bato_mechanic/src/common/widgets/audio_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/style_manager.dart';
 import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
@@ -48,14 +50,16 @@ class RepairProgressScreen extends ConsumerWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return Container(
-                        padding: EdgeInsets.all(16.0.doubleHardcoded()),
+                        padding: EdgeInsets.all(AppPadding.p16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               step.name,
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                              style: getBoldStyle().copyWith(
+                                fontSize: FontSize.s18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const SizedBox(height: 16),
                             if (step.detail.runtimeType == StringData)
@@ -75,8 +79,8 @@ class RepairProgressScreen extends ConsumerWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text('Report Fields:',
-                                      style: TextStyle(
+                                  Text('Report Fields:',
+                                      style: TextStyle().copyWith(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold)),
                                   for (var field in step.report!.reportFields)

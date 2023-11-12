@@ -1,18 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/card_theme.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/icon_button_theme.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/icon_theme.dart';
+import 'package:bato_mechanic/src/utils/theme/widget_themes/list_tile_theme.dart';
+import 'package:bato_mechanic/src/utils/theme/widget_themes/slider_theme.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/text_selection_theme.dart';
-import 'package:flutter/material.dart';
 
 import 'widget_themes/appbar_theme.dart';
 import 'widget_themes/bottom_sheet_theme.dart';
 import 'widget_themes/checkbox_theme.dart';
 import 'widget_themes/chip_theme.dart';
 import 'widget_themes/elevated_button_theme.dart';
-import 'widget_themes/outlined_button_theme.dart';
 import 'widget_themes/input_decoration_theme.dart';
+import 'widget_themes/outlined_button_theme.dart';
 import 'widget_themes/text_theme.dart';
 
 class BaatoAppTheme {
@@ -30,6 +36,7 @@ class BaatoAppTheme {
     textSelectionTheme: BaatoTextSelectionTheme.lightTextSelectionTheme,
     inputDecorationTheme: BaatoInputDecorationTheme.lightInputDecorationTheme,
     chipTheme: BaatoChipTheme.lightChipTheme,
+    listTileTheme: BaatoListTileTheme.lightListTileThemeData,
     scaffoldBackgroundColor: ThemeColor.white,
     appBarTheme: BaatoAppBarTheme.lightAppBarTheme,
     checkboxTheme: BaatoCheckboxTheme.lightCheckboxTheme,
@@ -39,6 +46,7 @@ class BaatoAppTheme {
     iconTheme: BaatoIconTheme.lightIconTheme,
     iconButtonTheme: BaatoIconButtonTheme.lightIconButtonTheme,
     cardTheme: BaatoCardTheme.lightCardTheme,
+    sliderTheme: BaatoSliderTheme.lightSliderTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -53,6 +61,7 @@ class BaatoAppTheme {
     textSelectionTheme: BaatoTextSelectionTheme.darkTextSelectionTheme,
     inputDecorationTheme: BaatoInputDecorationTheme.darkInputDecorationTheme,
     chipTheme: BaatoChipTheme.darkChipTheme,
+    listTileTheme: BaatoListTileTheme.darkListTileThemeData,
     scaffoldBackgroundColor: ThemeColor.black,
     appBarTheme: BaatoAppBarTheme.darkAppBarTheme,
     checkboxTheme: BaatoCheckboxTheme.darkCheckboxTheme,
@@ -62,5 +71,6 @@ class BaatoAppTheme {
     iconTheme: BaatoIconTheme.darkIconTheme,
     iconButtonTheme: BaatoIconButtonTheme.darkIconButtonTheme,
     cardTheme: BaatoCardTheme.darkCardTheme,
+    sliderTheme: BaatoSliderTheme.darkSliderTheme,
   );
 }

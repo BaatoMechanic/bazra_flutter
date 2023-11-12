@@ -1,10 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen.dart';
-import 'package:bato_mechanic/src/features/authentication/presentation/authentication_screen.dart';
 import 'package:bato_mechanic/src/features/feedback_and_contact/presentation/feedback_and_contact_screen.dart';
 import 'package:bato_mechanic/src/features/history/presentation/service_history_screen.dart';
 import 'package:bato_mechanic/src/features/home/home_screen.dart';
@@ -68,103 +68,92 @@ GoRouter goRouter() {
       GoRoute(
         path: '/',
         name: appRoute.splash.name,
-        // builder: (context, state) => const SplashScreen(),
-        // builder: (context, state) => RepairProgressScreen(
-        //   repairSteps: repairSteps,
-        // ),
-
-        builder: (context, state) => HomeScreen(),
-      ),
-      GoRoute(
-        path: '/login',
-        name: appRoute.login.name,
-        builder: (context, state) => LoginScreen(),
-      ),
-      GoRoute(
-        path: '/signup',
-        name: appRoute.signup.name,
-        builder: (context, state) => SignUpScreen(),
-      ),
-      GoRoute(
-        path: '/home',
-        name: appRoute.home.name,
-        builder: (context, state) => HomeScreen(),
-      ),
-      GoRoute(
-        path: '/track_mechanic',
-        name: appRoute.trackMechanic.name,
-        builder: (context, state) => const TrackMechanicScreen(),
-      ),
-      GoRoute(
-        path: '/review_mechanic',
-        name: appRoute.ReviewMechanic.name,
-        builder: (context, state) => ReviewMechanicScreen(),
-      ),
-      GoRoute(
-        path: '/recent_repairs',
-        name: appRoute.recentRepairs.name,
-        builder: (context, state) => const RecentRepairsList(),
-      ),
-      GoRoute(
-        path: '/repair_progress',
-        name: appRoute.repairProgress.name,
-        builder: (context, state) =>
-            RepairProgressScreen(repairSteps: repairSteps),
-      ),
-      GoRoute(
-        path: '/support-chat',
-        name: appRoute.supportChat.name,
-        builder: (context, state) => const SupportChatScreen(),
-      ),
-      GoRoute(
-        path: '/auth',
-        name: appRoute.auth.name,
-        builder: (context, state) => const AuthenticationScreen(),
-      ),
-      GoRoute(
-        path: '/mechanic-profile',
-        name: appRoute.mechanicProfile.name,
-        builder: (context, state) => MechanicProfileScreen(),
-      ),
-      GoRoute(
-        path: '/payment',
-        name: appRoute.payment.name,
-        builder: (context, state) => const PaymentIntegrationScreen(),
-      ),
-      GoRoute(
-        path: '/review-mechanic',
-        name: appRoute.reviewMechanic.name,
-        builder: (context, state) => ReviewMechanicScreen(),
-      ),
-      GoRoute(
-        path: '/history',
-        name: appRoute.history.name,
-        builder: (context, state) => ServiceHistoryScreen(),
-      ),
-      GoRoute(
-        path: '/feedback',
-        name: appRoute.feedback.name,
-        builder: (context, state) => const FeedbackContactScreen(),
-      ),
-      GoRoute(
-        path: '/categories',
-        name: appRoute.categories.name,
-        builder: (context, state) => const VehicleCategoryScreen(),
+        builder: (context, state) => SplashScreen(),
         routes: [
           GoRoute(
-            path: 'vehicles',
-            name: appRoute.vehicles.name,
-            builder: (context, state) => const VehiclesScreen(),
+            path: 'login',
+            name: appRoute.login.name,
+            builder: (context, state) => LoginScreen(),
+          ),
+          GoRoute(
+            path: 'signup',
+            name: appRoute.signup.name,
+            builder: (context, state) => SignUpScreen(),
+          ),
+          GoRoute(
+            path: 'track_mechanic',
+            name: appRoute.trackMechanic.name,
+            builder: (context, state) => const TrackMechanicScreen(),
             routes: [
               GoRoute(
-                path: 'parts',
-                name: appRoute.parts.name,
-                builder: (context, state) => const VehiclePartsScreen(),
+                path: 'payment',
+                name: appRoute.payment.name,
+                builder: (context, state) => const PaymentIntegrationScreen(),
+              ),
+            ],
+          ),
+          GoRoute(
+            path: 'home',
+            name: appRoute.home.name,
+            builder: (context, state) => HomeScreen(),
+            routes: [
+              GoRoute(
+                path: 'support-chat',
+                name: appRoute.supportChat.name,
+                builder: (context, state) => const SupportChatScreen(),
+              ),
+              GoRoute(
+                path: 'recent_repairs',
+                name: appRoute.recentRepairs.name,
+                builder: (context, state) => const RecentRepairsList(),
+              ),
+              GoRoute(
+                path: 'repair_progress',
+                name: appRoute.repairProgress.name,
+                builder: (context, state) =>
+                    RepairProgressScreen(repairSteps: repairSteps),
                 routes: [
                   GoRoute(
-                    path: 'request',
-                    name: appRoute.requestMechanic.name,
-                    builder: (context, state) => const RequestMechanicScreen(),
+                    path: 'review_mechanic',
+                    name: appRoute.ReviewMechanic.name,
+                    builder: (context, state) => ReviewMechanicScreen(),
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'mechanic-profile',
+                name: appRoute.mechanicProfile.name,
+                builder: (context, state) => MechanicProfileScreen(),
+              ),
+              GoRoute(
+                path: 'feedback',
+                name: appRoute.feedback.name,
+                builder: (context, state) => const FeedbackContactScreen(),
+              ),
+              GoRoute(
+                path: 'categories',
+                name: appRoute.categories.name,
+                builder: (context, state) => const VehicleCategoryScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'vehicles',
+                    name: appRoute.vehicles.name,
+                    builder: (context, state) => const VehiclesScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'parts',
+                        name: appRoute.parts.name,
+                        builder: (context, state) => const VehiclePartsScreen(),
+                        routes: [
+                          GoRoute(
+                            path: 'request',
+                            name: appRoute.requestMechanic.name,
+                            builder: (context, state) =>
+                                const RequestMechanicScreen(),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),

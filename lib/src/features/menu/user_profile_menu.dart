@@ -90,7 +90,24 @@ class UserProfileMenu extends StatelessWidget {
                   .setThemeMode(ThemeMode.light);
               return;
             });
-        ToastHelper.showCenterAlertWithOptions(ctx, [darkTile, lightTile]);
+
+        final systemTile = ListTile(
+            title: Text(
+              'System',
+              style: const TextStyle().copyWith(
+                fontSize: FontSize.s16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onTap: () {
+              ref
+                  .read(userSettingsRepositoryProvider)
+                  .setThemeMode(ThemeMode.system);
+              return;
+            });
+
+        ToastHelper.showCenterAlertWithOptions(
+            ctx, [darkTile, lightTile, systemTile]);
       },
     ),
     ProfileTile(

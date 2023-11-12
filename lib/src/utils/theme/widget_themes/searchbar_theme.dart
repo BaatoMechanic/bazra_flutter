@@ -13,7 +13,7 @@ class BaatoSearchBarTheme {
       ColorManager.primaryTint60,
     ),
     textStyle: MaterialStatePropertyAll<TextStyle>(
-      TextStyle().copyWith(
+      const TextStyle().copyWith(
         color: ThemeColor.dark,
       ),
     ),
@@ -26,7 +26,7 @@ class BaatoSearchBarTheme {
         Radius.circular(AppRadius.r32),
       ),
     )),
-    constraints: BoxConstraints(maxHeight: AppHeight.h50),
+    constraints: const BoxConstraints(maxHeight: AppHeight.h50),
   );
 
   static final darkSearchBarTheme = SearchBarThemeData(
@@ -34,7 +34,7 @@ class BaatoSearchBarTheme {
       ColorManager.primaryTint60,
     ),
     textStyle: MaterialStatePropertyAll<TextStyle>(
-      TextStyle().copyWith(
+      const TextStyle().copyWith(
         color: ThemeColor.dark,
       ),
     ),
@@ -47,6 +47,6 @@ class BaatoSearchBarTheme {
         Radius.circular(AppRadius.r32),
       ),
     )),
-    constraints: BoxConstraints(maxHeight: AppHeight.h50),
+    constraints: const BoxConstraints(maxHeight: AppHeight.h50),
   );
 }

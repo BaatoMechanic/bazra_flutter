@@ -1,8 +1,10 @@
 import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
+import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RecentRepairsList extends StatelessWidget {
   const RecentRepairsList({super.key});
@@ -36,8 +38,9 @@ class RecentRepairsList extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   TextButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.add),
+                    onPressed: () => context.goNamed(appRoute.categories.name),
+                    icon:
+                        Icon(Icons.add, color: Theme.of(context).primaryColor),
                     label: Text(
                       "New Order".hardcoded(),
                       style: Theme.of(context).textTheme.headlineSmall,

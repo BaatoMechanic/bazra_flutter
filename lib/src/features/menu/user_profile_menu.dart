@@ -35,6 +35,18 @@ class UserProfileMenu extends StatelessWidget {
     ),
     ProfileTile(
       leadingIcon: Icons.settings,
+      title: 'Actice Repair',
+      onPressed: (BuildContext context, WidgetRef ref) =>
+          context.goNamed(appRoute.repairProgress.name),
+    ),
+    ProfileTile(
+      leadingIcon: Icons.settings,
+      title: 'Recent Repairs',
+      onPressed: (BuildContext context, WidgetRef ref) =>
+          context.goNamed(appRoute.recentRepairs.name),
+    ),
+    ProfileTile(
+      leadingIcon: Icons.settings,
       title: 'Settings',
       onPressed: (BuildContext context, WidgetRef ref) {},
     ),
@@ -78,18 +90,7 @@ class UserProfileMenu extends StatelessWidget {
                   .setThemeMode(ThemeMode.light);
               return;
             });
-
         ToastHelper.showCenterAlertWithOptions(ctx, [darkTile, lightTile]);
-        // final themeMode =
-        //     ref.read(userSettingsRepositoryProvider).getThemeMode();
-        // if (themeMode == ThemeMode.dark) {
-        //   ref
-        //       .read(userSettingsRepositoryProvider)
-        //       .setThemeMode(ThemeMode.light);
-        //   return;
-        // }
-        // ref.read(userSettingsRepositoryProvider).setThemeMode(ThemeMode.dark);
-        // return;
       },
     ),
     ProfileTile(
@@ -104,6 +105,12 @@ class UserProfileMenu extends StatelessWidget {
       title: 'Feedback',
       onPressed: (BuildContext context, WidgetRef ref) =>
           context.goNamed(appRoute.feedback.name),
+    ),
+    ProfileTile(
+      leadingIcon: Icons.chat,
+      title: 'Chat Support',
+      onPressed: (BuildContext context, WidgetRef ref) =>
+          context.goNamed(appRoute.supportChat.name),
     ),
   ];
 

@@ -53,7 +53,8 @@ class HomeScreen extends StatelessWidget {
                     child: SearchBar(
                       controller: _searchTextController,
                       focusNode: _searchFocusNode,
-                      leading: Icon(Icons.search),
+                      hintText: 'Search'.hardcoded(),
+                      leading: Icon(Icons.search, color: ThemeColor.dark),
                       onChanged: (value) {
                         _searchTextController.text = value;
                       },

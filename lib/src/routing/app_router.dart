@@ -17,7 +17,6 @@ import 'package:bato_mechanic/src/features/repair_request/presentation/track_mec
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_parts/vehicle_parts_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen.dart';
 import 'package:bato_mechanic/src/features/review/review_mechanic_screen.dart';
-import 'package:bato_mechanic/src/features/reviews/presentation/rating_and_reviews_screen.dart';
 import 'package:bato_mechanic/src/features/splash/presentation/splash_screen.dart';
 import 'package:bato_mechanic/src/features/support_chat/presentation/support_chat_screen.dart';
 
@@ -37,7 +36,7 @@ enum appRoute {
   history,
   payment,
   mechanicProfile,
-  reviewsAndRating,
+  reviewMechanic,
   splash,
   trackMechanic,
   supportChat,
@@ -67,17 +66,14 @@ GoRouter goRouter() {
     initialLocation: '/',
     routes: [
       GoRoute(
-        // path: '/splash',
         path: '/',
         name: appRoute.splash.name,
         // builder: (context, state) => const SplashScreen(),
         // builder: (context, state) => RepairProgressScreen(
         //   repairSteps: repairSteps,
         // ),
-        // builder: (context, state) => FeedbackContactScreen(),
-        builder: (context, state) => HomeScreen(),
 
-        // builder: (context, state) => VehicleCategoryScreen(),
+        builder: (context, state) => HomeScreen(),
       ),
       GoRoute(
         path: '/login',
@@ -136,9 +132,9 @@ GoRouter goRouter() {
         builder: (context, state) => const PaymentIntegrationScreen(),
       ),
       GoRoute(
-        path: '/reviews-rating',
-        name: appRoute.reviewsAndRating.name,
-        builder: (context, state) => RatingsAndReviewsScreen(),
+        path: '/review-mechanic',
+        name: appRoute.reviewMechanic.name,
+        builder: (context, state) => ReviewMechanicScreen(),
       ),
       GoRoute(
         path: '/history',
@@ -154,8 +150,6 @@ GoRouter goRouter() {
         path: '/categories',
         name: appRoute.categories.name,
         builder: (context, state) => const VehicleCategoryScreen(),
-        // builder: (context, state) => SplashScreen(),
-
         routes: [
           GoRoute(
             path: 'vehicles',

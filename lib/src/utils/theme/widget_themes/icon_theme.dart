@@ -5,10 +5,10 @@ class BaatoIconTheme {
   BaatoIconTheme._();
 
   static final lightIconTheme = IconThemeData(
-    color: ThemeColor.black,
+    color: ThemeColor.dark,
   );
 
   static final darkIconTheme = IconThemeData(
-    color: ThemeColor.white,
+    color: ThemeColor.light,
   );
 }

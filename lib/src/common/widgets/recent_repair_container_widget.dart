@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,10 @@ class RecentRepairContainerWidget extends StatelessWidget {
               children: [
                 Text(
                   "Replace worn out tires".hardcoded(),
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(color: ThemeColor.dark),
                 ),
                 const SizedBox(
                   height: AppHeight.h14,
@@ -44,10 +48,16 @@ class RecentRepairContainerWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Icon(Icons.location_on_outlined),
+                    const Icon(
+                      Icons.location_on_outlined,
+                      color: ThemeColor.dark,
+                    ),
                     Text(
                       'Sauraha, Chitwan'.hardcoded(),
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: ThemeColor.dark),
                     )
                   ],
                 ),
@@ -57,10 +67,16 @@ class RecentRepairContainerWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Icon(Icons.calendar_month_outlined),
+                    const Icon(
+                      Icons.calendar_month_outlined,
+                      color: ThemeColor.dark,
+                    ),
                     Text(
                       '18th November, 2022'.hardcoded(),
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: ThemeColor.dark),
                     )
                   ],
                 ),
@@ -70,10 +86,16 @@ class RecentRepairContainerWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Icon(Icons.car_repair),
+                    const Icon(
+                      Icons.car_repair,
+                      color: ThemeColor.dark,
+                    ),
                     Text(
                       'Audi S3 model'.hardcoded(),
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: ThemeColor.dark),
                     )
                   ],
                 ),

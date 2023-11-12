@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../common/widgets/butons/submit_button.dart';
 import '../../utils/constants/managers/color_manager.dart';
 import '../../utils/constants/managers/values_manager.dart';
+import '../../utils/helpers/helper_functions.dart';
 
 class UserProfileMenu extends StatelessWidget {
   UserProfileMenu({super.key});
@@ -56,7 +57,7 @@ class UserProfileMenu extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: AppPadding.p20, vertical: AppPadding.p45),
+                horizontal: AppPadding.p4, vertical: AppPadding.p45),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -134,15 +135,24 @@ class ProfileTilesSection extends StatelessWidget {
   List<ProfileTile> tiles;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          sectionTitle,
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
-        ...tiles
-      ],
+    final bool isDarkTheme = HelperFunctions.isDarkMode(context);
+    return Container(
+      padding: EdgeInsets.all(AppPadding.p8),
+      decoration: BoxDecoration().copyWith(
+        color:
+            isDarkTheme ? ThemeColor.darkContainer : ColorManager.primaryTint90,
+        borderRadius: BorderRadius.circular(AppRadius.r12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            sectionTitle,
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
+          ...tiles
+        ],
+      ),
     );
   }
 }
@@ -163,10 +173,11 @@ class ProfileTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Container(
-        padding: const EdgeInsets.all(AppPadding.p8),
+        padding: const EdgeInsets.all(AppPadding.p2),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: ColorManager.primaryTint50,
@@ -180,15 +191,10 @@ class ProfileTile extends StatelessWidget {
       trailing: IconButton(
         iconSize: AppSize.s20,
         onPressed: () {},
-        icon: Container(
-          padding: EdgeInsets.all(AppPadding.p2),
-          decoration: BoxDecoration(
-            color: ColorManager.primaryTint80,
-            borderRadius: BorderRadius.circular(5.0.doubleHardcoded()),
-          ),
-          child: const Icon(
-            Icons.arrow_forward_ios,
-          ),
+        icon: Icon(
+          Icons.arrow_forward_ios,
+          size: AppSize.s14,
+          color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
         ),
       ),
     );

@@ -78,7 +78,7 @@ class _SubmitButtonState extends State<SubmitButton> {
               widget.label,
               style: getBoldStyle().copyWith(
                 fontSize: FontSize.s16,
-                color: isDarkTheme ? ThemeColor.white : ThemeColor.black,
+                color: ThemeColor.black,
               ),
             ),
         ],

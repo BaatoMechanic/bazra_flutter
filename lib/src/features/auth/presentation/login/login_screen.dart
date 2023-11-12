@@ -41,8 +41,7 @@ class LoginScreen extends ConsumerWidget {
           .signInWithIdAndPassword(
               _idController.text, _passwordController.text);
       if (response) {
-        context.goNamed(appRoute.home.name);
-        // context.goNamed(appRoute.trackMechanic.name);
+        context.replaceNamed(appRoute.home.name);
       }
     }
   }

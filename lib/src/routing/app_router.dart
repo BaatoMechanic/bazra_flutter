@@ -68,7 +68,8 @@ GoRouter goRouter() {
       GoRoute(
         path: '/',
         name: appRoute.splash.name,
-        builder: (context, state) => SplashScreen(),
+        // builder: (context, state) => SplashScreen(),
+        builder: (context, state) => HomeScreen(),
         routes: [
           GoRoute(
             path: 'login',

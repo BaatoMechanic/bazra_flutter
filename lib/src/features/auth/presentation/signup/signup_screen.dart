@@ -47,7 +47,7 @@ class SignUpScreen extends ConsumerWidget {
             context,
             'You have been registered successfully. Please login to continue'
                 .hardcoded());
-        context.goNamed(appRoute.login.name);
+        context.replaceNamed(appRoute.login.name);
       }
     }
   }

@@ -23,37 +23,39 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final isLoggedIn = ref.watch(userServiceProvider).currentUser != null;
-      if (!isLoggedIn) {
-        if (mounted) context.goNamed(appRoute.login.name);
-        return;
-      } else {
-        if (mounted) context.goNamed(appRoute.trackMechanic.name);
-        return;
-      }
-
-      ref
-          .read(splashScreenControllerProvider)
-          .hasRepairRequest("1")
-          .then((value) {
-        if (value) {
-          VehicleRepairRequest? repairRequest =
-              ref.read(repairRequestControllerProvider).repairRequest;
-
-          if (repairRequest != null) {
-            if (repairRequest.status ==
-                VehicleRepairRequestStatus.WAITING_FOR_MECHANIC) {
-              if (mounted) context.goNamed(appRoute.trackMechanic.name);
-              return;
-            }
-            if (mounted) context.goNamed(appRoute.repairProgress.name);
-            return;
-          }
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        final isLoggedIn = ref.watch(userServiceProvider).currentUser != null;
+        if (!isLoggedIn) {
+          if (mounted) context.replaceNamed(appRoute.login.name);
+          return;
+        } else {
+          if (mounted) context.replaceNamed(appRoute.trackMechanic.name);
+          return;
         }
-        if (mounted) context.goNamed(appRoute.categories.name);
-      });
-    });
+
+        ref.read(splashScreenControllerProvider).hasRepairRequest("1").then(
+          (value) {
+            if (value) {
+              VehicleRepairRequest? repairRequest =
+                  ref.read(repairRequestControllerProvider).repairRequest;
+
+              if (repairRequest != null) {
+                if (repairRequest.status ==
+                    VehicleRepairRequestStatus.WAITING_FOR_MECHANIC) {
+                  if (mounted)
+                    context.replaceNamed(appRoute.trackMechanic.name);
+                  return;
+                }
+                if (mounted) context.replaceNamed(appRoute.repairProgress.name);
+                return;
+              }
+            }
+            if (mounted) context.replaceNamed(appRoute.home.name);
+          },
+        );
+      },
+    );
   }
 
   @override

@@ -98,6 +98,7 @@ class EmailField extends StatelessWidget {
                   focusNode: focusNode,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) => AppValidator.validateEmail(value),
+                  style: TextStyle().copyWith(color: ThemeColor.dark),
                   // validator: (value) {
                   //   if (value == null || value.trim().isEmpty) {
                   //     return 'Please enter your email address';

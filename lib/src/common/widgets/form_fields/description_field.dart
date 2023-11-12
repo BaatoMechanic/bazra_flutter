@@ -22,7 +22,6 @@ class DescriptionField extends StatelessWidget {
       style: TextStyle().copyWith(color: ThemeColor.dark),
       decoration: InputDecoration().copyWith(
         hintText: hintText ?? '',
-        border: OutlineInputBorder(),
       ),
       maxLines: 5,
     );

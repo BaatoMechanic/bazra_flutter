@@ -92,10 +92,11 @@ class IdField extends StatelessWidget {
                   // },
                 )
               : TextFormField(
+                  style: TextStyle().copyWith(color: ThemeColor.dark),
                   controller: controller,
                   focusNode: focusNode,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => AppValidator.validateEmail(value),
+                  validator: (value) => AppValidator.validateId(value),
 
                   textInputAction: nextFocusNode != null
                       ? TextInputAction.done

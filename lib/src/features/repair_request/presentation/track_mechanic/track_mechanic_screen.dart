@@ -153,6 +153,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
         ref.watch(watchRepairRequestStateChangesProvider);
 
     final assignedMechanic = ref.watch(watchMechanicStateChangesProvider).value;
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     return AsyncValueWidget(
         value: repairRequestValue,
@@ -245,7 +246,11 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                         RichText(
                           text: TextSpan(
                             text: 'Estimated Arrival Time: ',
-                            style: const TextStyle(color: Colors.black),
+                            style: const TextStyle().copyWith(
+                              color: isDarkTheme
+                                  ? ThemeColor.white
+                                  : ThemeColor.black,
+                            ),
                             children: <TextSpan>[
                               TextSpan(
                                 text: BaatoDateFormatter.formatMinutesToGeneric(
@@ -255,7 +260,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                                                 .notifier)
                                         .getEstimateArrivalTime()),
                                 style: const TextStyle(
-                                  color: Colors.orange,
+                                  color: ThemeColor.primary,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
@@ -316,7 +321,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.orange,
+                              color: ThemeColor.primary,
                             ),
                           ),
                         ],

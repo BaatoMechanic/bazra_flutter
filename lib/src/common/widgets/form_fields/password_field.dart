@@ -112,6 +112,7 @@ class _PasswordFieldState extends State<PasswordField> {
                   controller: widget.controller,
                   obscureText: _obscurePassword,
                   focusNode: widget.focusNode,
+                  style: TextStyle().copyWith(color: ThemeColor.dark),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) => AppValidator.validatePassword(value),
                   textInputAction: widget.nextFocusNode == null

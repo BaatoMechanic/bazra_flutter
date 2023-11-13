@@ -15,6 +15,6 @@ class BaatoTextSelectionTheme {
       TextSelectionThemeData(
     cursorColor: ThemeColor.primary,
     selectionColor: ThemeColor.black,
-    selectionHandleColor: ThemeColor.accent,
+    selectionHandleColor: ThemeColor.primary,
   );
 }

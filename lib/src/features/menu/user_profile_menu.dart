@@ -275,9 +275,8 @@ class UserProfileMenu extends ConsumerWidget {
                   children: [
                     CircleAvatar(
                       radius: AppHeight.h30,
-                      child: Image.asset(
+                      backgroundImage: AssetImage(
                         'assets/images/no-profile.png'.hardcoded(),
-                        width: 50,
                       ),
                     ),
                     Padding(

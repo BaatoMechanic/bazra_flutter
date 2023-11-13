@@ -103,9 +103,8 @@ class CustomerProfileScreen extends StatelessWidget {
                               width: AppWidth.h2, color: ThemeColor.primary)),
                       child: CircleAvatar(
                         radius: AppHeight.h50,
-                        child: Image.asset(
+                        backgroundImage: AssetImage(
                           'assets/images/no-profile.png'.hardcoded(),
-                          width: AppHeight.h75,
                         ),
                       ),
                     ),
@@ -137,10 +136,8 @@ class CustomerProfileScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     TextButton(
-                      onPressed: () => context.pushNamed(
-                        appRoute.mechanicReviewsList.name,
-                        extra: {"mechanicId": "9"},
-                      ),
+                      onPressed: () =>
+                          context.pushNamed(appRoute.editProfile.name),
                       child: Row(
                         children: [
                           const Icon(

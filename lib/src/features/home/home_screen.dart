@@ -106,8 +106,8 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: AppPadding.p8),
                 child: CircleAvatar(
-                  child:
-                      Image.asset('assets/images/no-profile.png'.hardcoded()),
+                  backgroundImage:
+                      AssetImage('assets/images/no-profile.png'.hardcoded()),
                 ),
               )
             ],

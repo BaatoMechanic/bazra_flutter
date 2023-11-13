@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/features/review/mechanic_reviews_list_screen.dart';
 import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.dart';
@@ -46,6 +47,7 @@ enum appRoute {
   login,
   signup,
   ReviewMechanic,
+  mechanicReviewsList,
 }
 
 final repairSteps = [
@@ -68,8 +70,12 @@ GoRouter goRouter() {
       GoRoute(
         path: '/',
         name: appRoute.splash.name,
-        // builder: (context, state) => SplashScreen(),
-        builder: (context, state) => HomeScreen(),
+        builder: (context, state) => SplashScreen(),
+        // builder: (context, state) => MechanicProfileScreen(),
+        // builder: (context, state) => MechanicReviewsListScreen(mechanicId: '1'),
+        // builder: (context, state) => RepairProgressScreen(
+        //   repairSteps: repairSteps,
+        // ),
         routes: [
           GoRoute(
             path: 'login',
@@ -82,22 +88,23 @@ GoRouter goRouter() {
             builder: (context, state) => SignUpScreen(),
           ),
           GoRoute(
-            path: 'track_mechanic',
-            name: appRoute.trackMechanic.name,
-            builder: (context, state) => const TrackMechanicScreen(),
-            routes: [
-              GoRoute(
-                path: 'payment',
-                name: appRoute.payment.name,
-                builder: (context, state) => const PaymentIntegrationScreen(),
-              ),
-            ],
-          ),
-          GoRoute(
             path: 'home',
             name: appRoute.home.name,
             builder: (context, state) => HomeScreen(),
             routes: [
+              GoRoute(
+                path: 'track_mechanic',
+                name: appRoute.trackMechanic.name,
+                builder: (context, state) => const TrackMechanicScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'payment',
+                    name: appRoute.payment.name,
+                    builder: (context, state) =>
+                        const PaymentIntegrationScreen(),
+                  ),
+                ],
+              ),
               GoRoute(
                 path: 'support-chat',
                 name: appRoute.supportChat.name,
@@ -141,23 +148,37 @@ GoRouter goRouter() {
                     name: appRoute.vehicles.name,
                     builder: (context, state) => const VehiclesScreen(),
                     routes: [
+                      // GoRoute(
+                      //   path: 'parts',
+                      //   name: appRoute.parts.name,
+                      //   builder: (context, state) => const VehiclePartsScreen(),
+                      //   routes: [
+                      //     GoRoute(
+                      //       path: 'request',
+                      //       name: appRoute.requestMechanic.name,
+                      //       builder: (context, state) =>
+                      //           const RequestMechanicScreen(),
+                      //     ),
+                      //   ],
+                      // ),
                       GoRoute(
-                        path: 'parts',
-                        name: appRoute.parts.name,
-                        builder: (context, state) => const VehiclePartsScreen(),
-                        routes: [
-                          GoRoute(
-                            path: 'request',
-                            name: appRoute.requestMechanic.name,
-                            builder: (context, state) =>
-                                const RequestMechanicScreen(),
-                          ),
-                        ],
+                        path: 'request',
+                        name: appRoute.requestMechanic.name,
+                        builder: (context, state) =>
+                            const RequestMechanicScreen(),
                       ),
                     ],
                   ),
                 ],
               ),
+              GoRoute(
+                  path: 'mechanic-reviews',
+                  name: appRoute.mechanicReviewsList.name,
+                  builder: (context, state) {
+                    final mechanicId = (state.extra as Map)["mechanicId"];
+                    return MechanicReviewsListScreen(
+                        mechanicId: mechanicId ?? '1');
+                  }),
             ],
           ),
         ],

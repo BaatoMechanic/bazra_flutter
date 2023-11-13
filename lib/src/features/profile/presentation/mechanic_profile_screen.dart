@@ -1,17 +1,20 @@
+import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../common/widgets/customer_review_widget.dart';
+import '../../../common/widgets/mechanic_review_widget.dart';
 
 class MechanicProfileScreen extends StatelessWidget {
   const MechanicProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -131,11 +134,6 @@ class MechanicProfileScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
-                    // style: Theme.of(context).elevatedButtonTheme.style,
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStatePropertyAll(
-                          ThemeColor.black.withOpacity(0.5)),
-                    ),
                     onPressed: () {},
                     icon: const Icon(Icons.send),
                     label: Text('Request Session'.hardcoded()),
@@ -285,15 +283,24 @@ class MechanicProfileScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => context.pushNamed(
+                        appRoute.mechanicReviewsList.name,
+                        // queryParameters: {"mechanicId": "6"}
+                        // extra: "6",
+                        extra: {"mechanicId": "9"},
+                      ),
                       child: Row(
                         children: [
                           Text(
                             'See all'.hardcoded(),
+                            style: Theme.of(context).textTheme.labelLarge,
                           ),
-                          const Icon(
+                          Icon(
                             Icons.arrow_forward_ios,
                             size: AppSize.s16,
+                            color: isDarkTheme
+                                ? ThemeColor.light
+                                : ThemeColor.dark,
                           ),
                         ],
                       ),
@@ -314,7 +321,7 @@ class MechanicProfileScreen extends StatelessWidget {
                       itemBuilder: (context, idx) {
                         return const Padding(
                           padding: EdgeInsets.only(right: 8.0),
-                          child: CustomerReviewWidget(),
+                          child: MechanicReviewWidget(),
                         );
                       }),
                 )

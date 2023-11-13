@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bato_mechanic/src/features/repair_request/application/service_type_service.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
@@ -167,11 +168,13 @@ class RequestMechanicScreenController
       //     ref.read(searchMapWidgetControllerProvider).selectedPlaceName,
       "location_name": " Test location",
       "location_coordinates": coordinates,
-      "vehicle": ref.read(vehicleServiceProvider).selectedVehicle!.id,
+      // "vehicle": ref.read(vehicleServiceProvider).selectedVehicle!.id,
+      "vehicle_type":
+          ref.read(vehicleCategoryServiceProvider).selectedVehicleCategory!.id,
 
-      "vehicle_part":
-          ref.read(vehiclePartsServiceProvider).selectedVehiclePart!.id,
-      // "service_type": ref.read(serviceTypeServiceProvider).selectedServiceType,
+      // "vehicle_part":
+      //     ref.read(vehiclePartsServiceProvider).selectedVehiclePart!.id,
+      "service_type": ref.read(serviceTypeServiceProvider).selectedServiceType,
 
       "description": issueDescription,
     };
@@ -198,8 +201,8 @@ class RequestMechanicScreenController
   }
 }
 
-final requestMechanicScreenControllerProvider = StateNotifierProvider
-    .autoDispose<RequestMechanicScreenController, RequestMechanicState>(
+final requestMechanicScreenControllerProvider = StateNotifierProvider<
+    RequestMechanicScreenController, RequestMechanicState>(
   (ref) => RequestMechanicScreenController(ref: ref),
 );
 

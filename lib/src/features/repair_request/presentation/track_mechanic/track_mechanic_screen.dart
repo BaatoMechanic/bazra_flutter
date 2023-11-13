@@ -272,19 +272,15 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                     ),
                     ListTile(
                       title: Text(
-                        // 'Tire repair',
                         repairRequest.title ?? "",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       subtitle: Text(
-                        // 'Tire repair and replacement',
                         repairRequest.description ?? "No description provided",
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
+                        // style: TextStyle().copyWith(
+                        //   fontSize: 14,
+                        // ),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     const SizedBox(
@@ -369,7 +365,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                       SubmitButton(
                           label: 'Check Progress'.hardcoded(),
                           onPressed: () =>
-                              context.goNamed(appRoute.repairProgress.name))
+                              context.pushNamed(appRoute.repairProgress.name))
                   ],
                 ),
               ),

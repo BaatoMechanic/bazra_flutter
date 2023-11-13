@@ -194,12 +194,14 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
         context,
         'Please select a rating'.hardcoded(),
       );
+      return;
     }
     if (_reviewTextController.text.isEmpty) {
       ToastHelper.showNotification(
         context,
         'Please write a review'.hardcoded(),
       );
+      return;
     }
     VehicleRepairRequest? repairRequest =
         ref.read(watchRepairRequestStateChangesProvider).value;

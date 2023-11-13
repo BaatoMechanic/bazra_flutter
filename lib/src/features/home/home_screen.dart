@@ -22,36 +22,78 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
+      // onWillPop: () async {
+      //   bool result = false;
+      //   List<TextButton> options = [
+      //     TextButton(
+      //       onPressed: () {
+      //         result = true;
+      //       },
+      //       child: Text(
+      //         'Confirm',
+      //         style: Theme.of(context)
+      //             .textTheme
+      //             .headlineSmall!
+      //             .copyWith(color: ThemeColor.dark),
+      //       ),
+      //     ),
+      //     TextButton(
+      //       onPressed: () {
+      //         result = false;
+      //       },
+      //       child: Text(
+      //         'Cancel',
+      //         style: Theme.of(context)
+      //             .textTheme
+      //             .headlineSmall!
+      //             .copyWith(color: ThemeColor.dark),
+      //       ),
+      //     ),
+      //   ];
+      //   await ToastHelper.showCenterAlertWithOptions(context, options);
+      //   return result;
+      // },
       onWillPop: () async {
-        bool result = false;
-        List<TextButton> options = [
-          TextButton(
-            onPressed: () {
-              result = true;
-            },
-            child: Text(
-              'Confirm',
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall!
-                  .copyWith(color: ThemeColor.dark),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              result = false;
-            },
-            child: Text(
-              'Cancel',
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall!
-                  .copyWith(color: ThemeColor.dark),
-            ),
-          ),
-        ];
-        await ToastHelper.showCenterAlertWithOptions(context, options);
-        return result;
+        final shouldPop = await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              backgroundColor: ThemeColor.primary,
+              title: Text(
+                'Do you want to close the app?',
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: ThemeColor.dark,
+                    ),
+              ),
+              actionsAlignment: MainAxisAlignment.spaceBetween,
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  child: Text(
+                    'Yes',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: ThemeColor.dark,
+                        ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  child: Text(
+                    'No',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: ThemeColor.dark,
+                        ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+        return shouldPop!;
       },
       child: SafeArea(
         child: Scaffold(

@@ -25,8 +25,9 @@ class VehicleCategoryScreenController
   }
 }
 
-final vehicleCategoryScreenControllerProvider = StateNotifierProvider<
-    VehicleCategoryScreenController, AsyncValue<List<VehicleCategory>>>(
+final vehicleCategoryScreenControllerProvider =
+    StateNotifierProvider.autoDispose<VehicleCategoryScreenController,
+        AsyncValue<List<VehicleCategory>>>(
   (ref) => VehicleCategoryScreenController(ref: ref),
 );
 

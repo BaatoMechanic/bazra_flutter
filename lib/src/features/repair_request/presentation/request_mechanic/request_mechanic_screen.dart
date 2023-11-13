@@ -162,6 +162,14 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                                   top: -10,
                                   right: -10,
                                   child: IconButton(
+                                    style: Theme.of(context)
+                                        .iconButtonTheme
+                                        .style!
+                                        .copyWith(
+                                          backgroundColor:
+                                              MaterialStatePropertyAll<Color>(
+                                                  ThemeColor.transparent),
+                                        ),
                                     onPressed: () => ref
                                         .read(
                                             requestMechanicScreenControllerProvider
@@ -169,7 +177,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                                         .removeSelectedImage(image),
                                     icon: Icon(
                                       Icons.cancel,
-                                      color: Colors.amberAccent[200],
+                                      // color: Colors.amberAccent[200],
                                     ),
                                   ),
                                 ),

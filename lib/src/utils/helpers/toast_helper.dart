@@ -192,7 +192,8 @@ class ToastHelper {
     );
   }
 
-  static showCenterAlertWithOptions(BuildContext ctx, List<Widget> options) {
+  static showCenterAlertWithListOptions(
+      BuildContext ctx, List<Widget> options) {
     showGeneralDialog(
       barrierDismissible: false,
       barrierLabel: 'Center alert dismissed',
@@ -227,6 +228,54 @@ class ToastHelper {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [...options],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static showCenterAlertWithOptions(
+    BuildContext ctx,
+    List<TextButton> actions, {
+    String? message,
+  }) {
+    showGeneralDialog(
+      barrierDismissible: false,
+      barrierLabel: 'Center alert dismissed',
+      context: ctx,
+      pageBuilder: (ctx, a1, a2) {
+        return Container();
+      },
+      transitionBuilder: (ctx, a1, a2, child) {
+        var curve = Curves.easeInOut.transform(a1.value);
+        return Transform.scale(
+          scale: curve,
+          child: AlertDialog(
+            backgroundColor: ThemeColor.primary,
+            actions: [...actions],
+            actionsPadding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+                vertical: AppPadding.p4, horizontal: AppPadding.p4),
+            content: SizedBox(
+              height: 150,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    message ?? 'Confirm exit the app?',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(ctx)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(color: ThemeColor.dark),
+                  )
+                ],
+              ),
             ),
           ),
         );

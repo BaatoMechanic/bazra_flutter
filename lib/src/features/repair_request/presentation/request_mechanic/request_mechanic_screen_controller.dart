@@ -201,8 +201,8 @@ class RequestMechanicScreenController
   }
 }
 
-final requestMechanicScreenControllerProvider = StateNotifierProvider<
-    RequestMechanicScreenController, RequestMechanicState>(
+final requestMechanicScreenControllerProvider = StateNotifierProvider
+    .autoDispose<RequestMechanicScreenController, RequestMechanicState>(
   (ref) => RequestMechanicScreenController(ref: ref),
 );
 

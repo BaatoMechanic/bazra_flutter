@@ -56,14 +56,9 @@ class SignUpScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<AsyncValue>(signupScreenControllerProvider,
         (previous, state) => state.showError(context));
-
-    final user = ref.watch(watchUserStateChangesProvider).value;
     final state = ref.watch(signupScreenControllerProvider);
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: user != null ? Text('Hello, ${user.name}'.hardcoded()) : null,
-        ),
         body: Center(
           child: SingleChildScrollView(
             child: Padding(

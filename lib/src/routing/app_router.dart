@@ -71,11 +71,7 @@ GoRouter goRouter() {
         path: '/',
         name: appRoute.splash.name,
         builder: (context, state) => SplashScreen(),
-        // builder: (context, state) => MechanicProfileScreen(),
-        // builder: (context, state) => MechanicReviewsListScreen(mechanicId: '1'),
-        // builder: (context, state) => RepairProgressScreen(
-        //   repairSteps: repairSteps,
-        // ),
+        // builder: (context, state) => HomeScreen(),
         routes: [
           GoRoute(
             path: 'login',

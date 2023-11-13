@@ -51,14 +51,9 @@ class LoginScreen extends ConsumerWidget {
     ref.listen<AsyncValue>(loginScreenControllerProvider,
         (previous, state) => state.showError(context));
 
-    String name = "Krishna";
-    final user = ref.watch(watchUserStateChangesProvider).value;
     final state = ref.watch(loginScreenControllerProvider);
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: user != null ? Text('Hello, ${user.name}'.hardcoded()) : null,
-        ),
         body: Center(
           child: SingleChildScrollView(
             child: Padding(

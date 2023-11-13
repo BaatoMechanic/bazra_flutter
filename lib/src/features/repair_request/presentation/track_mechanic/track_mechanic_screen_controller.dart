@@ -160,9 +160,9 @@ double calculateHaversineDistance(
   return earthRadius * c;
 }
 
-final trackMechanicScreenControllerProvider =
-    StateNotifierProvider<TrackMechanicScreenController, AsyncValue<void>>(
-        (ref) => TrackMechanicScreenController(ref: ref));
+final trackMechanicScreenControllerProvider = StateNotifierProvider.autoDispose<
+    TrackMechanicScreenController,
+    AsyncValue<void>>((ref) => TrackMechanicScreenController(ref: ref));
 
 final fetchTrackMechanicRouteProvider = FutureProvider.autoDispose((ref) =>
     ref.watch(trackMechanicScreenControllerProvider.notifier).fetchRoute());

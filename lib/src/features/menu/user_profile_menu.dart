@@ -106,7 +106,7 @@ class UserProfileMenu extends StatelessWidget {
               return;
             });
 
-        ToastHelper.showCenterAlertWithOptions(
+        ToastHelper.showCenterAlertWithListOptions(
             ctx, [darkTile, lightTile, systemTile]);
       },
     ),
@@ -234,7 +234,9 @@ class UserProfileMenu extends StatelessWidget {
                 const SizedBox(
                   height: AppHeight.h30,
                 ),
-                SubmitButton(label: 'Logout', onPressed: () {})
+                SubmitButton(
+                    label: 'Logout',
+                    onPressed: () => context.replaceNamed(appRoute.login.name))
               ],
             ),
           ),

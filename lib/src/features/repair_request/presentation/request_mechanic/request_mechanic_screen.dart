@@ -102,7 +102,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
               ),
               const SizedBox(height: 8),
               DescriptionField(
-                textController: _issueTextController,
+                controller: _issueTextController,
                 focusNode: _issueTextFocusNode,
                 hintText: 'Describe the issue',
               ),

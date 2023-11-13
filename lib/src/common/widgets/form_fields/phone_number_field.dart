@@ -1,11 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../../utils/validators/validation.dart';
 import 'base_form_field.dart';
 
-class DescriptionField extends StatelessWidget {
-  const DescriptionField({
+class PhoneNumberField extends StatelessWidget {
+  PhoneNumberField({
     Key? key,
     this.title,
     this.labelText,
@@ -45,8 +44,9 @@ class DescriptionField extends StatelessWidget {
       focusNode: focusNode,
       nextFocusNode: nextFocusNode,
       autovalidateMode: autovalidateMode,
-      validator: validator ?? (value) {},
-      textInputType: TextInputType.text,
+      validator:
+          validator ?? (value) => AppValidator.validatePhoneNumber(value),
+      textInputType: TextInputType.numberWithOptions(),
       onSaved: onSaved,
       onChanged: onChanged,
       textStyle: textStyle,

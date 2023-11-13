@@ -162,7 +162,7 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
                 //   decoration: const InputDecoration(hintText: 'Write a review'),
                 // ),
                 DescriptionField(
-                  textController: _reviewTextController,
+                  controller: _reviewTextController,
                   focusNode: _reviewFocusNode,
                   hintText: 'Leave a review',
                 ),

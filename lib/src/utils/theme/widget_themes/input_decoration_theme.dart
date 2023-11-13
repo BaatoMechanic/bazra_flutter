@@ -65,7 +65,8 @@ class BaatoInputDecorationTheme {
     hintStyle: const TextStyle()
         .copyWith(fontSize: FontSize.s14, color: ThemeColor.black),
     errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
-    floatingLabelStyle: const TextStyle().copyWith(color: ThemeColor.white),
+    floatingLabelStyle:
+        const TextStyle().copyWith(color: ThemeColor.darkerGrey),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(DefaultManager.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: ThemeColor.grey),

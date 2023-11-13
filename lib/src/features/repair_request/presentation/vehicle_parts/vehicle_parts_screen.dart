@@ -60,7 +60,9 @@ class VehiclePartsScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Image.asset(
-                              vehicleParts[index].image,
+                              vehicleParts[index].image ??
+                                  'assets/images/no-profile.png',
+                              // vehicleParts[index].image,
                               width: AppWidth.h100,
                             ),
                             Text(

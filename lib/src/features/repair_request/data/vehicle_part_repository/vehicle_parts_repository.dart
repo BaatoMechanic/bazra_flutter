@@ -5,7 +5,7 @@ import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_part.da
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class VehiclePartsRepository {
-  Future<dynamic> fetchVehicleParts(String vehicleId);
+  Future<dynamic> fetchVehicleParts(String categoryId);
 }
 
 final vehiclePartsRepositoryProvider =

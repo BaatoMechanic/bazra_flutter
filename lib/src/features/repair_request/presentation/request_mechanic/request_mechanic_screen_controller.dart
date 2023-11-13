@@ -168,10 +168,11 @@ class RequestMechanicScreenController
       "location_name": " Test location",
       "location_coordinates": coordinates,
       "vehicle": ref.read(vehicleServiceProvider).selectedVehicle!.id,
-      // "vehicle": '1',
+
       "vehicle_part":
           ref.read(vehiclePartsServiceProvider).selectedVehiclePart!.id,
-      // "vehicle_part": '1',
+      // "service_type": ref.read(serviceTypeServiceProvider).selectedServiceType,
+
       "description": issueDescription,
     };
     ref

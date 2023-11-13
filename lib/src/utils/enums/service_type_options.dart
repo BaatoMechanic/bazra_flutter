@@ -1,0 +1,9 @@
+enum ServiceTypeOption {
+  BODY_REPAIR,
+  ENGINE_REPAIR,
+  ELECTRICAL_REPAIR,
+  WHEEL_REPAIR,
+
+  PAINTING,
+  OTHER
+}

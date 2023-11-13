@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/features/profile/presentation/customer_profile_screen.dart';
 import 'package:bato_mechanic/src/features/review/mechanic_reviews_list_screen.dart';
 import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
@@ -37,6 +38,7 @@ enum appRoute {
   history,
   payment,
   mechanicProfile,
+  customerProfile,
   reviewMechanic,
   splash,
   trackMechanic,
@@ -70,8 +72,8 @@ GoRouter goRouter() {
       GoRoute(
         path: '/',
         name: appRoute.splash.name,
-        builder: (context, state) => SplashScreen(),
-        // builder: (context, state) => HomeScreen(),
+        // builder: (context, state) => SplashScreen(),
+        builder: (context, state) => HomeScreen(),
         routes: [
           GoRoute(
             path: 'login',
@@ -128,6 +130,11 @@ GoRouter goRouter() {
                 path: 'mechanic-profile',
                 name: appRoute.mechanicProfile.name,
                 builder: (context, state) => MechanicProfileScreen(),
+              ),
+              GoRoute(
+                path: 'customer-profile',
+                name: appRoute.customerProfile.name,
+                builder: (context, state) => CustomerProfileScreen(),
               ),
               GoRoute(
                 path: 'feedback',

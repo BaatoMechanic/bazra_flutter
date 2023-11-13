@@ -10,167 +10,263 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../common/widgets/butons/submit_button.dart';
+import '../../common/widgets/menu_tile_section_widget.dart';
+import '../../common/widgets/menu_tile_widget.dart';
 import '../../utils/constants/managers/color_manager.dart';
 import '../../utils/constants/managers/values_manager.dart';
 import '../../utils/helpers/helper_functions.dart';
 
-class UserProfileMenu extends StatelessWidget {
+class UserProfileMenu extends ConsumerWidget {
   UserProfileMenu({super.key});
 
-  List<MenuTile> profileTiles = [
-    MenuTile(
-      leadingIcon: Icons.settings,
-      title: 'Manage data',
-      onPressed: (BuildContext context, WidgetRef ref) {},
-    ),
-    MenuTile(
-      leadingIcon: Icons.home,
-      title: 'Manage Profile',
-      onPressed: (BuildContext context, WidgetRef ref) {},
-    ),
-    MenuTile(
-      leadingIcon: Icons.person,
-      title: 'Profile',
-      onPressed: (BuildContext context, WidgetRef ref) {},
-    ),
-    MenuTile(
-      leadingIcon: Icons.settings,
-      title: 'Active Repair',
-      onPressed: (BuildContext context, WidgetRef ref) =>
-          context.goNamed(appRoute.repairProgress.name),
-    ),
-    MenuTile(
-      leadingIcon: Icons.settings,
-      title: 'Recent Repairs',
-      onPressed: (BuildContext context, WidgetRef ref) =>
-          context.goNamed(appRoute.recentRepairs.name),
-    ),
-    MenuTile(
-      leadingIcon: Icons.settings,
-      title: 'Settings',
-      onPressed: (BuildContext context, WidgetRef ref) {},
-    ),
-  ];
-  List<MenuTile> settingsTiles = [
-    MenuTile(
-      leadingIcon: Icons.notification_important,
-      title: 'Notifications',
-      onPressed: (BuildContext context, WidgetRef ref) {},
-    ),
-    MenuTile(
-      leadingIcon: Icons.dark_mode,
-      title: 'Dark mode',
-      onPressed: (BuildContext ctx, WidgetRef ref) {
-        final darkTile = ListTile(
-            title: Text(
-              'Dark mode',
-              style: const TextStyle().copyWith(
-                fontSize: FontSize.s16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            onTap: () {
-              ref
-                  .read(userSettingsRepositoryProvider)
-                  .setThemeMode(ThemeMode.dark);
-              return;
-            });
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = HelperFunctions.isDarkMode(context);
 
-        final lightTile = ListTile(
-            title: Text(
-              'Light mode',
-              style: const TextStyle().copyWith(
-                fontSize: FontSize.s16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            onTap: () {
-              ref
-                  .read(userSettingsRepositoryProvider)
-                  .setThemeMode(ThemeMode.light);
-              return;
-            });
-
-        final systemTile = ListTile(
-            title: Text(
-              'System',
-              style: const TextStyle().copyWith(
-                fontSize: FontSize.s16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            onTap: () {
-              ref
-                  .read(userSettingsRepositoryProvider)
-                  .setThemeMode(ThemeMode.system);
-              return;
-            });
-
-        ToastHelper.showCenterAlertWithListOptions(
-            ctx, [darkTile, lightTile, systemTile]);
-      },
-    ),
-    MenuTile(
-      leadingIcon: Icons.miscellaneous_services,
-      title: 'Misc',
-      onPressed: (BuildContext context, WidgetRef ref) {},
-    ),
-  ];
-  List<MenuTile> connectTiles = [
-    MenuTile(
-      leadingIcon: Icons.feedback,
-      title: 'Feedback',
-      onPressed: (BuildContext context, WidgetRef ref) =>
-          context.goNamed(appRoute.feedback.name),
-    ),
-    MenuTile(
-      leadingIcon: Icons.wechat,
-      title: 'Chat Support',
-      onPressed: (BuildContext context, WidgetRef ref) =>
-          context.goNamed(appRoute.supportChat.name),
-    ),
-  ];
-  List<MenuTile> moreTiles = [
-    MenuTile(
+    final List<MenuTile> moreTiles = [
+      MenuTile(
         leadingIcon: Icons.notifications,
         title: 'Notifications',
-        onPressed: (BuildContext context, WidgetRef ref) {}
-        // context.goNamed(appRoute.feedback.name),
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () {},
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
         ),
-    MenuTile(
-      leadingIcon: Icons.warning,
-      title: 'About',
-      onPressed: (BuildContext context, WidgetRef ref) =>
-          context.goNamed(appRoute.supportChat.name),
-    ),
-    MenuTile(
-      leadingIcon: Icons.report,
-      title: 'Rrport an issue',
-      onPressed: (BuildContext context, WidgetRef ref) =>
-          context.goNamed(appRoute.supportChat.name),
-    ),
-    MenuTile(
-      leadingIcon: Icons.policy,
-      title: 'Privacy Policy',
-      onPressed: (BuildContext context, WidgetRef ref) =>
-          context.goNamed(appRoute.supportChat.name),
-    ),
-    MenuTile(
-      leadingIcon: Icons.key,
-      title: 'Terms and Conditions',
-      onPressed: (BuildContext context, WidgetRef ref) =>
-          context.goNamed(appRoute.supportChat.name),
-    ),
-  ];
+      ),
+      MenuTile(
+        leadingIcon: Icons.warning,
+        title: 'About',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.goNamed(appRoute.supportChat.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.warning,
+        title: 'Report an issue',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.goNamed(appRoute.supportChat.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.warning,
+        title: 'Privacy Policy ',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.goNamed(appRoute.supportChat.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.key,
+        title: 'Terms and Conditions',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.goNamed(appRoute.supportChat.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+        isLast: true,
+      ),
+    ];
 
-  @override
-  Widget build(BuildContext context) {
+    List<MenuTile> profileTiles = [
+      MenuTile(
+        leadingIcon: Icons.settings,
+        title: 'Manage data',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () {},
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.home,
+        title: 'Manage Profile',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () {},
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.person,
+        title: 'Profile',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () => context.pushNamed(appRoute.customerProfile.name),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.settings,
+        title: 'Active Repair',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () => context.goNamed(appRoute.repairProgress.name),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.settings,
+        title: 'Recent Repairs',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () => context.goNamed(appRoute.recentRepairs.name),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.settings,
+        title: 'Settings',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () {},
+        ),
+        isLast: true,
+      ),
+    ];
+
+    List<MenuTile> settingsTiles = [
+      MenuTile(
+        leadingIcon: Icons.notification_important,
+        title: 'Notifications',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () {},
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.dark_mode,
+        title: 'Dark mode',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () {
+            final darkTile = ListTile(
+                title: Text(
+                  'Dark mode',
+                  style: const TextStyle().copyWith(
+                    fontSize: FontSize.s16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  ref
+                      .read(userSettingsRepositoryProvider)
+                      .setThemeMode(ThemeMode.dark);
+                  return;
+                });
+
+            final lightTile = ListTile(
+                title: Text(
+                  'Light mode',
+                  style: const TextStyle().copyWith(
+                    fontSize: FontSize.s16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  ref
+                      .read(userSettingsRepositoryProvider)
+                      .setThemeMode(ThemeMode.light);
+                  return;
+                });
+
+            final systemTile = ListTile(
+                title: Text(
+                  'System',
+                  style: const TextStyle().copyWith(
+                    fontSize: FontSize.s16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  ref
+                      .read(userSettingsRepositoryProvider)
+                      .setThemeMode(ThemeMode.system);
+                  return;
+                });
+
+            ToastHelper.showCenterAlertWithListOptions(
+                context, [darkTile, lightTile, systemTile]);
+          },
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.miscellaneous_services,
+        title: 'Misc',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () {},
+        ),
+        isLast: true,
+      )
+    ];
+
+    List<MenuTile> connectTiles = [
+      MenuTile(
+        leadingIcon: Icons.feedback,
+        title: 'Feedback',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(
+            Icons.arrow_forward_ios_outlined,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+          onPressed: () => context.goNamed(appRoute.feedback.name),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.wechat,
+        title: 'Chat Support',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(
+            Icons.arrow_forward_ios_outlined,
+          ),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () => context.goNamed(appRoute.feedback.name),
+        ),
+        isLast: true,
+      ),
+    ];
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: AppPadding.p4, vertical: AppPadding.p45),
+                horizontal: AppPadding.p12, vertical: AppPadding.p45),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -240,83 +336,6 @@ class UserProfileMenu extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class MenuTilesSection extends StatelessWidget {
-  MenuTilesSection({
-    Key? key,
-    required this.tiles,
-    required this.sectionTitle,
-  }) : super(key: key);
-
-  String sectionTitle;
-  List<MenuTile> tiles;
-  @override
-  Widget build(BuildContext context) {
-    final bool isDarkTheme = HelperFunctions.isDarkMode(context);
-    return Container(
-      padding: const EdgeInsets.all(AppPadding.p8),
-      decoration: const BoxDecoration().copyWith(
-        color:
-            isDarkTheme ? ThemeColor.darkContainer : ColorManager.primaryTint90,
-        borderRadius: BorderRadius.circular(AppRadius.r12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            sectionTitle,
-            style: Theme.of(context).textTheme.headlineLarge,
-          ),
-          ...tiles
-        ],
-      ),
-    );
-  }
-}
-
-class MenuTile extends ConsumerWidget {
-  MenuTile({
-    Key? key,
-    required this.title,
-    required this.leadingIcon,
-    this.trailingIcon = Icons.arrow_forward_ios,
-    required this.onPressed,
-  }) : super(key: key);
-
-  String title;
-  IconData leadingIcon;
-  IconData trailingIcon;
-  Function(BuildContext ctx, WidgetRef ref) onPressed;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final bool isDarkTheme = HelperFunctions.isDarkMode(context);
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Container(
-        padding: const EdgeInsets.all(AppPadding.p2),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: ColorManager.primaryTint50,
-        ),
-        child: Icon(leadingIcon),
-      ),
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.headlineSmall,
-      ),
-      trailing: IconButton(
-        iconSize: AppSize.s20,
-        onPressed: () => onPressed(context, ref),
-        icon: Icon(
-          Icons.arrow_forward_ios,
-          size: AppSize.s14,
-          color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
         ),
       ),
     );

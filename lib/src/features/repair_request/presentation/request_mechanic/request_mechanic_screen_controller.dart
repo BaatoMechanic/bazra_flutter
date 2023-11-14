@@ -126,22 +126,31 @@ class RequestMechanicScreenController
     state = state.copyWith(preferredMechanic: AsyncValue.data(mechanic));
   }
 
-  setUserPosition(UserPosition position) {
+  setSelectedPosition(UserPosition position) {
     state = state.copyWith(selectedPosition: position);
   }
 
+  UserPosition? get selectedPosition => state.selectedPosition;
+
   Future<bool> requestForVehicleRepair(
       String issueDescription, VideoPlayerController? videoController) async {
-    final customerRequestPosition =
-        ref.read(searchMapWidgetControllerProvider).markerPosition.value;
-    if (customerRequestPosition == null) {
+    // final customerRequestPosition =
+    //     ref.read(searchMapWidgetControllerProvider).markerPosition.value;
+    // if (customerRequestPosition == null) {
+    //   state = state.copyWith(
+    //       value:
+    //           AsyncError("Please provide your location", StackTrace.current));
+    //   return false;
+    // }
+    // String coordinates =
+    //     '${customerRequestPosition.latitude},${customerRequestPosition.longitude}';
+
+    if (selectedPosition == null) {
       state = state.copyWith(
           value:
               AsyncError("Please provide your location", StackTrace.current));
       return false;
     }
-    String coordinates =
-        '${customerRequestPosition.latitude},${customerRequestPosition.longitude}';
 
     if (issueDescription.isEmpty) {
       state = state.copyWith(
@@ -182,7 +191,8 @@ class RequestMechanicScreenController
       // "location_name":
       //     ref.read(searchMapWidgetControllerProvider).selectedPlaceName,
       "location_name": " Test location",
-      "location_coordinates": coordinates,
+      "selected_location": selectedPosition!.toJson(),
+      // "location_coordinates": coordinates,
       // "vehicle": ref.read(vehicleServiceProvider).selectedVehicle!.id,
       "vehicle_type":
           ref.read(vehicleCategoryServiceProvider).selectedVehicleCategory!.id,

@@ -82,7 +82,7 @@ GoRouter goRouter() {
         path: '/',
         name: appRoute.splash.name,
         // builder: (context, state) => SplashScreen(),
-        builder: (context, state) => RequestMechanicScreen(),
+        builder: (context, state) => HomeScreen(),
         // builder: (context, state) => OTPConfirmationScreen(
         //   otpType: OTPType.EMAIL,
         // ),

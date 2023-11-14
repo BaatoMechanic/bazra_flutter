@@ -55,11 +55,11 @@ class HelperFunctions {
     return MediaQuery.of(context).size;
   }
 
-  static Widget loadingInidicator(BuildContext context) {
+  static Widget loadingInidicator(BuildContext context, {double? radius}) {
     return Center(
         child: SizedBox(
-      height: AppHeight.h20,
-      width: AppWidth.h20,
+      height: radius,
+      width: radius,
       child: CircularProgressIndicator(
         color: Theme.of(context).primaryColor,
       ),

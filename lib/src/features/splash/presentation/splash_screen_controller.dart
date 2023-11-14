@@ -8,15 +8,6 @@ class SplashScreenController {
   });
 
   Ref ref;
-
-  Future<bool> hasRepairRequest(String userId) async {
-    await Future.delayed(Duration(seconds: 2));
-    final response = await ref
-        .read(repairRequestServiceProvider)
-        .fetchUserRepairRequests(userId);
-
-    return response;
-  }
 }
 
 final splashScreenControllerProvider =

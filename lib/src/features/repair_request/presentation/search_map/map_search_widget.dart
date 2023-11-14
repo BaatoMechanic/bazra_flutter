@@ -77,7 +77,23 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
       UserPosition? userPosition =
           ref.read(userServiceProvider).currentUser?.currentLocation;
 
-      if (userPosition == null) {
+      if (userPosition != null) {
+        ref
+            .read(requestMechanicScreenControllerProvider.notifier)
+            .setSelectedPosition(
+              UserPosition(
+                latitude: lat,
+                longitude: lon,
+                timestamp: userPosition.timestamp,
+                accuracy: userPosition.accuracy,
+                altitude: userPosition.altitude,
+                heading: userPosition.heading,
+                speed: userPosition.speed,
+                speedAccuracy: userPosition.speedAccuracy,
+                locationName: placeName,
+              ),
+            );
+      } else {
         userPosition = await MapHelper.getUserLocation();
         if (userPosition != null) {
           ref
@@ -237,9 +253,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
               .watch(searchMapWidgetControllerProvider)
               .markerPosition
               .isLoading)
-            const Center(
-              child: CircularProgressIndicator(),
-            ),
+            HelperFunctions.loadingInidicator(context),
         ],
       );
     });
@@ -272,7 +286,10 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   const MaterialStatePropertyAll<Color>(ThemeColor.light),
               trailing: [
                 _isFetchingSearchLocations
-                    ? HelperFunctions.loadingInidicator(context)
+                    ? HelperFunctions.loadingInidicator(
+                        context,
+                        radius: AppHeight.h20,
+                      )
                     : IconButton(
                         style: const ButtonStyle().copyWith(
                           backgroundColor: MaterialStateProperty.all<Color>(

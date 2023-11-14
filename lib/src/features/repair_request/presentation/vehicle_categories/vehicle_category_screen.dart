@@ -27,71 +27,67 @@ class VehicleCategoryScreen extends ConsumerWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: SingleChildScrollView(
-          child: Center(
-            child: AsyncValueWidget(
-              value: vehicleCategories,
-              data: (vehicleCategories) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 180),
-                    Text(
-                      'Select your vehicle type',
-                      style: Theme.of(context).textTheme.displayLarge,
+        child: AsyncValueWidget(
+          value: vehicleCategories,
+          data: (vehicleCategories) => SingleChildScrollView(
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 180),
+                  Text(
+                    'Select your vehicle type',
+                    style: Theme.of(context).textTheme.displayLarge,
+                  ),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: vehicleCategories.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
                     ),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: vehicleCategories.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                      ),
-                      itemBuilder: (context, index) => GestureDetector(
-                        onTap: () {
-                          ref
-                              .read(vehicleCategoryScreenControllerProvider
-                                  .notifier)
-                              .setSelectedCategory(vehicleCategories[index]);
-                          context.pushNamed(appRoute.requestMechanic.name);
-                          // final selectedService = ref
-                          //     .read(serviceTypeServiceProvider)
-                          //     .selectedServiceType;
-                          // if(selectedService != null && selectedService.partsIncluded){
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        ref
+                            .read(vehicleCategoryScreenControllerProvider
+                                .notifier)
+                            .setSelectedCategory(vehicleCategories[index]);
+                        context.pushNamed(appRoute.requestMechanic.name);
+                        // final selectedService = ref
+                        //     .read(serviceTypeServiceProvider)
+                        //     .selectedServiceType;
+                        // if(selectedService != null && selectedService.partsIncluded){
 
-                          // }
-                        },
-                        child: Card(
-                          margin: const EdgeInsets.all(AppMargin.m8),
-                          child: Padding(
-                            padding: const EdgeInsets.all(AppMargin.m8),
-                            child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    vehicleCategories[index].image,
-                                    width: 150,
+                        // }
+                      },
+                      child: Card(
+                        margin: const EdgeInsets.all(AppMargin.m8),
+                        child: Padding(
+                          padding: const EdgeInsets.all(AppMargin.m8),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset(
+                                  vehicleCategories[index].image,
+                                  width: 150,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    vehicleCategories[index].name.capitalize(),
+                                    overflow: TextOverflow.visible,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall!
+                                        .copyWith(color: ThemeColor.dark),
                                   ),
-                                  Flexible(
-                                    child: Text(
-                                      vehicleCategories[index]
-                                          .name
-                                          .capitalize(),
-                                      overflow: TextOverflow.visible,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displaySmall!
-                                          .copyWith(color: ThemeColor.dark),
-                                    ),
-                                  ),
-                                ]),
-                          ),
+                                ),
+                              ]),
                         ),
                       ),
                     ),
-                  ]),
-            ),
+                  ),
+                ]),
           ),
         ),
       ),

@@ -49,14 +49,20 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
   }
 
   Future<void> _pickVideo() async {
-    final XFile? video =
-        await ImagePicker().pickVideo(source: ImageSource.gallery);
-    if (video != null) {
-      _videoController = VideoPlayerController.file(File(video.path));
-      await _videoController!.initialize();
-      ref
-          .read(requestMechanicScreenControllerProvider.notifier)
-          .setVideo(video);
+    try {
+      final XFile? video =
+          await ImagePicker().pickVideo(source: ImageSource.gallery);
+      if (video != null) {
+        _videoController = VideoPlayerController.file(File(video.path));
+        await _videoController!.initialize();
+        ref
+            .read(requestMechanicScreenControllerProvider.notifier)
+            .setVideo(video);
+      }
+    } catch (exp) {
+      // catch the image picker is already active exception
+
+      return;
     }
   }
 

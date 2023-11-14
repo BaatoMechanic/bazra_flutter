@@ -1,5 +1,7 @@
 import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
+import 'package:bato_mechanic/src/features/home/presentation/home_screen_controller.dart';
+import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
@@ -9,50 +11,59 @@ import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../repair_request/domain/vehicle_repair_request.dart';
+import '../repair_request/presentation/request_mechanic/repair_request_controller.dart';
 import 'service_buttons_grid.dart';
 import 'service_type_button.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   HomeScreen({super.key});
 
+  @override
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen>
+    with WidgetsBindingObserver {
   TextEditingController _searchTextController = TextEditingController();
+
   FocusNode _searchFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        ref.read(homeScreenControllerProvider).hasRepairRequest("1").then(
+          (value) {
+            if (value) {
+              VehicleRepairRequest? repairRequest =
+                  ref.read(repairRequestControllerProvider).repairRequest;
+
+              if (repairRequest != null) {
+                if (repairRequest.status ==
+                    VehicleRepairRequestStatus.WAITING_FOR_MECHANIC) {
+                  if (mounted) context.pushNamed(appRoute.trackMechanic.name);
+                  return;
+                }
+                if (mounted) context.pushNamed(appRoute.repairProgress.name);
+                return;
+              }
+            }
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      // onWillPop: () async {
-      //   bool result = false;
-      //   List<TextButton> options = [
-      //     TextButton(
-      //       onPressed: () {
-      //         result = true;
-      //       },
-      //       child: Text(
-      //         'Confirm',
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .headlineSmall!
-      //             .copyWith(color: ThemeColor.dark),
-      //       ),
-      //     ),
-      //     TextButton(
-      //       onPressed: () {
-      //         result = false;
-      //       },
-      //       child: Text(
-      //         'Cancel',
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .headlineSmall!
-      //             .copyWith(color: ThemeColor.dark),
-      //       ),
-      //     ),
-      //   ];
-      //   await ToastHelper.showCenterAlertWithOptions(context, options);
-      //   return result;
-      // },
       onWillPop: () async {
         final shouldPop = await showDialog<bool>(
           context: context,

@@ -30,30 +30,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
           if (mounted) context.replaceNamed(appRoute.login.name);
           return;
         } else {
-          if (mounted) context.replaceNamed(appRoute.trackMechanic.name);
+          if (mounted) context.replaceNamed(appRoute.home.name);
           return;
         }
-
-        ref.read(splashScreenControllerProvider).hasRepairRequest("1").then(
-          (value) {
-            if (value) {
-              VehicleRepairRequest? repairRequest =
-                  ref.read(repairRequestControllerProvider).repairRequest;
-
-              if (repairRequest != null) {
-                if (repairRequest.status ==
-                    VehicleRepairRequestStatus.WAITING_FOR_MECHANIC) {
-                  if (mounted)
-                    context.replaceNamed(appRoute.trackMechanic.name);
-                  return;
-                }
-                if (mounted) context.replaceNamed(appRoute.repairProgress.name);
-                return;
-              }
-            }
-            if (mounted) context.replaceNamed(appRoute.home.name);
-          },
-        );
       },
     );
   }

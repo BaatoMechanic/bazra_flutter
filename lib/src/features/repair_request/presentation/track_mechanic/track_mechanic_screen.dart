@@ -338,9 +338,10 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                       ..._buildBaatoKharcha(context)
                     else
                       SubmitButton(
-                          label: 'Check Progress'.hardcoded(),
-                          onPressed: () =>
-                              context.pushNamed(appRoute.repairProgress.name))
+                        label: 'Check Progress'.hardcoded(),
+                        onPressed: () =>
+                            context.pushNamed(appRoute.repairProgress.name),
+                      )
                   ],
                 ),
               ),

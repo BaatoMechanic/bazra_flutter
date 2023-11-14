@@ -36,28 +36,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) async {
-        final result =
-            await ref.read(homeScreenControllerProvider).hasRepairRequest("1");
-        if (result) {
-          VehicleRepairRequest? repairRequest =
-              ref.read(repairRequestServiceProvider).activeRepairRequest;
-
-          if (repairRequest != null) {
-            if (repairRequest.status ==
-                VehicleRepairRequestStatus.IN_PROGRESS) {
-              if (mounted) context.pushNamed(appRoute.repairProgress.name);
-              return;
-            }
-            if (mounted) context.pushNamed(appRoute.trackMechanic.name);
-            return;
-          }
-        }
-      },
-    );
   }
 
   @override

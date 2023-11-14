@@ -23,9 +23,9 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
       "description": "ggrv byffgkj",
       "images": [],
       "videos": [],
-      "status": "IN_PROGRESS",
+      // "status": "IN_PROGRESS",
       // "status": "WAITING_FOR_MECHANIC",
-      // "status": "WAITING_FOR_ADVANCE_PAYMENT",
+      "status": "WAITING_FOR_ADVANCE_PAYMENT",
       "created_at": "2023-10-05T17:19:44.893829Z"
     };
     Response response = Response(jsonEncode(responseBody), HttpStatus.created);

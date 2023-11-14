@@ -55,7 +55,7 @@ class RequestMechanicScreenController
 
   Future<bool> _addImagesToRepairRequest(
       String requestId, List<File> images) async {
-    state = state.copyWith(value: AsyncLoading());
+    state = state.copyWith(value: const AsyncLoading());
     var response = await AsyncValue.guard(() => ref
         .read(repairRequestServiceProvider)
         .addImagesToVechicleRepairRequest(requestId, images));
@@ -97,18 +97,27 @@ class RequestMechanicScreenController
     final List<File> fileImages =
         images.map((xFile) => File(xFile.path)).toList();
     fileImages.addAll(state.selectedImages.value as List<File>);
-    state = state.copyWith(selectedImages: AsyncValue.data(fileImages));
+    state = state.copyWith(
+      selectedImages: AsyncValue.data(fileImages),
+      value: const AsyncData(null),
+    );
   }
 
   removeSelectedImage(File image) {
     state = state.copyWith(
-        selectedImages: AsyncValue.data(state.selectedImages.value!
-            .where((element) => element != image)
-            .toList()));
+      selectedImages: AsyncValue.data(state.selectedImages.value!
+          .where((element) => element != image)
+          .toList()),
+      value: const AsyncData(null),
+    );
   }
 
   Future<void> setVideo(XFile video) async {
-    state = state.copyWith(selectedVideo: AsyncValue.data(File(video.path)));
+    state = state.copyWith(
+      selectedVideo: AsyncValue.data(File(video.path)),
+      value: const AsyncData(null),
+    );
+    state = state.copyWith();
   }
 
   setPreferredMechanic(Mechanic mechanic) {

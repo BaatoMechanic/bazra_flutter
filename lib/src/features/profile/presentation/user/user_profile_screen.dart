@@ -14,8 +14,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../common/widgets/mechanic_review_widget.dart';
 import '../../../../common/widgets/menu_tile_widget.dart';
 
-class CustomerProfileScreen extends StatelessWidget {
-  CustomerProfileScreen({super.key});
+class UserProfileScreen extends StatelessWidget {
+  UserProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class CustomerProfileScreen extends StatelessWidget {
             Icons.arrow_forward_ios_outlined,
             color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
           ),
-          onPressed: () {},
+          onPressed: () => context.pushNamed(appRoute.confirmOldPassword.name),
         ),
         isLast: true,
       ),

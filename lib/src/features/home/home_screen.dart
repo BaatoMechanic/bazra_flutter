@@ -93,7 +93,10 @@ class HomeScreen extends StatelessWidget {
             );
           },
         );
-        return shouldPop!;
+        if (shouldPop != null) {
+          return shouldPop;
+        }
+        return false;
       },
       child: SafeArea(
         child: Scaffold(

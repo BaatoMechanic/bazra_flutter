@@ -102,6 +102,7 @@ class BaseFormField extends StatelessWidget {
                   initialValue: initialValue,
                   focusNode: focusNode,
                   controller: controller,
+                  maxLines: maxLines,
                   autovalidateMode:
                       autovalidateMode ?? AutovalidateMode.onUserInteraction,
                   validator: (value) => validator(value),

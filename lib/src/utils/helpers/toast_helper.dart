@@ -87,7 +87,7 @@ class ToastHelper {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            backgroundColor: Colors.amberAccent[200],
+            backgroundColor: Theme.of(ctx).primaryColor,
             // contentPadding: EdgeInsets.symmetric(
             //   horizontal: 0,
             //   vertical: 15,
@@ -168,7 +168,7 @@ class ToastHelper {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            backgroundColor: Colors.amberAccent[200],
+            backgroundColor: Theme.of(ctx).primaryColor,
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
               height: 150,
@@ -206,7 +206,7 @@ class ToastHelper {
         return Transform.scale(
           scale: curve,
           child: AlertDialog(
-            backgroundColor: ThemeColor.primary,
+            backgroundColor: Theme.of(ctx).primaryColor,
             actions: [
               TextButton(
                 onPressed: () {
@@ -286,7 +286,7 @@ class ToastHelper {
   static showNotification(BuildContext context, String message,
       {notificationDuration = 3}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.amberAccent[700],
+      backgroundColor: Theme.of(context).primaryColor,
       dismissDirection: DismissDirection.horizontal,
       content: Text(
         message.capitalize(),
@@ -304,7 +304,7 @@ class ToastHelper {
   static showNotificationWithCloseButton(BuildContext context, String message,
       {String label = "Close", notificationDuration}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.amberAccent[700],
+      backgroundColor: Theme.of(context).primaryColor,
       dismissDirection: DismissDirection.horizontal,
       content: Text(
         message.capitalize(),

@@ -41,6 +41,7 @@ class DescriptionField extends StatelessWidget {
       title: title,
       labelText: labelText,
       hintText: hintText,
+      maxLines: 4,
       controller: controller,
       focusNode: focusNode,
       nextFocusNode: nextFocusNode,

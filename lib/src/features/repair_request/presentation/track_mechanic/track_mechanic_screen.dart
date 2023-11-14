@@ -549,6 +549,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                     Polyline(
                       points: routeCoordinatePoints,
                       strokeWidth: 4,
+                      // color: Theme.of(context).primaryColor,
                       color: Colors.purple,
                     ),
                   ],

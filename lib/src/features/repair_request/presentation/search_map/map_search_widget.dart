@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:bato_mechanic/src/features/repair_request/application/location_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/search_map/search_map_widget_controller.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -26,13 +28,15 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   late MapController _mapController = MapController();
   late AnimationController _animationController;
-  TextEditingController searchController = TextEditingController();
-  FocusNode searchFocusNode = FocusNode();
-  List<OSMdata> options = <OSMdata>[];
-  Timer? debounce;
+  TextEditingController _searchController = TextEditingController();
+  FocusNode _searchFocusNode = FocusNode();
+  List<OSMdata> _options = <OSMdata>[];
+  Timer? _debounce;
   late double width;
   late double height;
-  String selectedPlaceName = 'lol';
+  String _selectedPlaceName = 'lol';
+
+  bool _isFetchingSearchLocations = false;
 
   @override
   void initState() {
@@ -62,8 +66,8 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
         .read(searchMapWidgetControllerProvider.notifier)
         .fetchLocationName(lat, lon);
     if (placeName != null) {
-      searchController.text = placeName;
-      selectedPlaceName = placeName;
+      _searchController.text = placeName;
+      _selectedPlaceName = placeName;
     } else {
       print('here');
     }
@@ -103,8 +107,8 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   void dispose() {
     _mapController.dispose();
     _animationController.dispose();
-    searchController.dispose();
-    searchFocusNode.dispose();
+    _searchController.dispose();
+    _searchFocusNode.dispose();
     super.dispose();
   }
 
@@ -232,44 +236,55 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
         child: Column(
           children: [
             SearchBar(
-              controller: searchController,
-              focusNode: searchFocusNode,
+              controller: _searchController,
+              focusNode: _searchFocusNode,
               hintText: 'Enter place name',
               backgroundColor:
                   MaterialStatePropertyAll<Color>(ThemeColor.light),
               trailing: [
-                IconButton(
-                  style: const ButtonStyle().copyWith(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        ThemeColor.transparent),
-                  ),
-                  onPressed: () {
-                    searchController.clear();
+                _isFetchingSearchLocations
+                    ? HelperFunctions.loadingInidicator(context)
+                    : IconButton(
+                        style: const ButtonStyle().copyWith(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              ThemeColor.transparent),
+                        ),
+                        onPressed: () {
+                          _searchController.clear();
 
-                    options = [];
-                  },
-                  icon: const Icon(
-                    Icons.clear,
-                  ),
-                ),
+                          _options = [];
+                        },
+                        icon: const Icon(
+                          Icons.clear,
+                        ),
+                      ),
               ],
               onChanged: (String value) {
-                if (debounce?.isActive ?? false) {
-                  debounce?.cancel();
+                if (_debounce?.isActive ?? false) {
+                  _debounce?.cancel();
                 }
 
-                debounce = Timer(const Duration(milliseconds: 20), () async {
-                  //   var response =
-                  //       await mapSearchWidgetViewModel.getSearchLocations(
-                  //           mapSearchWidgetViewModel.searchController.text);
-
-                  //   options = response
-                  //       .map((e) => OSMdata(
-                  //           displayname: e['display_name'],
-                  //           latitude: double.parse(e['lat']),
-                  //           longitude: double.parse(e['lon'])))
-                  //       .toList()
-                  //       .cast<OSMdata>();
+                _debounce = Timer(const Duration(milliseconds: 20), () async {
+                  if (mounted) {
+                    setState(() {
+                      _isFetchingSearchLocations = true;
+                    });
+                  }
+                  var response = await ref
+                      .read(searchMapWidgetControllerProvider.notifier)
+                      .fetchSearchLocations(_searchController.text);
+                  if (mounted) {
+                    setState(() {
+                      _options = response
+                          .map((e) => OSMdata(
+                              displayname: e['display_name'],
+                              latitude: double.parse(e['lat']),
+                              longitude: double.parse(e['lon'])))
+                          .toList()
+                          .cast<OSMdata>();
+                      _isFetchingSearchLocations = false;
+                    });
+                  }
                 });
               },
             ),
@@ -346,18 +361,18 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   Widget _buildListView() {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: options.length,
+        itemCount: _options.length,
         itemBuilder: (context, index) {
           return Container(
             color: Colors.white,
             child: ListTile(
               leading: const Icon(Icons.location_on),
               title: Text(
-                options[index].displayname,
+                _options[index].displayname,
               ),
               onTap: () {
                 LatLng positionToMove =
-                    LatLng(options[index].latitude, options[index].longitude);
+                    LatLng(_options[index].latitude, _options[index].longitude);
 
                 // markerPosition = positionToMove;
                 ref
@@ -369,8 +384,8 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                 _animatedMapMove(
                     positionToMove, _mapController.zoom, mounted, this);
 
-                searchFocusNode.unfocus();
-                options.clear();
+                _searchFocusNode.unfocus();
+                _options.clear();
               },
             ),
           );

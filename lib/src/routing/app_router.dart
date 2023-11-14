@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:bato_mechanic/src/features/password_change/presentation/change_password_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/old_password_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
-import 'package:bato_mechanic/src/features/profile/presentation/customer/customer_profile_screen.dart';
-import 'package:bato_mechanic/src/features/profile/presentation/customer/edit_profile_screen.dart';
+import 'package:bato_mechanic/src/features/profile/presentation/user/user_profile_screen.dart';
+import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
 import 'package:bato_mechanic/src/features/review/mechanic_reviews_list_screen.dart';
 import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
 import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
@@ -81,7 +81,8 @@ GoRouter goRouter() {
       GoRoute(
         path: '/',
         name: appRoute.splash.name,
-        builder: (context, state) => ConfirmOldPasswordScreen(),
+        // builder: (context, state) => SplashScreen(),
+        builder: (context, state) => RequestMechanicScreen(),
         // builder: (context, state) => OTPConfirmationScreen(
         //   otpType: OTPType.EMAIL,
         // ),
@@ -166,7 +167,7 @@ GoRouter goRouter() {
               GoRoute(
                 path: 'customer-profile',
                 name: appRoute.customerProfile.name,
-                builder: (context, state) => CustomerProfileScreen(),
+                builder: (context, state) => UserProfileScreen(),
               ),
               GoRoute(
                 path: 'edit-profile',

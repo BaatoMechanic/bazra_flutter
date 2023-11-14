@@ -291,11 +291,15 @@ class ToastHelper {
       content: Text(
         message.capitalize(),
         textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+        style: Theme.of(context)
+            .textTheme
+            .headlineMedium!
+            .copyWith(color: ThemeColor.dark),
+        // style:  TextStyle(
+        //   fontSize: 16,
+        //   fontWeight: FontWeight.bold,
+        //   color: Colors.white,
+        // ),
       ),
       duration: Duration(seconds: notificationDuration),
     ));

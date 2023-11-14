@@ -101,7 +101,7 @@ class LoginScreen extends ConsumerWidget {
                     LoginSignUpLabel(
                       infoText: 'Don\'t have an account ?'.hardcoded(),
                       labelText: 'Register'.hardcoded(),
-                      onPressed: () => context.goNamed(appRoute.signup.name),
+                      onPressed: () => context.pushNamed(appRoute.signup.name),
                     ),
                   ],
                 ),

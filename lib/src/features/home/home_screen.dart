@@ -1,6 +1,7 @@
 import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
 import 'package:bato_mechanic/src/features/home/presentation/home_screen_controller.dart';
+import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
@@ -38,25 +39,41 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        ref.read(homeScreenControllerProvider).hasRepairRequest("1").then(
-          (value) {
-            if (value) {
-              VehicleRepairRequest? repairRequest =
-                  ref.read(repairRequestControllerProvider).repairRequest;
+      (_) async {
+        // ref.read(homeScreenControllerProvider).hasRepairRequest("1").then(
+        //   (value) {
+        //     if (value) {
+        //       VehicleRepairRequest? repairRequest =
+        //           ref.read(repairRequestServiceProvider).activeRepairRequest;
 
-              if (repairRequest != null) {
-                if (repairRequest.status ==
-                    VehicleRepairRequestStatus.WAITING_FOR_MECHANIC) {
-                  if (mounted) context.pushNamed(appRoute.trackMechanic.name);
-                  return;
-                }
-                if (mounted) context.pushNamed(appRoute.repairProgress.name);
-                return;
-              }
+        //       if (repairRequest != null) {
+        //         if (repairRequest.status ==
+        //             VehicleRepairRequestStatus.WAITING_FOR_MECHANIC) {
+        //           if (mounted) context.pushNamed(appRoute.trackMechanic.name);
+        //           return;
+        //         }
+        //         if (mounted) context.pushNamed(appRoute.repairProgress.name);
+        //         return;
+        //       }
+        //     }
+        //   },
+        // );
+        final result =
+            await ref.read(homeScreenControllerProvider).hasRepairRequest("1");
+        if (result) {
+          VehicleRepairRequest? repairRequest =
+              ref.read(repairRequestServiceProvider).activeRepairRequest;
+
+          if (repairRequest != null) {
+            if (repairRequest.status ==
+                VehicleRepairRequestStatus.WAITING_FOR_MECHANIC) {
+              if (mounted) context.pushNamed(appRoute.trackMechanic.name);
+              return;
             }
-          },
-        );
+            if (mounted) context.pushNamed(appRoute.repairProgress.name);
+            return;
+          }
+        }
       },
     );
   }

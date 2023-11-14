@@ -68,6 +68,19 @@ class CustomerProfileScreen extends StatelessWidget {
         ),
       ),
       MenuTile(
+        leadingIcon: Icons.password,
+        title: 'Change password',
+        trailingWidget: IconButton(
+          iconSize: FontSize.s20,
+          icon: Icon(
+            Icons.arrow_forward_ios_outlined,
+            color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
+          ),
+          onPressed: () {},
+        ),
+        isLast: true,
+      ),
+      MenuTile(
         leadingIcon: Icons.logout,
         title: 'Logout',
         trailingWidget: IconButton(

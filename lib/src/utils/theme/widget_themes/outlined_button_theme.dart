@@ -29,11 +29,11 @@ class BaatoOutlinedButtonTheme {
   /* -- Dark Theme -- */
   static final darkOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      foregroundColor: ThemeColor.light,
+      foregroundColor: ThemeColor.primary,
       side: const BorderSide(color: ThemeColor.borderPrimary),
       textStyle: const TextStyle(
           fontSize: 16,
-          color: ThemeColor.textWhite,
+          // color: ThemeColor.textWhite,
           fontWeight: FontWeight.w600),
       padding: const EdgeInsets.symmetric(
           vertical: DefaultManager.buttonHeight, horizontal: 20),

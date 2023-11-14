@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/utils/theme/widget_themes/searchbar_theme.dart';
+import 'package:bato_mechanic/src/utils/theme/widget_themes/text_button_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,6 +45,7 @@ class BaatoAppTheme {
     bottomSheetTheme: BaatoBottomSheetTheme.lightBottomSheetTheme,
     elevatedButtonTheme: BaatoElevatedButtonTheme.lightElevatedButtonTheme,
     outlinedButtonTheme: BaatoOutlinedButtonTheme.lightOutlinedButtonTheme,
+    textButtonTheme: BaatoTextButtonTheme.darkTextButtonTheme,
     iconTheme: BaatoIconTheme.lightIconTheme,
     iconButtonTheme: BaatoIconButtonTheme.lightIconButtonTheme,
     cardTheme: BaatoCardTheme.lightCardTheme,
@@ -70,6 +72,7 @@ class BaatoAppTheme {
     bottomSheetTheme: BaatoBottomSheetTheme.darkBottomSheetTheme,
     elevatedButtonTheme: BaatoElevatedButtonTheme.darkElevatedButtonTheme,
     outlinedButtonTheme: BaatoOutlinedButtonTheme.darkOutlinedButtonTheme,
+    textButtonTheme: BaatoTextButtonTheme.darkTextButtonTheme,
     iconTheme: BaatoIconTheme.darkIconTheme,
     iconButtonTheme: BaatoIconButtonTheme.darkIconButtonTheme,
     cardTheme: BaatoCardTheme.darkCardTheme,

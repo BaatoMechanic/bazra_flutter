@@ -1,10 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/features/password_change/presentation/change_password_screen.dart';
+import 'package:bato_mechanic/src/features/password_change/presentation/old_password_confirmation_screen.dart';
+import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/customer/customer_profile_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/customer/edit_profile_screen.dart';
 import 'package:bato_mechanic/src/features/review/mechanic_reviews_list_screen.dart';
 import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
+import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen.dart';
@@ -52,6 +56,9 @@ enum appRoute {
   signup,
   ReviewMechanic,
   mechanicReviewsList,
+  confirmOldPassword,
+  confirmOTP,
+  changePassword,
 }
 
 final repairSteps = [
@@ -74,8 +81,10 @@ GoRouter goRouter() {
       GoRoute(
         path: '/',
         name: appRoute.splash.name,
-        // builder: (context, state) => SplashScreen(),
-        builder: (context, state) => HomeScreen(),
+        builder: (context, state) => ConfirmOldPasswordScreen(),
+        // builder: (context, state) => OTPConfirmationScreen(
+        //   otpType: OTPType.EMAIL,
+        // ),
         routes: [
           GoRoute(
             path: 'login',
@@ -102,6 +111,27 @@ GoRouter goRouter() {
                     name: appRoute.payment.name,
                     builder: (context, state) =>
                         const PaymentIntegrationScreen(),
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'confirm-old-password',
+                name: appRoute.confirmOldPassword.name,
+                builder: (context, state) => ConfirmOldPasswordScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'confirm-top',
+                    name: appRoute.confirmOTP.name,
+                    builder: (context, state) => OTPConfirmationScreen(
+                      otpType: OTPType.EMAIL,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'change-password',
+                        name: appRoute.changePassword.name,
+                        builder: (context, state) => ChangePasswordScreen(),
+                      ),
+                    ],
                   ),
                 ],
               ),

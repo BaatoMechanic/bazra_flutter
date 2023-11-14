@@ -9,22 +9,24 @@ import '../../../utils/constants/managers/values_manager.dart';
 import '../../../utils/validators/validation.dart';
 
 class BaseFormField extends StatelessWidget {
-  BaseFormField({
-    Key? key,
-    this.title,
-    this.labelText,
-    this.hintText,
-    this.controller,
-    this.focusNode,
-    this.initialValue,
-    this.nextFocusNode,
-    this.autovalidateMode,
-    required this.validator,
-    this.textStyle,
-    required this.textInputType,
-    this.onSaved,
-    this.onChanged,
-  }) : super(key: key);
+  BaseFormField(
+      {Key? key,
+      this.title,
+      this.labelText,
+      this.hintText,
+      this.controller,
+      this.focusNode,
+      this.initialValue,
+      this.nextFocusNode,
+      this.autovalidateMode,
+      required this.validator,
+      this.textStyle,
+      required this.textInputType,
+      this.onSaved,
+      this.onChanged,
+      this.textAlign,
+      this.maxLines})
+      : super(key: key);
 
   final String? title;
   final String? labelText;
@@ -39,6 +41,8 @@ class BaseFormField extends StatelessWidget {
   final Function(String?)? onChanged;
   final String? Function(String?) validator;
   final TextStyle? textStyle;
+  final TextAlign? textAlign;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +98,7 @@ class BaseFormField extends StatelessWidget {
                   },
                 )
               : TextFormField(
+                  textAlign: textAlign ?? TextAlign.start,
                   initialValue: initialValue,
                   focusNode: focusNode,
                   controller: controller,
@@ -102,7 +107,7 @@ class BaseFormField extends StatelessWidget {
                   validator: (value) => validator(value),
                   style:
                       textStyle ?? TextStyle().copyWith(color: ThemeColor.dark),
-                  textInputAction: nextFocusNode != null
+                  textInputAction: nextFocusNode == null
                       ? TextInputAction.done
                       : TextInputAction.next,
                   keyboardType: textInputType,
@@ -113,11 +118,7 @@ class BaseFormField extends StatelessWidget {
                       horizontal: AppPadding.p12,
                       vertical: AppPadding.p0,
                     ),
-                    // enabledBorder: const OutlineInputBorder(
-                    //   borderSide: BorderSide(color: Colors.black, width: 1.0),
-                    // ),
-                    // border: const OutlineInputBorder(),
-                    // labelStyle: const TextStyle(color: Colors.green),
+                    // labelStyle: labelStyle,
                   ),
                   onFieldSubmitted: (_) {
                     if (nextFocusNode != null) {

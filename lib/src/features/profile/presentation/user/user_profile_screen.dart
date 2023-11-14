@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/common/widgets/menu_tile_section_widget.dart';
+import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/menu/user_profile_menu.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
@@ -109,18 +110,9 @@ class UserProfileScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(AppRadius.r100),
-                          border: Border.all(
-                              width: AppWidth.h2, color: ThemeColor.primary)),
-                      child: CircleAvatar(
-                        radius: AppHeight.h50,
-                        backgroundImage: AssetImage(
-                          'assets/images/no-profile.png'.hardcoded(),
+                    const UserCircleAvatar(
+                        // radius: AppRadius.r60,
                         ),
-                      ),
-                    ),
                     Text(
                       'Krishna Rimal',
                       style: Theme.of(context).textTheme.displayLarge,

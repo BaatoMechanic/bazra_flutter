@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/common/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
@@ -23,91 +24,7 @@ class UserProfileMenu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkMode = HelperFunctions.isDarkMode(context);
 
-    final List<MenuTile> moreTiles = [
-      MenuTile(
-        leadingIcon: Icons.notifications,
-        title: 'Notifications',
-        trailingWidget: IconButton(
-          iconSize: AppSize.s20,
-          onPressed: () {},
-          icon: Icon(
-            Icons.arrow_forward_ios,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          ),
-        ),
-      ),
-      MenuTile(
-        leadingIcon: Icons.warning,
-        title: 'About',
-        trailingWidget: IconButton(
-          iconSize: AppSize.s20,
-          onPressed: () => context.goNamed(appRoute.supportChat.name),
-          icon: Icon(
-            Icons.arrow_forward_ios,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          ),
-        ),
-      ),
-      MenuTile(
-        leadingIcon: Icons.warning,
-        title: 'Report an issue',
-        trailingWidget: IconButton(
-          iconSize: AppSize.s20,
-          onPressed: () => context.goNamed(appRoute.supportChat.name),
-          icon: Icon(
-            Icons.arrow_forward_ios,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          ),
-        ),
-      ),
-      MenuTile(
-        leadingIcon: Icons.warning,
-        title: 'Privacy Policy ',
-        trailingWidget: IconButton(
-          iconSize: AppSize.s20,
-          onPressed: () => context.goNamed(appRoute.supportChat.name),
-          icon: Icon(
-            Icons.arrow_forward_ios,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          ),
-        ),
-      ),
-      MenuTile(
-        leadingIcon: Icons.key,
-        title: 'Terms and Conditions',
-        trailingWidget: IconButton(
-          iconSize: AppSize.s20,
-          onPressed: () => context.goNamed(appRoute.supportChat.name),
-          icon: Icon(
-            Icons.arrow_forward_ios,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          ),
-        ),
-        isLast: true,
-      ),
-    ];
-
     List<MenuTile> profileTiles = [
-      MenuTile(
-        leadingIcon: Icons.settings,
-        title: 'Manage data',
-        trailingWidget: IconButton(
-          iconSize: AppSize.s20,
-          icon: Icon(Icons.arrow_forward_ios_outlined),
-          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () {},
-        ),
-      ),
-      MenuTile(
-        leadingIcon: Icons.home,
-        title: 'Manage Profile',
-        trailingWidget: IconButton(
-          iconSize: AppSize.s20,
-          icon: Icon(Icons.arrow_forward_ios_outlined),
-          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () {},
-        ),
-      ),
       MenuTile(
         leadingIcon: Icons.person,
         title: 'Profile',
@@ -125,7 +42,7 @@ class UserProfileMenu extends ConsumerWidget {
           iconSize: AppSize.s20,
           icon: Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () => context.goNamed(appRoute.repairProgress.name),
+          onPressed: () => context.pushNamed(appRoute.repairProgress.name),
         ),
       ),
       MenuTile(
@@ -135,33 +52,12 @@ class UserProfileMenu extends ConsumerWidget {
           iconSize: AppSize.s20,
           icon: Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () => context.goNamed(appRoute.recentRepairs.name),
+          onPressed: () => context.pushNamed(appRoute.recentRepairs.name),
         ),
-      ),
-      MenuTile(
-        leadingIcon: Icons.settings,
-        title: 'Settings',
-        trailingWidget: IconButton(
-          iconSize: AppSize.s20,
-          icon: Icon(Icons.arrow_forward_ios_outlined),
-          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () {},
-        ),
-        isLast: true,
       ),
     ];
 
     List<MenuTile> settingsTiles = [
-      MenuTile(
-        leadingIcon: Icons.notification_important,
-        title: 'Notifications',
-        trailingWidget: IconButton(
-          iconSize: AppSize.s20,
-          icon: Icon(Icons.arrow_forward_ios_outlined),
-          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () {},
-        ),
-      ),
       MenuTile(
         leadingIcon: Icons.dark_mode,
         title: 'Dark mode',
@@ -233,6 +129,70 @@ class UserProfileMenu extends ConsumerWidget {
       )
     ];
 
+    final List<MenuTile> moreTiles = [
+      MenuTile(
+        leadingIcon: Icons.notifications,
+        title: 'Notifications',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () {},
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.warning,
+        title: 'About',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.warning,
+        title: 'Report an issue',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.pushNamed(appRoute.feedback.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.policy,
+        title: 'Privacy Policy ',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.key,
+        title: 'Terms and Conditions',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+        isLast: true,
+      ),
+    ];
+
     List<MenuTile> connectTiles = [
       MenuTile(
         leadingIcon: Icons.feedback,
@@ -243,7 +203,7 @@ class UserProfileMenu extends ConsumerWidget {
             Icons.arrow_forward_ios_outlined,
             color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
-          onPressed: () => context.goNamed(appRoute.feedback.name),
+          onPressed: () => context.pushNamed(appRoute.feedback.name),
         ),
       ),
       MenuTile(
@@ -255,7 +215,7 @@ class UserProfileMenu extends ConsumerWidget {
             Icons.arrow_forward_ios_outlined,
           ),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () => context.goNamed(appRoute.feedback.name),
+          onPressed: () => context.pushNamed(appRoute.supportChat.name),
         ),
         isLast: true,
       ),
@@ -273,11 +233,8 @@ class UserProfileMenu extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: AppHeight.h30,
-                      backgroundImage: AssetImage(
-                        'assets/images/no-profile.png'.hardcoded(),
-                      ),
+                    const UserCircleAvatar(
+                      radius: AppRadius.r50,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(

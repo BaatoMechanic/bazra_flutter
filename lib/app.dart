@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/common/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';

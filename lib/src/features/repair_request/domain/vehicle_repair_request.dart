@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // To parse this JSON data, do
 //
 //     final vehicleRepairRequest = vehicleRepairRequestFromJson(jsonString);
@@ -125,6 +126,40 @@ class VehicleRepairRequest {
         // throw Exception("Unsupported status value: $status");
         return VehicleRepairRequestStatus.PENDING;
     }
+  }
+
+  VehicleRepairRequest copyWith({
+    int? id,
+    int? customerId,
+    int? preferredMechanicId,
+    int? assignedMechanicId,
+    String? locationName,
+    String? locationCoordinates,
+    int? vehicleId,
+    int? vehiclePartId,
+    String? title,
+    String? description,
+    List<VehicleRepairRequestImage>? images,
+    List<VehicleRepairRequestVideo>? videos,
+    DateTime? createdAt,
+    VehicleRepairRequestStatus? status,
+  }) {
+    return VehicleRepairRequest(
+      id: id ?? this.id,
+      customerId: customerId ?? this.customerId,
+      preferredMechanicId: preferredMechanicId ?? this.preferredMechanicId,
+      assignedMechanicId: assignedMechanicId ?? this.assignedMechanicId,
+      locationName: locationName ?? this.locationName,
+      locationCoordinates: locationCoordinates ?? this.locationCoordinates,
+      vehicleId: vehicleId ?? this.vehicleId,
+      vehiclePartId: vehiclePartId ?? this.vehiclePartId,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      images: images ?? this.images,
+      videos: videos ?? this.videos,
+      createdAt: createdAt ?? this.createdAt,
+      status: status ?? VehicleRepairRequestStatus.PENDING,
+    );
   }
 }
 

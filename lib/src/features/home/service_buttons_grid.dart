@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/common/domain/service_type.dart';
+import 'package:bato_mechanic/src/common/core/domain/service_type.dart';
 
 import 'package:flutter/material.dart';
 

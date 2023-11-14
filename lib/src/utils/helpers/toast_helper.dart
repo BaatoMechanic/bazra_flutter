@@ -313,11 +313,15 @@ class ToastHelper {
       content: Text(
         message.capitalize(),
         textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall!
+            .copyWith(color: ThemeColor.dark),
+        // style: const TextStyle(
+        //   fontSize: 16,
+        //   fontWeight: FontWeight.bold,
+        //   color: Colors.white,
+        // ),
       ),
       duration: notificationDuration != null
           ? Duration(seconds: notificationDuration)
@@ -325,7 +329,7 @@ class ToastHelper {
           : Duration(days: 9999999.intHardcoded()),
       action: SnackBarAction(
         label: label,
-        textColor: Colors.white,
+        textColor: ThemeColor.dark,
         onPressed: () {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
         },

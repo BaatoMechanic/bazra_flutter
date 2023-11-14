@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:bato_mechanic/src/utils/enums/service_type_options.dart';
 import 'package:flutter/material.dart';
 
-import '../../features/repair_request/domain/vehicle_part.dart';
+import '../../../features/repair_request/domain/vehicle_part.dart';
 
 class ServiceType {
   final String id;

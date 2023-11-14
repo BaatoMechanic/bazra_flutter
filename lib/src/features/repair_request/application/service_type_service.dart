@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_category.dart';
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 
-import '../../../common/domain/service_type.dart';
+import '../../../common/core/domain/service_type.dart';
 import '../data/vehicle_category_repository/vehicle_category_repository.dart';
 import '../domain/vehicle.dart';
 import '../domain/vehicle_part.dart';

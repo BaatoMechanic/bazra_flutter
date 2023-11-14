@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/common/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';

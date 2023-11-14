@@ -40,24 +40,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_) async {
-        // ref.read(homeScreenControllerProvider).hasRepairRequest("1").then(
-        //   (value) {
-        //     if (value) {
-        //       VehicleRepairRequest? repairRequest =
-        //           ref.read(repairRequestServiceProvider).activeRepairRequest;
-
-        //       if (repairRequest != null) {
-        //         if (repairRequest.status ==
-        //             VehicleRepairRequestStatus.WAITING_FOR_MECHANIC) {
-        //           if (mounted) context.pushNamed(appRoute.trackMechanic.name);
-        //           return;
-        //         }
-        //         if (mounted) context.pushNamed(appRoute.repairProgress.name);
-        //         return;
-        //       }
-        //     }
-        //   },
-        // );
         final result =
             await ref.read(homeScreenControllerProvider).hasRepairRequest("1");
         if (result) {
@@ -66,11 +48,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
           if (repairRequest != null) {
             if (repairRequest.status ==
-                VehicleRepairRequestStatus.WAITING_FOR_MECHANIC) {
-              if (mounted) context.pushNamed(appRoute.trackMechanic.name);
+                VehicleRepairRequestStatus.IN_PROGRESS) {
+              if (mounted) context.pushNamed(appRoute.repairProgress.name);
               return;
             }
-            if (mounted) context.pushNamed(appRoute.repairProgress.name);
+            if (mounted) context.pushNamed(appRoute.trackMechanic.name);
             return;
           }
         }

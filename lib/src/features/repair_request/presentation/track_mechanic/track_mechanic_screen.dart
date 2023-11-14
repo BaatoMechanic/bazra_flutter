@@ -90,7 +90,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
 
     ref.read(repairRequestServiceProvider).fetchUserRepairRequests('1');
 
-    final timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+    final timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (mounted) {
         if (_currentIndex < pathPoints.length - 1) {
           User? user = ref.read(userServiceProvider).currentUser;
@@ -135,16 +135,20 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     });
   }
 
+// Setting this variable because the notification is shown every time the screen is rebuilt
+  bool _isFirstTime = true;
+
   @override
   Widget build(BuildContext context) {
     ref.listen(watchRepairRequestStateChangesProvider, (previous, state) {
       if (!state.isRefreshing && state.hasValue) {
-        if (state.value != null &&
+        if (_isFirstTime &&
+            state.value != null &&
             state.value!.status ==
                 VehicleRepairRequestStatus.WAITING_FOR_ADVANCE_PAYMENT) {
-          // Show message to pay baato kharcha if not paid
           ToastHelper.showNotificationWithCloseButton(
               context, "Please pay baato kharcha to continue the process");
+          _isFirstTime = false;
         }
       }
     });
@@ -323,38 +327,9 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                         ],
                       ),
                     ),
-                    // const Padding(
-                    //   padding: EdgeInsets.symmetric(
-                    //     horizontal: 16.0,
-                    //     vertical: 8.0,
-                    //   ),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       Text(
-                    //         'Advance Cost Paid',
-                    //         style: TextStyle(
-                    //           fontSize: 16,
-                    //           fontWeight: FontWeight.bold,
-                    //         ),
-                    //       ),
-                    //       Text(
-                    //         'Rs. 2000',
-                    //         style: TextStyle(
-                    //           fontSize: 16,
-                    //           fontWeight: FontWeight.bold,
-                    //           color: Colors.orange,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    SizedBox(
+                    const SizedBox(
                       height: AppHeight.h12,
                     ),
-
-                    // if (repairRequest.status ==
-                    //     VehicleRepairRequestStatus.WAITING_FOR_ADVANCE_PAYMENT)
                     if (repairRequest.status ==
                             VehicleRepairRequestStatus
                                 .WAITING_FOR_ADVANCE_PAYMENT ||
@@ -390,9 +365,36 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
               backgroundColor: ThemeColor.transparent,
               context: context,
               builder: (context) => PayBottomSheetWidget(
-                children: const [
-                  KhaltiButton(),
-                  EsewaButton(),
+                children: [
+                  KhaltiButton(
+                    onPressed: () async {
+                      final result = await ref
+                          .read(trackMechanicScreenControllerProvider.notifier)
+                          .payWithKhalti();
+                      Navigator.of(context).pop();
+                      if (result) {
+                        context.pushNamed(appRoute.repairProgress.name);
+                      } else {
+                        ToastHelper.showNotificationWithCloseButton(
+                            context, "Something went wrong, please try again");
+                      }
+                    },
+                  ),
+                  EsewaButton(
+                    onPressed: () async {
+                      context.goNamed(appRoute.repairProgress.name);
+                      // final result = await ref
+                      //     .read(trackMechanicScreenControllerProvider.notifier)
+                      //     .payWithEsewa();
+                      // Navigator.of(context).pop();
+                      // if (result) {
+                      //   context.pushNamed(appRoute.repairProgress.name);
+                      // } else {
+                      //   ToastHelper.showNotificationWithCloseButton(
+                      //       context, "Something went wrong, please try again");
+                      // }
+                    },
+                  ),
                 ],
               ),
             );

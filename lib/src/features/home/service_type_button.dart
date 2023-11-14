@@ -10,7 +10,7 @@ import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../common/domain/service_type.dart';
+import '../../common/core/domain/service_type.dart';
 import '../../utils/constants/managers/color_manager.dart';
 import '../../utils/constants/managers/values_manager.dart';
 import '../repair_request/application/service_type_service.dart';

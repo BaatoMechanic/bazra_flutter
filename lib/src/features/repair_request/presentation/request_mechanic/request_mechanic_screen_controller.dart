@@ -25,6 +25,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../utils/model_utils.dart';
+import '../../domain/user_position.dart';
 import 'request_mechanic_state.dart';
 
 class RequestMechanicScreenController
@@ -35,6 +36,7 @@ class RequestMechanicScreenController
             selectedImages: const AsyncValue.data([]),
             selectedVideo: const AsyncValue.data(null),
             preferredMechanic: const AsyncValue.data(null),
+            selectedPosition: null,
           ),
         );
   final Ref ref;
@@ -122,6 +124,10 @@ class RequestMechanicScreenController
 
   setPreferredMechanic(Mechanic mechanic) {
     state = state.copyWith(preferredMechanic: AsyncValue.data(mechanic));
+  }
+
+  setUserPosition(UserPosition position) {
+    state = state.copyWith(selectedPosition: position);
   }
 
   Future<bool> requestForVehicleRepair(

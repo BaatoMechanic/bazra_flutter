@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/domain/mechanic.dart';
@@ -10,18 +11,18 @@ import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_categor
 
 class RequestMechanicState {
   RequestMechanicState({
-    // this.error = const AsyncValue.data(null),
     required this.selectedImages,
     required this.selectedVideo,
     required this.preferredMechanic,
+    required this.selectedPosition,
     this.value = const AsyncValue.data(null),
   });
-  // final VehicleCategory? vehicleCategory;
-  // final Vehicle? selectedVehicle;
+
   final AsyncValue<List<File>> selectedImages;
   final AsyncValue<File?> selectedVideo;
   final AsyncValue<Mechanic?> preferredMechanic;
-  // final AsyncValue<String?> error;
+  final UserPosition? selectedPosition;
+
   final AsyncValue<void> value;
 
   RequestMechanicState copyWith({
@@ -29,18 +30,20 @@ class RequestMechanicState {
     AsyncValue<File?>? selectedVideo,
     AsyncValue<Mechanic?>? preferredMechanic,
     AsyncValue<void>? value,
+    UserPosition? selectedPosition,
   }) {
     return RequestMechanicState(
       selectedImages: selectedImages ?? this.selectedImages,
       selectedVideo: selectedVideo ?? this.selectedVideo,
       preferredMechanic: preferredMechanic ?? this.preferredMechanic,
+      selectedPosition: selectedPosition ?? this.selectedPosition,
       value: value ?? this.value,
     );
   }
 
   @override
   String toString() {
-    return 'RequestMechanicState(selectedImages: $selectedImages, selectedVideo: $selectedVideo, preferredMechanic: $preferredMechanic, value: $value)';
+    return 'SelectedPosition: $selectedPosition, RequestMechanicState(selectedImages: $selectedImages, selectedVideo: $selectedVideo, preferredMechanic: $preferredMechanic, value: $value)';
   }
 
   @override
@@ -50,6 +53,7 @@ class RequestMechanicState {
     return other.selectedImages == selectedImages &&
         other.selectedVideo == selectedVideo &&
         other.preferredMechanic == preferredMechanic &&
+        other.selectedPosition == selectedPosition &&
         other.value == value;
   }
 
@@ -58,6 +62,7 @@ class RequestMechanicState {
     return selectedImages.hashCode ^
         selectedVideo.hashCode ^
         preferredMechanic.hashCode ^
+        selectedPosition.hashCode ^
         value.hashCode;
   }
 }

@@ -161,7 +161,10 @@ class ToastHelper {
                 },
                 child: Text(
                   'Close'.hardcoded(),
-                  style: Theme.of(ctx).textTheme.bodyLarge,
+                  style: Theme.of(ctx)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: ThemeColor.dark),
                 ),
               ),
             ],
@@ -179,9 +182,10 @@ class ToastHelper {
                   Text(
                     message,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(ctx)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: ThemeColor.dark),
                   ),
                 ],
               ),

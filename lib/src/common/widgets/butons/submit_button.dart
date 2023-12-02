@@ -33,7 +33,7 @@ class _SubmitButtonState extends State<SubmitButton> {
     final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return ElevatedButton(
       onPressed: !widget.showSpinner
-          ? () {
+          ? () async {
               setState(() {
                 widget.showSpinner = !widget.showSpinner;
               });
@@ -44,7 +44,10 @@ class _SubmitButtonState extends State<SubmitButton> {
                   });
                 }
               });
-              widget.onPressed();
+              await widget.onPressed();
+              setState(() {
+                widget.showSpinner = !widget.showSpinner;
+              });
             }
           : null,
       child: Row(

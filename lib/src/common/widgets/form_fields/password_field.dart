@@ -115,7 +115,8 @@ class _PasswordFieldState extends State<PasswordField> {
                   focusNode: widget.focusNode,
                   style: TextStyle().copyWith(color: ThemeColor.dark),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => AppValidator.validatePassword(value),
+                  // TODO: uncomment this line to enable validation after development
+                  // validator: (value) => AppValidator.validatePassword(value),
                   textInputAction: widget.nextFocusNode == null
                       ? TextInputAction.done
                       : TextInputAction.next,

@@ -1,5 +1,7 @@
 import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
+import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
+import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/home/presentation/home_screen_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -11,10 +13,12 @@ import 'package:bato_mechanic/src/features/menu/user_profile_menu.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../auth/domain/user.dart';
 import '../repair_request/domain/vehicle_repair_request.dart';
 import '../repair_request/presentation/request_mechanic/repair_request_controller.dart';
 import 'service_buttons_grid.dart';
@@ -40,6 +44,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(watchUserStateChangesProvider).value;
     return WillPopScope(
       onWillPop: () async {
         final shouldPop = await showDialog<bool>(
@@ -93,14 +98,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           ),
           appBar: AppBar(
             elevation: AppHeight.h0,
-            actions: [
+            actions: const [
               Padding(
-                padding: const EdgeInsets.only(right: AppPadding.p8),
-                child: CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/images/no-profile.png'.hardcoded()),
+                padding: EdgeInsets.only(right: AppPadding.p8),
+                child: UserCircleAvatar(
+                  radius: AppRadius.r20,
                 ),
-              )
+              ),
             ],
           ),
           body: Stack(

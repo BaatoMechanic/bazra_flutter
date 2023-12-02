@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 abstract class RequestMechanicMapRepository {
   getRoute(String sourcePoint, String destinationPoint);
   fetchLocationName(double lat, double lon);
+  getSearchLocations(String searchText);
 }
 
 final requestMechanicMapRepositoryProvider =

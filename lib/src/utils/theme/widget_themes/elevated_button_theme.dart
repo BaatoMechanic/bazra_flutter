@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/managers/color_manager.dart';
@@ -11,13 +12,16 @@ class BaatoElevatedButtonTheme {
   static final lightElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: ThemeColor.light,
+      // foregroundColor: ThemeColor.light,
+      foregroundColor: ThemeColor.dark,
       backgroundColor: ThemeColor.primary,
       disabledForegroundColor: ThemeColor.darkGrey,
       disabledBackgroundColor: ThemeColor.buttonDisabled,
       side: const BorderSide(color: ThemeColor.transparent),
-      padding:
-          const EdgeInsets.symmetric(vertical: DefaultManager.buttonHeight),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppPadding.p4,
+        horizontal: AppPadding.p8,
+      ),
       textStyle: const TextStyle(
           fontSize: 16,
           color: ThemeColor.textWhite,
@@ -31,13 +35,16 @@ class BaatoElevatedButtonTheme {
   static final darkElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: ThemeColor.light,
+      // foregroundColor: ThemeColor.light,
+      foregroundColor: ThemeColor.dark,
       backgroundColor: ThemeColor.primary,
       disabledForegroundColor: ThemeColor.darkGrey,
       disabledBackgroundColor: ThemeColor.darkerGrey,
       side: const BorderSide(color: ThemeColor.transparent),
-      padding:
-          const EdgeInsets.symmetric(vertical: DefaultManager.buttonHeight),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppPadding.p4,
+        horizontal: AppPadding.p8,
+      ),
       textStyle: const TextStyle(
           fontSize: 16,
           color: ThemeColor.textWhite,

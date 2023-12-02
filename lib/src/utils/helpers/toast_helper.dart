@@ -1,3 +1,5 @@
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +87,7 @@ class ToastHelper {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            backgroundColor: Colors.amberAccent[200],
+            backgroundColor: Theme.of(ctx).primaryColor,
             // contentPadding: EdgeInsets.symmetric(
             //   horizontal: 0,
             //   vertical: 15,
@@ -166,7 +168,7 @@ class ToastHelper {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            backgroundColor: Colors.amberAccent[200],
+            backgroundColor: Theme.of(ctx).primaryColor,
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
               height: 150,
@@ -190,19 +192,114 @@ class ToastHelper {
     );
   }
 
+  static showCenterAlertWithListOptions(
+      BuildContext ctx, List<Widget> options) {
+    showGeneralDialog(
+      barrierDismissible: false,
+      barrierLabel: 'Center alert dismissed',
+      context: ctx,
+      pageBuilder: (ctx, a1, a2) {
+        return Container();
+      },
+      transitionBuilder: (ctx, a1, a2, child) {
+        var curve = Curves.easeInOut.transform(a1.value);
+        return Transform.scale(
+          scale: curve,
+          child: AlertDialog(
+            backgroundColor: Theme.of(ctx).primaryColor,
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text(
+                  'Close'.hardcoded(),
+                  style: Theme.of(ctx).textTheme.bodyLarge,
+                ),
+              ),
+            ],
+            actionsPadding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+                vertical: AppPadding.p4, horizontal: AppPadding.p4),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [...options],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static showCenterAlertWithOptions(
+    BuildContext ctx,
+    List<TextButton> actions, {
+    String? message,
+  }) {
+    showGeneralDialog(
+      barrierDismissible: false,
+      barrierLabel: 'Center alert dismissed',
+      context: ctx,
+      pageBuilder: (ctx, a1, a2) {
+        return Container();
+      },
+      transitionBuilder: (ctx, a1, a2, child) {
+        var curve = Curves.easeInOut.transform(a1.value);
+        return Transform.scale(
+          scale: curve,
+          child: AlertDialog(
+            backgroundColor: ThemeColor.primary,
+            actions: [...actions],
+            actionsPadding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+                vertical: AppPadding.p4, horizontal: AppPadding.p4),
+            content: SizedBox(
+              height: 150,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    message ?? 'Confirm exit the app?',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(ctx)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(color: ThemeColor.dark),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   static showNotification(BuildContext context, String message,
       {notificationDuration = 3}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.amberAccent[700],
+      backgroundColor: Theme.of(context).primaryColor,
       dismissDirection: DismissDirection.horizontal,
       content: Text(
         message.capitalize(),
         textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+        style: Theme.of(context)
+            .textTheme
+            .headlineMedium!
+            .copyWith(color: ThemeColor.dark),
+        // style:  TextStyle(
+        //   fontSize: 16,
+        //   fontWeight: FontWeight.bold,
+        //   color: Colors.white,
+        // ),
       ),
       duration: Duration(seconds: notificationDuration),
     ));
@@ -211,16 +308,20 @@ class ToastHelper {
   static showNotificationWithCloseButton(BuildContext context, String message,
       {String label = "Close", notificationDuration}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.amberAccent[700],
+      backgroundColor: Theme.of(context).primaryColor,
       dismissDirection: DismissDirection.horizontal,
       content: Text(
         message.capitalize(),
         textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall!
+            .copyWith(color: ThemeColor.dark),
+        // style: const TextStyle(
+        //   fontSize: 16,
+        //   fontWeight: FontWeight.bold,
+        //   color: Colors.white,
+        // ),
       ),
       duration: notificationDuration != null
           ? Duration(seconds: notificationDuration)
@@ -228,7 +329,7 @@ class ToastHelper {
           : Duration(days: 9999999.intHardcoded()),
       action: SnackBarAction(
         label: label,
-        textColor: Colors.white,
+        textColor: ThemeColor.dark,
         onPressed: () {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
         },

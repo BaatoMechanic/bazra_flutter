@@ -1,9 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/style_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
-import 'package:flutter/material.dart';
 
 import '../../../utils/constants/managers/color_manager.dart';
 import '../../../utils/constants/managers/values_manager.dart';
@@ -12,11 +13,13 @@ class SubmitButton extends StatefulWidget {
   SubmitButton({
     Key? key,
     required this.label,
-    required this.onPressed,
+    this.spinnerText,
     this.showSpinner = false,
+    required this.onPressed,
   }) : super(key: key);
 
   final String label;
+  final String? spinnerText;
   final Function() onPressed;
   bool showSpinner;
 
@@ -65,7 +68,7 @@ class _SubmitButtonState extends State<SubmitButton> {
             Row(
               children: [
                 Text(
-                  'Signing in'.hardcoded(),
+                  widget.spinnerText ?? ''.hardcoded(),
                   style: getBoldStyle().copyWith(
                     fontSize: FontSize.s16,
                     color: isDarkTheme ? ThemeColor.white : ThemeColor.black,
@@ -78,7 +81,7 @@ class _SubmitButtonState extends State<SubmitButton> {
               widget.label,
               style: getBoldStyle().copyWith(
                 fontSize: FontSize.s16,
-                color: isDarkTheme ? ThemeColor.white : ThemeColor.black,
+                color: ThemeColor.black,
               ),
             ),
         ],

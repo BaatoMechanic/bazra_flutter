@@ -12,9 +12,12 @@ class VehicleCategoryScreenController
 
   Future<List<VehicleCategory>> fetchVehicleCategories() async {
     // state = AsyncValue.loading();
-    state = await AsyncValue.guard(() =>
-        ref.watch(vehicleCategoryServiceProvider).fetchVehicleCategories());
-    return state.hasValue ? (state.value as List<VehicleCategory>) : [];
+    if (mounted) {
+      state = await AsyncValue.guard(() =>
+          ref.watch(vehicleCategoryServiceProvider).fetchVehicleCategories());
+      return state.hasValue ? (state.value as List<VehicleCategory>) : [];
+    }
+    return [];
   }
 
   void setSelectedCategory(VehicleCategory category) {

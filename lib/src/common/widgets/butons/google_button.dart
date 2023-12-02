@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,7 @@ class GoogleButton extends StatelessWidget {
         decoration: BoxDecoration().copyWith(
             borderRadius: BorderRadius.circular(AppRadius.r8),
             border: Border.all(
-              width: 1.2.doubleHardcoded(),
+              width: 0.9.doubleHardcoded(),
               color: ThemeColor.black,
             )),
         child: Row(

@@ -4,11 +4,14 @@ import 'dart:math';
 
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
+import 'package:bato_mechanic/src/features/payment/application/payment_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/mechanic_service.dart';
+import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/map_repository/request_mechanic_map_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/mechanic_repository/mechanic_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/mechanic.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,18 +51,6 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
 
     position = await Geolocator.getCurrentPosition();
 
-    // state = state.copyWith(
-    //     currentUserLocation: UserPosition(
-    //         latitude: position.latitude,
-    //         longitude: position.longitude,
-    //         timestamp: position.timestamp,
-    //         accuracy: position.accuracy,
-    //         altitude: position.altitude,
-    //         heading: position.heading,
-    //         speed: position.speed,
-    //         speedAccuracy: position.speedAccuracy,
-    //         locationName: "Temp Name"));
-
     final UserPosition currentUserLocation = UserPosition(
         latitude: position.latitude,
         longitude: position.longitude,
@@ -75,16 +66,29 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
     ref.read(userServiceProvider).setCurrentUser(currentUser);
   }
 
-  // void setMarkerPosition(UserPosition position) {
-  //   // mechanicPositionStreamController.add(position);
-  //   // state = state.copyWith(
-  //   //     currentMechanicLocation: mechanicPositionStreamController.stream);
+  Future<bool> payWithKhalti() async {
+    final result = await ref.read(paymentServiceProvider).payWithKhalti();
+    if (result) {
+      VehicleRepairRequest? request =
+          ref.watch(repairRequestServiceProvider).activeRepairRequest;
+      ref.read(repairRequestServiceProvider).setActiveRepairRequest(
+          request!.copyWith(status: VehicleRepairRequestStatus.IN_PROGRESS));
+      return true;
+    }
+    return false;
+  }
 
-  // }
-
-  // Stream<UserPosition> watchMechanicPosition() {
-  //   return mechanicPositionStreamController.stream;
-  // }
+  Future<bool> payWithEsewa() async {
+    final result = await ref.read(paymentServiceProvider).payWithEsewa();
+    if (result) {
+      VehicleRepairRequest? request =
+          ref.watch(repairRequestServiceProvider).activeRepairRequest;
+      ref.read(repairRequestServiceProvider).setActiveRepairRequest(
+          request!.copyWith(status: VehicleRepairRequestStatus.IN_PROGRESS));
+      return true;
+    }
+    return false;
+  }
 
   Future<dynamic> fetchRoute() async {
     final response = await ref
@@ -160,25 +164,9 @@ double calculateHaversineDistance(
   return earthRadius * c;
 }
 
-final trackMechanicScreenControllerProvider =
-    StateNotifierProvider<TrackMechanicScreenController, AsyncValue<void>>(
-        (ref) => TrackMechanicScreenController(ref: ref));
+final trackMechanicScreenControllerProvider = StateNotifierProvider.autoDispose<
+    TrackMechanicScreenController,
+    AsyncValue<void>>((ref) => TrackMechanicScreenController(ref: ref));
 
 final fetchTrackMechanicRouteProvider = FutureProvider.autoDispose((ref) =>
     ref.watch(trackMechanicScreenControllerProvider.notifier).fetchRoute());
-
-// final fetchTrackMechanicScreenMechanicInfoProvider =
-//     FutureProvider.autoDispose((ref) {
-//   final String mechanicId = ref
-//       .read(repairRequestControllerProvider)
-//       .repairRequest!
-//       .assignedMechanicId
-//       .toString();
-//   return ref
-//       .watch(trackMechanicScreenControllerProvider.notifier)
-//       .fetchMechanicInfo(mechanicId);
-// });
-
-// final watchMechanicPositionProvider = StreamProvider.autoDispose((ref) => ref
-//     .watch(trackMechanicScreenControllerProvider.notifier)
-//     .watchMechanicPosition());

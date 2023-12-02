@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/features/repair_request/application/location_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/map_repository/request_mechanic_map_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -73,18 +74,20 @@ class SearchMapWidgetController extends StateNotifier<SearchMapState> {
     // return 'TEst location';
   }
 
-  getSearchLocations(String searchText) async {
+  fetchSearchLocations(String searchText) async {
     // loading = true;
     // var response = await MapApi.getSearchLocations(searchText);
+    var response =
+        await ref.read(locationServiceProvider).fetchSearchLocation(searchText);
 
-    // if (response is Success) {
-    //   loading = false;
-    //   return response.response;
-    // }
+    if (response is Success) {
+      // loading = false;
+      return response.response;
+    }
 
-    // if (response is Failure) {
-    //   mapError = MapError(code: response.code, message: response.errorResponse);
-    // }
+    if (response is Failure) {
+      // mapError = MapError(code: response.code, message: response.errorResponse);
+    }
     // loading = false;
     // return null;
     return 'TEst search result location';
@@ -96,11 +99,14 @@ class SearchMapWidgetController extends StateNotifier<SearchMapState> {
   }
 }
 
-// final searchMapWidgetControllerProvider =
-//     StateNotifierProvider.autoDispose<SearchMapWidgetController, VehiclesState>(
-//   (ref) => SearchMapWidgetController(ref: ref),
-// );
 final searchMapWidgetControllerProvider = StateNotifierProvider.autoDispose<
     SearchMapWidgetController, SearchMapState>(
   (ref) => SearchMapWidgetController(ref: ref),
 );
+
+// final fetchSearchLocationsProvider =
+//     FutureProvider.autoDispose.family<String, String>((ref, searchText) {
+//   final searchMapWidgetController =
+//       ref.watch(searchMapWidgetControllerProvider.notifier);
+//   return searchMapWidgetController.fetchSearchLocations(searchText);
+// });

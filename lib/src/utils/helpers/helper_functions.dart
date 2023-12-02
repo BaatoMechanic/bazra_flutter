@@ -1,3 +1,5 @@
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
 class HelperFunctions {
@@ -51,6 +53,17 @@ class HelperFunctions {
 
   static Size screenSize(BuildContext context) {
     return MediaQuery.of(context).size;
+  }
+
+  static Widget loadingInidicator(BuildContext context, {double? radius}) {
+    return Center(
+        child: SizedBox(
+      height: radius,
+      width: radius,
+      child: CircularProgressIndicator(
+        color: Theme.of(context).primaryColor,
+      ),
+    ));
   }
 
   static double screenHeight(BuildContext context) {

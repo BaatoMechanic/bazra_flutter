@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // To parse this JSON data, do
 //
 //     final vehiclePart = vehiclePartFromJson(jsonString);
@@ -19,34 +20,57 @@ String vehiclePartToJson(VehiclePart data) => json.encode(data.toJson());
 class VehiclePart {
   int id;
   String name;
-  int vehicleId;
-  String image;
+  int vehicleCategoryId;
+  String? image;
+  bool isMultiple;
+  String? position;
 
   VehiclePart({
     required this.id,
     required this.name,
-    required this.vehicleId,
+    required this.vehicleCategoryId,
     required this.image,
+    required this.isMultiple,
+    this.position,
   });
 
   factory VehiclePart.fromJson(Map<String, dynamic> json) => VehiclePart(
         id: json["id"],
         name: json["name"].toString().capitalize(),
-        vehicleId: json["vehicle"],
+        vehicleCategoryId: json["vehicle"],
         image: json["image"],
+        isMultiple: json["is_multiple"],
+        position: json["position"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name.toLowerCase(),
-        "vehicle": vehicleId,
+        "vehicle": vehicleCategoryId,
         "image": image,
+        "is_multiple": isMultiple,
+        "position": position,
       };
-}
 
-class VehiclePartError {
-  int code;
-  Object message;
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'vehicleCategoryId': vehicleCategoryId,
+      'image': image,
+      'isMultiple': isMultiple,
+      'position': position,
+    };
+  }
 
-  VehiclePartError({required this.code, required this.message});
+  factory VehiclePart.fromMap(Map<String, dynamic> map) {
+    return VehiclePart(
+      id: map['id'] as int,
+      name: map['name'] as String,
+      vehicleCategoryId: map['vehicleCategoryId'] as int,
+      image: map['image'] != null ? map['image'] as String : null,
+      isMultiple: map['isMultiple'] as bool,
+      position: map['position'] != null ? map['position'] as String : null,
+    );
+  }
 }

@@ -11,14 +11,14 @@ import '../../../utils/constants/managers/values_manager.dart';
 class PasswordField extends StatefulWidget {
   PasswordField({
     Key? key,
-    required this.title,
+    this.title,
     this.labelText,
     this.hintText,
     required this.controller,
     required this.focusNode,
     this.nextFocusNode,
   }) : super(key: key);
-  final String title;
+  final String? title;
   final String? labelText;
   final String? hintText;
   final TextEditingController controller;
@@ -39,10 +39,11 @@ class _PasswordFieldState extends State<PasswordField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            widget.title,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ),
+          if (widget.title != null)
+            Text(
+              widget.title as String,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
           const SizedBox(
             height: AppHeight.h4,
           ),
@@ -112,6 +113,7 @@ class _PasswordFieldState extends State<PasswordField> {
                   controller: widget.controller,
                   obscureText: _obscurePassword,
                   focusNode: widget.focusNode,
+                  style: TextStyle().copyWith(color: ThemeColor.dark),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) => AppValidator.validatePassword(value),
                   textInputAction: widget.nextFocusNode == null
@@ -129,6 +131,13 @@ class _PasswordFieldState extends State<PasswordField> {
                               ? Icons.visibility
                               : Icons.visibility_off,
                         ),
+                        style: Theme.of(context)
+                            .iconButtonTheme
+                            .style!
+                            .copyWith(
+                                backgroundColor:
+                                    MaterialStatePropertyAll<Color>(
+                                        ThemeColor.transparent)),
                         onPressed: () {
                           setState(() {
                             _obscurePassword = !_obscurePassword;

@@ -1,4 +1,6 @@
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/common/widgets/form_fields/description_field.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
@@ -22,7 +24,8 @@ class ReviewMechanicScreen extends ConsumerStatefulWidget {
 }
 
 class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
-  TextEditingController _reviewTextController = TextEditingController();
+  final TextEditingController _reviewTextController = TextEditingController();
+  final FocusNode _reviewFocusNode = FocusNode();
 
   int selectedStars = 0;
 
@@ -68,7 +71,9 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
-                                  .copyWith(color: ColorManager.primaryTint90),
+                                  .copyWith(
+                                    color: ThemeColor.dark,
+                                  ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,11 +96,16 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
                                     borderRadius:
                                         BorderRadius.circular(AppRadius.r8),
                                   ),
-                                  child: const Row(
+                                  child: Row(
                                     children: [
-                                      Text('4.5'),
-                                      Icon(
+                                      Text(
+                                        '4.5',
+                                        style: const TextStyle()
+                                            .copyWith(color: ThemeColor.dark),
+                                      ),
+                                      const Icon(
                                         Icons.star,
+                                        color: ThemeColor.dark,
                                       )
                                     ],
                                   ),
@@ -115,17 +125,30 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
                     for (int i = 0; i < selectedStars; i++)
                       IconButton(
                         onPressed: () => _setStars(i),
-                        icon: Icon(
+                        style: const ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll<Color>(
+                              ThemeColor.transparent,
+                            ),
+                            iconSize:
+                                MaterialStatePropertyAll<double>(FontSize.s30)),
+                        icon: const Icon(
                           Icons.star,
-                          color: ColorManager.primary,
+                          color: ThemeColor.primary,
                         ),
                       ),
                     for (int i = selectedStars; i < 5; i++)
                       IconButton(
                         onPressed: () => _setStars(i),
-                        icon: Icon(
+                        style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                            ThemeColor.transparent,
+                          ),
+                          iconSize:
+                              MaterialStatePropertyAll<double>(FontSize.s30),
+                        ),
+                        icon: const Icon(
                           Icons.star_outline,
-                          color: ColorManager.primary,
+                          color: ThemeColor.primary,
                         ),
                       ),
                   ],
@@ -133,16 +156,22 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
                 const SizedBox(
                   height: AppSize.s20,
                 ),
-                TextField(
+                // TextField(
+                //   controller: _reviewTextController,
+                //   maxLines: 10,
+                //   decoration: const InputDecoration(hintText: 'Write a review'),
+                // ),
+                DescriptionField(
                   controller: _reviewTextController,
-                  maxLines: 10,
-                  decoration: InputDecoration(hintText: 'Write a review'),
+                  focusNode: _reviewFocusNode,
+                  hintText: 'Leave a review',
                 ),
                 const SizedBox(
                   height: AppSize.s20,
                 ),
                 SubmitButton(
                   label: 'Submit',
+                  spinnerText: "Submitting your review".hardcoded(),
                   onPressed: _submitReview,
                 ),
               ],
@@ -165,12 +194,14 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
         context,
         'Please select a rating'.hardcoded(),
       );
+      return;
     }
     if (_reviewTextController.text.isEmpty) {
       ToastHelper.showNotification(
         context,
         'Please write a review'.hardcoded(),
       );
+      return;
     }
     VehicleRepairRequest? repairRequest =
         ref.read(watchRepairRequestStateChangesProvider).value;

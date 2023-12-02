@@ -41,8 +41,7 @@ class LoginScreen extends ConsumerWidget {
           .signInWithIdAndPassword(
               _idController.text, _passwordController.text);
       if (response) {
-        // context.goNamed(appRoute.home.name);
-        context.goNamed(appRoute.trackMechanic.name);
+        context.replaceNamed(appRoute.home.name);
       }
     }
   }
@@ -52,14 +51,9 @@ class LoginScreen extends ConsumerWidget {
     ref.listen<AsyncValue>(loginScreenControllerProvider,
         (previous, state) => state.showError(context));
 
-    String name = "Krishna";
-    final user = ref.watch(watchUserStateChangesProvider).value;
     final state = ref.watch(loginScreenControllerProvider);
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: user != null ? Text('Hello, ${user.name}'.hardcoded()) : null,
-        ),
         body: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -107,7 +101,7 @@ class LoginScreen extends ConsumerWidget {
                     LoginSignUpLabel(
                       infoText: 'Don\'t have an account ?'.hardcoded(),
                       labelText: 'Register'.hardcoded(),
-                      onPressed: () => context.goNamed(appRoute.signup.name),
+                      onPressed: () => context.pushNamed(appRoute.signup.name),
                     ),
                   ],
                 ),

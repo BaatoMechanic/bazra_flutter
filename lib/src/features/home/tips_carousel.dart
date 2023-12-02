@@ -25,6 +25,7 @@ class TipsCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     final List<Widget> tipSliderItems = tipList
         .map(
           (item) => Row(
@@ -33,9 +34,10 @@ class TipsCarousel extends StatelessWidget {
                 child: Text(
                   item['tip'],
                   textAlign: TextAlign.justify,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      // color: ColorManager.blackWithOpacity,
-                      color: ThemeColor.black.withOpacity(0.5)),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: ThemeColor.black.withOpacity(0.5)),
                 ),
               ),
               SizedBox(
@@ -49,8 +51,9 @@ class TipsCarousel extends StatelessWidget {
         )
         .toList();
     return Container(
-      decoration: BoxDecoration(
-        color: ThemeColor.grey,
+      decoration: const BoxDecoration().copyWith(
+        color: ColorManager.primaryShade10,
+        // color: isDarkTheme ? ThemeColor.grey : ThemeColor.lightGrey,
         borderRadius: BorderRadius.circular(
           AppRadius.r12,
         ),

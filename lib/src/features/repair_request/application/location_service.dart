@@ -77,7 +77,27 @@ class LocationService {
     }
 
     return null;
-    // return 'TEst location';
+  }
+
+  fetchSearchLocation(String searchText) async {
+    var response = await ref
+        .read(requestMechanicMapRepositoryProvider)
+        .getSearchLocations(searchText);
+
+    if (response is Success) {
+      return Success(
+        code: response.code,
+        response: response.response,
+      );
+    }
+
+    if (response is Failure) {
+      // state = state.copyWith(
+      //     markerPosition:
+      //         AsyncValue.error(response.errorResponse, response.stackTrace));
+    }
+
+    return null;
   }
 }
 

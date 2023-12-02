@@ -1,75 +1,240 @@
+import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
+import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../common/widgets/butons/submit_button.dart';
+import '../../common/widgets/menu_tile_section_widget.dart';
+import '../../common/widgets/menu_tile_widget.dart';
 import '../../utils/constants/managers/color_manager.dart';
 import '../../utils/constants/managers/values_manager.dart';
+import '../../utils/helpers/helper_functions.dart';
 
-class UserProfileMenu extends StatelessWidget {
+class UserProfileMenu extends ConsumerWidget {
   UserProfileMenu({super.key});
 
-  List<ProfileTile> profileTiles = [
-    ProfileTile(
-      leadingIcon: Icons.settings,
-      title: 'Manage data',
-      onPressed: () {},
-    ),
-    ProfileTile(
-      leadingIcon: Icons.home,
-      title: 'Manage Profile',
-      onPressed: () {},
-    ),
-    ProfileTile(
-      leadingIcon: Icons.person,
-      title: 'Profile',
-      onPressed: () {},
-    ),
-    ProfileTile(
-      leadingIcon: Icons.settings,
-      title: 'Settings',
-      onPressed: () {},
-    ),
-  ];
-  List<ProfileTile> settingsTiles = [
-    ProfileTile(
-      leadingIcon: Icons.notification_important,
-      title: 'Notifications',
-      onPressed: () {},
-    ),
-    ProfileTile(
-      leadingIcon: Icons.dark_mode,
-      title: 'Dark mode',
-      onPressed: () {},
-    ),
-    ProfileTile(
-      leadingIcon: Icons.miscellaneous_services,
-      title: 'Misc',
-      onPressed: () {},
-    ),
-  ];
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = HelperFunctions.isDarkMode(context);
+
+    List<MenuTile> profileTiles = [
+      MenuTile(
+        leadingIcon: Icons.person,
+        title: 'Profile',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () => context.pushNamed(appRoute.customerProfile.name),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.settings,
+        title: 'Active Repair',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () => context.pushNamed(appRoute.repairProgress.name),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.settings,
+        title: 'Recent Repairs',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () => context.pushNamed(appRoute.recentRepairs.name),
+        ),
+      ),
+    ];
+
+    List<MenuTile> settingsTiles = [
+      MenuTile(
+        leadingIcon: Icons.dark_mode,
+        title: 'Dark mode',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () {
+            final darkTile = ListTile(
+                title: Text(
+                  'Dark mode',
+                  style: const TextStyle().copyWith(
+                    fontSize: FontSize.s16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  ref
+                      .read(userSettingsRepositoryProvider)
+                      .setThemeMode(ThemeMode.dark);
+                  return;
+                });
+
+            final lightTile = ListTile(
+                title: Text(
+                  'Light mode',
+                  style: const TextStyle().copyWith(
+                    fontSize: FontSize.s16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  ref
+                      .read(userSettingsRepositoryProvider)
+                      .setThemeMode(ThemeMode.light);
+                  return;
+                });
+
+            final systemTile = ListTile(
+                title: Text(
+                  'System',
+                  style: const TextStyle().copyWith(
+                    fontSize: FontSize.s16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  ref
+                      .read(userSettingsRepositoryProvider)
+                      .setThemeMode(ThemeMode.system);
+                  return;
+                });
+
+            ToastHelper.showCenterAlertWithListOptions(
+                context, [darkTile, lightTile, systemTile]);
+          },
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.miscellaneous_services,
+        title: 'Misc',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(Icons.arrow_forward_ios_outlined),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () {},
+        ),
+        isLast: true,
+      )
+    ];
+
+    final List<MenuTile> moreTiles = [
+      MenuTile(
+        leadingIcon: Icons.notifications,
+        title: 'Notifications',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () {},
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.warning,
+        title: 'About',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.warning,
+        title: 'Report an issue',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.pushNamed(appRoute.feedback.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.policy,
+        title: 'Privacy Policy ',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.key,
+        title: 'Terms and Conditions',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+        ),
+        isLast: true,
+      ),
+    ];
+
+    List<MenuTile> connectTiles = [
+      MenuTile(
+        leadingIcon: Icons.feedback,
+        title: 'Feedback',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(
+            Icons.arrow_forward_ios_outlined,
+            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          ),
+          onPressed: () => context.pushNamed(appRoute.feedback.name),
+        ),
+      ),
+      MenuTile(
+        leadingIcon: Icons.wechat,
+        title: 'Chat Support',
+        trailingWidget: IconButton(
+          iconSize: AppSize.s20,
+          icon: Icon(
+            Icons.arrow_forward_ios_outlined,
+          ),
+          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+        ),
+        isLast: true,
+      ),
+    ];
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: AppPadding.p20, vertical: AppPadding.p45),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppPadding.p12, vertical: AppPadding.p45),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: AppHeight.h30,
-                      child: Image.asset(
-                        'assets/images/no-profile.png'.hardcoded(),
-                        // width: AppHeight.h50,
-                        width: 50,
-                      ),
+                    const UserCircleAvatar(
+                      radius: AppRadius.r50,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -80,9 +245,9 @@ class UserProfileMenu extends StatelessWidget {
                         children: [
                           Text(
                             'Krishna Rimal',
-                            style: Theme.of(context).textTheme.displaySmall,
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: AppHeight.h12,
                           ),
                           Text(
@@ -104,94 +269,28 @@ class UserProfileMenu extends StatelessWidget {
                 const SizedBox(
                   height: AppHeight.h30,
                 ),
-                ProfileTilesSection(
-                    sectionTitle: 'Profile', tiles: profileTiles),
+                MenuTilesSection(sectionTitle: 'Profile', tiles: profileTiles),
                 const SizedBox(
                   height: AppHeight.h30,
                 ),
-                ProfileTilesSection(
+                MenuTilesSection(
                     sectionTitle: 'Settings', tiles: settingsTiles),
                 const SizedBox(
                   height: AppHeight.h30,
                 ),
-                SubmitButton(label: 'Logout', onPressed: () {})
+                MenuTilesSection(sectionTitle: 'More', tiles: moreTiles),
+                const SizedBox(
+                  height: AppHeight.h30,
+                ),
+                MenuTilesSection(sectionTitle: 'Connect', tiles: connectTiles),
+                const SizedBox(
+                  height: AppHeight.h30,
+                ),
+                SubmitButton(
+                    label: 'Logout',
+                    onPressed: () => context.replaceNamed(appRoute.login.name))
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ProfileTilesSection extends StatelessWidget {
-  ProfileTilesSection({
-    Key? key,
-    required this.tiles,
-    required this.sectionTitle,
-  }) : super(key: key);
-
-  String sectionTitle;
-  List<ProfileTile> tiles;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          sectionTitle,
-          style: Theme.of(context).textTheme.displaySmall,
-        ),
-        const SizedBox(
-          height: AppHeight.h12,
-        ),
-        ...tiles
-      ],
-    );
-  }
-}
-
-class ProfileTile extends StatelessWidget {
-  ProfileTile({
-    Key? key,
-    required this.title,
-    required this.leadingIcon,
-    this.trailingIcon = Icons.arrow_forward_ios,
-    required this.onPressed,
-  }) : super(key: key);
-
-  String title;
-  IconData leadingIcon;
-  IconData trailingIcon;
-  Function() onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Container(
-        padding: const EdgeInsets.all(AppPadding.p8),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: ColorManager.primaryTint50,
-        ),
-        child: Icon(leadingIcon),
-      ),
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.headlineSmall,
-      ),
-      trailing: IconButton(
-        iconSize: AppSize.s20,
-        onPressed: () {},
-        icon: Container(
-          padding: EdgeInsets.all(AppPadding.p2),
-          decoration: BoxDecoration(
-            color: ColorManager.primaryTint80,
-            borderRadius: BorderRadius.circular(5.0.doubleHardcoded()),
-          ),
-          child: const Icon(
-            Icons.arrow_forward_ios,
           ),
         ),
       ),

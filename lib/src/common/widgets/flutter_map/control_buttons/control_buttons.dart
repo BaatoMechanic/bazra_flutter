@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geolocator/geolocator.dart';
@@ -143,9 +144,12 @@ class _FlutterMapControlButtonsState extends State<FlutterMapControlButtons>
                     // _animatedMapMove(centerZoom.center, zoom);
                     _animatedMapMove(centerZoom.center, zoom, mounted, this);
                   },
-                  child: Icon(widget.zoomInIcon,
-                      color: widget.zoomInColorIcon ??
-                          IconTheme.of(context).color),
+                  child: Icon(
+                    widget.zoomInIcon,
+                    // color:
+                    //     widget.zoomInColorIcon ?? IconTheme.of(context).color,
+                    color: ThemeColor.dark,
+                  ),
                 ),
               ),
             if (widget.showZoomOutButton)
@@ -167,9 +171,12 @@ class _FlutterMapControlButtonsState extends State<FlutterMapControlButtons>
                     // _animatedMapMove(centerZoom.center, zoom);
                     _animatedMapMove(centerZoom.center, zoom, mounted, this);
                   },
-                  child: Icon(widget.zoomOutIcon,
-                      color: widget.zoomOutColorIcon ??
-                          IconTheme.of(context).color),
+                  child: Icon(
+                    widget.zoomOutIcon,
+                    color:
+                        // widget.zoomOutColorIcon ?? IconTheme.of(context).color,
+                        ThemeColor.dark,
+                  ),
                 ),
               ),
             if (widget.showCurrentLocationButton)
@@ -197,9 +204,12 @@ class _FlutterMapControlButtonsState extends State<FlutterMapControlButtons>
                         mounted,
                         this);
                   },
-                  child: Icon(widget.currentLocationIcon,
-                      color: widget.currentLocationColorIcon ??
-                          IconTheme.of(context).color),
+                  child: Icon(
+                    widget.currentLocationIcon,
+                    // color: widget.currentLocationColorIcon ??
+                    //     IconTheme.of(context).color,
+                    color: ThemeColor.dark,
+                  ),
                 ),
               ),
           ],

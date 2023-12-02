@@ -1,6 +1,9 @@
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+
+import '../../utils/helpers/helper_functions.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
   final String audioPath;
@@ -39,6 +42,9 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
         sliderValue = position.inSeconds.toDouble();
       });
     });
+    // player.onPlayerStateChanged.listen((event) {
+    //   if (event == PlayerState.paused) {}
+    // });
   }
 
   @override
@@ -49,6 +55,7 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return Row(
       children: [
         IconButton(
@@ -58,7 +65,16 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
             } else {
               await player.play(AssetSource(widget.audioPath));
             }
+            setState(() {});
           },
+          style: const ButtonStyle().copyWith(
+            backgroundColor: const MaterialStatePropertyAll<Color>(
+              ThemeColor.transparent,
+            ),
+            iconColor: isDarkTheme
+                ? const MaterialStatePropertyAll<Color>(ThemeColor.light)
+                : const MaterialStatePropertyAll<Color>(ThemeColor.black),
+          ),
           icon: Icon(
             player.state == PlayerState.playing
                 ? Icons.pause

@@ -64,7 +64,8 @@ class ThemeColor {
   static const Color buttonDisabled = Color(0xFFC4C4C4);
 
   // Border colors
-  static const Color borderPrimary = Color(0xFFD9D9D9);
+  // static const Color borderPrimary = Color(0xFFD9D9D9);
+  static const Color borderPrimary = Color(0xFFffd740);
   static const Color borderSecondary = Color(0xFFE6E6E6);
 
   // Error and validation colors

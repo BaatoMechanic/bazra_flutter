@@ -57,6 +57,48 @@ class FakeRequestMechanicMapRepository implements RequestMechanicMapRepository {
   }
 
   @override
+  getSearchLocations(String searchText) async {
+    try {
+      String url =
+          'https://nominatim.openstreetmap.org/search?q=$searchText&format=json&polygon_geojson=1&addressdetails=1&accept-language=en';
+      // var response = await http.post(Uri.parse(url));
+      var response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        return Success(
+          code: response.statusCode,
+          response:
+              jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>,
+        );
+      }
+      return Failure(
+        code: ApiStatusCode.invalidResponse,
+        stackTrace: StackTrace.current,
+        errorResponse: ApiStrings.invalidResponseString,
+      );
+    } on HttpException {
+      return Failure(
+        code: ApiStatusCode.httpError,
+        stackTrace: StackTrace.current,
+        errorResponse: ApiStrings.noInternetString,
+      );
+    } on FormatException {
+      return Failure(
+        code: ApiStatusCode.invalidResponse,
+        stackTrace: StackTrace.current,
+        errorResponse: ApiStrings.invalidFormatString,
+      );
+    } catch (e) {
+      // return Failure(code: 103, errorResponse: e.toString());
+      return Failure(
+        code: ApiStatusCode.unknownError,
+        stackTrace: StackTrace.current,
+        errorResponse: ApiStrings.unknownErrorString,
+      );
+    }
+  }
+
+  @override
   fetchLocationName(double latitude, double longitude) async {
     try {
       String url =

@@ -20,4 +20,4 @@ class SplashScreenController {
 }
 
 final splashScreenControllerProvider =
-    Provider((ref) => SplashScreenController(ref: ref));
+    Provider.autoDispose((ref) => SplashScreenController(ref: ref));

@@ -10,12 +10,17 @@ class PayButton extends StatefulWidget {
     Key? key,
     required this.label,
     required this.onPressed,
-    this.showSpinner = false,
+    this.shouldShowSpinner = false,
+    this.buttonColor,
+    this.textColor,
   }) : super(key: key);
 
   final String label;
   final Function() onPressed;
-  bool showSpinner;
+  bool shouldShowSpinner;
+  bool showSpinner = false;
+  final Color? buttonColor;
+  final Color? textColor;
 
   @override
   State<PayButton> createState() => _PayButtonState();
@@ -27,17 +32,29 @@ class _PayButtonState extends State<PayButton> {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: ElevatedButton.icon(
-          onPressed: widget.onPressed,
-          // onPressed: () {
-          //   setState(() {
-          //     widget.showSpinner = !widget.showSpinner;
-          //   });
-          //   widget.onPressed;
-          // },
+          onPressed: widget.showSpinner
+              ? null
+              : () async {
+                  if (widget.shouldShowSpinner) {
+                    setState(() {
+                      widget.showSpinner = true;
+                    });
+                  }
+                  await widget.onPressed();
+                  if (widget.shouldShowSpinner) {
+                    setState(() {
+                      widget.showSpinner = false;
+                    });
+                  }
+                },
           style: !widget.showSpinner
               ? Theme.of(context).elevatedButtonTheme.style!.copyWith(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(ColorManager.primary))
+                    foregroundColor: MaterialStatePropertyAll(
+                      widget.textColor,
+                    ),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        widget.buttonColor ?? ColorManager.primary),
+                  )
               : ElevatedButton.styleFrom(
                   backgroundColor: ColorManager.primaryTint40,
                 ),
@@ -56,7 +73,9 @@ class _PayButtonState extends State<PayButton> {
               : Container(),
           label: Text(
             widget.label,
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                  color: widget.textColor ?? ThemeColor.dark,
+                ),
           )),
     );
   }

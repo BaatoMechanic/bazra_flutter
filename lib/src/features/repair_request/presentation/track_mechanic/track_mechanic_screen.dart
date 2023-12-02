@@ -90,7 +90,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
 
     ref.read(repairRequestServiceProvider).fetchUserRepairRequests('1');
 
-    final timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+    final timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (mounted) {
         if (_currentIndex < pathPoints.length - 1) {
           User? user = ref.read(userServiceProvider).currentUser;
@@ -107,10 +107,6 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
               latitude: pathPoints[_currentIndex].latitude,
               longitude: pathPoints[_currentIndex].longitude,
             );
-
-            // ref
-            //     .read(trackMechanicScreenControllerProvider.notifier)
-            //     .setMarkerPosition(nextPosition);
             ref
                 .read(userServiceProvider)
                 .setCurrentUser(user?.copyWith(currentLocation: nextPosition));
@@ -132,19 +128,30 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
       if (ref.read(userServiceProvider).currentUser?.currentLocation == null) {
         ref.read(locationServiceProvider).initializeUserLocation();
       }
+      // Directly go to progress screen if the repair request is in progress
+      if (ref.read(repairRequestServiceProvider).activeRepairRequest?.status ==
+          VehicleRepairRequestStatus.IN_PROGRESS) {
+        if (mounted) {
+          context.replaceNamed(appRoute.repairProgress.name);
+        }
+      }
     });
   }
+
+// Setting this variable because the notification is shown every time the screen is rebuilt
+  bool _isFirstTime = true;
 
   @override
   Widget build(BuildContext context) {
     ref.listen(watchRepairRequestStateChangesProvider, (previous, state) {
       if (!state.isRefreshing && state.hasValue) {
-        if (state.value != null &&
+        if (_isFirstTime &&
+            state.value != null &&
             state.value!.status ==
                 VehicleRepairRequestStatus.WAITING_FOR_ADVANCE_PAYMENT) {
-          // Show message to pay baato kharcha if not paid
           ToastHelper.showNotificationWithCloseButton(
               context, "Please pay baato kharcha to continue the process");
+          _isFirstTime = false;
         }
       }
     });
@@ -153,6 +160,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
         ref.watch(watchRepairRequestStateChangesProvider);
 
     final assignedMechanic = ref.watch(watchMechanicStateChangesProvider).value;
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     return AsyncValueWidget(
         value: repairRequestValue,
@@ -245,7 +253,11 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                         RichText(
                           text: TextSpan(
                             text: 'Estimated Arrival Time: ',
-                            style: const TextStyle(color: Colors.black),
+                            style: const TextStyle().copyWith(
+                              color: isDarkTheme
+                                  ? ThemeColor.white
+                                  : ThemeColor.black,
+                            ),
                             children: <TextSpan>[
                               TextSpan(
                                 text: BaatoDateFormatter.formatMinutesToGeneric(
@@ -255,7 +267,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                                                 .notifier)
                                         .getEstimateArrivalTime()),
                                 style: const TextStyle(
-                                  color: Colors.orange,
+                                  color: ThemeColor.primary,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
@@ -267,19 +279,15 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                     ),
                     ListTile(
                       title: Text(
-                        // 'Tire repair',
                         repairRequest.title ?? "",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       subtitle: Text(
-                        // 'Tire repair and replacement',
                         repairRequest.description ?? "No description provided",
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
+                        // style: TextStyle().copyWith(
+                        //   fontSize: 14,
+                        // ),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     const SizedBox(
@@ -316,44 +324,15 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.orange,
+                              color: ThemeColor.primary,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    // const Padding(
-                    //   padding: EdgeInsets.symmetric(
-                    //     horizontal: 16.0,
-                    //     vertical: 8.0,
-                    //   ),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       Text(
-                    //         'Advance Cost Paid',
-                    //         style: TextStyle(
-                    //           fontSize: 16,
-                    //           fontWeight: FontWeight.bold,
-                    //         ),
-                    //       ),
-                    //       Text(
-                    //         'Rs. 2000',
-                    //         style: TextStyle(
-                    //           fontSize: 16,
-                    //           fontWeight: FontWeight.bold,
-                    //           color: Colors.orange,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    SizedBox(
+                    const SizedBox(
                       height: AppHeight.h12,
                     ),
-
-                    // if (repairRequest.status ==
-                    //     VehicleRepairRequestStatus.WAITING_FOR_ADVANCE_PAYMENT)
                     if (repairRequest.status ==
                             VehicleRepairRequestStatus
                                 .WAITING_FOR_ADVANCE_PAYMENT ||
@@ -362,9 +341,10 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                       ..._buildBaatoKharcha(context)
                     else
                       SubmitButton(
-                          label: 'Check Progress'.hardcoded(),
-                          onPressed: () =>
-                              context.goNamed(appRoute.repairProgress.name))
+                        label: 'Check Progress'.hardcoded(),
+                        onPressed: () =>
+                            context.pushNamed(appRoute.repairProgress.name),
+                      )
                   ],
                 ),
               ),
@@ -389,9 +369,36 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
               backgroundColor: ThemeColor.transparent,
               context: context,
               builder: (context) => PayBottomSheetWidget(
-                children: const [
-                  KhaltiButton(),
-                  EsewaButton(),
+                children: [
+                  KhaltiButton(
+                    onPressed: () async {
+                      final result = await ref
+                          .read(trackMechanicScreenControllerProvider.notifier)
+                          .payWithKhalti();
+                      Navigator.of(context).pop();
+                      if (result) {
+                        context.pushNamed(appRoute.repairProgress.name);
+                      } else {
+                        ToastHelper.showNotificationWithCloseButton(
+                            context, "Something went wrong, please try again");
+                      }
+                    },
+                  ),
+                  EsewaButton(
+                    onPressed: () async {
+                      context.goNamed(appRoute.repairProgress.name);
+                      // final result = await ref
+                      //     .read(trackMechanicScreenControllerProvider.notifier)
+                      //     .payWithEsewa();
+                      // Navigator.of(context).pop();
+                      // if (result) {
+                      //   context.pushNamed(appRoute.repairProgress.name);
+                      // } else {
+                      //   ToastHelper.showNotificationWithCloseButton(
+                      //       context, "Something went wrong, please try again");
+                      // }
+                    },
+                  ),
                 ],
               ),
             );
@@ -548,6 +555,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                     Polyline(
                       points: routeCoordinatePoints,
                       strokeWidth: 4,
+                      // color: Theme.of(context).primaryColor,
                       color: Colors.purple,
                     ),
                   ],

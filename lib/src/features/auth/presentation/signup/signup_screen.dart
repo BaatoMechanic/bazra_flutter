@@ -16,6 +16,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../common/widgets/butons/facebook_button.dart';
 import '../../../../common/widgets/butons/google_button.dart';
 import '../../../../common/widgets/form_fields/divider_field.dart';
+import '../../../../common/widgets/form_fields/id_field.dart';
+import '../../../../utils/constants/managers/default_manager.dart';
 import '../login_signup_label.dart';
 
 class SignUpScreen extends ConsumerWidget {
@@ -45,7 +47,7 @@ class SignUpScreen extends ConsumerWidget {
             context,
             'You have been registered successfully. Please login to continue'
                 .hardcoded());
-        context.goNamed(appRoute.login.name);
+        context.replaceNamed(appRoute.login.name);
       }
     }
   }
@@ -54,14 +56,9 @@ class SignUpScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<AsyncValue>(signupScreenControllerProvider,
         (previous, state) => state.showError(context));
-
-    final user = ref.watch(watchUserStateChangesProvider).value;
     final state = ref.watch(signupScreenControllerProvider);
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: user != null ? Text('Hello, ${user.name}'.hardcoded()) : null,
-        ),
         body: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -71,7 +68,15 @@ class SignUpScreen extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    EmailField(
+                    // EmailField(
+                    //   title: 'Id'.hardcoded(),
+                    //   labelText: "Phone/email".hardcoded(),
+                    //   hintText: "Enter your number or your valid email address"
+                    //       .hardcoded(),
+                    //   controller: _idController,
+                    //   focusNode: _emailFocusNode,
+                    // ),
+                    IdField(
                       title: 'Id'.hardcoded(),
                       labelText: "Phone/email".hardcoded(),
                       hintText: "Enter your number or your valid email address"
@@ -79,12 +84,18 @@ class SignUpScreen extends ConsumerWidget {
                       controller: _idController,
                       focusNode: _emailFocusNode,
                     ),
+                    const SizedBox(
+                      height: DefaultManager.defaultSpace,
+                    ),
                     PasswordField(
                       title: "Password".hardcoded(),
                       labelText: "Password".hardcoded(),
                       hintText: "Enter your password".hardcoded(),
                       controller: _passwordController,
                       focusNode: _passwordFocusNode,
+                    ),
+                    const SizedBox(
+                      height: AppHeight.h30,
                     ),
                     SubmitButton(
                       showSpinner: state.isLoading,

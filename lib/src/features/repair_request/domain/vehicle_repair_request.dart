@@ -35,7 +35,7 @@ class VehicleRepairRequest {
   int? assignedMechanicId;
   String locationName;
   String locationCoordinates;
-  int vehicleId;
+  int vehicleCategoryId;
   int vehiclePartId;
   String? title;
   String? description;
@@ -51,7 +51,7 @@ class VehicleRepairRequest {
     this.assignedMechanicId,
     required this.locationName,
     required this.locationCoordinates,
-    required this.vehicleId,
+    required this.vehicleCategoryId,
     required this.vehiclePartId,
     required this.title,
     required this.description,
@@ -69,7 +69,7 @@ class VehicleRepairRequest {
         assignedMechanicId: json["assigned_mechanic"],
         locationName: json["location_name"],
         locationCoordinates: json["location_coordinates"],
-        vehicleId: json["vehicle"],
+        vehicleCategoryId: json["vehicle"],
         vehiclePartId: json["vehicle_part"],
         title: json["title"],
         description: json["description"],
@@ -89,7 +89,7 @@ class VehicleRepairRequest {
         "assigned_mechanic": assignedMechanicId,
         "location_name": locationName,
         "location_coordinates": locationCoordinates,
-        "vehicle": vehicleId,
+        "vehicle": vehicleCategoryId,
         "vehicle_part": vehiclePartId,
         "title": title,
         "description": description,
@@ -151,7 +151,7 @@ class VehicleRepairRequest {
       assignedMechanicId: assignedMechanicId ?? this.assignedMechanicId,
       locationName: locationName ?? this.locationName,
       locationCoordinates: locationCoordinates ?? this.locationCoordinates,
-      vehicleId: vehicleId ?? this.vehicleId,
+      vehicleCategoryId: vehicleId ?? this.vehicleCategoryId,
       vehiclePartId: vehiclePartId ?? this.vehiclePartId,
       title: title ?? this.title,
       description: description ?? this.description,

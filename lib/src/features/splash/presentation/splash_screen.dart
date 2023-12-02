@@ -25,41 +25,34 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        // final isLoggedIn = ref.watch(userServiceProvider).currentUser != null;
-        // if (!isLoggedIn) {
-        //   if (mounted) context.replaceNamed(appRoute.login.name);
-        //   return;
-        // } else {
-        //   if (mounted) context.replaceNamed(appRoute.home.name);
-        //   return;
-        // }
+      (_) async {
+        final isLoggedIn = ref.watch(userServiceProvider).currentUser != null;
+        if (!isLoggedIn) {
+          if (mounted) context.replaceNamed(appRoute.login.name);
+          return;
+        } else {
+          final result = await ref
+              .read(splashScreenControllerProvider)
+              .hasRepairRequest("1");
+          if (result) {
+            VehicleRepairRequest? repairRequest =
+                ref.read(repairRequestServiceProvider).activeRepairRequest;
 
-        WidgetsBinding.instance.addObserver(this);
-
-        WidgetsBinding.instance.addPostFrameCallback(
-          (_) async {
-            final result = await ref
-                .read(splashScreenControllerProvider)
-                .hasRepairRequest("1");
-            if (result) {
-              VehicleRepairRequest? repairRequest =
-                  ref.read(repairRequestServiceProvider).activeRepairRequest;
-
-              if (repairRequest != null) {
-                if (repairRequest.status ==
-                    VehicleRepairRequestStatus.IN_PROGRESS) {
-                  // if (mounted) context.pushNamed(appRoute.repairProgress.name);
-                  if (mounted) context.goNamed(appRoute.repairProgress.name);
-                  return;
-                }
-                // if (mounted) context.pushNamed(appRoute.trackMechanic.name);
-                if (mounted) context.goNamed(appRoute.trackMechanic.name);
+            if (repairRequest != null) {
+              if (repairRequest.status ==
+                  VehicleRepairRequestStatus.IN_PROGRESS) {
+                // if (mounted) context.pushNamed(appRoute.repairProgress.name);
+                if (mounted) context.goNamed(appRoute.repairProgress.name);
                 return;
               }
+              // if (mounted) context.pushNamed(appRoute.trackMechanic.name);
+              if (mounted) context.goNamed(appRoute.trackMechanic.name);
+              return;
             }
-          },
-        );
+          }
+          if (mounted) context.replaceNamed(appRoute.home.name);
+          return;
+        }
       },
     );
   }

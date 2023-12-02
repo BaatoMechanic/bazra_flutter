@@ -107,10 +107,6 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
               latitude: pathPoints[_currentIndex].latitude,
               longitude: pathPoints[_currentIndex].longitude,
             );
-
-            // ref
-            //     .read(trackMechanicScreenControllerProvider.notifier)
-            //     .setMarkerPosition(nextPosition);
             ref
                 .read(userServiceProvider)
                 .setCurrentUser(user?.copyWith(currentLocation: nextPosition));
@@ -131,6 +127,13 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
       // Get user location if not present
       if (ref.read(userServiceProvider).currentUser?.currentLocation == null) {
         ref.read(locationServiceProvider).initializeUserLocation();
+      }
+      // Directly go to progress screen if the repair request is in progress
+      if (ref.read(repairRequestServiceProvider).activeRepairRequest?.status ==
+          VehicleRepairRequestStatus.IN_PROGRESS) {
+        if (mounted) {
+          context.replaceNamed(appRoute.repairProgress.name);
+        }
       }
     });
   }

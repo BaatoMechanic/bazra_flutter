@@ -6,6 +6,8 @@ class BaseException implements Exception {
       this.alertType = ErrorAlertType.CENTER_ALERT_DIALOGUE});
 
   final String message;
+  // Alert type is used to show different types of alerts like notification or center dialogue
+  // see async_value_extension.dart to see the implementation
   final ErrorAlertType alertType;
 
   @override

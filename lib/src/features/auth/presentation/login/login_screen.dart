@@ -24,9 +24,11 @@ class LoginScreen extends ConsumerWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _idController =
+      TextEditingController(text: "9808144809");
 
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController =
+      TextEditingController(text: "adminadmin");
 
   final _emailFocusNode = FocusNode();
 

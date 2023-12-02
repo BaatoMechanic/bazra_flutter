@@ -34,4 +34,10 @@ class FakeAuthRepository implements AuthRepository {
     // TODO: implement signOut
     throw UnimplementedError();
   }
+
+  @override
+  Future getUserInfo(String token) {
+    // TODO: implement getUserInfo
+    throw UnimplementedError();
+  }
 }

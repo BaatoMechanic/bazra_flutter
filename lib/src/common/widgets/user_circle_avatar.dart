@@ -27,25 +27,19 @@ class UserCircleAvatar extends ConsumerWidget {
             color: ThemeColor.primary,
           ),
         ),
-        // child: CircleAvatar(
-        //   radius: radius,
-        //   backgroundImage: AssetImage(
-        //     'assets/images/no-profile.png'.hardcoded(),
-        //   ),
-        // ),
-        child: user == null || user.profilePic == null
+        child: user != null && user.profilePic != null
             ? CircleAvatar(
-                radius: radius,
-                backgroundImage: AssetImage(
-                  'assets/images/no-profile.png'.hardcoded(),
-                ),
-              )
-            : CircleAvatar(
                 radius: radius,
                 backgroundImage: NetworkImage(
                   UserHelperFunctions.getProfileImageUrl(
                     user.profilePic as String,
                   ),
+                ),
+              )
+            : CircleAvatar(
+                radius: radius,
+                backgroundImage: AssetImage(
+                  'assets/images/no-profile.png'.hardcoded(),
                 ),
               ));
   }

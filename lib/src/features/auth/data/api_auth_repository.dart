@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/features/auth/data/auth_repository.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
 import '../../../utils/constants/managers/api_values_manager.dart';
 
@@ -101,8 +104,8 @@ class APIAuthRepository implements AuthRepository {
   }
 
   @override
-  Future signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  void signOut(Ref ref) {
+    ref.read(sharedPreferencesProvider).remove('access');
+    ref.read(sharedPreferencesProvider).remove('refresh');
   }
 }

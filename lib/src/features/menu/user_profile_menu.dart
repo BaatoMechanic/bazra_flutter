@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
@@ -16,6 +17,7 @@ import '../../common/widgets/menu_tile_widget.dart';
 import '../../utils/constants/managers/color_manager.dart';
 import '../../utils/constants/managers/values_manager.dart';
 import '../../utils/helpers/helper_functions.dart';
+import '../core/application/user_service.dart';
 
 class UserProfileMenu extends ConsumerWidget {
   UserProfileMenu({super.key});
@@ -221,6 +223,7 @@ class UserProfileMenu extends ConsumerWidget {
       ),
     ];
 
+    final user = ref.watch(watchUserStateChangesProvider).value;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -244,7 +247,8 @@ class UserProfileMenu extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Krishna Rimal',
+                            // 'Krishna Rimal',
+                            user!.name,
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           const SizedBox(

@@ -51,6 +51,7 @@ enum appRoute {
   supportChat,
   repairProgress,
   recentRepairs,
+  buildHome,
   home,
   login,
   signup,
@@ -97,10 +98,16 @@ GoRouter goRouter() {
           ),
         ],
       ),
+      // GoRoute(
+      //   path: '/build-home,',
+      //   name: appRoute.buildHome.name,
+      //   builder: (context, state) => BuildHomeScreen(),
+      // ),
       GoRoute(
         path: '/home',
         name: appRoute.home.name,
-        builder: (context, state) => HomeScreen(),
+        // builder: (context, state) => HomeScreen(),
+        builder: (context, state) => BuildHomeScreen(),
         routes: [
           GoRoute(
             path: 'track_mechanic',

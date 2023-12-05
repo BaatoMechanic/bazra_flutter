@@ -6,6 +6,7 @@ import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/home/presentation/home_screen_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
+import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
@@ -16,6 +17,8 @@ import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
+import 'package:flip_card/flip_card.dart';
+import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,8 +29,49 @@ import '../repair_request/presentation/request_mechanic/repair_request_controlle
 import 'service_buttons_grid.dart';
 import 'service_type_button.dart';
 
+class BuildHomeScreen extends ConsumerWidget {
+  BuildHomeScreen({super.key});
+  final controller = FlipCardController();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return FlipCard(
+      speed: 300,
+      direction: FlipDirection.HORIZONTAL,
+      flipOnTouch: false,
+      controller: controller,
+      front: HomeScreen(flipCardController: controller),
+      back: TempScreen(flipCardController: controller),
+      // back: TrackMechanicScreen(),
+    );
+  }
+}
+
+class TempScreen extends StatelessWidget {
+  const TempScreen({super.key, this.flipCardController});
+  final FlipCardController? flipCardController;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        floatingActionButton: flipCardController == null
+            ? null
+            : FloatingActionButton(
+                onPressed: () {
+                  flipCardController!.toggleCard();
+                },
+                child: Image.asset('assets/images/parts/wheel.png'),
+              ),
+        body: Center(child: CircularProgressIndicator()),
+      ),
+    );
+  }
+}
+
 class HomeScreen extends ConsumerStatefulWidget {
-  HomeScreen({super.key});
+  HomeScreen({super.key, this.flipCardController});
+  final FlipCardController? flipCardController;
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
@@ -95,6 +139,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       },
       child: SafeArea(
         child: Scaffold(
+          floatingActionButton: widget.flipCardController == null
+              ? null
+              : FloatingActionButton(
+                  onPressed: () {
+                    widget.flipCardController!.toggleCard();
+                  },
+                  shape: const RoundedRectangleBorder().copyWith(
+                      borderRadius: BorderRadius.circular(
+                    DefaultManager.borderRadiusFull,
+                  )),
+                  child: Image.asset('assets/images/parts/wheel.png'),
+                ),
           drawer: Drawer(
             child: UserProfileMenu(),
           ),
@@ -115,7 +171,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 height: AppHeight.h150,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       bottomLeft:
                           Radius.circular(DefaultManager.borderRadiusMd),
                       bottomRight:
@@ -135,13 +191,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         controller: _searchTextController,
                         focusNode: _searchFocusNode,
                         hintText: 'Search'.hardcoded(),
-                        leading: Icon(Icons.search, color: ThemeColor.dark),
+                        leading:
+                            const Icon(Icons.search, color: ThemeColor.dark),
                         onChanged: (value) {
                           _searchTextController.text = value;
                         },
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(top: AppPadding.p24),
                       child: SingleChildScrollView(
                         child: Column(
@@ -154,13 +211,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               height: AppHeight.h20,
                             ),
                             ServiceButtonsGrid(),
-                            ElevatedButton(
-                                onPressed: () {
-                                  ref.read(authServiceProvider).refreshToken(ref
-                                      .read(sharedPreferencesProvider)
-                                      .getString('refresh')!);
-                                },
-                                child: Text('He'))
                           ],
                         ),
                       ),

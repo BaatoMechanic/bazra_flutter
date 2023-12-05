@@ -93,6 +93,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       // }
 
       if (mounted) context.replaceNamed(appRoute.home.name);
+      // if (mounted) context.replaceNamed(appRoute.buildHome.name);
       return;
     });
   }

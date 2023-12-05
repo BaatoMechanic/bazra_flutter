@@ -1,6 +1,8 @@
+import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
+import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/home/presentation/home_screen_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
@@ -139,7 +141,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         },
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(top: AppPadding.p24),
                       child: SingleChildScrollView(
                         child: Column(
@@ -152,6 +154,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               height: AppHeight.h20,
                             ),
                             ServiceButtonsGrid(),
+                            ElevatedButton(
+                                onPressed: () {
+                                  ref.read(authServiceProvider).refreshToken(ref
+                                      .read(sharedPreferencesProvider)
+                                      .getString('refresh')!);
+                                },
+                                child: Text('He'))
                           ],
                         ),
                       ),

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/auth/data/auth_repository.dart';
+import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,15 +64,25 @@ class AuthService {
     }
   }
 
-  Future<void> fetchUserInfo(String token) async {
-    final response = await ref.read(authRepositoryProvider).getUserInfo(token);
+  Future<void> fetchUserInfo(String accessToken) async {
+    final response =
+        await ref.read(authRepositoryProvider).getUserInfo(accessToken);
 
     if (response is Success) {
       User user = User.fromJson(jsonDecode((jsonEncode(response.response))));
       ref.read(userServiceProvider).setCurrentUser(user);
+      return;
     }
 
     if (response is Failure) {
+      if (response.code == 401.intHardcoded()) {
+        await refreshToken(
+            ref.read(sharedPreferencesProvider).getString('refresh')!);
+        await fetchUserInfo(
+            ref.read(sharedPreferencesProvider).getString('access')!);
+        return;
+      }
+
       throw BaseException(message: response.errorResponse.toString());
     }
   }

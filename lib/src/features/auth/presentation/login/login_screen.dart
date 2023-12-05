@@ -50,6 +50,7 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // No need to check isRefreshing and hasError here as this is checked in extension function
     ref.listen<AsyncValue>(loginScreenControllerProvider,
         (previous, state) => state.showError(context));
 

@@ -58,6 +58,9 @@ class TempScreen extends StatelessWidget {
         floatingActionButton: flipCardController == null
             ? null
             : FloatingActionButton(
+                // Giving a unique tag because exception of 'There are multiple heroes that share the same tag within a subtree.' was being thrown as front and back page use the floating action button which is within the same subtree
+
+                heroTag: "unique_tag_for_back_fab",
                 onPressed: () {
                   flipCardController!.toggleCard();
                 },
@@ -142,6 +145,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           floatingActionButton: widget.flipCardController == null
               ? null
               : FloatingActionButton(
+                  heroTag: "unique_tag_for_front_fab",
                   onPressed: () {
                     widget.flipCardController!.toggleCard();
                   },

@@ -1,6 +1,7 @@
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
+import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
@@ -247,8 +248,7 @@ class UserProfileMenu extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            // 'Krishna Rimal',
-                            user!.name,
+                            user?.name ?? "Unknown user",
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           const SizedBox(
@@ -292,7 +292,12 @@ class UserProfileMenu extends ConsumerWidget {
                 ),
                 SubmitButton(
                     label: 'Logout',
-                    onPressed: () => context.replaceNamed(appRoute.login.name))
+                    onPressed: () {
+                      final result = ref.read(authServiceProvider).logOut();
+                      if (result) {
+                        context.goNamed(appRoute.login.name);
+                      }
+                    })
               ],
             ),
           ),

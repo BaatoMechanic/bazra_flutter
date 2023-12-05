@@ -5,6 +5,7 @@ import 'fake_auth_repository.dart';
 
 abstract class AuthRepository {
   Future<dynamic> signInWithIdAndPassword(String uId, String password);
+  Future<dynamic> refreshToken(String refreshToken);
   Future<dynamic> createUserWithIdAndPassword(String uId, String password);
   Future getUserInfo(String token);
   void signOut(Ref ref);

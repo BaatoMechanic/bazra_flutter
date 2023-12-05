@@ -37,18 +37,38 @@ class AuthService {
           .read(sharedPreferencesProvider)
           .setString('refresh', responseBody['refresh'] as String);
 
-      final userInfo = await ref.read(authRepositoryProvider).getUserInfo(
-            responseBody['access'] as String,
-          );
+      fetchUserInfo(responseBody['access'] as String);
+    }
 
-      if (userInfo is Success) {
-        User user = User.fromJson(jsonDecode((jsonEncode(userInfo.response))));
-        ref.read(userServiceProvider).setCurrentUser(user);
-      }
+    if (response is Failure) {
+      throw BaseException(message: response.errorResponse.toString());
+    }
+  }
 
-      if (userInfo is Failure) {
-        throw BaseException(message: userInfo.errorResponse.toString());
-      }
+  Future<void> refreshToken(String refreshToken) async {
+    final response =
+        await ref.read(authRepositoryProvider).refreshToken(refreshToken);
+    if (response is Success) {
+      Map<String, dynamic> responseBody =
+          jsonDecode(response.response as String);
+
+      ref
+          .read(sharedPreferencesProvider)
+          .setString('access', responseBody['access'] as String);
+
+      return;
+    }
+    if (response is Failure) {
+      throw BaseException(message: response.errorResponse.toString());
+    }
+  }
+
+  Future<void> fetchUserInfo(String token) async {
+    final response = await ref.read(authRepositoryProvider).getUserInfo(token);
+
+    if (response is Success) {
+      User user = User.fromJson(jsonDecode((jsonEncode(response.response))));
+      ref.read(userServiceProvider).setCurrentUser(user);
     }
 
     if (response is Failure) {
@@ -65,6 +85,13 @@ class AuthService {
       User user = User.fromJson(jsonEncode(response.response));
       ref.read(userServiceProvider).setCurrentUser(user);
     }
+  }
+
+  bool logOut() {
+    ref.read(sharedPreferencesProvider).remove('access');
+    ref.read(sharedPreferencesProvider).remove('refresh');
+    ref.read(userServiceProvider).setCurrentUser(null);
+    return true;
   }
 }
 

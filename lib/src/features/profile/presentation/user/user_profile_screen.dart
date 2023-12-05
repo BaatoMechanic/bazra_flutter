@@ -1,5 +1,6 @@
 import 'package:bato_mechanic/src/common/widgets/menu_tile_section_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
+import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/menu/user_profile_menu.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
@@ -15,18 +16,22 @@ import 'package:go_router/go_router.dart';
 import '../../../../common/widgets/mechanic_review_widget.dart';
 import '../../../../common/widgets/menu_tile_widget.dart';
 
-class UserProfileScreen extends StatelessWidget {
+class UserProfileScreen extends ConsumerWidget {
   UserProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
+    final user = ref.watch(watchUserStateChangesProvider).value;
+
     List<MenuTile> infoTiles = [
       MenuTile(
         leadingIcon: Icons.email,
-        title: 'Email',
+        title: 'Email'.hardcoded(),
         trailingWidget: Text(
-          'mail@bato_mechanic.com',
+          // 'mail@bato_mechanic.com',
+          user?.email ?? "No Email".hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
               ),
@@ -36,7 +41,8 @@ class UserProfileScreen extends StatelessWidget {
         leadingIcon: Icons.phone,
         title: 'Phone',
         trailingWidget: Text(
-          '9863748593',
+          // '9863748593',
+          user?.phone ?? "No phone".hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
               ),
@@ -44,9 +50,9 @@ class UserProfileScreen extends StatelessWidget {
       ),
       MenuTile(
         leadingIcon: Icons.location_on,
-        title: 'Locaiont',
+        title: 'Location'.hardcoded(),
         trailingWidget: Text(
-          'Kathmandu',
+          'Kathmandu'.hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
               ),
@@ -58,7 +64,7 @@ class UserProfileScreen extends StatelessWidget {
     List<MenuTile> utilityTiles = [
       MenuTile(
         leadingIcon: Icons.connect_without_contact,
-        title: 'Connect with us',
+        title: 'Connect with us'.hardcoded(),
         trailingWidget: IconButton(
           iconSize: FontSize.s20,
           icon: Icon(
@@ -70,7 +76,7 @@ class UserProfileScreen extends StatelessWidget {
       ),
       MenuTile(
         leadingIcon: Icons.password,
-        title: 'Change password',
+        title: 'Change password'.hardcoded(),
         trailingWidget: IconButton(
           iconSize: FontSize.s20,
           icon: Icon(
@@ -83,7 +89,7 @@ class UserProfileScreen extends StatelessWidget {
       ),
       MenuTile(
         leadingIcon: Icons.logout,
-        title: 'Logout',
+        title: 'Logout'.hardcoded(),
         trailingWidget: IconButton(
           iconSize: FontSize.s20,
           icon: Icon(
@@ -114,7 +120,8 @@ class UserProfileScreen extends StatelessWidget {
                         // radius: AppRadius.r60,
                         ),
                     Text(
-                      'Krishna Rimal',
+                      // 'Krishna Rimal',
+                      user?.name ?? "Unknown User".hardcoded(),
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                     Row(

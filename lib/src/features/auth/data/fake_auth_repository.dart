@@ -49,4 +49,10 @@ class FakeAuthRepository implements AuthRepository {
   void signOut(Ref<Object?> ref) {
     // TODO: implement signOut
   }
+
+  @override
+  Future refreshToken(String refreshToken) {
+    // TODO: implement refreshToken
+    throw UnimplementedError();
+  }
 }

@@ -63,6 +63,46 @@ class APIAuthRepository implements AuthRepository {
   }
 
   @override
+  Future refreshToken(String refreshToken) async {
+    try {
+      var url = Uri.parse('${RemoteManager.BASE_URI}autho/refresh-token/');
+
+      var response = await http.post(url, body: {"refresh": refreshToken});
+
+      if (response.statusCode == 200) {
+        return Success(
+          code: response.statusCode,
+          response: response.body,
+        );
+      }
+      return Failure(
+        code: response.statusCode,
+        stackTrace: StackTrace.current,
+        errorResponse: jsonDecode(response.body)['detail'],
+      );
+    } on HttpException {
+      return Failure(
+        code: ApiStatusCode.httpError,
+        stackTrace: StackTrace.current,
+        errorResponse: ApiStrings.noInternetString,
+      );
+    } on FormatException {
+      return Failure(
+        code: ApiStatusCode.invalidResponse,
+        stackTrace: StackTrace.current,
+        errorResponse: ApiStrings.invalidFormatString,
+      );
+    } catch (e, st) {
+      // return Failure(code: 103, errorResponse: e.toString());
+      return Failure(
+        code: ApiStatusCode.unknownError,
+        stackTrace: st,
+        errorResponse: ApiStrings.unknownErrorString,
+      );
+    }
+  }
+
+  @override
   Future getUserInfo(String token) async {
     try {
       var url = Uri.parse('${RemoteManager.BASE_URI}autho/users_info/me/');

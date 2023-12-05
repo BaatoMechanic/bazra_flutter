@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
@@ -30,29 +31,45 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
         if (!isLoggedIn) {
           if (mounted) context.replaceNamed(appRoute.login.name);
           return;
-        } else {
-          final result = await ref
-              .read(splashScreenControllerProvider)
-              .hasRepairRequest("1");
-          if (result) {
-            VehicleRepairRequest? repairRequest =
-                ref.read(repairRequestServiceProvider).activeRepairRequest;
+        }
 
-            if (repairRequest != null) {
-              if (repairRequest.status ==
-                  VehicleRepairRequestStatus.IN_PROGRESS) {
-                // if (mounted) context.pushNamed(appRoute.repairProgress.name);
-                if (mounted) context.goNamed(appRoute.repairProgress.name);
-                return;
-              }
-              // if (mounted) context.pushNamed(appRoute.trackMechanic.name);
-              if (mounted) context.goNamed(appRoute.trackMechanic.name);
+        final sharedPreferences = ref.read(sharedPreferencesProvider);
+
+        if (sharedPreferences.containsKey("access")) {
+          await ref
+              .read(authServiceProvider)
+              .fetchUserInfo(sharedPreferences.getString("access")!);
+        } else if (sharedPreferences.containsKey("refresh")) {
+          await ref
+              .read(authServiceProvider)
+              .refreshToken(sharedPreferences.getString('refresh')!);
+          await ref
+              .read(authServiceProvider)
+              .fetchUserInfo(sharedPreferences.getString("access")!);
+        }
+
+        final result = await ref
+            .read(splashScreenControllerProvider)
+            .hasRepairRequest("1");
+        if (result) {
+          VehicleRepairRequest? repairRequest =
+              ref.read(repairRequestServiceProvider).activeRepairRequest;
+
+          if (repairRequest != null) {
+            if (repairRequest.status ==
+                VehicleRepairRequestStatus.IN_PROGRESS) {
+              // if (mounted) context.pushNamed(appRoute.repairProgress.name);
+              if (mounted) context.goNamed(appRoute.repairProgress.name);
               return;
             }
+            // if (mounted) context.pushNamed(appRoute.trackMechanic.name);
+            if (mounted) context.goNamed(appRoute.trackMechanic.name);
+            return;
           }
-          if (mounted) context.replaceNamed(appRoute.home.name);
-          return;
         }
+
+        if (mounted) context.replaceNamed(appRoute.home.name);
+        return;
       },
     );
   }

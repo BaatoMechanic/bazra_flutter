@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:bato_mechanic/src/features/auth/domain/user.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/domain/mechanic.dart';
@@ -15,12 +16,12 @@ class TrackMechanicScreenState {
 
   final UserPosition? currentUserLocation;
   final Stream<UserPosition?> currentMechanicLocation;
-  final Mechanic? mechanicInfo;
+  final User? mechanicInfo;
 
   TrackMechanicScreenState copyWith({
     UserPosition? currentUserLocation,
     Stream<UserPosition?>? currentMechanicLocation,
-    Mechanic? mechanicInfo,
+    User? mechanicInfo,
   }) {
     return TrackMechanicScreenState(
       currentUserLocation: currentUserLocation ?? this.currentUserLocation,

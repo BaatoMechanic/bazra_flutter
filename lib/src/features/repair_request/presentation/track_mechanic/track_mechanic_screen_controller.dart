@@ -98,11 +98,11 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
     return response;
   }
 
-  Future<Mechanic> fetchMechanicInfo(String mechanicId) async {
+  Future<User> fetchMechanicInfo(String mechanicId) async {
     final response = await ref
         .read(mechanicRepositoryProvider)
         .fetchMechanicInfo(mechanicId);
-    final mechanic = Mechanic.fromJson(jsonDecode(response.body));
+    final mechanic = User.fromJson(jsonDecode(response.body));
     ref.read(mechanicServiceProvider).setAssignedMechanic(mechanic);
     // state = state.copyWith(mechanicInfo: mechanic);
 
@@ -128,10 +128,10 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
     }
     // Calculate distance using Haversine formula
     double distance = calculateHaversineDistance(
-      userLocation!.latitude,
-      userLocation.longitude,
-      mechanicLocation.latitude,
-      mechanicLocation.longitude,
+      userLocation!.latitude!,
+      userLocation.longitude!,
+      mechanicLocation.latitude!,
+      mechanicLocation.longitude!,
     );
 
     // Assume an average speed of the mechanic (in kilometers per hour)

@@ -12,8 +12,8 @@ import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../utils/constants/managers/color_manager.dart';
-import '../../utils/constants/managers/values_manager.dart';
+import '../../../../utils/constants/managers/color_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
 
 class MechanicReviewWidget extends ConsumerWidget {
   const MechanicReviewWidget({

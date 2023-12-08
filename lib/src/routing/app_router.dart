@@ -6,7 +6,7 @@ import 'package:bato_mechanic/src/features/password_change/presentation/old_pass
 import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/user_profile_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
-import 'package:bato_mechanic/src/features/review/presentation/mechanic_reviews_list_screen.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen.dart';
 import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
 import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
@@ -23,7 +23,7 @@ import 'package:bato_mechanic/src/features/repair_request/presentation/request_m
 import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_parts/vehicle_parts_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen.dart';
-import 'package:bato_mechanic/src/features/review/presentation/review_mechanic_screen.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/review_mechanic_screen/review_mechanic_screen.dart';
 import 'package:bato_mechanic/src/features/splash/presentation/splash_screen.dart';
 import 'package:bato_mechanic/src/features/support_chat/presentation/support_chat_screen.dart';
 

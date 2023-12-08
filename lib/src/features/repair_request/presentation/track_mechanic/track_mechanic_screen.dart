@@ -540,12 +540,12 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                           .watch(watchUserStateChangesProvider)
                           .value!
                           .currentLocation!
-                          .latitude,
+                          .latitude!,
                       ref
                           .watch(watchUserStateChangesProvider)
                           .value!
                           .currentLocation!
-                          .longitude),
+                          .longitude!),
                   builder: (ctx) => const Icon(
                     Icons.location_on,
                     color: Colors.green,

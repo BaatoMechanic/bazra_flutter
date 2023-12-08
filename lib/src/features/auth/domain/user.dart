@@ -15,6 +15,7 @@ class User {
     this.currentLocation,
     required this.primaryRole,
     required this.roles,
+    required this.additionalAttributes,
   });
   final String idx;
   final String name;
@@ -24,6 +25,7 @@ class User {
   final UserPosition? currentLocation;
   final String? primaryRole;
   final List<String> roles;
+  final Map<String, dynamic> additionalAttributes;
 
   User copyWith({
     String? idx,
@@ -34,6 +36,7 @@ class User {
     UserPosition? currentLocation,
     String? primaryRole,
     List<String>? roles,
+    Map<String, dynamic>? additionalAttributes,
   }) {
     return User(
       idx: idx ?? this.idx,
@@ -44,6 +47,7 @@ class User {
       currentLocation: currentLocation ?? this.currentLocation,
       primaryRole: primaryRole ?? this.primaryRole,
       roles: roles ?? this.roles,
+      additionalAttributes: additionalAttributes ?? this.additionalAttributes,
     );
   }
 
@@ -53,28 +57,35 @@ class User {
       'name': name,
       'email': email,
       'phone': phone,
-      'profilePic': profilePic,
-      'currentLocation': currentLocation?.toMap(),
-      'primaryRole': primaryRole,
+      'profile_pic': profilePic,
+      'current_location': currentLocation?.toMap(),
+      'primary_role': primaryRole,
       'roles': roles,
+      'additional_attributes': additionalAttributes,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-        idx: map['idx'] as String,
-        name: map['name'] as String,
-        email: map['email'] != null ? map['email'] as String : null,
-        phone: map['phone'] != null ? map['phone'] as String : null,
-        profilePic: map['image'] != null ? map['image'] as String : null,
-        currentLocation: map['currentLocation'] != null
-            ? UserPosition.fromMap(
-                map['currentLocation'] as Map<String, dynamic>)
-            : null,
-        primaryRole: map['primary_role'],
-        roles: List<String>.from(
-          (map['roles'] as List<dynamic>),
-        ));
+      idx: map['idx'] as String,
+      name: map['name'] as String,
+      email: map['email'] != null ? map['email'] as String : null,
+      phone: map['phone'] != null ? map['phone'] as String : null,
+      profilePic:
+          map['profile_pic'] != null ? map['profile_pic'] as String : null,
+      currentLocation: map['current_location'] != null
+          ? UserPosition.fromMap(
+              map['current_location'] as Map<String, dynamic>)
+          : null,
+      primaryRole:
+          map['primary_role'] != null ? map['primary_role'] as String : null,
+      roles: List<String>.from(
+        map['roles'],
+      ),
+      additionalAttributes: Map<String, dynamic>.from(
+        (map['additional_attributes'] as Map<String, dynamic>),
+      ),
+    );
   }
 
   String toJson() => json.encode(toMap());
@@ -84,7 +95,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(idx: $idx, name: $name, email: $email, phone: $phone, profilePic: $profilePic, currentLocation: $currentLocation, primaryRole: $primaryRole, roles: $roles)';
+    return 'User(idx: $idx, name: $name, email: $email, phone: $phone, profilePic: $profilePic, currentLocation: $currentLocation, primaryRole: $primaryRole, roles: $roles, additionalAttributes: $additionalAttributes)';
   }
 
   @override
@@ -98,7 +109,8 @@ class User {
         other.profilePic == profilePic &&
         other.currentLocation == currentLocation &&
         other.primaryRole == primaryRole &&
-        listEquals(other.roles, roles);
+        listEquals(other.roles, roles) &&
+        mapEquals(other.additionalAttributes, additionalAttributes);
   }
 
   @override
@@ -110,6 +122,7 @@ class User {
         profilePic.hashCode ^
         currentLocation.hashCode ^
         primaryRole.hashCode ^
-        roles.hashCode;
+        roles.hashCode ^
+        additionalAttributes.hashCode;
   }
 }

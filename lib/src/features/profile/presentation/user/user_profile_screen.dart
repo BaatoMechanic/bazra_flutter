@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../common/widgets/mechanic_review_widget.dart';
+import '../../../reviews_and_rating/presentation/widgets/mechanic_review_widget.dart';
 import '../../../../common/widgets/menu_tile_widget.dart';
 import '../../../auth/application/auth_service.dart';
 

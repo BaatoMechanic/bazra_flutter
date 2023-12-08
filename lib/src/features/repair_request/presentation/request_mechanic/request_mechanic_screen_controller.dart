@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bato_mechanic/src/features/auth/domain/user.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/service_type_service.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/mechanic_service.dart';
@@ -73,7 +74,7 @@ class RequestMechanicScreenController
     return false;
   }
 
-  Future<List<Mechanic>> fetchRecommendedMechanics() async {
+  Future<List<User>> fetchRecommendedMechanics() async {
     final selectedCategory =
         ref.read(vehicleCategoryServiceProvider).selectedVehicleCategory;
     final selectedPart =
@@ -122,7 +123,7 @@ class RequestMechanicScreenController
     state = state.copyWith();
   }
 
-  setPreferredMechanic(Mechanic mechanic) {
+  setPreferredMechanic(User mechanic) {
     state = state.copyWith(preferredMechanic: AsyncValue.data(mechanic));
   }
 
@@ -232,7 +233,7 @@ final requestMechanicScreenControllerProvider = StateNotifierProvider
 );
 
 final fetchRecommendedMechanicsProvider =
-    FutureProvider.autoDispose<List<Mechanic>>((ref) {
+    FutureProvider.autoDispose<List<User>>((ref) {
   final requestMechanicController =
       ref.watch(requestMechanicScreenControllerProvider.notifier);
   return requestMechanicController.fetchRecommendedMechanics();

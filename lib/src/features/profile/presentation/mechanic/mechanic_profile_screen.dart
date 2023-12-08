@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:bato_mechanic/src/features/repair_request/application/mechanic_service.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,7 +14,7 @@ import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
-import '../../../../common/widgets/mechanic_review_widget.dart';
+import '../../../reviews_and_rating/presentation/widgets/mechanic_review_widget.dart';
 import 'mechanic_profile_screen_controller.dart';
 
 class MechanicProfileScreen extends ConsumerWidget {
@@ -28,6 +30,9 @@ class MechanicProfileScreen extends ConsumerWidget {
         (previous, state) => state.showError(context));
 
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
+    final assignedMechanic = ref.watch(watchMechanicStateChangesProvider).value;
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -144,14 +149,16 @@ class MechanicProfileScreen extends ConsumerWidget {
                 const SizedBox(
                   height: AppHeight.h30,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.send),
-                    label: Text('Request Session'.hardcoded()),
+                if (assignedMechanic == null ||
+                    assignedMechanic.idx != mechanicIdx)
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(Icons.send),
+                      label: Text('Request Session'.hardcoded()),
+                    ),
                   ),
-                ),
                 const SizedBox(
                   height: AppHeight.h30,
                 ),

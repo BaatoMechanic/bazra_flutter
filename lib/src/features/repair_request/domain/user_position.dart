@@ -1,18 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
 
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
-UserPosition userPositionFromJson(String str) =>
-    UserPosition.fromJson(json.decode(str));
-
 // List<UserPosition> userPositionsFromJson(String str) =>
 //     List<UserPosition>.from(json.decode(str).map((x) {
 //       return UserPosition.fromJson(x);
 //     }));
-
-String userPositionToJson(UserPosition data) => json.encode(data.toJson());
 
 class UserPosition {
   UserPosition({
@@ -27,39 +23,15 @@ class UserPosition {
     required this.locationName,
   });
 
-  final double latitude;
-  final double longitude;
+  final double? latitude;
+  final double? longitude;
   final DateTime? timestamp;
-  final double accuracy;
-  final double altitude;
-  final double heading;
-  final double speed;
-  final double speedAccuracy;
+  final double? accuracy;
+  final double? altitude;
+  final double? heading;
+  final double? speed;
+  final double? speedAccuracy;
   final String? locationName;
-
-  factory UserPosition.fromJson(Map<String, dynamic> json) => UserPosition(
-        latitude: json["latitude"],
-        longitude: json["longitude"],
-        timestamp: DateTime.parse(json["timestamp"]),
-        accuracy: json["accuracy"].toDouble(),
-        altitude: json["altitude"].toDouble(),
-        heading: json["heading"].toDouble(),
-        speed: json["speed"].toDouble(),
-        speedAccuracy: json["speed_accuracy"].toDouble(),
-        locationName: json["location_name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "latitude": latitude,
-        "longitude": longitude,
-        "timestamp": timestamp,
-        "accuracy": accuracy,
-        "altitude": altitude,
-        "heading": heading,
-        "speed": speed,
-        "speed_accuracy": speedAccuracy,
-        "location_name": locationName,
-      };
 
   UserPosition copyWith({
     double? latitude,
@@ -89,29 +61,70 @@ class UserPosition {
     return <String, dynamic>{
       'latitude': latitude,
       'longitude': longitude,
-      'timestamp': timestamp?.millisecondsSinceEpoch,
+      'timestamp': timestamp,
       'accuracy': accuracy,
       'altitude': altitude,
       'heading': heading,
       'speed': speed,
-      'speedAccuracy': speedAccuracy,
-      'locationName': locationName,
+      'speed_ccuracy': speedAccuracy,
+      'location_name': locationName,
     };
   }
 
   factory UserPosition.fromMap(Map<String, dynamic> map) {
     return UserPosition(
-      latitude: map['latitude'] as double,
-      longitude: map['longitude'] as double,
+      latitude: map['latitude'] != null ? map['latitude'] as double : null,
+      longitude: map['longitude'] != null ? map['longitude'] as double : null,
       timestamp: map['timestamp'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['timestamp'] as int)
+          ? DateTime.parse(map['timestamp'] as String)
           : null,
-      accuracy: map['accuracy'] as double,
-      altitude: map['altitude'] as double,
-      heading: map['heading'] as double,
-      speed: map['speed'] as double,
-      speedAccuracy: map['speedAccuracy'] as double,
-      locationName: map['locationName'] as String,
+      accuracy: map['accuracy'] != null ? map['accuracy'] as double : null,
+      altitude: map['altitude'] != null ? map['altitude'] as double : null,
+      heading: map['heading'] != null ? map['heading'] as double : null,
+      speed: map['speed'] != null ? map['speed'] as double : null,
+      speedAccuracy: map['speed_accuracy'] != null
+          ? map['speed_accuracy'] as double
+          : null,
+      locationName:
+          map['location_name'] != null ? map['location_name'] as String : null,
     );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UserPosition.fromJson(String source) =>
+      UserPosition.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'UserPosition(latitude: $latitude, longitude: $longitude, timestamp: $timestamp, accuracy: $accuracy, altitude: $altitude, heading: $heading, speed: $speed, speedAccuracy: $speedAccuracy, locationName: $locationName)';
+  }
+
+  @override
+  bool operator ==(covariant UserPosition other) {
+    if (identical(this, other)) return true;
+
+    return other.latitude == latitude &&
+        other.longitude == longitude &&
+        other.timestamp == timestamp &&
+        other.accuracy == accuracy &&
+        other.altitude == altitude &&
+        other.heading == heading &&
+        other.speed == speed &&
+        other.speedAccuracy == speedAccuracy &&
+        other.locationName == locationName;
+  }
+
+  @override
+  int get hashCode {
+    return latitude.hashCode ^
+        longitude.hashCode ^
+        timestamp.hashCode ^
+        accuracy.hashCode ^
+        altitude.hashCode ^
+        heading.hashCode ^
+        speed.hashCode ^
+        speedAccuracy.hashCode ^
+        locationName.hashCode;
   }
 }

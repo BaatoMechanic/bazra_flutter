@@ -7,6 +7,7 @@ import 'package:bato_mechanic/src/features/repair_request/domain/mechanic.dart';
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 import 'package:http/http.dart';
 
+import '../../auth/domain/user.dart';
 import '../data/mechanic_repository/mechanic_repository.dart';
 import 'vechicle_category_service.dart';
 
@@ -15,24 +16,24 @@ class MechanicService {
     required this.ref,
   });
 
-  final _mechanicState = InMemoryStore<Mechanic?>(null);
+  final _mechanicState = InMemoryStore<User?>(null);
   final Ref ref;
 
-  Stream<Mechanic?> mechanicStateChanges() => _mechanicState.stream;
-  Mechanic? get assignedMechanic => _mechanicState.value;
+  Stream<User?> mechanicStateChanges() => _mechanicState.stream;
+  User? get assignedMechanic => _mechanicState.value;
 
-  void setAssignedMechanic(Mechanic mechanic) {
+  void setAssignedMechanic(User mechanic) {
     _mechanicState.value = mechanic;
   }
 
-  Future<List<Mechanic>> fetchRecommendedMechanics(
+  Future<List<User>> fetchRecommendedMechanics(
       String vehicleCategoryId, String vehiclePartId) async {
     final response = await ref
         .watch(mechanicRepositoryProvider)
         .fetchRecommendedMechanics(vehicleCategoryId, vehiclePartId);
 
     if (response is Success) {
-      return response.response as List<Mechanic>;
+      return response.response as List<User>;
     }
     if (response is Failure) {
       // throw Exception(response.errorResponse);
@@ -51,8 +52,7 @@ class MechanicService {
     final response = await _fetchMechanic(mechanicId);
 
     if (response is Success) {
-      // Mechanic mechanic = response.response as Mechanic;
-      Mechanic mechanic = mechanicFromJson(response.response.toString());
+      User mechanic = User.fromJson(response.response.toString());
       setAssignedMechanic(mechanic);
     }
     if (response is Failure) {
@@ -60,11 +60,11 @@ class MechanicService {
     }
   }
 
-  Future<Mechanic?> fetchMechanicInfo(String mechanicId) async {
+  Future<User?> fetchMechanicInfo(String mechanicId) async {
     final response = await _fetchMechanic(mechanicId);
 
     if (response is Success) {
-      Mechanic mechanic = mechanicFromJson(response.response.toString());
+      User mechanic = User.fromJson(response.response.toString());
       return mechanic;
     }
     if (response is Failure) {
@@ -94,13 +94,13 @@ final mechanicServiceProvider = Provider((ref) {
 });
 
 final watchMechanicStateChangesProvider =
-    StreamProvider.autoDispose<Mechanic?>((ref) {
+    StreamProvider.autoDispose<User?>((ref) {
   final mechanicService = ref.watch(mechanicServiceProvider);
   return mechanicService.mechanicStateChanges();
 });
 
 final fetchMechanicInfoProvider =
-    FutureProvider.autoDispose.family<Mechanic?, String>((ref, mechanicId) {
+    FutureProvider.autoDispose.family<User?, String>((ref, mechanicId) {
   final mechanicService = ref.watch(mechanicServiceProvider);
   return mechanicService.fetchMechanicInfo(mechanicId);
 });

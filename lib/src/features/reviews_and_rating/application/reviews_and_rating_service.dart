@@ -5,7 +5,7 @@ import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../domain/reviews_and_rating.dart';
+import '../../profile/domain/reviews_and_rating.dart';
 
 class ReviewsAndRatingService {
   ReviewsAndRatingService({

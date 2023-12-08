@@ -22,6 +22,15 @@ class AuthService {
 
   final Ref ref;
 
+  final _userState = InMemoryStore<User?>(null);
+
+  Stream<User?> userStateChanges() => _userState.stream;
+  User? get currentUser => _userState.value;
+
+  void setCurrentUser(User? user) => _userState.value = user;
+
+  void dispose() => _userState.close();
+
   Future<void> signInWithIdAndPassword(String uId, String password) async {
     final response = await ref
         .read(authRepositoryProvider)
@@ -38,7 +47,7 @@ class AuthService {
           .read(sharedPreferencesProvider)
           .setString('refresh', responseBody['refresh'] as String);
 
-      fetchUserInfo(responseBody['access'] as String);
+      fetchCurrentUserInfo(responseBody['access'] as String);
     }
 
     if (response is Failure) {
@@ -64,13 +73,14 @@ class AuthService {
     }
   }
 
-  Future<void> fetchUserInfo(String accessToken) async {
+  Future<void> fetchCurrentUserInfo(String accessToken) async {
     final response =
-        await ref.read(authRepositoryProvider).getUserInfo(accessToken);
+        await ref.read(authRepositoryProvider).getCurrentUserInfo(accessToken);
 
     if (response is Success) {
       User user = User.fromJson(jsonDecode((jsonEncode(response.response))));
-      ref.read(userServiceProvider).setCurrentUser(user);
+      // ref.read(userServiceProvider).setCurrentUser(user);
+      setCurrentUser(user);
       return;
     }
 
@@ -78,7 +88,7 @@ class AuthService {
       if (response.code == 401.intHardcoded()) {
         await refreshToken(
             ref.read(sharedPreferencesProvider).getString('refresh')!);
-        await fetchUserInfo(
+        await fetchCurrentUserInfo(
             ref.read(sharedPreferencesProvider).getString('access')!);
         return;
       }
@@ -94,18 +104,25 @@ class AuthService {
 
     if (response is Success) {
       User user = User.fromJson(jsonEncode(response.response));
-      ref.read(userServiceProvider).setCurrentUser(user);
+      setCurrentUser(user);
     }
   }
 
   bool logOut() {
     ref.read(sharedPreferencesProvider).remove('access');
     ref.read(sharedPreferencesProvider).remove('refresh');
-    ref.read(userServiceProvider).setCurrentUser(null);
+    setCurrentUser(null);
     return true;
   }
 }
 
 final authServiceProvider = Provider((ref) {
-  return AuthService(ref: ref);
+  final service = AuthService(ref: ref);
+  ref.onDispose(() => service.dispose());
+  return service;
+});
+
+final watchUserStateChangesProvider = StreamProvider.autoDispose<User?>((ref) {
+  final authService = ref.watch(authServiceProvider);
+  return authService.userStateChanges();
 });

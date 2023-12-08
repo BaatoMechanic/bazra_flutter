@@ -22,7 +22,7 @@ class SplashScreenController extends StateNotifier<AsyncValue<void>> {
 
   Future<bool> fetchUserInfo(String token) async {
     state = await AsyncValue.guard(
-        () => ref.read(authServiceProvider).fetchUserInfo(token));
+        () => ref.read(authServiceProvider).fetchCurrentUserInfo(token));
     return !state.hasError;
   }
 

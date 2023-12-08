@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/auth/application/auth_service.dart';
 import '../../utils/constants/managers/color_manager.dart';
 import '../../utils/constants/managers/values_manager.dart';
 import '../../utils/helpers/user_helper.dart';

@@ -6,7 +6,7 @@ import 'package:bato_mechanic/src/features/password_change/presentation/old_pass
 import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/user_profile_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
-import 'package:bato_mechanic/src/features/review/mechanic_reviews_list_screen.dart';
+import 'package:bato_mechanic/src/features/review/presentation/mechanic_reviews_list_screen.dart';
 import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
 import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
@@ -16,14 +16,14 @@ import 'package:bato_mechanic/src/features/feedback_and_contact/presentation/fee
 import 'package:bato_mechanic/src/features/history/presentation/service_history_screen.dart';
 import 'package:bato_mechanic/src/features/home/home_screen.dart';
 import 'package:bato_mechanic/src/features/payment/presentation/payment_integration_screen.dart';
-import 'package:bato_mechanic/src/features/profile/presentation/mechanic_profile_screen.dart';
+import 'package:bato_mechanic/src/features/profile/presentation/mechanic/mechanic_profile_screen.dart';
 import 'package:bato_mechanic/src/features/recent_repairs/recent_repairs_list.dart';
 import 'package:bato_mechanic/src/features/repair_progress/repair_progress_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_parts/vehicle_parts_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen.dart';
-import 'package:bato_mechanic/src/features/review/review_mechanic_screen.dart';
+import 'package:bato_mechanic/src/features/review/presentation/review_mechanic_screen.dart';
 import 'package:bato_mechanic/src/features/splash/presentation/splash_screen.dart';
 import 'package:bato_mechanic/src/features/support_chat/presentation/support_chat_screen.dart';
 
@@ -168,7 +168,12 @@ GoRouter goRouter() {
           GoRoute(
             path: 'mechanic-profile',
             name: appRoute.mechanicProfile.name,
-            builder: (context, state) => MechanicProfileScreen(),
+            builder: (context, state) {
+              final mechanicIdx = (state.extra as Map)["mechanicIdx"];
+              return MechanicProfileScreen(
+                mechanicIdx: mechanicIdx ?? '4ebFHe3UfuBLr9WbEroijH',
+              );
+            },
           ),
           GoRoute(
             path: 'customer-profile',
@@ -221,8 +226,9 @@ GoRouter goRouter() {
               path: 'mechanic-reviews',
               name: appRoute.mechanicReviewsList.name,
               builder: (context, state) {
-                final mechanicId = (state.extra as Map)["mechanicId"];
-                return MechanicReviewsListScreen(mechanicId: mechanicId ?? '1');
+                final mechanicIdx = (state.extra as Map)["mechanicIdx"];
+                return MechanicReviewsListScreen(
+                    mechanicIdx: mechanicIdx ?? '4ebFHe3UfuBLr9WbEroijH');
               }),
         ],
       ),

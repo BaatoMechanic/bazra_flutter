@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../common/widgets/mechanic_review_widget.dart';
 import '../../../../common/widgets/menu_tile_widget.dart';
+import '../../../auth/application/auth_service.dart';
 
 class UserProfileScreen extends ConsumerWidget {
   UserProfileScreen({super.key});

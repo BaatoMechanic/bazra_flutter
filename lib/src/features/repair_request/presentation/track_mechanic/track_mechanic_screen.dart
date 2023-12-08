@@ -7,6 +7,7 @@ import 'package:bato_mechanic/src/common/widgets/butons/esewa_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/khalti_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/pay_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/location_service.dart';
@@ -93,7 +94,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     final timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (mounted) {
         if (_currentIndex < pathPoints.length - 1) {
-          User? user = ref.read(userServiceProvider).currentUser;
+          User? user = ref.read(authServiceProvider).currentUser;
           UserPosition? nextPosition = user?.currentLocation;
           if (ref.read(watchMechanicStateChangesProvider).isLoading) {
             print('dd');
@@ -108,7 +109,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
               longitude: pathPoints[_currentIndex].longitude,
             );
             ref
-                .read(userServiceProvider)
+                .read(authServiceProvider)
                 .setCurrentUser(user?.copyWith(currentLocation: nextPosition));
 
             _currentIndex++;
@@ -125,7 +126,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Get user location if not present
-      if (ref.read(userServiceProvider).currentUser?.currentLocation == null) {
+      if (ref.read(authServiceProvider).currentUser?.currentLocation == null) {
         ref.read(locationServiceProvider).initializeUserLocation();
       }
       // Directly go to progress screen if the repair request is in progress
@@ -189,11 +190,23 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                       children: [
                         assignedMechanic == null
                             ? const CircularProgressIndicator.adaptive()
-                            : Text(
-                                assignedMechanic.name,
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
+                            : TextButton(
+                                onPressed: () => context.pushNamed(
+                                    appRoute.mechanicProfile.name,
+                                    extra: {
+                                      'mechanicIdx': assignedMechanic.idx
+                                    }),
+                                style: Theme.of(context).textButtonTheme.style,
+                                child: Text(
+                                  assignedMechanic.name,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge!
+                                      .copyWith(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          backgroundColor:
+                                              ThemeColor.transparent),
                                 ),
                               ),
                         const SizedBox(height: 4),

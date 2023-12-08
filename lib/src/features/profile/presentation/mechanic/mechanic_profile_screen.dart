@@ -1,19 +1,32 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../common/widgets/mechanic_review_widget.dart';
+import '../../../../common/widgets/mechanic_review_widget.dart';
+import 'mechanic_profile_screen_controller.dart';
 
-class MechanicProfileScreen extends StatelessWidget {
-  const MechanicProfileScreen({super.key});
+class MechanicProfileScreen extends ConsumerWidget {
+  const MechanicProfileScreen({
+    required this.mechanicIdx,
+  });
+
+  final String mechanicIdx;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(mechanicProfileScreenControllerProvider,
+        (previous, state) => state.showError(context));
+
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     return SafeArea(
       child: Scaffold(
@@ -285,9 +298,7 @@ class MechanicProfileScreen extends StatelessWidget {
                     TextButton(
                       onPressed: () => context.pushNamed(
                         appRoute.mechanicReviewsList.name,
-                        // queryParameters: {"mechanicId": "6"}
-                        // extra: "6",
-                        extra: {"mechanicId": "9"},
+                        extra: {"mechanicIdx": mechanicIdx},
                       ),
                       child: Row(
                         children: [
@@ -310,26 +321,34 @@ class MechanicProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: AppHeight.h30,
                 ),
-                SizedBox(
-                  // width: MediaQuery.of(context).size.width * 0.5,
-                  height: AppHeight.h140,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      // physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      itemBuilder: (context, idx) {
-                        return const Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: MechanicReviewWidget(),
-                        );
-                      }),
-                )
+                _getMechanicReviews(ref),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _getMechanicReviews(WidgetRef ref) {
+    final reviewsValue =
+        ref.watch(fetchMechanicReviewsProvider('4ebFHe3UfuBLr9WbEroijH'));
+    return AsyncValueWidget(
+        value: reviewsValue,
+        data: (reviews) => SizedBox(
+              height: AppHeight.h140,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: reviews.length,
+                  itemBuilder: (context, idx) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: MechanicReviewWidget(
+                        review: reviews[idx],
+                      ),
+                    );
+                  }),
+            ));
   }
 }

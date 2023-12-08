@@ -75,7 +75,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
       _searchController.text = placeName;
       _selectedPlaceName = placeName;
       UserPosition? userPosition =
-          ref.read(userServiceProvider).currentUser?.currentLocation;
+          ref.read(authServiceProvider).currentUser?.currentLocation;
 
       if (userPosition != null) {
         ref
@@ -404,7 +404,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   _mapController.center.longitude = positionToMove.longitude;
 
                   UserPosition? userPosition = ref
-                      .read(userServiceProvider)
+                      .read(authServiceProvider)
                       .currentUser
                       ?.currentLocation;
 

@@ -7,14 +7,14 @@ abstract class AuthRepository {
   Future<dynamic> signInWithIdAndPassword(String uId, String password);
   Future<dynamic> refreshToken(String refreshToken);
   Future<dynamic> createUserWithIdAndPassword(String uId, String password);
-  Future getUserInfo(String token);
+  Future getCurrentUserInfo(String token);
   void signOut(Ref ref);
 }
 
-final authRepositoryProvider = Provider<FakeAuthRepository>((ref) {
-  return FakeAuthRepository();
-});
-
-// final authRepositoryProvider = Provider<APIAuthRepository>((ref) {
-//   return APIAuthRepository();
+// final authRepositoryProvider = Provider<FakeAuthRepository>((ref) {
+//   return FakeAuthRepository();
 // });
+
+final authRepositoryProvider = Provider<APIAuthRepository>((ref) {
+  return APIAuthRepository();
+});

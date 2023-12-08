@@ -41,8 +41,8 @@ class BuildHomeScreen extends ConsumerWidget {
       flipOnTouch: false,
       controller: controller,
       front: HomeScreen(flipCardController: controller),
-      back: TempScreen(flipCardController: controller),
-      // back: TrackMechanicScreen(),
+      // back: TempScreen(flipCardController: controller),
+      back: TrackMechanicScreen(),
     );
   }
 }

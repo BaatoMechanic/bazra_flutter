@@ -19,7 +19,7 @@ List<Mechanic> mechanicsFromJson(String str) =>
 String mechanicToJson(Mechanic data) => json.encode(data.toJson());
 
 class Mechanic {
-  int id;
+  String idx;
   int userId;
   String name;
   String phoneNumber;
@@ -35,7 +35,7 @@ class Mechanic {
   double averageRating;
 
   Mechanic({
-    required this.id,
+    required this.idx,
     required this.userId,
     required this.name,
     required this.phoneNumber,
@@ -51,7 +51,7 @@ class Mechanic {
   });
 
   factory Mechanic.fromJson(Map<String, dynamic> json) => Mechanic(
-        id: json["id"],
+        idx: json["id"],
         userId: json["user_id"],
         name: json["name"],
         phoneNumber: json["phone_number"],
@@ -72,7 +72,7 @@ class Mechanic {
     Map<String, dynamic> userLocation = jsonDecode(userLocationJson);
     // userLocation['location_name'] = currentLocationName;
     return {
-      "id": id,
+      "id": idx,
       "user_id": userId,
       "name": name,
       "phone_number": phoneNumber,

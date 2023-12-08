@@ -4,7 +4,7 @@ import 'package:latlong2/latlong.dart';
 
 final mTestMechanics = [
   Mechanic(
-    id: 1,
+    idx: '1',
     userId: 2,
     name: "Krishna Rimal",
     phoneNumber: "9808144809",
@@ -30,7 +30,7 @@ final mTestMechanics = [
     averageRating: 0,
   ),
   Mechanic(
-    id: 2,
+    idx: '2',
     userId: 3,
     name: "Krishna Shrish",
     phoneNumber: "9808144809",

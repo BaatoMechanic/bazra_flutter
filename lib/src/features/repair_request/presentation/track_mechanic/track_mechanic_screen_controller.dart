@@ -61,9 +61,9 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
         speed: position.speed,
         speedAccuracy: position.speedAccuracy,
         locationName: "Temp Name");
-    User currentUser = ref.read(userServiceProvider).currentUser!;
+    User currentUser = ref.read(authServiceProvider).currentUser!;
     currentUser = currentUser.copyWith(currentLocation: currentUserLocation);
-    ref.read(userServiceProvider).setCurrentUser(currentUser);
+    ref.read(authServiceProvider).setCurrentUser(currentUser);
   }
 
   Future<bool> payWithKhalti() async {

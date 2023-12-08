@@ -103,9 +103,9 @@ class APIAuthRepository implements AuthRepository {
   }
 
   @override
-  Future getUserInfo(String token) async {
+  Future getCurrentUserInfo(String token) async {
     try {
-      var url = Uri.parse('${RemoteManager.BASE_URI}autho/users_info/me/');
+      var url = Uri.parse('${RemoteManager.BASE_URI}autho/user_info/me/');
 
       var response = await http.get(url, headers: {
         HttpHeaders.authorizationHeader: 'BM $token',

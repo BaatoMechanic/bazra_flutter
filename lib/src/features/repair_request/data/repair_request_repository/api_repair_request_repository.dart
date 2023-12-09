@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../common/core/repositories/user_settings_repository.dart';
 import '../../../../utils/constants/managers/api_values_manager.dart';
 import '../../../../utils/constants/managers/strings_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
@@ -11,6 +12,9 @@ import 'repair_request_repository.dart';
 import 'package:http/http.dart' as http;
 
 class APIRepairRequestRepository implements RepairRequestRepository {
+  APIRepairRequestRepository({required this.ref});
+  final Ref ref;
+
   @override
   Future<dynamic> fetchVechicleRepairRequest(String repairRequestId) async {
     try {
@@ -165,8 +169,46 @@ class APIRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
-  Future fetchUserRepairRequest(String userId) {
-    // TODO: implement fetchUserRepairRequest
-    throw UnimplementedError();
+  Future fetchUserRepairRequest() async {
+    try {
+      var url =
+          Uri.parse('${RemoteManager.BASE_URI}vehicle-repair/repair_requests/');
+
+      var response = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader:
+            "BM ${ref.read(sharedPreferencesProvider).getString('access')!}",
+      });
+
+      if (response.statusCode == 200) {
+        return Success(
+          code: response.statusCode,
+          response: response,
+        );
+      }
+      return Failure(
+        code: response.statusCode,
+        stackTrace: StackTrace.current,
+        errorResponse: response.body,
+      );
+    } on HttpException {
+      return Failure(
+        code: ApiStatusCode.httpError,
+        stackTrace: StackTrace.current,
+        errorResponse: ApiStrings.noInternetString,
+      );
+    } on FormatException {
+      return Failure(
+        code: ApiStatusCode.invalidResponse,
+        stackTrace: StackTrace.current,
+        errorResponse: ApiStrings.invalidFormatString,
+      );
+    } catch (e, st) {
+      // return Failure(code: 103, errorResponse: e.toString());
+      return Failure(
+        code: ApiStatusCode.unknownError,
+        stackTrace: st,
+        errorResponse: ApiStrings.unknownErrorString,
+      );
+    }
   }
 }

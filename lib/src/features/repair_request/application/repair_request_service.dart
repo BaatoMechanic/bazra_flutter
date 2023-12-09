@@ -24,7 +24,7 @@ class RepairRequestService {
       _repairRequestState.stream;
   VehicleRepairRequest? get activeRepairRequest => _repairRequestState.value;
 
-  void setActiveRepairRequest(VehicleRepairRequest request) {
+  void setActiveRepairRequest(VehicleRepairRequest? request) {
     _repairRequestState.value = request;
   }
 
@@ -60,23 +60,33 @@ class RepairRequestService {
     return response;
   }
 
-  fetchUserRepairRequests(String userId) async {
+  fetchUserRepairRequests() async {
     await Future.delayed(Duration(seconds: 2));
     final response = await ref
         .read(repairRequestRepositoryProvider)
-        .fetchUserRepairRequest(userId);
+        .fetchUserRepairRequest();
     if (response is Success) {
       List<VehicleRepairRequest> repairRequests =
           vehicleRepairRequestsFromJson((response.response as Response).body);
-      if (repairRequests.isEmpty) return false;
-      // ref
-      //     .read(repairRequestControllerProvider.notifier)
-      //     .setRepairRequest(repairRequests.first);
-      setActiveRepairRequest(repairRequests.first);
-      return true;
+      // if (repairRequests.isEmpty) return false;
+      if (repairRequests.isNotEmpty) {
+        setActiveRepairRequest(repairRequests.first);
+      } else {
+        setActiveRepairRequest(null);
+      }
+
+      // return true;
+    }
+    if (response is Failure) {
+      if (response.code == 404) {
+        setActiveRepairRequest(null);
+      } else {
+        throw Exception(jsonDecode(response.errorResponse as String)['detail']);
+        // return;
+      }
     }
     print('here');
-    return false;
+    // return false;
   }
 
   void dispose() => _repairRequestState.close();

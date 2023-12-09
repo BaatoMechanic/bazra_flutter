@@ -89,30 +89,36 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
-  Future fetchUserRepairRequest(String userId) async {
-    Map<String, dynamic> responseBody = {
-      "id": 2,
-      "customer": 1,
-      "preferred_mechanic": 1,
-      "assigned_mechanic": 1,
-      "location_name":
-          "Paneku Marg, Paneku Tol, Chabahil, Kathmandu-07, Kathmandu, Kathmandu Metropolitan City, Kathmandu, Bagmati Province, 44660, Nepal",
-      "location_coordinates": "27.70862555398949,85.33758702603099",
-      "vehicle": 1,
-      "vehicle_part": 1,
-      "title": "Tire Repair",
-      "description": "Tire repair and replacement.",
-      "images": [],
-      "videos": [],
-      // "status": "IN_PROGRESS",
-      // "status": "WAITING_COMPLETION_ACCEPTANCE",
-      // "status": "WAITING_FOR_MECHANIC",
-      "status": "WAITING_FOR_ADVANCE_PAYMENT",
-      "created_at": "2023-10-05T17:19:44.893829Z"
-    };
-    // Response response = Response(jsonEncode([]), HttpStatus.created);
-    Response response =
-        Response(jsonEncode([responseBody]), HttpStatus.created);
+  Future fetchUserRepairRequest() async {
+    // Response response = Response(jsonEncode([]), HttpStatus.ok);
+    Response response = Response(
+        jsonEncode([
+          {
+            "idx": "8aMD5vyNQZqpySEm9T38Y2",
+            "title": "Car is not startingg",
+            "description":
+                "The engine just suddenly shut off and is now not starting",
+            "user": "itLGCnD7vf9P7eucZf3Kgo",
+            "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
+            "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
+            "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+            "assigned_mechanic": null,
+            "status": "waiting_for_advance_payment"
+          },
+          {
+            "idx": "5xBBkkGbKTwEzuAkX46K8H",
+            "title": "Car is not startingg",
+            "description":
+                "The engine just suddenly shut off and is now not starting",
+            "user": "itLGCnD7vf9P7eucZf3Kgo",
+            "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
+            "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
+            "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+            "assigned_mechanic": null,
+            "status": "pending"
+          },
+        ]),
+        HttpStatus.created);
 
     await Future.delayed(const Duration(seconds: 1));
     return Success(code: HttpStatus.ok, response: response);

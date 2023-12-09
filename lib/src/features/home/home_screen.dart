@@ -9,6 +9,7 @@ import 'package:bato_mechanic/src/features/repair_request/application/repair_req
 import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
+import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/home/tips_carousel.dart';
@@ -73,8 +74,8 @@ class TempScreen extends StatelessWidget {
 }
 
 class HomeScreen extends ConsumerStatefulWidget {
-  HomeScreen({super.key, this.flipCardController});
-  final FlipCardController? flipCardController;
+  HomeScreen({super.key, required this.flipCardController});
+  final FlipCardController flipCardController;
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
@@ -154,18 +155,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         }
       }
 
-      // TODO: Uncomment this code to check for available repair request and to act accordingly
-
-      // final result = await ref
-      //     .read(splashScreenControllerProvider.notifier)
-      //     .hasRepairRequest("1");
+      // Fetch user repair requests when the app starts
+      await ref
+          .read(homeScreenControllerProvider.notifier)
+          .fetchUserRepairRequests();
       // if (result) {
       //   VehicleRepairRequest? repairRequest =
       //       ref.read(repairRequestServiceProvider).activeRepairRequest;
 
       //   if (repairRequest != null) {
-      //     if (repairRequest.status ==
-      //         VehicleRepairRequestStatus.IN_PROGRESS) {
+      //     if (repairRequest.status == VehicleRepairRequestStatus.IN_PROGRESS) {
       //       // if (mounted) context.pushNamed(appRoute.repairProgress.name);
       //       if (mounted) context.goNamed(appRoute.repairProgress.name);
       //       return;
@@ -185,23 +184,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(homeScreenControllerProvider,
+        (previousState, state) => state.showError(context));
+
     return WillPopScope(
       onWillPop: () => ToastHelper.onWillPopToast(context),
       child: SafeArea(
         child: Scaffold(
-          floatingActionButton: widget.flipCardController == null
-              ? null
-              : FloatingActionButton(
-                  heroTag: "unique_tag_for_front_fab",
-                  onPressed: () {
-                    widget.flipCardController!.toggleCard();
-                  },
-                  shape: const RoundedRectangleBorder().copyWith(
-                      borderRadius: BorderRadius.circular(
-                    DefaultManager.borderRadiusFull,
-                  )),
-                  child: Image.asset('assets/images/parts/wheel.png'),
-                ),
+          floatingActionButton:
+              ref.watch(watchRepairRequestStateChangesProvider).value == null
+                  ? null
+                  : FloatingActionButton(
+                      heroTag: "unique_tag_for_front_fab",
+                      onPressed: () {
+                        widget.flipCardController.toggleCard();
+                      },
+                      shape: const RoundedRectangleBorder().copyWith(
+                          borderRadius: BorderRadius.circular(
+                        DefaultManager.borderRadiusFull,
+                      )),
+                      child: Image.asset('assets/images/parts/wheel.png'),
+                    ),
           drawer: Drawer(
             child: UserProfileMenu(),
           ),
@@ -216,70 +219,72 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
             ],
           ),
-          body: Column(
-            children: [
-              if (_loadingData)
-                LinearProgressIndicator(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                      Colors.grey,
-                    )),
-              Stack(
-                children: [
-                  Container(
-                    height: AppHeight.h150,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft:
-                              Radius.circular(DefaultManager.borderRadiusMd),
-                          bottomRight:
-                              Radius.circular(DefaultManager.borderRadiusMd)),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                if (_loadingData)
+                  LinearProgressIndicator(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        Colors.grey,
+                      )),
+                Stack(
+                  children: [
+                    Container(
+                      height: AppHeight.h150,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: const BorderRadius.only(
+                            bottomLeft:
+                                Radius.circular(DefaultManager.borderRadiusMd),
+                            bottomRight:
+                                Radius.circular(DefaultManager.borderRadiusMd)),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppPadding.p16,
-                      vertical: AppPadding.p12,
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: AppHeight.h40,
-                          child: SearchBar(
-                            controller: _searchTextController,
-                            focusNode: _searchFocusNode,
-                            hintText: 'Search'.hardcoded(),
-                            leading: const Icon(Icons.search,
-                                color: ThemeColor.dark),
-                            onChanged: (value) {
-                              _searchTextController.text = value;
-                            },
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppPadding.p24),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: AppHeight.h14,
-                                ),
-                                TipsCarousel(),
-                                SizedBox(
-                                  height: AppHeight.h20,
-                                ),
-                                ServiceButtonsGrid(),
-                              ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppPadding.p16,
+                        vertical: AppPadding.p12,
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: AppHeight.h40,
+                            child: SearchBar(
+                              controller: _searchTextController,
+                              focusNode: _searchFocusNode,
+                              hintText: 'Search'.hardcoded(),
+                              leading: const Icon(Icons.search,
+                                  color: ThemeColor.dark),
+                              onChanged: (value) {
+                                _searchTextController.text = value;
+                              },
                             ),
                           ),
-                        )
-                      ],
+                          const Padding(
+                            padding: EdgeInsets.only(top: AppPadding.p24),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: AppHeight.h14,
+                                  ),
+                                  TipsCarousel(),
+                                  SizedBox(
+                                    height: AppHeight.h20,
+                                  ),
+                                  ServiceButtonsGrid(),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

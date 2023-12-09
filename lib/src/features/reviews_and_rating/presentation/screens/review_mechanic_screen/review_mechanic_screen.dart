@@ -208,7 +208,7 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
     if (repairRequest != null) {
       final result = await ref
           .read(mechanicServiceProvider)
-          .rateAndReviewMechanic(repairRequest.id.toString(), selectedStars,
+          .rateAndReviewMechanic(repairRequest.idx.toString(), selectedStars,
               _reviewTextController.text);
       if (result) {
         ToastHelper.showNotification(

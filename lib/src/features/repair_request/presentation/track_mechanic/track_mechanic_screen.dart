@@ -95,8 +95,6 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
 
     int _currentIndex = 0;
 
-    ref.read(repairRequestServiceProvider).fetchUserRepairRequests('1');
-
     final timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (mounted) {
         if (_currentIndex < pathPoints.length - 1) {
@@ -189,7 +187,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
 
             if (assignedMechanic == null) {
               ref.read(mechanicServiceProvider).fetchAssignedMechanic(
-                  repairRequest.assignedMechanicId.toString());
+                  repairRequest.assignedMechanicIdx.toString());
             }
             return Scaffold(
               appBar: AppBar(

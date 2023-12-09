@@ -29,80 +29,67 @@ enum VehicleRepairRequestStatus {
 }
 
 class VehicleRepairRequest {
-  int id;
-  int customerId;
-  int? preferredMechanicId;
-  int? assignedMechanicId;
-  String locationName;
-  String locationCoordinates;
-  int vehicleCategoryId;
-  int vehiclePartId;
+  String idx;
   String? title;
   String? description;
-  List<VehicleRepairRequestImage> images;
-  List<VehicleRepairRequestVideo> videos;
+  String userIdx;
+  String vehicleCategoryIdx;
+  String vehiclePartIdx;
+  String? preferredMechanicIdx;
+  String? assignedMechanicIdx;
   VehicleRepairRequestStatus status;
-  DateTime createdAt;
 
   VehicleRepairRequest({
-    required this.id,
-    required this.customerId,
-    this.preferredMechanicId,
-    this.assignedMechanicId,
-    required this.locationName,
-    required this.locationCoordinates,
-    required this.vehicleCategoryId,
-    required this.vehiclePartId,
+    required this.idx,
+    required this.userIdx,
+    this.preferredMechanicIdx,
+    this.assignedMechanicIdx,
+    required this.vehicleCategoryIdx,
+    required this.vehiclePartIdx,
     required this.title,
     required this.description,
-    required this.images,
-    required this.videos,
     required this.status,
-    required this.createdAt,
   });
 
   factory VehicleRepairRequest.fromJson(Map<String, dynamic> json) =>
       VehicleRepairRequest(
-        id: json["id"],
-        customerId: json["customer"],
-        preferredMechanicId: json["preferred_mechanic"],
-        assignedMechanicId: json["assigned_mechanic"],
-        locationName: json["location_name"],
-        locationCoordinates: json["location_coordinates"],
-        vehicleCategoryId: json["vehicle"],
-        vehiclePartId: json["vehicle_part"],
+        idx: json["idx"],
+        userIdx: json["user"],
+        preferredMechanicIdx: json["preferred_mechanic"],
+        assignedMechanicIdx: json["assigned_mechanic"],
+
+        vehicleCategoryIdx: json["vehicle_type"],
+        vehiclePartIdx: json["vehicle_part"],
         title: json["title"],
         description: json["description"],
-        images: List<VehicleRepairRequestImage>.from(
-            json["images"].map((x) => VehicleRepairRequestImage.fromJson(x))),
-        videos: List<VehicleRepairRequestVideo>.from(
-            json["videos"].map((x) => VehicleRepairRequestVideo.fromJson(x))),
-        // status: json['status'],
+        // images: List<VehicleRepairRequestImage>.from(
+        //     json["images"].map((x) => VehicleRepairRequestImage.fromJson(x))),
+        // videos: List<VehicleRepairRequestVideo>.from(
+        //     json["videos"].map((x) => VehicleRepairRequestVideo.fromJson(x))),
+
         status: vehicleRepairRequestStatusFromJson(json['status']),
-        createdAt: DateTime.parse(json["created_at"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "customer": customerId,
-        "preferred_mechanic": preferredMechanicId,
-        "assigned_mechanic": assignedMechanicId,
-        "location_name": locationName,
-        "location_coordinates": locationCoordinates,
-        "vehicle": vehicleCategoryId,
-        "vehicle_part": vehiclePartId,
+        "id": idx,
+        "customer": userIdx,
+        "preferred_mechanic": preferredMechanicIdx,
+        "assigned_mechanic": assignedMechanicIdx,
+
+        "vehicle": vehicleCategoryIdx,
+        "vehicle_part": vehiclePartIdx,
         "title": title,
         "description": description,
-        "images": List<dynamic>.from(images.map((x) => x.toJson())),
-        "videos": List<dynamic>.from(videos.map((x) => x.toJson())),
+        // "images": List<dynamic>.from(images.map((x) => x.toJson())),
+        // "videos": List<dynamic>.from(videos.map((x) => x.toJson())),
         "status": status,
-        "created_at": createdAt.toIso8601String(),
+        // "created_at": createdAt.toIso8601String(),
       };
 
   // Function to convert a JSON value to the enum
   static VehicleRepairRequestStatus vehicleRepairRequestStatusFromJson(
       String status) {
-    switch (status) {
+    switch (status.toUpperCase()) {
       case "PENDING":
         return VehicleRepairRequestStatus.PENDING;
       case "WAITING_FOR_ADVANCE_PAYMENT":
@@ -145,19 +132,17 @@ class VehicleRepairRequest {
     VehicleRepairRequestStatus? status,
   }) {
     return VehicleRepairRequest(
-      id: id ?? this.id,
-      customerId: customerId ?? this.customerId,
-      preferredMechanicId: preferredMechanicId ?? this.preferredMechanicId,
-      assignedMechanicId: assignedMechanicId ?? this.assignedMechanicId,
-      locationName: locationName ?? this.locationName,
-      locationCoordinates: locationCoordinates ?? this.locationCoordinates,
-      vehicleCategoryId: vehicleId ?? this.vehicleCategoryId,
-      vehiclePartId: vehiclePartId ?? this.vehiclePartId,
+      idx: idx,
+      userIdx: userIdx,
+      preferredMechanicIdx: preferredMechanicIdx,
+      assignedMechanicIdx: assignedMechanicIdx,
+      vehicleCategoryIdx: vehicleCategoryIdx,
+      vehiclePartIdx: vehiclePartIdx,
       title: title ?? this.title,
       description: description ?? this.description,
-      images: images ?? this.images,
-      videos: videos ?? this.videos,
-      createdAt: createdAt ?? this.createdAt,
+      // images: images ?? this.images,
+      // videos: videos ?? this.videos,
+      // createdAt: createdAt ?? this.createdAt,
       status: status ?? VehicleRepairRequestStatus.PENDING,
     );
   }

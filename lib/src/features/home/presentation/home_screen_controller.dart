@@ -20,13 +20,11 @@ class HomeScreenController extends StateNotifier<AsyncValue<void>> {
   //   return response;
   // }
 
-  Future<bool> hasRepairRequest(String userId) async {
-    await Future.delayed(Duration(seconds: 2));
-    final response = await ref
-        .read(repairRequestServiceProvider)
-        .fetchUserRepairRequests(userId);
-
-    return response;
+  Future<bool> fetchUserRepairRequests() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(
+        () => ref.read(repairRequestServiceProvider).fetchUserRepairRequests());
+    return !state.hasError;
   }
 
   Future<bool> fetchUserInfo(String token) async {

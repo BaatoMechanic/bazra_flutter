@@ -12,10 +12,9 @@ abstract class RepairRequestRepository {
   Future<dynamic> requestForVehicleRepair(Map<String, dynamic> requestInfo);
   Future<dynamic> addImagesToRepairRequest(
       String repairRequestId, List<File> images);
-  Future<dynamic> fetchUserRepairRequest(String userId);
+  Future<dynamic> fetchUserRepairRequest();
 }
 
 final repairRequestRepositoryProvider =
     Provider((ref) => FakeRepairRequestRepository());
-// Provider((ref) => APIRepairRequestRepository());
-
+    // Provider((ref) => APIRepairRequestRepository(ref: ref));

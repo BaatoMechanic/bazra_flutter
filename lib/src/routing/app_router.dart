@@ -67,7 +67,15 @@ final repairSteps = [
       name: 'Inception',
       detail: AudioData(File('audios/sample_audio.mp3')),
       status: 'Completed',
-      report: RepairStepReport(reportFields: [])),
+      report: RepairStepReport(reportFields: [
+        {
+          "bill_images": [
+            "assets/images/parts/body",
+            "assets/images/parts/wheel",
+            "assets/images/vehicle/jcb",
+          ]
+        }
+      ])),
   RepairStep(
       name: 'Step 2 details',
       detail: StringData("Did the inception"),

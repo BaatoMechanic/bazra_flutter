@@ -13,9 +13,8 @@ class SplashScreenController extends StateNotifier<AsyncValue<void>> {
 
   Future<bool> hasRepairRequest(String userId) async {
     await Future.delayed(Duration(seconds: 2));
-    final response = await ref
-        .read(repairRequestServiceProvider)
-        .fetchUserRepairRequests(userId);
+    final response =
+        await ref.read(repairRequestServiceProvider).fetchUserRepairRequests();
 
     return response;
   }

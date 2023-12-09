@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 
@@ -9,6 +10,7 @@ import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:bato_mechanic/src/utils/system_alerts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -213,26 +215,44 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
               //         : const Text('Add Video'),
               //   );
               // }),
-              ElevatedButton(
-                onPressed: _pickVideo,
-                child: _videoController != null
-                    ? Text(
-                        'Change Video',
-                        style: TextStyle().copyWith(color: ThemeColor.dark),
-                      )
-                    : Text(
-                        'Add Video',
-                        style: TextStyle().copyWith(color: ThemeColor.dark),
-                      ),
-              ),
-              if (_videoController != null)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: AspectRatio(
-                    aspectRatio: _videoController!.value.aspectRatio,
-                    child: VideoPlayer(_videoController!),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: _pickVideo,
+                    child: _videoController != null
+                        ? Text(
+                            'Change Video',
+                            style: TextStyle().copyWith(color: ThemeColor.dark),
+                          )
+                        : Text(
+                            'Add Video',
+                            style: TextStyle().copyWith(color: ThemeColor.dark),
+                          ),
                   ),
-                ),
+                  if (_videoController != null)
+                    Padding(
+                      padding: const EdgeInsets.only(left: AppPadding.p12),
+                      child: Align(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth:
+                                  HelperFunctions.screenWidth(context) * 0.5,
+                              maxHeight:
+                                  HelperFunctions.screenHeight(context) * 0.2,
+                            ),
+                            child: AspectRatio(
+                              aspectRatio: _videoController!.value.aspectRatio,
+                              child: VideoPlayer(_videoController!),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+
               const SizedBox(height: 16),
 
               AsyncValueWidget(

@@ -212,12 +212,12 @@ class RequestMechanicScreenController
       ref.read(systemAlertProvider.notifier).setAlertMessage("Adding images");
 
       if (await _addImagesToRepairRequest(
-          response.id.toString(), state.selectedImages.value!)) {
+          response.idx.toString(), state.selectedImages.value!)) {
         // When repair request has been successfully created then fetch the additional infos like mechanicinfo, customerInfo, vehicleInfo, etc
         ref.read(mechanicServiceProvider).fetchAssignedMechanic(ref
             .read(repairRequestServiceProvider)
             .activeRepairRequest!
-            .assignedMechanicId
+            .assignedMechanicIdx
             .toString());
         return true;
       }

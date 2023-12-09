@@ -26,7 +26,7 @@ class RepairProgressScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final activeRepariRequest =
         ref.watch(watchRepairRequestStateChangesProvider).value;
-    ref.read(repairRequestServiceProvider).fetchUserRepairRequests('1');
+    ref.read(repairRequestServiceProvider).fetchUserRepairRequests();
 
     return Scaffold(
       appBar: AppBar(
@@ -82,10 +82,12 @@ class RepairProgressScreen extends ConsumerWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Report Fields:',
-                                      style: TextStyle().copyWith(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold)),
+                                  Text(
+                                    'Report Fields:',
+                                    style: TextStyle().copyWith(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                   for (var field in step.report!.reportFields)
                                     Text('${field['name']}: ${field['value']}',
                                         style: const TextStyle(fontSize: 16)),

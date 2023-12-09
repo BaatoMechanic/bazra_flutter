@@ -2,6 +2,7 @@
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/rating_stars_widget.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/reviews_and_rating_shimmer_widget.dart';
 import 'package:bato_mechanic/src/utils/extensions/datetime_extensions.dart';
 import 'package:bato_mechanic/src/utils/foramtters/date_formatter.dart';
 import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
@@ -29,13 +30,15 @@ class MechanicReviewWidget extends ConsumerWidget {
     final reviewerInfoValue =
         ref.watch(fetchUserInfoProvider(review.reviewerIdx));
     return AsyncValueWidget(
+      loadingShimmer: const ReviewsAndRatingShimmerWidget(),
       value: reviewerInfoValue,
       data: (reviewer) => Container(
         padding: const EdgeInsets.all(AppPadding.p8),
         decoration: BoxDecoration(
-            border: isDarkTheme
-                ? Border.all(color: ThemeColor.lightGrey)
-                : Border.all(color: ThemeColor.grey),
+            // border: isDarkTheme
+            //     ? Border.all(color: ThemeColor.lightGrey)
+            //     : Border.all(color: ThemeColor.grey),
+            border: Border.all(color: ThemeColor.darkContainer),
             color: isDarkTheme
                 ? ThemeColor.transparent
                 : ColorManager.primaryTint60,

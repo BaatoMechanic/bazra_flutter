@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen_controller.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/reviews_and_rating_shimmer_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/mechanic_review_widget.dart';
@@ -33,6 +34,7 @@ class MechanicReviewsListScreen extends ConsumerWidget {
             vertical: AppPadding.p20,
           ),
           child: AsyncValueWidget(
+            loadingShimmer: const ReviewsAndRatingShimmerWidget(),
             value: reviewsValue,
             data: (reviews) => ListView.builder(
                 shrinkWrap: true,

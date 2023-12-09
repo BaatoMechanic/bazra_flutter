@@ -103,6 +103,7 @@ GoRouter goRouter() {
         name: appRoute.home.name,
         // builder: (context, state) => HomeScreen(),
         builder: (context, state) => BuildHomeScreen(),
+
         routes: [
           GoRoute(
             path: 'track_mechanic',

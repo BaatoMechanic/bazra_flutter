@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:bato_mechanic/src/features/auth/domain/user.dart';
 import 'package:geolocator/geolocator.dart';
 
-import 'package:bato_mechanic/src/features/repair_request/domain/mechanic.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
 
 class TrackMechanicScreenState {

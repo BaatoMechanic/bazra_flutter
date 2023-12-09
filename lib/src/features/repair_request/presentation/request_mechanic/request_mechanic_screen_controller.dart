@@ -10,7 +10,6 @@ import 'package:bato_mechanic/src/features/repair_request/application/vechicles_
 import 'package:bato_mechanic/src/features/repair_request/application/vehicle_parts_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/vehicle_category_repository/vehicle_category_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/mechanic_repository/mechanic_repository.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/mechanic.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_category.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';

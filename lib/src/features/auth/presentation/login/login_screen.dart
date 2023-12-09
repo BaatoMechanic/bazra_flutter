@@ -55,58 +55,63 @@ class LoginScreen extends ConsumerWidget {
         (previous, state) => state.showError(context));
 
     final state = ref.watch(loginScreenControllerProvider);
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(AppPadding.p16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IdField(
-                      title: 'Id'.hardcoded(),
-                      labelText: "Phone/email".hardcoded(),
-                      hintText: "Enter your number or your valid email address"
-                          .hardcoded(),
-                      controller: _idController,
-                      focusNode: _emailFocusNode,
-                    ),
-                    const SizedBox(
-                      height: DefaultManager.defaultSpace,
-                    ),
-                    PasswordField(
-                      title: "Password".hardcoded(),
-                      labelText: "Password".hardcoded(),
-                      hintText: "Enter your password".hardcoded(),
-                      controller: _passwordController,
-                      focusNode: _passwordFocusNode,
-                    ),
-                    const SizedBox(
-                      height: AppHeight.h30,
-                    ),
-                    SubmitButton(
-                      showSpinner: state.isLoading,
-                      label: 'Login'.hardcoded(),
-                      onPressed: () => _login(context, ref),
-                    ),
-                    DividerField(
-                      text: 'Or'.hardcoded(),
-                    ),
-                    GoogleButton(
-                        labelText: "Sign in with Google".hardcoded(),
-                        onPressed: () {}),
-                    FacebookButton(
-                        labelText: 'Log in with Facebook'.hardcoded(),
-                        onPressed: () {}),
-                    LoginSignUpLabel(
-                      infoText: 'Don\'t have an account ?'.hardcoded(),
-                      labelText: 'Register'.hardcoded(),
-                      onPressed: () => context.pushNamed(appRoute.signup.name),
-                    ),
-                  ],
+    return WillPopScope(
+      onWillPop: () => ToastHelper.onWillPopToast(context),
+      child: SafeArea(
+        child: Scaffold(
+          body: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(AppPadding.p16),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IdField(
+                        title: 'Id'.hardcoded(),
+                        labelText: "Phone/email".hardcoded(),
+                        hintText:
+                            "Enter your number or your valid email address"
+                                .hardcoded(),
+                        controller: _idController,
+                        focusNode: _emailFocusNode,
+                      ),
+                      const SizedBox(
+                        height: DefaultManager.defaultSpace,
+                      ),
+                      PasswordField(
+                        title: "Password".hardcoded(),
+                        labelText: "Password".hardcoded(),
+                        hintText: "Enter your password".hardcoded(),
+                        controller: _passwordController,
+                        focusNode: _passwordFocusNode,
+                      ),
+                      const SizedBox(
+                        height: AppHeight.h30,
+                      ),
+                      SubmitButton(
+                        showSpinner: state.isLoading,
+                        label: 'Login'.hardcoded(),
+                        onPressed: () => _login(context, ref),
+                      ),
+                      DividerField(
+                        text: 'Or'.hardcoded(),
+                      ),
+                      GoogleButton(
+                          labelText: "Sign in with Google".hardcoded(),
+                          onPressed: () {}),
+                      FacebookButton(
+                          labelText: 'Log in with Facebook'.hardcoded(),
+                          onPressed: () {}),
+                      LoginSignUpLabel(
+                        infoText: 'Don\'t have an account ?'.hardcoded(),
+                        labelText: 'Register'.hardcoded(),
+                        onPressed: () =>
+                            context.pushNamed(appRoute.signup.name),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

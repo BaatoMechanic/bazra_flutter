@@ -42,7 +42,7 @@ class BuildHomeScreen extends ConsumerWidget {
       controller: controller,
       front: HomeScreen(flipCardController: controller),
       // back: TempScreen(flipCardController: controller),
-      back: TrackMechanicScreen(),
+      back: TrackMechanicScreen(flipCardController: controller),
     );
   }
 }
@@ -86,60 +86,107 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   FocusNode _searchFocusNode = FocusNode();
 
+// Set this to true when first loading data when the app starts
+  bool _loadingData = false;
+
+  void _navigateToLogin(BuildContext context) {
+    if (mounted) context.replaceNamed(appRoute.login.name);
+  }
+
+  Future<bool> _fetchUserInfoWithAccessToken(
+      WidgetRef ref, String accessToken) async {
+    final notifier = ref.read(homeScreenControllerProvider.notifier);
+    return await notifier.fetchUserInfo(accessToken);
+  }
+
+  Future<bool> _refreshTokenAndFetchUserInfo(
+      WidgetRef ref, String refreshToken) async {
+    final notifier = ref.read(homeScreenControllerProvider.notifier);
+    if (!await notifier.refreshToken(refreshToken)) {
+      return false;
+    }
+    final accessToken = ref.read(sharedPreferencesProvider).getString("access");
+    return await notifier.fetchUserInfo(accessToken!);
+  }
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        _loadingData = true;
+      });
+      final isLoggedIn = ref.watch(authServiceProvider).currentUser != null;
+
+      if (!isLoggedIn) {
+        final sharedPreferences = ref.read(sharedPreferencesProvider);
+        final accessToken = sharedPreferences.getString("access");
+        final refreshToken = sharedPreferences.getString("refresh");
+
+        if (accessToken != null) {
+          if (!await _fetchUserInfoWithAccessToken(ref, accessToken)) {
+            setState(() {
+              _loadingData = false;
+            });
+            if (!mounted) return;
+            _navigateToLogin(context);
+
+            return;
+          }
+        } else if (refreshToken != null) {
+          if (!await _refreshTokenAndFetchUserInfo(ref, refreshToken)) {
+            setState(() {
+              _loadingData = false;
+            });
+            if (!mounted) return;
+            _navigateToLogin(context);
+            return;
+          }
+        } else {
+          setState(() {
+            _loadingData = false;
+          });
+          if (!mounted) return;
+          _navigateToLogin(context);
+          return;
+        }
+      }
+
+      // TODO: Uncomment this code to check for available repair request and to act accordingly
+
+      // final result = await ref
+      //     .read(splashScreenControllerProvider.notifier)
+      //     .hasRepairRequest("1");
+      // if (result) {
+      //   VehicleRepairRequest? repairRequest =
+      //       ref.read(repairRequestServiceProvider).activeRepairRequest;
+
+      //   if (repairRequest != null) {
+      //     if (repairRequest.status ==
+      //         VehicleRepairRequestStatus.IN_PROGRESS) {
+      //       // if (mounted) context.pushNamed(appRoute.repairProgress.name);
+      //       if (mounted) context.goNamed(appRoute.repairProgress.name);
+      //       return;
+      //     }
+      //     // if (mounted) context.pushNamed(appRoute.trackMechanic.name);
+      //     if (mounted) context.goNamed(appRoute.trackMechanic.name);
+      //     return;
+      //   }
+      // }
+      setState(() {
+        _loadingData = false;
+      });
+      // if (mounted) context.replaceNamed(appRoute.home.name);
+      // if (mounted) context.replaceNamed(appRoute.buildHome.name);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(watchUserStateChangesProvider).value;
     return WillPopScope(
-      onWillPop: () async {
-        final shouldPop = await showDialog<bool>(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              backgroundColor: ThemeColor.primary,
-              title: Text(
-                'Do you want to close the app?',
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                      color: ThemeColor.dark,
-                    ),
-              ),
-              actionsAlignment: MainAxisAlignment.spaceBetween,
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context, true);
-                  },
-                  child: Text(
-                    'Yes',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: ThemeColor.dark,
-                        ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context, false);
-                  },
-                  child: Text(
-                    'No',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: ThemeColor.dark,
-                        ),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-        if (shouldPop != null) {
-          return shouldPop;
-        }
-        return false;
-      },
+      onWillPop: () => ToastHelper.onWillPopToast(context),
       child: SafeArea(
         child: Scaffold(
           floatingActionButton: widget.flipCardController == null
@@ -169,58 +216,68 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
             ],
           ),
-          body: Stack(
+          body: Column(
             children: [
-              Container(
-                height: AppHeight.h150,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft:
-                          Radius.circular(DefaultManager.borderRadiusMd),
-                      bottomRight:
-                          Radius.circular(DefaultManager.borderRadiusMd)),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPadding.p16,
-                  vertical: AppPadding.p12,
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: AppHeight.h40,
-                      child: SearchBar(
-                        controller: _searchTextController,
-                        focusNode: _searchFocusNode,
-                        hintText: 'Search'.hardcoded(),
-                        leading:
-                            const Icon(Icons.search, color: ThemeColor.dark),
-                        onChanged: (value) {
-                          _searchTextController.text = value;
-                        },
-                      ),
+              if (_loadingData)
+                LinearProgressIndicator(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                      Colors.grey,
+                    )),
+              Stack(
+                children: [
+                  Container(
+                    height: AppHeight.h150,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft:
+                              Radius.circular(DefaultManager.borderRadiusMd),
+                          bottomRight:
+                              Radius.circular(DefaultManager.borderRadiusMd)),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: AppPadding.p24),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: AppHeight.h14,
-                            ),
-                            TipsCarousel(),
-                            SizedBox(
-                              height: AppHeight.h20,
-                            ),
-                            ServiceButtonsGrid(),
-                          ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppPadding.p16,
+                      vertical: AppPadding.p12,
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: AppHeight.h40,
+                          child: SearchBar(
+                            controller: _searchTextController,
+                            focusNode: _searchFocusNode,
+                            hintText: 'Search'.hardcoded(),
+                            leading: const Icon(Icons.search,
+                                color: ThemeColor.dark),
+                            onChanged: (value) {
+                              _searchTextController.text = value;
+                            },
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: AppPadding.p24),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: AppHeight.h14,
+                                ),
+                                TipsCarousel(),
+                                SizedBox(
+                                  height: AppHeight.h20,
+                                ),
+                                ServiceButtonsGrid(),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

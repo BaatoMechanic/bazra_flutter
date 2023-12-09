@@ -340,4 +340,50 @@ class ToastHelper {
       ),
     ));
   }
+
+  static Future<bool> onWillPopToast(BuildContext context) async {
+    final shouldPop = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: ThemeColor.primary,
+          title: Text(
+            'Do you want to close the app?',
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                  color: ThemeColor.dark,
+                ),
+          ),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text(
+                'Yes',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: ThemeColor.dark,
+                    ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text(
+                'No',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: ThemeColor.dark,
+                    ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    if (shouldPop != null) {
+      return shouldPop;
+    }
+    return false;
+  }
 }

@@ -3,7 +3,6 @@ import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bato_mechanic/src/features/repair_request/domain/mechanic.dart';
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 import 'package:http/http.dart';
 

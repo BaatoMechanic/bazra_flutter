@@ -79,7 +79,6 @@ class AuthService {
 
     if (response is Success) {
       User user = User.fromJson(jsonDecode((jsonEncode(response.response))));
-      // ref.read(userServiceProvider).setCurrentUser(user);
       setCurrentUser(user);
       return;
     }

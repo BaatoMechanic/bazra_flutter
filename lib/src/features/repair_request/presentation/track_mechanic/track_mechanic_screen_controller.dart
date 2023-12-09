@@ -9,7 +9,7 @@ import 'package:bato_mechanic/src/features/repair_request/application/mechanic_s
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/map_repository/request_mechanic_map_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/mechanic_repository/mechanic_repository.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/mechanic.dart';
+
 import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';

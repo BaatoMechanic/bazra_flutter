@@ -57,7 +57,7 @@ class User {
       'name': name,
       'email': email,
       'phone': phone,
-      'profile_pic': profilePic,
+      'image': profilePic,
       'current_location': currentLocation?.toMap(),
       'primary_role': primaryRole,
       'roles': roles,
@@ -71,8 +71,7 @@ class User {
       name: map['name'] as String,
       email: map['email'] != null ? map['email'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
-      profilePic:
-          map['profile_pic'] != null ? map['profile_pic'] as String : null,
+      profilePic: map['image'] != null ? map['image'] as String : null,
       currentLocation: map['current_location'] != null
           ? UserPosition.fromMap(
               map['current_location'] as Map<String, dynamic>)

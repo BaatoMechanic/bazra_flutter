@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/mechanic.dart';
 import 'fake_mechanic_repository.dart';
 
 abstract class MechanicRepository {

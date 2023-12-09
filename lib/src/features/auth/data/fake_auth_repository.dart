@@ -29,7 +29,7 @@ class FakeAuthRepository implements AuthRepository {
   Future getCurrentUserInfo(String token) async {
     await Future.delayed(Duration(seconds: 1));
     var response = Response(
-        '{"idx": "itLGCnD7vf9P7eucZf3Kgo", "name": "Krishna Rimal", "email": null,"phone": "9808144809", "image": null,"primary_role": "Consumer","roles": []}',
+        '{"idx": "itLGCnD7vf9P7eucZf3Kgo", "name": "Krishna Rimal", "email": null,"phone": "9808144809", "image": null,"primary_role": "Consumer","roles": [], "additional_attributes": {} }',
         200);
     return Success(code: response.statusCode, response: response.body);
   }

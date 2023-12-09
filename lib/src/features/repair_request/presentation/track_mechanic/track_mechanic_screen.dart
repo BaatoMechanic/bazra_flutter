@@ -1,14 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+
+import 'package:flip_card/flip_card_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map/plugin_api.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:latlong2/latlong.dart';
 
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/billing_info_widget.dart';
-import 'package:bato_mechanic/src/common/widgets/pay_bottom_sheet_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/esewa_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/khalti_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/pay_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/common/widgets/pay_bottom_sheet_widget.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/location_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/mechanic_service.dart';
@@ -19,18 +28,12 @@ import 'package:bato_mechanic/src/features/repair_request/presentation/request_m
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/search_map/search_map_widget_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen_controller.dart';
+import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/foramtters/date_formatter.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map/plugin_api.dart';
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:latlong2/latlong.dart';
 
 import '../../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
 import '../../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
@@ -39,7 +42,10 @@ import '../../../auth/domain/user.dart';
 class TrackMechanicScreen extends ConsumerStatefulWidget {
   const TrackMechanicScreen({
     Key? key,
+    this.flipCardController,
   }) : super(key: key);
+
+  final FlipCardController? flipCardController;
 
   @override
   ConsumerState<TrackMechanicScreen> createState() =>
@@ -163,207 +169,219 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     final assignedMechanic = ref.watch(watchMechanicStateChangesProvider).value;
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-    return AsyncValueWidget(
-        value: repairRequestValue,
-        data: (repairRequest) {
-          if (repairRequest == null) {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator.adaptive()),
-            );
+    return WillPopScope(
+      onWillPop: () async {
+        if (mounted) {
+          if (widget.flipCardController != null) {
+            widget.flipCardController!.toggleCard();
           }
+        }
+        return Future.value(false);
+      },
+      child: AsyncValueWidget(
+          value: repairRequestValue,
+          data: (repairRequest) {
+            if (repairRequest == null) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator.adaptive()),
+              );
+            }
 
-          if (assignedMechanic == null) {
-            ref.read(mechanicServiceProvider).fetchAssignedMechanic(
-                repairRequest.assignedMechanicId.toString());
-          }
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Track Mechanic'),
-            ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: [
-                        assignedMechanic == null
-                            ? const CircularProgressIndicator.adaptive()
-                            : TextButton(
-                                onPressed: () => context.pushNamed(
-                                    appRoute.mechanicProfile.name,
-                                    extra: {
-                                      'mechanicIdx': assignedMechanic.idx
-                                    }),
-                                style: Theme.of(context).textButtonTheme.style,
-                                child: Text(
-                                  assignedMechanic.name,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineLarge!
-                                      .copyWith(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                          backgroundColor:
-                                              ThemeColor.transparent),
-                                ),
-                              ),
-                        const SizedBox(height: 4),
-                        assignedMechanic == null
-                            ? const CircularProgressIndicator.adaptive()
-                            : Text(
-                                'Mechanic Location: ${assignedMechanic.currentLocation!.locationName}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                        const SizedBox(height: 16),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FullScreenMapScreen(
-                                  mechanicLocation: assignedMechanic!
-                                          .currentLocation!.locationName ??
-                                      'Unknown',
-                                ),
-                              ),
-                            );
-                          },
-                          child: SizedBox(
-                            height: _showBigScreenMap
-                                ? MediaQuery.of(context).size.height * 0.75
-                                : 400,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20.0),
-                              child: _showMechanicTrackMap(context),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(8),
-                          padding: const EdgeInsets.all(8),
-                          width: 75,
-                          decoration: BoxDecoration(
-                            color: Colors.amberAccent[200],
-                            borderRadius: BorderRadius.circular(
-                              20,
-                            ),
-                          ),
-                          child: Image.asset(
-                            'assets/images/parts/wheel.png',
-                          ),
-                        ),
-                        RichText(
-                          text: TextSpan(
-                            text: 'Estimated Arrival Time: ',
-                            style: const TextStyle().copyWith(
-                              color: isDarkTheme
-                                  ? ThemeColor.white
-                                  : ThemeColor.black,
-                            ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: BaatoDateFormatter.formatMinutesToGeneric(
-                                    ref
-                                        .read(
-                                            trackMechanicScreenControllerProvider
-                                                .notifier)
-                                        .getEstimateArrivalTime()),
-                                style: const TextStyle(
-                                  color: ThemeColor.primary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    ListTile(
-                      title: Text(
-                        repairRequest.title ?? "",
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                      subtitle: Text(
-                        repairRequest.description ?? "No description provided",
-                        // style: TextStyle().copyWith(
-                        //   fontSize: 14,
-                        // ),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 8.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            if (assignedMechanic == null) {
+              ref.read(mechanicServiceProvider).fetchAssignedMechanic(
+                  repairRequest.assignedMechanicId.toString());
+            }
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Track Mechanic'),
+              ),
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Mechanic baato karcha',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                          assignedMechanic == null
+                              ? const CircularProgressIndicator.adaptive()
+                              : TextButton(
+                                  onPressed: () => context.pushNamed(
+                                      appRoute.mechanicProfile.name,
+                                      extra: {
+                                        'mechanicIdx': assignedMechanic.idx
+                                      }),
+                                  style:
+                                      Theme.of(context).textButtonTheme.style,
+                                  child: Text(
+                                    assignedMechanic.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge!
+                                        .copyWith(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            backgroundColor:
+                                                ThemeColor.transparent),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                'Khaana included',
-                                style: TextStyle(
-                                  fontSize: 14,
+                          const SizedBox(height: 4),
+                          assignedMechanic == null
+                              ? const CircularProgressIndicator.adaptive()
+                              : Text(
+                                  'Mechanic Location: ${assignedMechanic.currentLocation!.locationName}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
+                          const SizedBox(height: 16),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FullScreenMapScreen(
+                                    mechanicLocation: assignedMechanic!
+                                            .currentLocation!.locationName ??
+                                        'Unknown',
+                                  ),
+                                ),
+                              );
+                            },
+                            child: SizedBox(
+                              height: _showBigScreenMap
+                                  ? MediaQuery.of(context).size.height * 0.75
+                                  : 400,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: _showMechanicTrackMap(context),
                               ),
-                            ],
-                          ),
-                          Text(
-                            'Rs. 3000',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: ThemeColor.primary,
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: AppHeight.h12,
-                    ),
-                    if (repairRequest.status ==
-                            VehicleRepairRequestStatus
-                                .WAITING_FOR_ADVANCE_PAYMENT ||
-                        repairRequest.status ==
-                            VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
-                      ..._buildBaatoKharcha(context)
-                    else
-                      SubmitButton(
-                        label: 'Check Progress'.hardcoded(),
-                        onPressed: () =>
-                            context.pushNamed(appRoute.repairProgress.name),
-                      )
-                  ],
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(8),
+                            width: 75,
+                            decoration: BoxDecoration(
+                              color: Colors.amberAccent[200],
+                              borderRadius: BorderRadius.circular(
+                                20,
+                              ),
+                            ),
+                            child: Image.asset(
+                              'assets/images/parts/wheel.png',
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              text: 'Estimated Arrival Time: ',
+                              style: const TextStyle().copyWith(
+                                color: isDarkTheme
+                                    ? ThemeColor.white
+                                    : ThemeColor.black,
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: BaatoDateFormatter
+                                      .formatMinutesToGeneric(ref
+                                          .read(
+                                              trackMechanicScreenControllerProvider
+                                                  .notifier)
+                                          .getEstimateArrivalTime()),
+                                  style: const TextStyle(
+                                    color: ThemeColor.primary,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      ListTile(
+                        title: Text(
+                          repairRequest.title ?? "",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        subtitle: Text(
+                          repairRequest.description ??
+                              "No description provided",
+                          // style: TextStyle().copyWith(
+                          //   fontSize: 14,
+                          // ),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 8.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Mechanic baato karcha',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  'Khaana included',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              'Rs. 3000',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: ThemeColor.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: AppHeight.h12,
+                      ),
+                      if (repairRequest.status ==
+                              VehicleRepairRequestStatus
+                                  .WAITING_FOR_ADVANCE_PAYMENT ||
+                          repairRequest.status ==
+                              VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
+                        ..._buildBaatoKharcha(context)
+                      else
+                        SubmitButton(
+                          label: 'Check Progress'.hardcoded(),
+                          onPressed: () =>
+                              context.pushNamed(appRoute.repairProgress.name),
+                        )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        });
+            );
+          }),
+    );
   }
 
   List<Widget> _buildBaatoKharcha(BuildContext context) {

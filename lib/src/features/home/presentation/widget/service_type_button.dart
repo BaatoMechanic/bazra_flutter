@@ -4,19 +4,19 @@ import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_c
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bato_mechanic/src/features/home/tips_carousel.dart';
+import 'package:bato_mechanic/src/features/mechanic_tips/presentaiton/widgets/tips_carousel.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../common/core/domain/service_type.dart';
-import '../../utils/constants/managers/color_manager.dart';
-import '../../utils/constants/managers/values_manager.dart';
-import '../repair_request/application/service_type_service.dart';
+import '../../../repair_request/domain/service_type.dart';
+import '../../../../utils/constants/managers/color_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../repair_request/application/service_type_service.dart';
 
-class ServiceTypeButton extends ConsumerWidget {
-  ServiceTypeButton({
+class ServiceTypeButtonWidget extends ConsumerWidget {
+  ServiceTypeButtonWidget({
     required this.serviceType,
     Key? key,
   }) : super(key: key);

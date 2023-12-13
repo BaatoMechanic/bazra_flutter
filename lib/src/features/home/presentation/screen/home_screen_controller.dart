@@ -1,8 +1,12 @@
+import 'package:bato_mechanic/src/features/mechanic_tips/applicatoin/mechanic_tips_service.dart';
+import 'package:bato_mechanic/src/features/mechanic_tips/domain/mechanic_tip.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
+import 'package:bato_mechanic/src/features/repair_request/application/service_type_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/repair_request_repository/repair_request_repository.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/service_type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../auth/application/auth_service.dart';
+import '../../../auth/application/auth_service.dart';
 
 class HomeScreenController extends StateNotifier<AsyncValue<void>> {
   HomeScreenController({
@@ -38,9 +42,38 @@ class HomeScreenController extends StateNotifier<AsyncValue<void>> {
         () => ref.read(authServiceProvider).refreshToken(refreshToken));
     return !state.hasError;
   }
+
+  Future<List<ServiceType>> fetchAllServices() async {
+    final services = ref.read(watchAllServiceTypeProvider).value;
+    if (services != null && services.isNotEmpty) {
+      return services;
+    }
+    state = await AsyncValue.guard(
+        () => ref.read(serviceTypeServiceProvider).fetchAllSerivceTypes());
+
+    return state.value as List<ServiceType>;
+  }
+
+  Future<List<MechanicTip>> fetchAllMechanicTips() async {
+    final List<MechanicTip>? tips =
+        ref.read(watchAllMechanicTipsProvider).value;
+    if (tips != null && tips.isNotEmpty) {
+      return tips;
+    }
+    state = await AsyncValue.guard(
+        () => ref.read(mechanicTipsServiceProvider).fetchMechanicTips());
+
+    return state.value as List<MechanicTip>;
+  }
 }
 
 final homeScreenControllerProvider =
     StateNotifierProvider<HomeScreenController, AsyncValue<void>>((ref) {
   return HomeScreenController(ref: ref);
+});
+
+final fetchAllServiceTypeProvider = FutureProvider<List<ServiceType>>((ref) {
+  final serviceProvider = ref.watch(homeScreenControllerProvider.notifier);
+  // return ref.watch(serviceTypeServiceProvider).fetchAllSerivceTypes();
+  return serviceProvider.fetchAllServices();
 });

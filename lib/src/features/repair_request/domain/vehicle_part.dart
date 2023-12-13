@@ -18,45 +18,45 @@ List<VehiclePart> vehiclePartsFromJson(String str) =>
 String vehiclePartToJson(VehiclePart data) => json.encode(data.toJson());
 
 class VehiclePart {
-  int id;
+  String idx;
   String name;
-  int vehicleCategoryId;
+  String vehicleCategoryIdx;
   String? image;
   bool isMultiple;
   String? position;
 
   VehiclePart({
-    required this.id,
+    required this.idx,
     required this.name,
-    required this.vehicleCategoryId,
-    required this.image,
+    required this.vehicleCategoryIdx,
+    this.image,
     required this.isMultiple,
     this.position,
   });
 
-  factory VehiclePart.fromJson(Map<String, dynamic> json) => VehiclePart(
-        id: json["id"],
-        name: json["name"].toString().capitalize(),
-        vehicleCategoryId: json["vehicle"],
-        image: json["image"],
-        isMultiple: json["is_multiple"],
-        position: json["position"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name.toLowerCase(),
-        "vehicle": vehicleCategoryId,
-        "image": image,
-        "is_multiple": isMultiple,
-        "position": position,
-      };
+  VehiclePart copyWith({
+    String? idx,
+    String? name,
+    String? vehicleCategoryIdx,
+    String? image,
+    bool? isMultiple,
+    String? position,
+  }) {
+    return VehiclePart(
+      idx: idx ?? this.idx,
+      name: name ?? this.name,
+      vehicleCategoryIdx: vehicleCategoryIdx ?? this.vehicleCategoryIdx,
+      image: image ?? this.image,
+      isMultiple: isMultiple ?? this.isMultiple,
+      position: position ?? this.position,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'idx': idx,
       'name': name,
-      'vehicleCategoryId': vehicleCategoryId,
+      'vehicleCategoryIdx': vehicleCategoryIdx,
       'image': image,
       'isMultiple': isMultiple,
       'position': position,
@@ -65,12 +65,44 @@ class VehiclePart {
 
   factory VehiclePart.fromMap(Map<String, dynamic> map) {
     return VehiclePart(
-      id: map['id'] as int,
+      idx: map['idx'] as String,
       name: map['name'] as String,
-      vehicleCategoryId: map['vehicleCategoryId'] as int,
+      vehicleCategoryIdx: map['vehicleCategoryIdx'] as String,
       image: map['image'] != null ? map['image'] as String : null,
       isMultiple: map['isMultiple'] as bool,
       position: map['position'] != null ? map['position'] as String : null,
     );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory VehiclePart.fromJson(String source) =>
+      VehiclePart.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'VehiclePart(idx: $idx, name: $name, vehicleCategoryIdx: $vehicleCategoryIdx, image: $image, isMultiple: $isMultiple, position: $position)';
+  }
+
+  @override
+  bool operator ==(covariant VehiclePart other) {
+    if (identical(this, other)) return true;
+
+    return other.idx == idx &&
+        other.name == name &&
+        other.vehicleCategoryIdx == vehicleCategoryIdx &&
+        other.image == image &&
+        other.isMultiple == isMultiple &&
+        other.position == position;
+  }
+
+  @override
+  int get hashCode {
+    return idx.hashCode ^
+        name.hashCode ^
+        vehicleCategoryIdx.hashCode ^
+        image.hashCode ^
+        isMultiple.hashCode ^
+        position.hashCode;
   }
 }

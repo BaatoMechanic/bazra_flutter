@@ -1,18 +1,22 @@
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
-import 'package:bato_mechanic/src/features/home/presentation/home_screen_controller.dart';
+import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen_controller.dart';
+import 'package:bato_mechanic/src/features/home/presentation/widget/service_buttons_grid_shimmer.dart';
+import 'package:bato_mechanic/src/features/mechanic_tips/applicatoin/mechanic_tips_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
+import 'package:bato_mechanic/src/features/repair_request/application/service_type_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/features/home/tips_carousel.dart';
+import 'package:bato_mechanic/src/features/mechanic_tips/presentaiton/widgets/tips_carousel.dart';
 import 'package:bato_mechanic/src/features/menu/user_profile_menu.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
@@ -24,11 +28,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../auth/domain/user.dart';
-import '../repair_request/domain/vehicle_repair_request.dart';
-import '../repair_request/presentation/request_mechanic/repair_request_controller.dart';
-import 'service_buttons_grid.dart';
-import 'service_type_button.dart';
+import '../../../auth/domain/user.dart';
+import '../../../repair_request/domain/vehicle_repair_request.dart';
+import '../../../repair_request/presentation/request_mechanic/repair_request_controller.dart';
+import '../widget/service_buttons_grid.dart';
+import '../widget/service_type_button.dart';
 
 class BuildHomeScreen extends ConsumerWidget {
   BuildHomeScreen({super.key});
@@ -67,7 +71,7 @@ class TempScreen extends StatelessWidget {
                 },
                 child: Image.asset('assets/images/parts/wheel.png'),
               ),
-        body: Center(child: CircularProgressIndicator()),
+        body: const Center(child: CircularProgressIndicator()),
       ),
     );
   }
@@ -155,6 +159,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         }
       }
 
+      // Fetch mechanic tips when the app starts
+      if (ref.read(mechanicTipsServiceProvider).allMechanicTips.isEmpty) {
+        await ref
+            .read(homeScreenControllerProvider.notifier)
+            .fetchAllMechanicTips();
+      }
+
+      // Fetch services list when the app starts
+      if (ref.read(serviceTypeServiceProvider).allServiceType.isEmpty) {
+        // await ref.read(serviceTypeServiceProvider).fetchAllSerivceTypes();
+        await ref
+            .read(homeScreenControllerProvider.notifier)
+            .fetchAllServices();
+      }
+
+      // await ref.read(homeScreenControllerProvider.notifier).fetchAllServices();
+
       // Fetch user repair requests when the app starts
       await ref
           .read(homeScreenControllerProvider.notifier)
@@ -186,6 +207,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   Widget build(BuildContext context) {
     ref.listen(homeScreenControllerProvider,
         (previousState, state) => state.showError(context));
+
+    // final servicesValue = ref.watch(watchAllServiceTypeProvider);
+    final servicesValue = ref.watch(fetchAllServiceTypeProvider);
 
     return WillPopScope(
       onWillPop: () => ToastHelper.onWillPopToast(context),
@@ -261,19 +285,36 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               },
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: AppPadding.p24),
+                          Padding(
+                            padding: const EdgeInsets.only(top: AppPadding.p24),
                             child: SingleChildScrollView(
                               child: Column(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: AppHeight.h14,
                                   ),
-                                  TipsCarousel(),
-                                  SizedBox(
+                                  Consumer(
+                                    builder: (context, ref, child) =>
+                                        AsyncValueWidget(
+                                      value: ref
+                                          .read(watchAllMechanicTipsProvider),
+                                      data: (tips) => TipsCarousel(
+                                        tips: tips,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
                                     height: AppHeight.h20,
                                   ),
-                                  ServiceButtonsGrid(),
+                                  AsyncValueWidget(
+                                    loadingShimmer:
+                                        ServiceButtonsGridShimmerWidget(),
+                                    value: servicesValue,
+                                    data: (services) =>
+                                        ServiceButtonsGridWidget(
+                                      services: services,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

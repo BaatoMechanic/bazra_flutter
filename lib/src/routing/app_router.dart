@@ -14,7 +14,7 @@ import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen.dart';
 import 'package:bato_mechanic/src/features/feedback_and_contact/presentation/feedback_and_contact_screen.dart';
 import 'package:bato_mechanic/src/features/history/presentation/service_history_screen.dart';
-import 'package:bato_mechanic/src/features/home/home_screen.dart';
+import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen.dart';
 import 'package:bato_mechanic/src/features/payment/presentation/payment_integration_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/mechanic/mechanic_profile_screen.dart';
 import 'package:bato_mechanic/src/features/recent_repairs/recent_repairs_list.dart';

@@ -44,10 +44,6 @@ class HomeScreenController extends StateNotifier<AsyncValue<void>> {
   }
 
   Future<List<ServiceType>> fetchAllServices() async {
-    final services = ref.read(watchAllServiceTypeProvider).value;
-    if (services != null && services.isNotEmpty) {
-      return services;
-    }
     state = await AsyncValue.guard(
         () => ref.read(serviceTypeServiceProvider).fetchAllSerivceTypes());
 
@@ -55,11 +51,6 @@ class HomeScreenController extends StateNotifier<AsyncValue<void>> {
   }
 
   Future<List<MechanicTip>> fetchAllMechanicTips() async {
-    final List<MechanicTip>? tips =
-        ref.read(watchAllMechanicTipsProvider).value;
-    if (tips != null && tips.isNotEmpty) {
-      return tips;
-    }
     state = await AsyncValue.guard(
         () => ref.read(mechanicTipsServiceProvider).fetchMechanicTips());
 
@@ -76,4 +67,9 @@ final fetchAllServiceTypeProvider = FutureProvider<List<ServiceType>>((ref) {
   final serviceProvider = ref.watch(homeScreenControllerProvider.notifier);
   // return ref.watch(serviceTypeServiceProvider).fetchAllSerivceTypes();
   return serviceProvider.fetchAllServices();
+});
+
+final fetchAllMechanicTipsProvider = FutureProvider<List<MechanicTip>>((ref) {
+  final serviceProvider = ref.watch(homeScreenControllerProvider.notifier);
+  return serviceProvider.fetchAllMechanicTips();
 });

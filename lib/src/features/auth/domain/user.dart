@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import '../../repair_request/domain/user_position.dart';
+import '../../core/domain/user_position.dart';
 
 class User {
   User({

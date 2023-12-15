@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/location_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/map_repository/request_mechanic_map_repository.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/core/application/location_service.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/search_map/search_map_widget_controller.dart';
+import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_widget_controller.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';

@@ -1,6 +1,6 @@
 import 'package:bato_mechanic/src/features/reviews_and_rating/application/reviews_and_rating_service.dart';
-import 'package:bato_mechanic/src/features/profile/domain/reviews_and_rating.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/mechanic_service.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
+import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/exceptions/base_exception.dart';

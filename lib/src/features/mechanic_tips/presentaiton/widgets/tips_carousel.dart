@@ -42,7 +42,6 @@ class TipsCarousel extends StatelessWidget {
             children: [
               Flexible(
                 child: Text(
-                  // item['tip'],
                   item.tip,
                   textAlign: TextAlign.justify,
                   style: Theme.of(context)
@@ -72,7 +71,6 @@ class TipsCarousel extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration().copyWith(
         color: ColorManager.primaryShade10,
-        // color: isDarkTheme ? ThemeColor.grey : ThemeColor.lightGrey,
         borderRadius: BorderRadius.circular(
           AppRadius.r12,
         ),
@@ -85,12 +83,9 @@ class TipsCarousel extends StatelessWidget {
             'Best Mechanic Tips',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          const SizedBox(
-            height: AppHeight.h8,
-          ),
           InPlaceCarouselWidget(
             items: tipSliderItems,
-            aspectRatio: 4.5.doubleHardcoded(),
+            aspectRatio: 3.2.doubleHardcoded(),
           ),
         ],
       ),

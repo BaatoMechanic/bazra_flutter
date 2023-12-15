@@ -12,13 +12,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../common/widgets/butons/submit_button.dart';
-import '../../common/widgets/menu_tile_section_widget.dart';
-import '../../common/widgets/menu_tile_widget.dart';
-import '../../utils/constants/managers/color_manager.dart';
-import '../../utils/constants/managers/values_manager.dart';
-import '../../utils/helpers/helper_functions.dart';
-import '../core/application/user_service.dart';
+import '../../../../common/widgets/butons/submit_button.dart';
+import 'menu_tile_section_widget.dart';
+import 'menu_tile_widget.dart';
+import '../../../../utils/constants/managers/color_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../../utils/helpers/helper_functions.dart';
+import '../../../core/application/user_service.dart';
 
 class UserProfileMenu extends ConsumerWidget {
   UserProfileMenu({super.key});
@@ -240,16 +240,17 @@ class UserProfileMenu extends ConsumerWidget {
                     const UserCircleAvatar(
                       radius: AppRadius.r50,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: AppHeight.h30,
-                      ),
+                    const SizedBox(
+                      width: AppHeight.h30,
+                    ),
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             user?.name ?? "Unknown user",
                             style: Theme.of(context).textTheme.headlineMedium,
+                            softWrap: true,
                           ),
                           const SizedBox(
                             height: AppHeight.h12,

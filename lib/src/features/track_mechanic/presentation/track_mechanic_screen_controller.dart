@@ -4,20 +4,20 @@ import 'dart:math';
 
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
+import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:bato_mechanic/src/features/payment/application/payment_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/mechanic_service.dart';
+import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/map_repository/request_mechanic_map_repository.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/mechanic_repository/mechanic_repository.dart';
+import 'package:bato_mechanic/src/features/core/data/mechanic_repository/mechanic_repository.dart';
 
-import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen_state.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../../auth/domain/user.dart';
+import '../../auth/domain/user.dart';
 
 class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
   TrackMechanicScreenController({required this.ref})
@@ -91,10 +91,9 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
   }
 
   Future<dynamic> fetchRoute() async {
-    final response = await ref
-        .read(requestMechanicMapRepositoryProvider)
-        .getRoute('85.33033043146135,27.703292452047425',
-            '85.33825904130937, 27.707645262018172');
+    final response = await ref.read(mapRepositoryProvider).getRoute(
+        '85.33033043146135,27.703292452047425',
+        '85.33825904130937, 27.707645262018172');
     return response;
   }
 

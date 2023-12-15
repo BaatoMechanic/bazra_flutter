@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/repair_request/data/map_repository/request_mechanic_map_repository.dart';
-
 import 'package:http/http.dart' as http;
 
 import '../../../../utils/constants/managers/strings_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../../utils/model_utils.dart';
+import 'map_repository.dart';
 
-class FakeRequestMechanicMapRepository implements RequestMechanicMapRepository {
+class FakeMapRepository implements MapRepository {
   @override
   getRoute(String sourcePoint, String destinationPoint) async {
     try {

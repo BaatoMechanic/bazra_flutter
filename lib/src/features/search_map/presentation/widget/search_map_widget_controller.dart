@@ -1,5 +1,5 @@
-import 'package:bato_mechanic/src/features/repair_request/application/location_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/map_repository/request_mechanic_map_repository.dart';
+import 'package:bato_mechanic/src/features/core/application/location_service.dart';
+import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
@@ -52,9 +52,8 @@ class SearchMapWidgetController extends StateNotifier<SearchMapState> {
     // final markerPos = state.markerPosition.value;
     state = state.copyWith(markerPosition: const AsyncValue.loading());
 
-    var response = await ref
-        .read(requestMechanicMapRepositoryProvider)
-        .fetchLocationName(lat, lon);
+    var response =
+        await ref.read(mapRepositoryProvider).fetchLocationName(lat, lon);
 
     if (response is Success) {
       // loading = false;

@@ -1,7 +1,7 @@
-import 'package:bato_mechanic/src/common/widgets/menu_tile_section_widget.dart';
+import 'package:bato_mechanic/src/features/menu/presentation/widgets/menu_tile_section_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
-import 'package:bato_mechanic/src/features/menu/user_profile_menu.dart';
+import 'package:bato_mechanic/src/features/menu/presentation/widgets/user_profile_menu.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
@@ -14,7 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../reviews_and_rating/presentation/widgets/mechanic_review_widget.dart';
-import '../../../../common/widgets/menu_tile_widget.dart';
+import '../../../menu/presentation/widgets/menu_tile_widget.dart';
 import '../../../auth/application/auth_service.dart';
 
 class UserProfileScreen extends ConsumerWidget {

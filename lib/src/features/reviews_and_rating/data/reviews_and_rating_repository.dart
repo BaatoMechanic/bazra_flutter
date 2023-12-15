@@ -1,5 +1,5 @@
-import 'package:bato_mechanic/src/features/profile/data/api_reviews_and_rating_repository.dart';
-import 'package:bato_mechanic/src/features/profile/data/fake_reviews_and_rating_repository.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/data/api_reviews_and_rating_repository.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/data/fake_reviews_and_rating_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class ReviewsAndRatingRepository {

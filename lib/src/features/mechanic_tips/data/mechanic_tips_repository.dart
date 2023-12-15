@@ -8,5 +8,5 @@ abstract class MechanicTipsRepository {
 }
 
 final mechanicTipRepositoryProvider =
-    // Provider<MechanicTipsRepository>((ref) => FakeMechanicTipsRepository());
-    Provider<MechanicTipsRepository>((ref) => APIMechanicTipsRepository(ref));
+    Provider<MechanicTipsRepository>((ref) => FakeMechanicTipsRepository());
+    // Provider<MechanicTipsRepository>((ref) => APIMechanicTipsRepository(ref));

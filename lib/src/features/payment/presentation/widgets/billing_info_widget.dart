@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../utils/constants/managers/color_manager.dart';
-import '../../utils/constants/managers/font_manager.dart';
-import '../../utils/constants/managers/style_manager.dart';
-import '../../utils/constants/managers/values_manager.dart';
+import '../../../../utils/constants/managers/color_manager.dart';
+import '../../../../utils/constants/managers/font_manager.dart';
+import '../../../../utils/constants/managers/style_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
 
 class BillingInfoWidget extends StatefulWidget {
   BillingInfoWidget({Key? key}) : super(key: key);

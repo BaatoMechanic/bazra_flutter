@@ -9,18 +9,18 @@ import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profil
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen.dart';
 import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
 import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
+import 'package:bato_mechanic/src/utils/enums/repair_setp_status.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen.dart';
 import 'package:bato_mechanic/src/features/feedback_and_contact/presentation/feedback_and_contact_screen.dart';
 import 'package:bato_mechanic/src/features/history/presentation/service_history_screen.dart';
 import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen.dart';
-import 'package:bato_mechanic/src/features/payment/presentation/payment_integration_screen.dart';
+import 'package:bato_mechanic/src/features/payment/presentation/screens/payment_integration_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/mechanic/mechanic_profile_screen.dart';
 import 'package:bato_mechanic/src/features/recent_repairs/recent_repairs_list.dart';
 import 'package:bato_mechanic/src/features/repair_progress/repair_progress_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_parts/vehicle_parts_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/review_mechanic_screen/review_mechanic_screen.dart';
@@ -31,7 +31,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../temp.dart';
 import '../common/widgets/inplace_carousel_widget.dart';
+import '../features/repair_progress/domain/repair_step.dart';
+import '../features/repair_progress/domain/repair_step_report.dart';
 import '../features/repair_request/presentation/vehicle_categories/vehicle_category_screen.dart';
+import '../features/track_mechanic/presentation/track_mechanic_screen.dart';
 
 enum appRoute {
   categories,
@@ -66,20 +69,21 @@ final repairSteps = [
   RepairStep(
       name: 'Inception',
       detail: AudioData(File('audios/sample_audio.mp3')),
-      status: 'Completed',
+      status: RepairStepStatus.COMPLETED,
       report: RepairStepReport(reportFields: [
         {
           "bill_images": [
-            "assets/images/parts/body",
-            "assets/images/parts/wheel",
-            "assets/images/vehicle/jcb",
+            "assets/images/parts/body.png",
+            "assets/images/parts/wheel.png",
+            "assets/images/vehicle/jcb.png",
           ]
         }
       ])),
   RepairStep(
-      name: 'Step 2 details',
-      detail: StringData("Did the inception"),
-      status: 'In Progress'),
+    name: 'Step 2 details',
+    detail: StringData("Did the inception"),
+    status: RepairStepStatus.PENDING,
+  ),
   // Add more steps as needed
 ];
 
@@ -111,6 +115,8 @@ GoRouter goRouter() {
         name: appRoute.home.name,
         // builder: (context, state) => HomeScreen(),
         builder: (context, state) => BuildHomeScreen(),
+        // builder: (context, state) =>
+        //     RepairProgressScreen(repairSteps: repairSteps),
 
         routes: [
           GoRoute(

@@ -8,7 +8,7 @@ import 'package:http/http.dart';
 
 import '../../auth/domain/user.dart';
 import '../data/mechanic_repository/mechanic_repository.dart';
-import 'vechicle_category_service.dart';
+import '../../repair_request/application/vechicle_category_service.dart';
 
 class MechanicService {
   MechanicService({

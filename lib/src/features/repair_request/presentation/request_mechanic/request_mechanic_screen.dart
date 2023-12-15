@@ -20,7 +20,8 @@ import 'package:video_player/video_player.dart';
 
 import '../../../../common/widgets/form_fields/description_field.dart';
 import '../../../../utils/helpers/toast_helper.dart';
-import '../search_map/map_search_widget.dart';
+
+import '../../../search_map/presentation/widget/map_search_widget.dart';
 
 class RequestMechanicScreen extends ConsumerStatefulWidget {
   const RequestMechanicScreen({Key? key}) : super(key: key);

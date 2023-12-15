@@ -11,23 +11,22 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/common/widgets/billing_info_widget.dart';
+import 'package:bato_mechanic/src/features/payment/presentation/widgets/billing_info_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/esewa_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/khalti_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/pay_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
-import 'package:bato_mechanic/src/common/widgets/pay_bottom_sheet_widget.dart';
+import 'package:bato_mechanic/src/features/payment/presentation/widgets/pay_bottom_sheet_widget.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/location_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/mechanic_service.dart';
+import 'package:bato_mechanic/src/features/core/application/location_service.dart';
+import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/search_map/search_map_widget_controller.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/track_mechanic/track_mechanic_screen_controller.dart';
+
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
@@ -35,9 +34,10 @@ import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/foramtters/date_formatter.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 
-import '../../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
-import '../../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
-import '../../../auth/domain/user.dart';
+import '../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
+import '../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
+import '../../auth/domain/user.dart';
+import 'track_mechanic_screen_controller.dart';
 
 class TrackMechanicScreen extends ConsumerStatefulWidget {
   const TrackMechanicScreen({
@@ -329,30 +329,36 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Mechanic baato karcha',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                            Flexible(
+                              flex: 4,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Mechanic baato karcha',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  'Khaana included',
-                                  style: TextStyle(
-                                    fontSize: 14,
+                                  Text(
+                                    'Khaana included',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                            Text(
-                              'Rs. 3000',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: ThemeColor.primary,
+                            Flexible(
+                              flex: 1,
+                              child: Text(
+                                'Rs. 3000',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: ThemeColor.primary,
+                                ),
                               ),
                             ),
                           ],

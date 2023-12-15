@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:bato_mechanic/src/common/widgets/shimmer/shimmer_widget.dart';
+import 'package:bato_mechanic/src/common/widgets/shimmer_widget.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/vehicle_parts_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_categories/vehicle_category_screen.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';

@@ -21,6 +21,10 @@ class MechanicTipsService {
   }
 
   Future<List<MechanicTip>> fetchMechanicTips() async {
+    if (allMechanicTips.isNotEmpty) {
+      return allMechanicTips;
+    }
+
     var response =
         await ref.read(mechanicTipRepositoryProvider).fetchMechanicTips();
 

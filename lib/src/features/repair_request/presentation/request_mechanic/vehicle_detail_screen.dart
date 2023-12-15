@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../domain/vehicle.dart';
+import '../../domain/vehicle.dart';
 
 class VehicleDetailsScreen extends StatelessWidget {
   final Vehicle vehicle;

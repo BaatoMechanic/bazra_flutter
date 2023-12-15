@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/auth/domain/user.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle.dart';

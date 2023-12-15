@@ -2,9 +2,9 @@ import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../utils/constants/managers/color_manager.dart';
-import '../../utils/constants/managers/values_manager.dart';
-import '../../utils/helpers/helper_functions.dart';
+import '../../../../utils/constants/managers/color_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../../utils/helpers/helper_functions.dart';
 
 class MenuTile extends ConsumerWidget {
   MenuTile({

@@ -16,6 +16,8 @@ class ServiceButtonsGridShimmerWidget extends StatelessWidget {
         ),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
+          crossAxisSpacing: AppPadding.p4,
+          mainAxisSpacing: AppPadding.p12,
         ),
         itemCount: 4,
         itemBuilder: (ctx, idx) => ServiceTypeButtonShimmerWidget());

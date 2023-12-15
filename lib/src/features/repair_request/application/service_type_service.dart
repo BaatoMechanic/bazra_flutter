@@ -53,6 +53,9 @@ class SerivceTypeService {
   }
 
   Future<List<ServiceType>> fetchAllSerivceTypes() async {
+    if (allServiceType.isNotEmpty) {
+      return allServiceType;
+    }
     final response =
         await ref.read(serviceTypeRepositoryProvider).fetchAllServiceTypes();
 

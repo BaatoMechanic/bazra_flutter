@@ -21,14 +21,12 @@ class ServiceTypeButtonWidget extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
 
-  // final Widget icon;
-  // final String name;
-  // final ServiceTypeOption type;
   ServiceType serviceType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           decoration: BoxDecoration(
@@ -48,11 +46,11 @@ class ServiceTypeButtonWidget extends ConsumerWidget {
         const SizedBox(
           height: AppHeight.h4,
         ),
-        Flexible(
-          child: Text(
-            serviceType.name,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
+        Text(
+          serviceType.name,
+          style: Theme.of(context).textTheme.labelLarge,
+          textAlign: TextAlign.center,
+          softWrap: true,
         )
       ],
     );

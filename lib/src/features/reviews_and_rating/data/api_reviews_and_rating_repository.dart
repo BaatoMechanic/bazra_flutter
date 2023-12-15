@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/profile/data/reviews_and_rating_repository.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/data/reviews_and_rating_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import '../../../common/core/repositories/user_settings_repository.dart';

@@ -1,12 +1,12 @@
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../../utils/model_utils.dart';
 import '../../auth/domain/user.dart';
-import '../data/map_repository/request_mechanic_map_repository.dart';
 
 class LocationService {
   LocationService({required this.ref});
@@ -63,9 +63,8 @@ class LocationService {
   }
 
   fetchLocationName(double lat, double lon) async {
-    var response = await ref
-        .read(requestMechanicMapRepositoryProvider)
-        .fetchLocationName(lat, lon);
+    var response =
+        await ref.read(mapRepositoryProvider).fetchLocationName(lat, lon);
 
     if (response is Success) {
       return response.response;
@@ -81,9 +80,8 @@ class LocationService {
   }
 
   fetchSearchLocation(String searchText) async {
-    var response = await ref
-        .read(requestMechanicMapRepositoryProvider)
-        .getSearchLocations(searchText);
+    var response =
+        await ref.read(mapRepositoryProvider).getSearchLocations(searchText);
 
     if (response is Success) {
       return Success(

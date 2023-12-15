@@ -103,7 +103,8 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
             "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
             "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
             "assigned_mechanic": null,
-            "status": "waiting_for_advance_payment"
+            // "status": "waiting_for_advance_payment"
+            "status": "pending"
           },
           {
             "idx": "5xBBkkGbKTwEzuAkX46K8H",

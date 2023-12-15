@@ -17,6 +17,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'domain/repair_step.dart';
+import 'widgets/repair_step_bottom_sheet.dart';
+
 class RepairProgressScreen extends ConsumerWidget {
   final List<RepairStep> repairSteps;
 
@@ -50,52 +53,7 @@ class RepairProgressScreen extends ConsumerWidget {
                     ),
                     context: context,
                     builder: (BuildContext context) {
-                      return Container(
-                        padding: EdgeInsets.all(AppPadding.p16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              step.name,
-                              style: getBoldStyle().copyWith(
-                                fontSize: FontSize.s18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: AppHeight.h16),
-                            if (step.detail.runtimeType == StringData)
-                              Text(
-                                'Details: ${(step.detail as StringData).stringValue}',
-                                style: Theme.of(context).textTheme.titleSmall,
-                              )
-                            else
-                              AudioPlayerWidget(
-                                  audioPath: (step.detail as AudioData)
-                                      .audioFile
-                                      .path),
-                            const SizedBox(height: 16),
-                            Text(
-                              'Status: ${step.status}',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            if (step.report != null)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Report Fields:',
-                                    style: TextStyle().copyWith(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  for (var field in step.report!.reportFields)
-                                    Text('${field['name']}: ${field['value']}',
-                                        style: const TextStyle(fontSize: 16)),
-                                ],
-                              ),
-                          ],
-                        ),
-                      );
+                      return RepairStepBottomSheet(step: step);
                     },
                   );
                 },
@@ -123,111 +81,3 @@ class RepairProgressScreen extends ConsumerWidget {
     );
   }
 }
-
-class RepairStep {
-  final String name;
-  // final String detail;
-  final StringOrAudio detail;
-  final String status;
-  final RepairStepReport? report;
-
-  RepairStep({
-    required this.name,
-    required this.detail,
-    required this.status,
-    this.report,
-  });
-}
-
-class RepairStepReport {
-  final List<Map<String, dynamic>> reportFields;
-
-  RepairStepReport({required this.reportFields});
-}
-
-
-
-
-
-//   Widget _buildAudioDetails(AudioData audioData) {
-//     final player = AudioPlayer();
-//     player.onPlayerComplete.listen((event) {
-//       // Handle audio playback completion here, if needed.
-//     });
-
-//     return Container(
-//       padding: EdgeInsets.all(16),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children:
-//           [
-//             Text('Step 1 Audio Details',
-//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-//             SizedBox(height: 16),
-//             Text('Audio File: ${audioData.audioFile.path}',
-//               style: TextStyle(fontSize: 16)),
-//             SizedBox(height: 16),
-//             StreamBuilder<Duration?>(
-//               stream: player.onPositionChanged,
-//               builder: (context, snapshot) {
-//                 final durationFuture = player.getDuration();
-
-//                 if (snapshot.hasData && durationFuture != null) {
-//                   final position = snapshot.data!;
-//                   final duration = durationFuture;
-
-//                   return Column(
-//                     children:
-//                       [
-//                         Slider(
-//                           value: position.inSeconds.toDouble(),
-//                           onChanged: (value) {
-//                             player.seek(Duration(seconds: value.toInt()));
-//                           },
-//                           min: 0,
-//                           max: duration.inSeconds.toDouble(),
-//                           // max: duration. .toDouble(),
-//                         ),
-//                         Text(
-//                           '${position.inMinutes}:${(position.inSeconds % 60).toString().padLeft(2, '0')} / ${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
-//                           style: TextStyle(fontSize: 16),
-//                         ),
-//                       ],
-                    
-//                   );
-//                 } else {
-//                   return CircularProgressIndicator(); // Show a loading indicator while fetching duration.
-//                 }
-//               },
-//             ),
-//             IconButton(
-//               onPressed: () async {
-//                 if (player.state == PlayerState.PAUSED) {
-//                   await player.resume();
-//                 } else {
-//                   String audioPath = audioData.audioFile.path;
-//                   await player.play(audioPath, isLocal: true);
-//                 }
-//               },
-//               icon: StreamBuilder<PlayerState>(
-//                 stream: player.onPlayerStateChanged,
-//                 builder: (context, snapshot) {
-//                   if (snapshot.hasData) {
-//                     final playerState = snapshot.data;
-//                     if (playerState == PlayerState.PLAYING) {
-//                       return Icon(Icons.pause);
-//                     } else {
-//                       return Icon(Icons.play_arrow);
-//                     }
-//                   } else {
-//                     return Icon(Icons.play_arrow);
-//                   },
-//                 },
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

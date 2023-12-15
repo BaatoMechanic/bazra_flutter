@@ -1,9 +1,9 @@
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/constants/managers/color_manager.dart';
-import '../../utils/constants/managers/values_manager.dart';
-import '../../utils/helpers/helper_functions.dart';
+import '../../../../utils/constants/managers/color_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../../utils/helpers/helper_functions.dart';
 import 'menu_tile_widget.dart';
 
 class MenuTilesSection extends StatelessWidget {

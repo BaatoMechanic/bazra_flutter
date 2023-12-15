@@ -1,5 +1,5 @@
 import 'package:bato_mechanic/src/features/auth/domain/user.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:latlong2/latlong.dart';
 
 final mTestMechanics = [

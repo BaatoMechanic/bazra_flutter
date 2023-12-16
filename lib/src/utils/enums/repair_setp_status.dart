@@ -19,3 +19,18 @@ RepairStepStatus repairStepStautsFromJson(String status) {
       return RepairStepStatus.PENDING;
   }
 }
+
+String repairStepStautsToJson(RepairStepStatus status) {
+  switch (status) {
+    case RepairStepStatus.PENDING:
+      return "pending";
+    case RepairStepStatus.IN_PROGRESS:
+      return "in_progress";
+    case RepairStepStatus.COMPLETED:
+      return "completed";
+    case RepairStepStatus.CANCELLED:
+      return "cancelled";
+    default:
+      return "pending";
+  }
+}

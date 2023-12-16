@@ -19,7 +19,7 @@ import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen.
 import 'package:bato_mechanic/src/features/payment/presentation/screens/payment_integration_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/mechanic/mechanic_profile_screen.dart';
 import 'package:bato_mechanic/src/features/recent_repairs/recent_repairs_list.dart';
-import 'package:bato_mechanic/src/features/repair_progress/repair_progress_screen.dart';
+import 'package:bato_mechanic/src/features/repair_progress/presentation/screen/repair_progress_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_parts/vehicle_parts_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen.dart';
@@ -65,27 +65,27 @@ enum appRoute {
   changePassword,
 }
 
-final repairSteps = [
-  RepairStep(
-      name: 'Inception',
-      detail: AudioData(File('audios/sample_audio.mp3')),
-      status: RepairStepStatus.COMPLETED,
-      report: RepairStepReport(reportFields: [
-        {
-          "bill_images": [
-            "assets/images/parts/body.png",
-            "assets/images/parts/wheel.png",
-            "assets/images/vehicle/jcb.png",
-          ]
-        }
-      ])),
-  RepairStep(
-    name: 'Step 2 details',
-    detail: StringData("Did the inception"),
-    status: RepairStepStatus.PENDING,
-  ),
-  // Add more steps as needed
-];
+// final repairSteps = [
+//   RepairStep(
+//       name: 'Inception',
+//       detail: AudioData(File('audios/sample_audio.mp3')),
+//       status: RepairStepStatus.COMPLETED,
+//       report: RepairStepReport(reportFields: [
+//         {
+//           "bill_images": [
+//             "assets/images/parts/body.png",
+//             "assets/images/parts/wheel.png",
+//             "assets/images/vehicle/jcb.png",
+//           ]
+//         }
+//       ])),
+//   RepairStep(
+//     name: 'Step 2 details',
+//     detail: StringData("Did the inception"),
+//     status: RepairStepStatus.PENDING,
+//   ),
+//   // Add more steps as needed
+// ];
 
 GoRouter goRouter() {
   return GoRouter(
@@ -115,8 +115,9 @@ GoRouter goRouter() {
         name: appRoute.home.name,
         // builder: (context, state) => HomeScreen(),
         builder: (context, state) => BuildHomeScreen(),
-        // builder: (context, state) =>
-        //     RepairProgressScreen(repairSteps: repairSteps),
+        // builder: (context, state) => RepairProgressScreen(
+        //   repairRequestIdx: "NqCYPG6oX2jrjsePXZg42Z",
+        // ),
 
         routes: [
           GoRoute(
@@ -165,8 +166,13 @@ GoRouter goRouter() {
           GoRoute(
             path: 'repair_progress',
             name: appRoute.repairProgress.name,
-            builder: (context, state) =>
-                RepairProgressScreen(repairSteps: repairSteps),
+            builder: (context, state) {
+              final repairRequestIdx = (state.extra as Map)["repairRequestIdx"];
+
+              return RepairProgressScreen(
+                  repairRequestIdx:
+                      repairRequestIdx ?? "NqCYPG6oX2jrjsePXZg42Z");
+            },
             routes: [
               GoRoute(
                 path: 'review_mechanic',

@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/audio_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/features/repair_progress/presentation/screen/repair_progress_screen_controller.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/style_manager.dart';
@@ -17,50 +19,54 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'domain/repair_step.dart';
-import 'widgets/repair_step_bottom_sheet.dart';
+import '../widgets/repair_step_bottom_sheet.dart';
 
 class RepairProgressScreen extends ConsumerWidget {
-  final List<RepairStep> repairSteps;
+  RepairProgressScreen({super.key, required this.repairRequestIdx});
 
-  RepairProgressScreen({required this.repairSteps});
+  final String repairRequestIdx;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activeRepariRequest =
         ref.watch(watchRepairRequestStateChangesProvider).value;
-    ref.read(repairRequestServiceProvider).fetchUserRepairRequests();
+
+    final repairStepsValue =
+        ref.watch(fetchRepairStepsProvider(repairRequestIdx));
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Repair Progress'),
       ),
-      body: ListView.builder(
-        itemCount: repairSteps.length,
-        itemBuilder: (context, index) {
-          final step = repairSteps[index];
-          return Card(
-            margin: const EdgeInsets.all(8),
-            child: ListTile(
-              title: Text('Step ${index + 1}'),
-              subtitle: Text('Status: ${step.status}'),
-              trailing: IconButton(
-                icon: const Icon(Icons.info),
-                onPressed: () {
-                  showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppRadius.r16),
-                    ),
-                    context: context,
-                    builder: (BuildContext context) {
-                      return RepairStepBottomSheet(step: step);
-                    },
-                  );
-                },
+      body: AsyncValueWidget(
+        value: repairStepsValue,
+        data: (repairSteps) => ListView.builder(
+          itemCount: repairSteps.length,
+          itemBuilder: (context, index) {
+            final step = repairSteps[index];
+            return Card(
+              margin: const EdgeInsets.all(8),
+              child: ListTile(
+                title: Text('Step ${index + 1}'),
+                subtitle: Text('Status: ${step.status}'),
+                trailing: IconButton(
+                  icon: const Icon(Icons.info),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.r16),
+                      ),
+                      context: context,
+                      builder: (BuildContext context) {
+                        return RepairStepBottomSheet(step: step);
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
       bottomSheet: Padding(
         padding: const EdgeInsets.symmetric(

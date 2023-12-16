@@ -5,14 +5,14 @@ import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common/widgets/audio_widget.dart';
-import '../../../utils/constants/managers/font_manager.dart';
-import '../../../utils/constants/managers/style_manager.dart';
-import '../../../utils/constants/managers/values_manager.dart';
-import '../../../utils/data_types/string_or_audio.dart';
-import '../../../utils/enums/repair_setp_status.dart';
-import '../domain/repair_step.dart';
-import '../repair_progress_screen.dart';
+import '../../../../common/widgets/audio_widget.dart';
+import '../../../../utils/constants/managers/font_manager.dart';
+import '../../../../utils/constants/managers/style_manager.dart';
+import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../../utils/data_types/string_or_audio.dart';
+import '../../../../utils/enums/repair_setp_status.dart';
+import '../../domain/repair_step.dart';
+import '../screen/repair_progress_screen.dart';
 
 class RepairStepBottomSheet extends StatelessWidget {
   const RepairStepBottomSheet({
@@ -60,8 +60,7 @@ class RepairStepBottomSheet extends StatelessWidget {
                     style: TextStyle()
                         .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  for (var field in step.report!.reportFields)
-                    _buildReportField(field),
+                  _buildReport(step.report!),
                 ],
               ),
             if (step.status == RepairStepStatus.PENDING)
@@ -74,15 +73,22 @@ class RepairStepBottomSheet extends StatelessWidget {
   }
 }
 
-// Widget _buildReportField(Map<String, dynamic> reportField) {
+// Widget _buildReport(Map<String, dynamic> reportField) {
 //   for (final entry in reportField.entries) {
 //     if (entry.value is List) {
 //       if (entry.key == "bill_images") {
-//         return Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
+//         return Row(
 //           children: [
-//             Text(HelperFunctions.humanizeMapKey(entry.key).capitalize()),
-//             for (final field in entry.value) _buildReportImage(field),
+//             Text(HelperFunctions.humanizeString(entry.key).capitalize()),
+//             Expanded(
+//               child: SingleChildScrollView(
+//                 child: Row(
+//                   children: [
+//                     for (final field in entry.value) _buildReportImage(field),
+//                   ],
+//                 ),
+//               ),
+//             ),
 //           ],
 //         );
 //       }
@@ -92,36 +98,24 @@ class RepairStepBottomSheet extends StatelessWidget {
 //   }
 //   return Container();
 // }
-Widget _buildReportField(Map<String, dynamic> reportField) {
-  for (final entry in reportField.entries) {
-    if (entry.value is List) {
-      if (entry.key == "bill_images") {
-        return Row(
-          children: [
-            Text(HelperFunctions.humanizeString(entry.key).capitalize()),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Row(
-                  children: [
-                    for (final field in entry.value) _buildReportImage(field),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        );
-      }
-    } else {
-      return Container();
-    }
-  }
-  return Container();
+Widget _buildReport(RepairStepReport report) {
+  return Row(
+    children: [
+      Text(HelperFunctions.humanizeString("Bill images").capitalize()),
+      Expanded(
+        child: SingleChildScrollView(
+          child: Row(
+            children: [
+              for (Map<String, String> image in report.billImages)
+                _buildReportImage(image["image"]!),
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
 }
 
-// Widget _buildReportImage(String url) {
-//   if (!url.contains('http')) url = RemoteManager.BASE_URI + url;
-//   return Image.network(url);
-// }
 Widget _buildReportImage(String url) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: AppPadding.p4),

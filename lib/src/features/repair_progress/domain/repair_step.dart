@@ -14,9 +14,9 @@ List<RepairStep> repairStepsFromJson(String str) =>
 class RepairStep {
   String idx;
   final String name;
-  final String textDescription;
-  final File audioDescription;
-  final StringOrAudio detail;
+  final String? textDescription;
+  final File? audioDescription;
+  // final StringOrAudio? detail;
   final RepairStepStatus status;
   final RepairStepReport? report;
 
@@ -25,7 +25,7 @@ class RepairStep {
     required this.name,
     required this.textDescription,
     required this.audioDescription,
-    required this.detail,
+    // required this.detail,
     required this.status,
     this.report,
   });
@@ -35,7 +35,7 @@ class RepairStep {
     String? name,
     String? textDescription,
     File? audioDescription,
-    StringOrAudio? detail,
+    // StringOrAudio? detail,
     RepairStepStatus? status,
     RepairStepReport? report,
   }) {
@@ -44,7 +44,7 @@ class RepairStep {
       name: name ?? this.name,
       textDescription: textDescription ?? this.textDescription,
       audioDescription: audioDescription ?? this.audioDescription,
-      detail: detail ?? this.detail,
+      // detail: detail ?? this.detail,
       status: status ?? this.status,
       report: report ?? this.report,
     );
@@ -56,7 +56,7 @@ class RepairStep {
       'name': name,
       'text_description': textDescription,
       'audio_description': audioDescription,
-      'detail': detail,
+      // 'detail': detail,
       'status': repairStepStautsToJson(status),
       'report': report,
     };
@@ -66,9 +66,13 @@ class RepairStep {
     return RepairStep(
       idx: map['idx'] as String,
       name: map['name'] as String,
-      textDescription: map['textDescription'] as String,
-      audioDescription: map['audioDescription'] as File,
-      detail: map['detail'] as StringOrAudio,
+      textDescription: map['text_description'],
+      // audioDescription: map['audio_description'] != null
+      //     ? File.fromUri(map['audio_description'])
+      //     : null,
+      audioDescription:
+          map['audio_description']?.let(File.fromUri(map['audio_description'])),
+      // detail: map['detail'],
       status: repairStepStautsFromJson(map['status']),
       report: map['report'] != null
           ? RepairStepReport.fromMap(map['report'] as Map<String, dynamic>)
@@ -83,7 +87,7 @@ class RepairStep {
 
   @override
   String toString() {
-    return 'RepairStep(idx: $idx, name: $name, textDescription: $textDescription, audioDescription: $audioDescription, detail: $detail, status: $status, report: $report)';
+    return 'RepairStep(idx: $idx, name: $name, textDescription: $textDescription, audioDescription: $audioDescription, status: $status, report: $report)';
   }
 
   @override
@@ -94,7 +98,7 @@ class RepairStep {
         other.name == name &&
         other.textDescription == textDescription &&
         other.audioDescription == audioDescription &&
-        other.detail == detail &&
+        // other.detail == detail &&
         other.status == status &&
         other.report == report;
   }
@@ -105,7 +109,7 @@ class RepairStep {
         name.hashCode ^
         textDescription.hashCode ^
         audioDescription.hashCode ^
-        detail.hashCode ^
+        // detail.hashCode ^
         status.hashCode ^
         report.hashCode;
   }

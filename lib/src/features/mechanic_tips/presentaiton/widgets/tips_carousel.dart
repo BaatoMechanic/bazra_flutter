@@ -55,7 +55,7 @@ class TipsCarousel extends StatelessWidget {
                 child: item.mechanic['image'] != null
                     ? GestureDetector(
                         onTap: () => context.pushNamed(
-                                appRoute.mechanicProfile.name,
+                                APP_ROUTE.mechanicProfile.name,
                                 extra: {
                                   'mechanicIdx': item.mechanic['idx'],
                                 }),

@@ -38,7 +38,7 @@ class AuthService {
 
     if (response is Success) {
       Map<String, dynamic> responseBody =
-          jsonDecode((response.response as Response).body);
+          jsonDecode(response.response as String);
 
       ref
           .read(sharedPreferencesProvider)
@@ -83,17 +83,17 @@ class AuthService {
       return;
     }
 
-    if (response is Failure) {
-      if (response.code == 401.intHardcoded()) {
-        await refreshToken(
-            ref.read(sharedPreferencesProvider).getString('refresh')!);
-        await fetchCurrentUserInfo(
-            ref.read(sharedPreferencesProvider).getString('access')!);
-        return;
-      }
+    // if (response is Failure) {
+    //   if (response.code == 401.intHardcoded()) {
+    //     await refreshToken(
+    //         ref.read(sharedPreferencesProvider).getString('refresh')!);
+    //     await fetchCurrentUserInfo(
+    //         ref.read(sharedPreferencesProvider).getString('access')!);
+    //     return;
+    //   }
 
-      throw BaseException(message: response.errorResponse.toString());
-    }
+    //   throw BaseException(message: response.errorResponse.toString());
+    // }
   }
 
   Future<void> createUserWithIdAndPassword(String uId, String password) async {

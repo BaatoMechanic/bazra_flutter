@@ -23,9 +23,11 @@ class APIMechanicTipsRepository implements MechanicTipsRepository {
   Future<dynamic> fetchMechanicTips() async {
     var url = Uri.parse('${RemoteManager.BASE_URI}autho/mechanic_tips/');
 
-    HttpHelper.guard(() => http.get(url, headers: {
-          HttpHeaders.authorizationHeader:
-              'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
-        }));
+    return await HttpHelper.guard(
+        () => http.get(url, headers: {
+              HttpHeaders.authorizationHeader:
+                  'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
+            }),
+        ref);
   }
 }

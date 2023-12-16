@@ -47,7 +47,7 @@ class SignUpScreen extends ConsumerWidget {
             context,
             'You have been registered successfully. Please login to continue'
                 .hardcoded());
-        context.replaceNamed(appRoute.login.name);
+        context.replaceNamed(APP_ROUTE.login.name);
       }
     }
   }
@@ -114,7 +114,7 @@ class SignUpScreen extends ConsumerWidget {
                     LoginSignUpLabel(
                       infoText: 'Already have an account ?'.hardcoded(),
                       labelText: 'Login'.hardcoded(),
-                      onPressed: () => context.goNamed(appRoute.login.name),
+                      onPressed: () => context.goNamed(APP_ROUTE.login.name),
                     ),
                   ],
                 ),

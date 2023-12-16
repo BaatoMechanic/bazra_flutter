@@ -23,7 +23,7 @@ class SplashScreen extends ConsumerStatefulWidget {
 class _SplashScreenState extends ConsumerState<SplashScreen>
     with WidgetsBindingObserver {
   void _navigateToLogin(BuildContext context) {
-    if (mounted) context.replaceNamed(appRoute.login.name);
+    if (mounted) context.replaceNamed(APP_ROUTE.login.name);
   }
 
   Future<bool> _fetchUserInfoWithAccessToken(
@@ -92,7 +92,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       //   }
       // }
 
-      if (mounted) context.replaceNamed(appRoute.home.name);
+      if (mounted) context.replaceNamed(APP_ROUTE.home.name);
       // if (mounted) context.replaceNamed(appRoute.buildHome.name);
       return;
     });

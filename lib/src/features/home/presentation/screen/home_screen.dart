@@ -96,7 +96,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   bool _loadingData = false;
 
   void _navigateToLogin(BuildContext context) {
-    if (mounted) context.replaceNamed(appRoute.login.name);
+    if (mounted) context.replaceNamed(APP_ROUTE.login.name);
   }
 
   Future<bool> _fetchUserInfoWithAccessToken(

@@ -35,7 +35,7 @@ class UserProfileMenu extends ConsumerWidget {
           iconSize: AppSize.s20,
           icon: Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () => context.pushNamed(appRoute.customerProfile.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.customerProfile.name),
         ),
       ),
       MenuTile(
@@ -45,7 +45,7 @@ class UserProfileMenu extends ConsumerWidget {
           iconSize: AppSize.s20,
           icon: Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () => context.pushNamed(appRoute.repairProgress.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.repairProgress.name),
         ),
       ),
       MenuTile(
@@ -55,7 +55,7 @@ class UserProfileMenu extends ConsumerWidget {
           iconSize: AppSize.s20,
           icon: Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () => context.pushNamed(appRoute.recentRepairs.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.recentRepairs.name),
         ),
       ),
     ];
@@ -150,7 +150,7 @@ class UserProfileMenu extends ConsumerWidget {
         title: 'About',
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
-          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.supportChat.name),
           icon: Icon(
             Icons.arrow_forward_ios,
             color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
@@ -162,7 +162,7 @@ class UserProfileMenu extends ConsumerWidget {
         title: 'Report an issue',
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
-          onPressed: () => context.pushNamed(appRoute.feedback.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.feedback.name),
           icon: Icon(
             Icons.arrow_forward_ios,
             color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
@@ -174,7 +174,7 @@ class UserProfileMenu extends ConsumerWidget {
         title: 'Privacy Policy ',
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
-          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.supportChat.name),
           icon: Icon(
             Icons.arrow_forward_ios,
             color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
@@ -186,7 +186,7 @@ class UserProfileMenu extends ConsumerWidget {
         title: 'Terms and Conditions',
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
-          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.supportChat.name),
           icon: Icon(
             Icons.arrow_forward_ios,
             color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
@@ -206,7 +206,7 @@ class UserProfileMenu extends ConsumerWidget {
             Icons.arrow_forward_ios_outlined,
             color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
-          onPressed: () => context.pushNamed(appRoute.feedback.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.feedback.name),
         ),
       ),
       MenuTile(
@@ -218,7 +218,7 @@ class UserProfileMenu extends ConsumerWidget {
             Icons.arrow_forward_ios_outlined,
           ),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          onPressed: () => context.pushNamed(appRoute.supportChat.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.supportChat.name),
         ),
         isLast: true,
       ),
@@ -296,7 +296,7 @@ class UserProfileMenu extends ConsumerWidget {
                     onPressed: () {
                       final result = ref.read(authServiceProvider).logOut();
                       if (result) {
-                        context.goNamed(appRoute.login.name);
+                        context.goNamed(APP_ROUTE.login.name);
                       }
                     })
               ],

@@ -215,7 +215,7 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
           context,
           'Thank you for the review'.hardcoded(),
         );
-        context.goNamed(appRoute.home.name);
+        context.goNamed(APP_ROUTE.home.name);
       } else {
         ToastHelper.showNotification(
           context,

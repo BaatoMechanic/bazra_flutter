@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/features/auth/data/auth_repository.dart';
+import 'package:bato_mechanic/src/utils/http/http_client.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,10 @@ import '../../../utils/constants/managers/strings_manager.dart';
 import '../../../utils/constants/managers/values_manager.dart';
 
 class APIAuthRepository implements AuthRepository {
+  APIAuthRepository({required this.ref});
+
+  final Ref ref;
+
   @override
   Future createUserWithIdAndPassword(String uId, String password) {
     // TODO: implement createUserWithIdAndPassword
@@ -23,124 +28,31 @@ class APIAuthRepository implements AuthRepository {
 
   @override
   Future signInWithIdAndPassword(String uId, String password) async {
-    try {
-      var url = Uri.parse('${RemoteManager.BASE_URI}autho/create-token/');
+    var url = Uri.parse('${RemoteManager.BASE_URI}autho/create-token/');
 
-      var response = await http
-          .post(url, body: {"user_identifier": uId, "password": password});
-
-      if (response.statusCode == 200) {
-        return Success(
-          code: response.statusCode,
-          response: response,
-        );
-      }
-      return Failure(
-        code: response.statusCode,
-        stackTrace: StackTrace.current,
-        errorResponse: jsonDecode(response.body)['detail'],
-      );
-    } on HttpException {
-      return Failure(
-        code: ApiStatusCode.httpError,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.noInternetString,
-      );
-    } on FormatException {
-      return Failure(
-        code: ApiStatusCode.invalidResponse,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.invalidFormatString,
-      );
-    } catch (e, st) {
-      // return Failure(code: 103, errorResponse: e.toString());
-      return Failure(
-        code: ApiStatusCode.unknownError,
-        stackTrace: st,
-        errorResponse: ApiStrings.unknownErrorString,
-      );
-    }
+    return await HttpHelper.guard(
+        () => http
+            .post(url, body: {"user_identifier": uId, "password": password}),
+        ref);
   }
 
   @override
   Future refreshToken(String refreshToken) async {
-    try {
-      var url = Uri.parse('${RemoteManager.BASE_URI}autho/refresh-token/');
+    var url = Uri.parse('${RemoteManager.BASE_URI}autho/refresh-token/');
 
-      var response = await http.post(url, body: {"refresh": refreshToken});
-
-      if (response.statusCode == 200) {
-        return Success(
-          code: response.statusCode,
-          response: response.body,
-        );
-      }
-      return Failure(
-        code: response.statusCode,
-        stackTrace: StackTrace.current,
-        errorResponse: jsonDecode(response.body)['detail'],
-      );
-    } on HttpException {
-      return Failure(
-        code: ApiStatusCode.httpError,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.noInternetString,
-      );
-    } on FormatException {
-      return Failure(
-        code: ApiStatusCode.invalidResponse,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.invalidFormatString,
-      );
-    } catch (e, st) {
-      // return Failure(code: 103, errorResponse: e.toString());
-      return Failure(
-        code: ApiStatusCode.unknownError,
-        stackTrace: st,
-        errorResponse: ApiStrings.unknownErrorString,
-      );
-    }
+    return await HttpHelper.guard(
+        () => http.post(url, body: {"refresh": refreshToken}), ref);
   }
 
   @override
   Future getCurrentUserInfo(String token) async {
-    try {
-      var url = Uri.parse('${RemoteManager.BASE_URI}autho/user_info/me/');
+    var url = Uri.parse('${RemoteManager.BASE_URI}autho/user_info/me/');
 
-      var response = await http.get(url, headers: {
-        HttpHeaders.authorizationHeader: 'BM $token',
-      });
-      if (response.statusCode == 200) {
-        return Success(
-          code: response.statusCode,
-          response: response.body,
-        );
-      }
-      return Failure(
-        code: response.statusCode,
-        stackTrace: StackTrace.current,
-        errorResponse: jsonDecode(response.body)['detail'],
-      );
-    } on HttpException {
-      return Failure(
-        code: ApiStatusCode.httpError,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.noInternetString,
-      );
-    } on FormatException {
-      return Failure(
-        code: ApiStatusCode.invalidResponse,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.invalidFormatString,
-      );
-    } catch (e, st) {
-      // return Failure(code: 103, errorResponse: e.toString());
-      return Failure(
-        code: ApiStatusCode.unknownError,
-        stackTrace: st,
-        errorResponse: ApiStrings.unknownErrorString,
-      );
-    }
+    return await HttpHelper.guard(
+        () => http.get(url, headers: {
+              HttpHeaders.authorizationHeader: 'BM $token',
+            }),
+        ref);
   }
 
   @override

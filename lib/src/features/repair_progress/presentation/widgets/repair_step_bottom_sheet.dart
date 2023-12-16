@@ -1,20 +1,22 @@
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step_report.dart';
+import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/api_values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../common/widgets/audio_widget.dart';
 import '../../../../utils/constants/managers/font_manager.dart';
 import '../../../../utils/constants/managers/style_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
-import '../../../../utils/data_types/string_or_audio.dart';
 import '../../../../utils/enums/repair_setp_status.dart';
 import '../../domain/repair_step.dart';
-import '../screen/repair_progress_screen.dart';
+import '../screen/repair_progress_screen_controller.dart';
 
-class RepairStepBottomSheet extends StatelessWidget {
+class RepairStepBottomSheet extends ConsumerWidget {
   const RepairStepBottomSheet({
     super.key,
     required this.step,
@@ -23,10 +25,10 @@ class RepairStepBottomSheet extends StatelessWidget {
   final RepairStep step;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.all(AppPadding.p16),
+        padding: const EdgeInsets.all(AppPadding.p16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,26 +40,38 @@ class RepairStepBottomSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppHeight.h16),
-            if (step.detail.runtimeType == StringData)
+            // if (step.detail.runtimeType == StringData)
+            //   Text(
+            //     'Details: ${(step.detail as StringData).stringValue}',
+            //     style: Theme.of(context).textTheme.titleSmall,
+            //   )
+            // else
+            //   AudioPlayerWidget(
+            //       audioPath: (step.detail as AudioData).audioFile.path),
+            if (step.textDescription != null)
               Text(
-                'Details: ${(step.detail as StringData).stringValue}',
+                'Details: ${step.textDescription}',
                 style: Theme.of(context).textTheme.titleSmall,
-              )
-            else
+              ),
+            if (step.audioDescription != null)
               AudioPlayerWidget(
-                  audioPath: (step.detail as AudioData).audioFile.path),
-            const SizedBox(height: 16),
+                // audioPath: (step.data as AudioData).audioFile.path),
+                audioPath: (step.audioDescription!.path),
+              ),
+
+            const SizedBox(height: AppHeight.h4),
             Text(
               'Status: ${HelperFunctions.humanizeString(step.status.name).capitalize()}',
               style: Theme.of(context).textTheme.titleSmall,
             ),
+            const SizedBox(height: AppHeight.h16),
             if (step.report != null)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Report Fields:',
-                    style: TextStyle()
+                    style: const TextStyle()
                         .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   _buildReport(step.report!),
@@ -65,7 +79,26 @@ class RepairStepBottomSheet extends StatelessWidget {
               ),
             if (step.status == RepairStepStatus.PENDING)
               SubmitButton(
-                  label: "Start the process".hardcoded(), onPressed: () {})
+                label: "Start the process".hardcoded(),
+                onPressed: () async {
+                  if (await ref
+                      .read(repairProgressScreenControllerProvider.notifier)
+                      .updateRepairStepStatus(
+                          step.idx, RepairStepStatus.IN_PROGRESS)) {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            if (step.status == RepairStepStatus.IN_PROGRESS)
+              SubmitButton(
+                label: "Complete the process".hardcoded(),
+                onPressed: () async {
+                  await ref
+                      .read(repairProgressScreenControllerProvider.notifier)
+                      .updateRepairStepStatus(
+                          step.idx, RepairStepStatus.COMPLETED);
+                },
+              ),
           ],
         ),
       ),
@@ -73,31 +106,6 @@ class RepairStepBottomSheet extends StatelessWidget {
   }
 }
 
-// Widget _buildReport(Map<String, dynamic> reportField) {
-//   for (final entry in reportField.entries) {
-//     if (entry.value is List) {
-//       if (entry.key == "bill_images") {
-//         return Row(
-//           children: [
-//             Text(HelperFunctions.humanizeString(entry.key).capitalize()),
-//             Expanded(
-//               child: SingleChildScrollView(
-//                 child: Row(
-//                   children: [
-//                     for (final field in entry.value) _buildReportImage(field),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ],
-//         );
-//       }
-//     } else {
-//       return Container();
-//     }
-//   }
-//   return Container();
-// }
 Widget _buildReport(RepairStepReport report) {
   return Row(
     children: [
@@ -122,7 +130,7 @@ Widget _buildReportImage(String url) {
     child: SizedBox(
       width: AppWidth.h75,
       height: AppWidth.h200,
-      child: Image.asset(url),
+      child: url.startsWith('http') ? Image.network(url) : Image.asset(url),
     ),
   );
 }

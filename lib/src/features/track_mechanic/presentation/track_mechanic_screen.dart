@@ -137,7 +137,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
       if (ref.read(repairRequestServiceProvider).activeRepairRequest?.status ==
           VehicleRepairRequestStatus.IN_PROGRESS) {
         if (mounted) {
-          context.replaceNamed(appRoute.repairProgress.name);
+          context.replaceNamed(APP_ROUTE.repairProgress.name);
         }
       }
     });
@@ -205,7 +205,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                               ? const CircularProgressIndicator.adaptive()
                               : TextButton(
                                   onPressed: () => context.pushNamed(
-                                      appRoute.mechanicProfile.name,
+                                      APP_ROUTE.mechanicProfile.name,
                                       extra: {
                                         'mechanicIdx': assignedMechanic.idx
                                       }),
@@ -376,8 +376,9 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                       else
                         SubmitButton(
                           label: 'Check Progress'.hardcoded(),
-                          onPressed: () =>
-                              context.pushNamed(appRoute.repairProgress.name),
+                          onPressed: () => context.pushNamed(
+                              APP_ROUTE.repairProgress.name,
+                              extra: {"repairRequestIdx": repairRequest.idx}),
                         )
                     ],
                   ),
@@ -412,7 +413,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                           .payWithKhalti();
                       Navigator.of(context).pop();
                       if (result) {
-                        context.pushNamed(appRoute.repairProgress.name);
+                        context.pushNamed(APP_ROUTE.repairProgress.name);
                       } else {
                         ToastHelper.showNotificationWithCloseButton(
                             context, "Something went wrong, please try again");
@@ -421,7 +422,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                   ),
                   EsewaButton(
                     onPressed: () async {
-                      context.goNamed(appRoute.repairProgress.name);
+                      context.goNamed(APP_ROUTE.repairProgress.name);
                       // final result = await ref
                       //     .read(trackMechanicScreenControllerProvider.notifier)
                       //     .payWithEsewa();

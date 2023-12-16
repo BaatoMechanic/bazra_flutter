@@ -12,6 +12,6 @@ abstract class AuthRepository {
 }
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  // return FakeAuthRepository();
-  return APIAuthRepository();
+  return FakeAuthRepository();
+  // return APIAuthRepository(ref: ref);
 });

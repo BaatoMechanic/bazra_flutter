@@ -49,7 +49,7 @@ class VehiclesScreen extends ConsumerWidget {
                     ref
                         .read(vehiclesScreenControllerProvider.notifier)
                         .setSelectedVehicle(vehicles[index]);
-                    context.goNamed(appRoute.parts.name);
+                    context.goNamed(APP_ROUTE.parts.name);
                   },
                   child: Card(
                     margin: const EdgeInsets.all(AppMargin.m8),

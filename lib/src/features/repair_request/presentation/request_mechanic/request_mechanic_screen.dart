@@ -404,7 +404,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                       ref
                           .read(systemAlertProvider.notifier)
                           .closeLoading(context);
-                      context.goNamed(appRoute.trackMechanic.name);
+                      context.goNamed(APP_ROUTE.trackMechanic.name);
                       return;
                     } else {
                       ref

@@ -50,7 +50,7 @@ class OTPConfirmationScreen extends StatelessWidget {
             SubmitButton(
               label: "Submit OTP",
               onPressed: () =>
-                  context.replaceNamed(appRoute.changePassword.name),
+                  context.replaceNamed(APP_ROUTE.changePassword.name),
             ),
             TextButton(
               onPressed: () {},

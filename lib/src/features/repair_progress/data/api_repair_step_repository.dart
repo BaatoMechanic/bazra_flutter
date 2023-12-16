@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/utils/enums/repair_setp_status.dart';
+import 'package:bato_mechanic/src/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common/core/repositories/user_settings_repository.dart';
@@ -18,45 +20,28 @@ class APIRepairStepRepository implements RepairStepRepository {
 
   @override
   Future<dynamic> fetchRepairSteps(String repairStepIdx) async {
-    try {
-      var url = Uri.parse(
-          '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/$repairStepIdx/repair_steps');
+    var url = Uri.parse(
+        '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/$repairStepIdx/repair_steps');
 
-      var response = await http.get(url, headers: {
-        HttpHeaders.authorizationHeader:
-            'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
-      });
+    return await HttpHelper.guard(
+        () => http.get(url, headers: {
+              HttpHeaders.authorizationHeader:
+                  'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
+            }),
+        ref);
+  }
 
-      if (response.statusCode == 200) {
-        return Success(
-          code: response.statusCode,
-          response: response.body,
-        );
-      }
-      return Failure(
-        code: response.statusCode,
-        stackTrace: StackTrace.current,
-        errorResponse: jsonDecode(response.body)['detail'],
-      );
-    } on HttpException {
-      return Failure(
-        code: ApiStatusCode.httpError,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.noInternetString,
-      );
-    } on FormatException {
-      return Failure(
-        code: ApiStatusCode.invalidResponse,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.invalidFormatString,
-      );
-    } catch (e, st) {
-      // return Failure(code: 103, errorResponse: e.toString());
-      return Failure(
-        code: ApiStatusCode.unknownError,
-        stackTrace: st,
-        errorResponse: ApiStrings.unknownErrorString,
-      );
-    }
+  @override
+  Future updateRepairStepStatus(
+      String repairRequestIdx, String repairStepIdx, String status) async {
+    var url = Uri.parse(
+        '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/$repairRequestIdx/repair_steps/$repairStepIdx/$status');
+
+    return await HttpHelper.guard(
+        () => http.get(url, headers: {
+              HttpHeaders.authorizationHeader:
+                  'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
+            }),
+        ref);
   }
 }

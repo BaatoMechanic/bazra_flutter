@@ -84,7 +84,7 @@ class UserProfileScreen extends ConsumerWidget {
             Icons.arrow_forward_ios_outlined,
             color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
           ),
-          onPressed: () => context.pushNamed(appRoute.confirmOldPassword.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.confirmOldPassword.name),
         ),
         isLast: true,
       ),
@@ -150,7 +150,7 @@ class UserProfileScreen extends ConsumerWidget {
                     ),
                     TextButton(
                       onPressed: () =>
-                          context.pushNamed(appRoute.editProfile.name),
+                          context.pushNamed(APP_ROUTE.editProfile.name),
                       child: Row(
                         children: [
                           const Icon(

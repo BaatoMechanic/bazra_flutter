@@ -38,7 +38,7 @@ class ServiceTypeButtonWidget extends ConsumerWidget {
               ref
                   .read(serviceTypeServiceProvider)
                   .setSelectedServiceType(serviceType);
-              context.pushNamed(appRoute.categories.name);
+              context.pushNamed(APP_ROUTE.categories.name);
             },
             icon: Icon(serviceType.icon ?? Icons.hourglass_empty),
           ),

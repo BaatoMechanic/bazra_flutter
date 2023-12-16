@@ -304,7 +304,7 @@ class MechanicProfileScreen extends ConsumerWidget {
                     ),
                     TextButton(
                       onPressed: () => context.pushNamed(
-                        appRoute.mechanicReviewsList.name,
+                        APP_ROUTE.mechanicReviewsList.name,
                         extra: {"mechanicIdx": mechanicIdx},
                       ),
                       child: Row(

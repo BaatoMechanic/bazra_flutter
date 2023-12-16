@@ -3,11 +3,11 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-billImagesFromJson(List<String> json) {
+billImagesFromJson(List<dynamic> json) {
   return List<Map<String, String>>.from(
     json.map<Map<String, String>>((x) => {
-          'idx': x,
-          'image': x,
+          'idx': x['idx'],
+          'image': x['image'],
         }),
   );
 }
@@ -41,7 +41,7 @@ class RepairStepReport {
   factory RepairStepReport.fromMap(Map<String, dynamic> map) {
     return RepairStepReport(
       idx: map['idx'] as String,
-      billImages: billImagesFromJson(map['billImages'] as List<String>),
+      billImages: billImagesFromJson(map['bill_images'] as List<dynamic>),
     );
   }
 

@@ -43,7 +43,7 @@ class LoginScreen extends ConsumerWidget {
           .signInWithIdAndPassword(
               _idController.text, _passwordController.text);
       if (response) {
-        context.replaceNamed(appRoute.home.name);
+        context.replaceNamed(APP_ROUTE.home.name);
       }
     }
   }
@@ -108,7 +108,7 @@ class LoginScreen extends ConsumerWidget {
                         infoText: 'Don\'t have an account ?'.hardcoded(),
                         labelText: 'Register'.hardcoded(),
                         onPressed: () =>
-                            context.pushNamed(appRoute.signup.name),
+                            context.pushNamed(APP_ROUTE.signup.name),
                       ),
                     ],
                   ),

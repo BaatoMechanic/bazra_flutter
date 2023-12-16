@@ -44,7 +44,7 @@ class _ConfirmOldPasswordScreenState extends State<ConfirmOldPasswordScreen> {
             ),
             const SizedBox(height: 16.0),
             SubmitButton(
-              onPressed: () => context.pushNamed(appRoute.confirmOTP.name),
+              onPressed: () => context.pushNamed(APP_ROUTE.confirmOTP.name),
               label: 'Change Password'.hardcoded(),
             ),
           ],

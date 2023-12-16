@@ -38,7 +38,7 @@ class RecentRepairsList extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   TextButton.icon(
-                    onPressed: () => context.goNamed(appRoute.categories.name),
+                    onPressed: () => context.goNamed(APP_ROUTE.categories.name),
                     icon:
                         Icon(Icons.add, color: Theme.of(context).primaryColor),
                     label: Text(

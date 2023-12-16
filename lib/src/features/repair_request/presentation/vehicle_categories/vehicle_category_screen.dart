@@ -52,7 +52,7 @@ class VehicleCategoryScreen extends ConsumerWidget {
                             .read(vehicleCategoryScreenControllerProvider
                                 .notifier)
                             .setSelectedCategory(vehicleCategories[index]);
-                        context.pushNamed(appRoute.requestMechanic.name);
+                        context.pushNamed(APP_ROUTE.requestMechanic.name);
                         // final selectedService = ref
                         //     .read(serviceTypeServiceProvider)
                         //     .selectedServiceType;

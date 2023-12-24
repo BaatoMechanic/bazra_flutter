@@ -1,12 +1,9 @@
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step_report.dart';
-import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/api_values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../common/widgets/audio_widget.dart';
 import '../../../../utils/constants/managers/font_manager.dart';
@@ -96,7 +93,7 @@ class RepairStepBottomSheet extends ConsumerWidget {
                   await ref
                       .read(repairProgressScreenControllerProvider.notifier)
                       .updateRepairStepStatus(
-                          step.idx, RepairStepStatus.COMPLETED);
+                          step.idx, RepairStepStatus.COMPLETE);
                 },
               ),
           ],

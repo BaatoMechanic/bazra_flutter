@@ -1,5 +1,3 @@
-import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
 class HelperFunctions {

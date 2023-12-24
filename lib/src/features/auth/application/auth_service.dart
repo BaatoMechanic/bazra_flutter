@@ -2,16 +2,12 @@
 import 'dart:convert';
 
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/auth/data/auth_repository.dart';
-import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:bato_mechanic/src/features/auth/domain/user.dart';
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
-import 'package:http/http.dart';
 
 import '../../../utils/exceptions/base_exception.dart';
 

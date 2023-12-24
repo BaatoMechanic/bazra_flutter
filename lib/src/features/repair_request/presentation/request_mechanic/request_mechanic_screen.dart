@@ -132,7 +132,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                         .pickImages,
                     child: Text(
                       'Add Photos',
-                      style: TextStyle().copyWith(color: ThemeColor.dark),
+                      style: const TextStyle().copyWith(color: ThemeColor.dark),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -176,7 +176,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                                         .style!
                                         .copyWith(
                                           backgroundColor:
-                                              MaterialStatePropertyAll<Color>(
+                                              const MaterialStatePropertyAll<Color>(
                                                   ThemeColor.transparent),
                                         ),
                                     onPressed: () => ref
@@ -184,7 +184,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                                             requestMechanicScreenControllerProvider
                                                 .notifier)
                                         .removeSelectedImage(image),
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.cancel,
                                       // color: Colors.amberAccent[200],
                                     ),
@@ -223,11 +223,11 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                     child: _videoController != null
                         ? Text(
                             'Change Video',
-                            style: TextStyle().copyWith(color: ThemeColor.dark),
+                            style: const TextStyle().copyWith(color: ThemeColor.dark),
                           )
                         : Text(
                             'Add Video',
-                            style: TextStyle().copyWith(color: ThemeColor.dark),
+                            style: const TextStyle().copyWith(color: ThemeColor.dark),
                           ),
                   ),
                   if (_videoController != null)
@@ -420,7 +420,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                 },
                 child: Text(
                   'Request for a mechanic',
-                  style: TextStyle().copyWith(color: ThemeColor.dark),
+                  style: const TextStyle().copyWith(color: ThemeColor.dark),
                 ),
               ),
             ],

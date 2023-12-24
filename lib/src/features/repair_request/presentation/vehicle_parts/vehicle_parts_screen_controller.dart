@@ -1,10 +1,7 @@
 import 'package:bato_mechanic/src/features/repair_request/application/vehicle_parts_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/vehicle_part_repository/vehicle_parts_repository.dart';
-import '../../domain/vehicle.dart';
 import '../../domain/vehicle_part.dart';
-import 'vehicle_parts_state.dart';
 
 class VehiclePartsScreenController
     extends StateNotifier<AsyncValue<List<VehiclePart>>> {

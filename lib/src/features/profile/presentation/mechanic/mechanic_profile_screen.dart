@@ -10,15 +10,13 @@ import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
 import '../../../reviews_and_rating/presentation/widgets/mechanic_review_widget.dart';
 import 'mechanic_profile_screen_controller.dart';
 
 class MechanicProfileScreen extends ConsumerWidget {
-  const MechanicProfileScreen({
+  const MechanicProfileScreen({super.key, 
     required this.mechanicIdx,
   });
 

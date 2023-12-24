@@ -2,7 +2,6 @@ import 'package:bato_mechanic/src/features/mechanic_tips/applicatoin/mechanic_ti
 import 'package:bato_mechanic/src/features/mechanic_tips/domain/mechanic_tip.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/service_type_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/repair_request_repository/repair_request_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/service_type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +10,7 @@ import '../../../auth/application/auth_service.dart';
 class HomeScreenController extends StateNotifier<AsyncValue<void>> {
   HomeScreenController({
     required this.ref,
-  }) : super(AsyncData(null));
+  }) : super(const AsyncData(null));
 
   Ref ref;
 
@@ -65,7 +64,6 @@ final homeScreenControllerProvider =
 
 final fetchAllServiceTypeProvider = FutureProvider<List<ServiceType>>((ref) {
   final serviceProvider = ref.watch(homeScreenControllerProvider.notifier);
-  // return ref.watch(serviceTypeServiceProvider).fetchAllSerivceTypes();
   return serviceProvider.fetchAllServices();
 });
 

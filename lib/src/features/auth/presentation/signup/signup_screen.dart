@@ -1,10 +1,7 @@
-import 'package:bato_mechanic/src/common/widgets/form_fields/email_field.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/password_field.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen_controller.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';

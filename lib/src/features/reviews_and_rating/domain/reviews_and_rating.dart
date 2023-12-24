@@ -11,6 +11,7 @@ class ReviewAndRating {
   final double rating;
   final String reviewerIdx;
   final String reviewedIdx;
+  final String repairRequestIdx;
   final DateTime createdAt;
   ReviewAndRating({
     required this.idx,
@@ -19,6 +20,7 @@ class ReviewAndRating {
     required this.reviewerIdx,
     required this.reviewedIdx,
     required this.createdAt,
+    required this.repairRequestIdx,
   });
 
   ReviewAndRating copyWith({
@@ -35,6 +37,7 @@ class ReviewAndRating {
       rating: rating ?? this.rating,
       reviewerIdx: reviewerIdx ?? this.reviewerIdx,
       reviewedIdx: reviewedIdx ?? this.reviewedIdx,
+      repairRequestIdx: repairRequestIdx,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -46,6 +49,7 @@ class ReviewAndRating {
       'rating': rating,
       'reviewer': reviewerIdx,
       'reviewed': reviewedIdx,
+      'repair_request': repairRequestIdx,
       'created_at': createdAt.millisecondsSinceEpoch,
     };
   }
@@ -57,6 +61,7 @@ class ReviewAndRating {
       rating: map['rating'] as double,
       reviewerIdx: map['reviewer'] as String,
       reviewedIdx: map['reviewed'] as String,
+      repairRequestIdx: map['repair_request'] as String,
       createdAt: DateTime.parse(map['created_at'] as String),
     );
   }
@@ -80,6 +85,7 @@ class ReviewAndRating {
         other.rating == rating &&
         other.reviewerIdx == reviewerIdx &&
         other.reviewedIdx == reviewedIdx &&
+        other.repairRequestIdx == repairRequestIdx &&
         other.createdAt == createdAt;
   }
 
@@ -90,6 +96,7 @@ class ReviewAndRating {
         rating.hashCode ^
         reviewerIdx.hashCode ^
         reviewedIdx.hashCode ^
+        repairRequestIdx.hashCode ^
         createdAt.hashCode;
   }
 }

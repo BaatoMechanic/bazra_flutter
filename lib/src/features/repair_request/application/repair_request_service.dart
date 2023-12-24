@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -43,6 +42,20 @@ class RepairRequestService {
     // return response;
   }
 
+  Future<dynamic> updateVehicleRepairRequest(
+      String requestId, Map<String, dynamic> requestInfo) async {
+    var response = await ref
+        .read(repairRequestRepositoryProvider)
+        .updateRepairRequest(requestId, requestInfo);
+    if (response is Success) {
+      VehicleRepairRequest repairRequest = VehicleRepairRequest.fromJson(
+          jsonDecode((response.response as String)));
+      setActiveRepairRequest(repairRequest);
+      return repairRequest;
+    }
+    return false;
+  }
+
   Future<dynamic> addImagesToVechicleRepairRequest(
       String requestId, List<File> images) async {
     var response = await ref
@@ -61,7 +74,7 @@ class RepairRequestService {
   }
 
   fetchUserRepairRequests() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     final response = await ref
         .read(repairRequestRepositoryProvider)
         .fetchUserRepairRequest();
@@ -70,7 +83,7 @@ class RepairRequestService {
           vehicleRepairRequestsFromJson((response.response as Response).body);
       // if (repairRequests.isEmpty) return false;
       if (repairRequests.isNotEmpty) {
-        setActiveRepairRequest(repairRequests.first);
+        setActiveRepairRequest(repairRequests.last);
       } else {
         setActiveRepairRequest(null);
       }

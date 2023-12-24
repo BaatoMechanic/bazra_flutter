@@ -9,7 +9,7 @@ class FakeAuthRepository implements AuthRepository {
   @override
   Future<dynamic> createUserWithIdAndPassword(
       String uId, String password) async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     return Success(
         code: 201,
         response:
@@ -18,7 +18,7 @@ class FakeAuthRepository implements AuthRepository {
 
   @override
   Future<dynamic> signInWithIdAndPassword(String uId, String password) async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     var response = Response(
         '{"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwMTYyODcwNiwiaWF0IjoxNzAxNTQyMzA2LCJqdGkiOiIwNTA3NTExNWUyYmI0MTIzODc4OTZiZDBmZjE4OTZlYiIsInVzZXJfaWQiOjEzfQ.c_iA-kFOi_P_b29pVR2UK_R4I3S03VUaBSC0KblwCSQ", "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxNjI4NzA2LCJpYXQiOjE3MDE1NDIzMDYsImp0aSI6ImIyYjk2ZTVmYmVjZDRhNzFiNWJmODI5YzgzM2E5NjZiIiwidXNlcl9pZCI6MTN9.nZCaUPmEyefC7FnQkkC7iiu2h5gLffuvjNyeHp6Iy7c"}',
         200);
@@ -27,7 +27,7 @@ class FakeAuthRepository implements AuthRepository {
 
   @override
   Future getCurrentUserInfo(String token) async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     var response = Response(
         '{"idx": "itLGCnD7vf9P7eucZf3Kgo", "name": "Krishna Rimal", "email": null,"phone": "9808144809", "image": null,"primary_role": "Consumer","roles": [], "additional_attributes": {} }',
         200);
@@ -42,7 +42,7 @@ class FakeAuthRepository implements AuthRepository {
 
   @override
   Future refreshToken(String refreshToken) async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     var response = Response(
         '{"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxNjI4NzA2LCJpYXQiOjE3MDE1NDIzMDYsImp0aSI6ImIyYjk2ZTVmYmVjZDRhNzFiNWJmODI5YzgzM2E5NjZiIiwidXNlcl9pZCI6MTN9.nZCaUPmEyefC7FnQkkC7iiu2h5gLffuvjNyeHp6Iy7c"}',
         200);

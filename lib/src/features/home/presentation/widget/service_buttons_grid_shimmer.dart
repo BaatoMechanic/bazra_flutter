@@ -9,7 +9,7 @@ class ServiceButtonsGridShimmerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: const EdgeInsets.symmetric(
           horizontal: AppPadding.p8,
@@ -20,6 +20,6 @@ class ServiceButtonsGridShimmerWidget extends StatelessWidget {
           mainAxisSpacing: AppPadding.p12,
         ),
         itemCount: 4,
-        itemBuilder: (ctx, idx) => ServiceTypeButtonShimmerWidget());
+        itemBuilder: (ctx, idx) => const ServiceTypeButtonShimmerWidget());
   }
 }

@@ -1,17 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/rating_stars_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/shimmer_widget.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
-import 'package:bato_mechanic/src/utils/extensions/datetime_extensions.dart';
-import 'package:bato_mechanic/src/utils/foramtters/date_formatter.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
-import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/constants/managers/color_manager.dart';
@@ -43,12 +34,12 @@ class ReviewsAndRatingShimmerWidget extends ConsumerWidget {
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.55,
-                child: Row(
+                child: const Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const ShimmerWidget.circular(),
+                    ShimmerWidget.circular(),
                     Padding(
-                      padding: const EdgeInsets.only(
+                      padding: EdgeInsets.only(
                         left: AppPadding.p4,
                       ),
                       child: Column(
@@ -63,7 +54,7 @@ class ReviewsAndRatingShimmerWidget extends ConsumerWidget {
                   ],
                 ),
               ),
-              ShimmerWidget.roundedRectangular(),
+              const ShimmerWidget.roundedRectangular(),
             ],
           ),
           const SizedBox(

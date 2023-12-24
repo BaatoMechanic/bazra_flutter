@@ -1,4 +1,3 @@
-import 'package:bato_mechanic/src/utils/foramtters/date_formatter.dart';
 
 extension DateTimeExtensions on DateTime {
   String toAgo() {
@@ -24,6 +23,6 @@ extension DateTimeExtensions on DateTime {
           "${diff.inMinutes} ${diff.inMinutes == 1 ? 'minute' : 'minutes'}";
     }
 
-    return "${returnValue} ago";
+    return "$returnValue ago";
   }
 }

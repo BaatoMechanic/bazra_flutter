@@ -27,7 +27,7 @@ class GoogleButton extends StatelessWidget {
         backgroundColor: MaterialStateProperty.all<Color>(ThemeColor.white),
       ),
       child: Container(
-        decoration: BoxDecoration().copyWith(
+        decoration: const BoxDecoration().copyWith(
             borderRadius: BorderRadius.circular(AppRadius.r8),
             border: Border.all(
               width: 0.9.doubleHardcoded(),
@@ -50,7 +50,7 @@ class GoogleButton extends StatelessWidget {
               child: Text(
                 labelText,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 16,
                 ),

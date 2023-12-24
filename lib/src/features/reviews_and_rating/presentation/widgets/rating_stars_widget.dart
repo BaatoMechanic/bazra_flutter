@@ -5,7 +5,7 @@ import '../../../../utils/constants/managers/values_manager.dart';
 
 class RatingStarsWidget extends StatelessWidget {
   const RatingStarsWidget({
-    Key? key,
+    super.key,
     required this.rating,
   });
 

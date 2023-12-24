@@ -4,13 +4,11 @@ import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widge
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/reviews_and_rating_shimmer_widget.dart';
 import 'package:bato_mechanic/src/utils/extensions/datetime_extensions.dart';
-import 'package:bato_mechanic/src/utils/foramtters/date_formatter.dart';
 import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/constants/managers/color_manager.dart';

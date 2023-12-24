@@ -4,8 +4,6 @@ import 'dart:io';
 
 import 'package:bato_mechanic/src/utils/enums/repair_setp_status.dart';
 
-import '../../../utils/data_types/string_or_audio.dart';
-import '../presentation/screen/repair_progress_screen.dart';
 import 'repair_step_report.dart';
 
 List<RepairStep> repairStepsFromJson(String str) =>

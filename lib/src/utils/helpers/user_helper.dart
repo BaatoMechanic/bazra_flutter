@@ -19,4 +19,20 @@ class UserHelperFunctions {
     final output = splitStr.join(' ');
     return output;
   }
+
+  static String getMechanicExpertise(Map<String, dynamic>? attributes) {
+    if (attributes == null) {
+      return '';
+    }
+    String? partSpeciality = attributes['vehicle_part_speciality'];
+    String? vehicleSpeciality = attributes['vehicle_category_speciality'];
+
+    return "${(vehicleSpeciality as String).capitalize()}'s $partSpeciality";
+  }
+
+  // static String getMechanicRating(Map<String, dynamic>? attributes) {
+  //   if (attributes == null) {
+  //     return '';
+  //   }
+  // }
 }

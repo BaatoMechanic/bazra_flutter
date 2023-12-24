@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 
 enum ErrorAlertType { NOTIFICATION, CENTER_ALERT_DIALOGUE }

@@ -23,8 +23,8 @@ enum VehicleRepairRequestStatus {
   WAITING_FOR_MECHANIC,
   IN_PROGRESS,
   HALT,
-  WAITING_COMPLETION_ACCEPTANCE,
-  COMPLETED,
+  WAITING_FOR_COMPLETION_ACCEPTANCE,
+  COMPLETE,
   CANCELLED
 }
 
@@ -102,10 +102,10 @@ class VehicleRepairRequest {
         return VehicleRepairRequestStatus.IN_PROGRESS;
       case "HALT":
         return VehicleRepairRequestStatus.HALT;
-      case "WAITING_COMPLETION_ACCEPTANCE":
-        return VehicleRepairRequestStatus.WAITING_COMPLETION_ACCEPTANCE;
-      case "COMPLETED":
-        return VehicleRepairRequestStatus.COMPLETED;
+      case "WAITING_FOR_COMPLETION_ACCEPTANCE":
+        return VehicleRepairRequestStatus.WAITING_FOR_COMPLETION_ACCEPTANCE;
+      case "COMPLETE":
+        return VehicleRepairRequestStatus.COMPLETE;
       case "CANCELLED":
         return VehicleRepairRequestStatus.CANCELLED;
       default:

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../utils/constants/managers/color_manager.dart';
 import '../../../../utils/constants/managers/font_manager.dart';
@@ -8,7 +6,7 @@ import '../../../../utils/constants/managers/style_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
 
 class BillingInfoWidget extends StatefulWidget {
-  BillingInfoWidget({Key? key}) : super(key: key);
+  const BillingInfoWidget({Key? key}) : super(key: key);
 
   @override
   State<BillingInfoWidget> createState() => _BillingInfoWidgetState();
@@ -44,7 +42,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: AppPadding.p16,
             horizontal: AppPadding.p14,
           ),
@@ -55,7 +53,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
               // ----------------------    Name section starts here -----------------------------------
 
               Container(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: AppPadding.p12,
                 ),
                 child: Column(
@@ -69,11 +67,11 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                         color: ColorManager.primaryShade100,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: AppHeight.h4,
                     ),
                     Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           // border: Border.all(
                           //   color: Colors.grey,
                           //   width: 1.0,
@@ -104,7 +102,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                                               Theme.of(context).primaryColor,
                                           // focusNode: _userProvider
                                           //     .billingInfoViewModelFirstNameFocusNode,
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                             labelText: 'First Name',
                                             focusColor: Colors.redAccent,
                                           ),
@@ -145,7 +143,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                                               Theme.of(context).primaryColor,
                                           // focusNode: _userProvider
                                           //     .billingInfoViewModelLastNameFocusNode,
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                             labelText: 'Last Name',
                                           ),
                                           textInputAction: TextInputAction.next,
@@ -185,7 +183,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                                     //     .billingInfoViewModelEmailFocusNode,
                                     keyboardType: TextInputType.text,
                                     cursorColor: Theme.of(context).primaryColor,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       labelText: 'Email Address',
                                     ),
                                     textInputAction: TextInputAction.next,
@@ -221,7 +219,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                                     //     .billingInfoViewModelPhoneNumberFocusNode,
                                     keyboardType: TextInputType.number,
                                     cursorColor: Theme.of(context).primaryColor,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       labelText: 'Phone Number',
                                     ),
                                     textInputAction: TextInputAction.next,
@@ -252,7 +250,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                                     //     .billingInfoViewModelSideNoteFocusNode,
                                     keyboardType: TextInputType.multiline,
                                     cursorColor: Theme.of(context).primaryColor,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       labelText: 'Side Note',
                                     ),
                                     textInputAction: TextInputAction.newline,
@@ -279,7 +277,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
               // ----------------------    Name section ends here -----------------------------------
               // ----------------------    Sort by locations section ends here -----------------------------------
               Container(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: AppPadding.p12,
                 ),
                 child: Column(
@@ -293,7 +291,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                         color: ColorManager.primaryShade100,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: AppHeight.h4,
                     ),
                     Container(
@@ -339,7 +337,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
               // ----------------------    Sort by location section ends here -----------------------------------
               // ----------------------    Payment gateway section starts here -----------------------------------
 
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: AppPadding.p12,
                 ),
@@ -370,7 +368,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                   //     PaymentMethod.Esewa;
                   // });
                 },
-                child: Text("Pay with e-Sewa"),
+                child: const Text("Pay with e-Sewa"),
               ),
 
               ElevatedButton(
@@ -390,7 +388,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                   //       PaymentMethod.Khalti;
                   // });
                 },
-                child: Text("Pay with Khalti"),
+                child: const Text("Pay with Khalti"),
               ),
 
               ElevatedButton(
@@ -424,12 +422,12 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                   //   // Handle payment error
                   // }
                 },
-                child: Text("Pay with Cash"),
+                child: const Text("Pay with Cash"),
               ),
 
               // ----------------------    Payment gateway section ends here -----------------------------------
 
-              SizedBox(
+              const SizedBox(
                 height: AppHeight.h50,
               ),
             ],
@@ -438,7 +436,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
       ),
       bottomSheet: Container(
         height: AppHeight.h60,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
             top: BorderSide(
               // color: ColorManager.lighterGrey,
@@ -447,7 +445,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
             ),
           ),
         ),
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: AppPadding.p12,
           vertical: AppPadding.p8,
         ),
@@ -455,7 +453,7 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
           children: [
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.rectangle,
                 ),
               ),

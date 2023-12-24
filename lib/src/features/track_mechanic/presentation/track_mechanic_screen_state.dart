@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:bato_mechanic/src/features/auth/domain/user.dart';
-import 'package:geolocator/geolocator.dart';
 
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 

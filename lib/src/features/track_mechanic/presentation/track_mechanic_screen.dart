@@ -11,21 +11,18 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/features/payment/presentation/widgets/billing_info_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/esewa_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/khalti_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/pay_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/payment/presentation/widgets/pay_bottom_sheet_widget.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/core/application/location_service.dart';
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
@@ -54,7 +51,7 @@ class TrackMechanicScreen extends ConsumerStatefulWidget {
 
 class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
-  double _animationValue = 0.0;
+  final double _animationValue = 0.0;
   bool _showBigScreenMap = false;
   late MapController _mapController;
   late AnimationController _animationController;
@@ -93,11 +90,11 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
       duration: const Duration(seconds: 5),
     );
 
-    int _currentIndex = 0;
+    int currentIndex = 0;
 
     final timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (mounted) {
-        if (_currentIndex < pathPoints.length - 1) {
+        if (currentIndex < pathPoints.length - 1) {
           User? user = ref.read(authServiceProvider).currentUser;
           UserPosition? nextPosition = user?.currentLocation;
           if (ref.read(watchMechanicStateChangesProvider).isLoading) {
@@ -109,14 +106,14 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
             ref.read(repairRequestControllerProvider).repairRequest;
           } else {
             nextPosition = nextPosition.copyWith(
-              latitude: pathPoints[_currentIndex].latitude,
-              longitude: pathPoints[_currentIndex].longitude,
+              latitude: pathPoints[currentIndex].latitude,
+              longitude: pathPoints[currentIndex].longitude,
             );
             ref
                 .read(authServiceProvider)
                 .setCurrentUser(user?.copyWith(currentLocation: nextPosition));
 
-            _currentIndex++;
+            currentIndex++;
           }
         } else {
           print('reached to the location');

@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:bato_mechanic/src/features/repair_request/data/service_type_repository/service_type_repository.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
-import 'package:http/http.dart';
 
 class FakeServiceTypeRepository implements ServiceTypeRepository {
   @override

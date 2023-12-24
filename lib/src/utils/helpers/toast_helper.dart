@@ -226,7 +226,7 @@ class ToastHelper {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
                 vertical: AppPadding.p4, horizontal: AppPadding.p4),
             content: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -262,7 +262,7 @@ class ToastHelper {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
                 vertical: AppPadding.p4, horizontal: AppPadding.p4),
             content: SizedBox(
               height: 150,

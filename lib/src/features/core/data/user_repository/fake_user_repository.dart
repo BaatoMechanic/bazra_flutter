@@ -25,4 +25,16 @@ class FakeUserRepository extends UserRepository {
       ),
     );
   }
+
+  @override
+  Future rateAndReviewUser(Map<String, dynamic> body) {
+    // TODO: implement rateUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future fetchRecommendedMechanics(String vehicleCategory, String vehiclePart) {
+    // TODO: implement fetchRecommendedMechanics
+    throw UnimplementedError();
+  }
 }

@@ -75,7 +75,7 @@ class TipsCarousel extends StatelessWidget {
           AppRadius.r12,
         ),
       ),
-      padding: EdgeInsets.all(AppPadding.p8),
+      padding: const EdgeInsets.all(AppPadding.p8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

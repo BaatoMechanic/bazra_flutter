@@ -5,7 +5,6 @@
 
 import 'dart:convert';
 
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
 VehiclePart vehiclePartFromJson(String str) =>
     VehiclePart.fromJson(json.decode(str));

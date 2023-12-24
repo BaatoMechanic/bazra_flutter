@@ -1,6 +1,5 @@
 import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
@@ -48,9 +47,9 @@ class RecentRepairsList extends StatelessWidget {
                   )
                 ],
               ),
-              RecentRepairContainerWidget(),
-              RecentRepairContainerWidget(),
-              RecentRepairContainerWidget(),
+              const RecentRepairContainerWidget(),
+              const RecentRepairContainerWidget(),
+              const RecentRepairContainerWidget(),
             ],
           ),
         ),

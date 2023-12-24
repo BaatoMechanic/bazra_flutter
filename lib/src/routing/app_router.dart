@@ -1,38 +1,25 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:bato_mechanic/src/features/password_change/presentation/change_password_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/old_password_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/user_profile_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen.dart';
-import 'package:bato_mechanic/src/utils/data_types/string_or_audio.dart';
 import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
-import 'package:bato_mechanic/src/utils/enums/repair_setp_status.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen.dart';
 import 'package:bato_mechanic/src/features/feedback_and_contact/presentation/feedback_and_contact_screen.dart';
-import 'package:bato_mechanic/src/features/history/presentation/service_history_screen.dart';
 import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen.dart';
 import 'package:bato_mechanic/src/features/payment/presentation/screens/payment_integration_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/mechanic/mechanic_profile_screen.dart';
 import 'package:bato_mechanic/src/features/recent_repairs/recent_repairs_list.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/screen/repair_progress_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_parts/vehicle_parts_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/review_mechanic_screen/review_mechanic_screen.dart';
-import 'package:bato_mechanic/src/features/splash/presentation/splash_screen.dart';
 import 'package:bato_mechanic/src/features/support_chat/presentation/support_chat_screen.dart';
 
 import 'package:go_router/go_router.dart';
 
-import '../../temp.dart';
-import '../common/widgets/inplace_carousel_widget.dart';
-import '../features/repair_progress/domain/repair_step.dart';
-import '../features/repair_progress/domain/repair_step_report.dart';
 import '../features/repair_request/presentation/vehicle_categories/vehicle_category_screen.dart';
 import '../features/track_mechanic/presentation/track_mechanic_screen.dart';
 
@@ -113,10 +100,10 @@ GoRouter goRouter() {
         path: '/',
         name: APP_ROUTE.home.name,
         // builder: (context, state) => HomeScreen(),
-        // builder: (context, state) => BuildHomeScreen(),
-        builder: (context, state) => RepairProgressScreen(
-          repairRequestIdx: "NqCYPG6oX2jrjsePXZg42Z",
-        ),
+        builder: (context, state) => BuildHomeScreen(),
+        // builder: (context, state) => RepairProgressScreen(
+        //   repairRequestIdx: "NqCYPG6oX2jrjsePXZg42Z",
+        // ),
 
         routes: [
           GoRoute(
@@ -134,19 +121,19 @@ GoRouter goRouter() {
           GoRoute(
             path: 'confirm-old-password',
             name: APP_ROUTE.confirmOldPassword.name,
-            builder: (context, state) => ConfirmOldPasswordScreen(),
+            builder: (context, state) => const ConfirmOldPasswordScreen(),
             routes: [
               GoRoute(
                 path: 'confirm-top',
                 name: APP_ROUTE.confirmOTP.name,
-                builder: (context, state) => OTPConfirmationScreen(
+                builder: (context, state) => const OTPConfirmationScreen(
                   otpType: OTPType.EMAIL,
                 ),
                 routes: [
                   GoRoute(
                     path: 'change-password',
                     name: APP_ROUTE.changePassword.name,
-                    builder: (context, state) => ChangePasswordScreen(),
+                    builder: (context, state) => const ChangePasswordScreen(),
                   ),
                 ],
               ),
@@ -166,7 +153,8 @@ GoRouter goRouter() {
             path: 'repair_progress',
             name: APP_ROUTE.repairProgress.name,
             builder: (context, state) {
-              final repairRequestIdx = (state.extra as Map)["repairRequestIdx"];
+              final repairRequestIdx =
+                  (state.extra as Map?)?["repairRequestIdx"];
 
               return RepairProgressScreen(
                   repairRequestIdx:
@@ -174,10 +162,17 @@ GoRouter goRouter() {
             },
             routes: [
               GoRoute(
-                path: 'review_mechanic',
-                name: APP_ROUTE.reviewMechanic.name,
-                builder: (context, state) => ReviewMechanicScreen(),
-              ),
+                  path: 'review_mechanic',
+                  name: APP_ROUTE.reviewMechanic.name,
+                  builder: (context, state) {
+                    final mechanicIdx = (state.extra as Map?)?["mechanicIdx"];
+                    final repairRequestIdx =
+                        (state.extra as Map?)?["repairRequestIdx"];
+                    return ReviewMechanicScreen(
+                      mechanicIdx: mechanicIdx,
+                      repairRequestIdx: repairRequestIdx,
+                    );
+                  }),
             ],
           ),
           GoRoute(
@@ -193,12 +188,12 @@ GoRouter goRouter() {
           GoRoute(
             path: 'customer-profile',
             name: APP_ROUTE.customerProfile.name,
-            builder: (context, state) => UserProfileScreen(),
+            builder: (context, state) => const UserProfileScreen(),
           ),
           GoRoute(
             path: 'edit-profile',
             name: APP_ROUTE.editProfile.name,
-            builder: (context, state) => EditProfileScreen(),
+            builder: (context, state) => const EditProfileScreen(),
           ),
           GoRoute(
             path: 'feedback',

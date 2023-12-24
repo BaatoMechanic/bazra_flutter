@@ -6,25 +6,14 @@ import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/vechicle_category_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/vechicles_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/vehicle_parts_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/vehicle_category_repository/vehicle_category_repository.dart';
-import 'package:bato_mechanic/src/features/core/data/mechanic_repository/mechanic_repository.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_category.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
 
-import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_categories/vehicle_category_screen_controller.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_parts/vehicle_parts_screen_controller.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen_controller.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_state.dart';
 import 'package:bato_mechanic/src/utils/system_alerts_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../../utils/model_utils.dart';
 import '../../../core/domain/user_position.dart';
 import 'request_mechanic_state.dart';
 

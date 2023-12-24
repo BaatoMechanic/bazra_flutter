@@ -8,7 +8,7 @@ import 'reviews_and_rating_repository.dart';
 class FakeReviewsAndRatingRepository implements ReviewsAndRatingRepository {
   @override
   Future<dynamic> fetchMechanicReviews(String mechanicIdx) async {
-    await Future.delayed(Duration(seconds: 0));
+    await Future.delayed(const Duration(seconds: 0));
     return Success(
       code: HttpStatus.accepted,
       response: json.encode(

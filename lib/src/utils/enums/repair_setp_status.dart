@@ -1,7 +1,7 @@
 enum RepairStepStatus {
   PENDING,
   IN_PROGRESS,
-  COMPLETED,
+  COMPLETE,
   CANCELLED,
 }
 
@@ -11,8 +11,8 @@ RepairStepStatus repairStepStautsFromJson(String status) {
       return RepairStepStatus.PENDING;
     case "IN_PROGRESS":
       return RepairStepStatus.IN_PROGRESS;
-    case "COMPLETED":
-      return RepairStepStatus.COMPLETED;
+    case "COMPLETE":
+      return RepairStepStatus.COMPLETE;
     case "CANCELLED":
       return RepairStepStatus.CANCELLED;
     default:
@@ -26,7 +26,7 @@ String repairStepStautsToJson(RepairStepStatus status) {
       return "pending";
     case RepairStepStatus.IN_PROGRESS:
       return "in_progress";
-    case RepairStepStatus.COMPLETED:
+    case RepairStepStatus.COMPLETE:
       return "completed";
     case RepairStepStatus.CANCELLED:
       return "cancelled";

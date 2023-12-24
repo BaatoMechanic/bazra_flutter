@@ -1,13 +1,11 @@
 import 'package:bato_mechanic/src/features/repair_request/application/vechicle_category_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/vehicle_category_repository/vehicle_category_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_category.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_categories/vehicle_category_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class VehicleCategoryScreenController
     extends StateNotifier<AsyncValue<List<VehicleCategory>>> {
   VehicleCategoryScreenController({required this.ref})
-      : super(AsyncValue.data([]));
+      : super(const AsyncValue.data([]));
   final Ref ref;
 
   Future<List<VehicleCategory>> fetchVehicleCategories() async {

@@ -1,13 +1,9 @@
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
-import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
-import 'package:bato_mechanic/src/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,10 +14,9 @@ import 'menu_tile_widget.dart';
 import '../../../../utils/constants/managers/color_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../../utils/helpers/helper_functions.dart';
-import '../../../core/application/user_service.dart';
 
 class UserProfileMenu extends ConsumerWidget {
-  UserProfileMenu({super.key});
+  const UserProfileMenu({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +28,7 @@ class UserProfileMenu extends ConsumerWidget {
         title: 'Profile',
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
-          icon: Icon(Icons.arrow_forward_ios_outlined),
+          icon: const Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () => context.pushNamed(APP_ROUTE.customerProfile.name),
         ),
@@ -43,7 +38,7 @@ class UserProfileMenu extends ConsumerWidget {
         title: 'Active Repair',
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
-          icon: Icon(Icons.arrow_forward_ios_outlined),
+          icon: const Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () => context.pushNamed(APP_ROUTE.repairProgress.name),
         ),
@@ -53,7 +48,7 @@ class UserProfileMenu extends ConsumerWidget {
         title: 'Recent Repairs',
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
-          icon: Icon(Icons.arrow_forward_ios_outlined),
+          icon: const Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () => context.pushNamed(APP_ROUTE.recentRepairs.name),
         ),
@@ -66,7 +61,7 @@ class UserProfileMenu extends ConsumerWidget {
         title: 'Dark mode',
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
-          icon: Icon(Icons.arrow_forward_ios_outlined),
+          icon: const Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () {
             final darkTile = ListTile(
@@ -124,7 +119,7 @@ class UserProfileMenu extends ConsumerWidget {
         title: 'Misc',
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
-          icon: Icon(Icons.arrow_forward_ios_outlined),
+          icon: const Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () {},
         ),
@@ -214,7 +209,7 @@ class UserProfileMenu extends ConsumerWidget {
         title: 'Chat Support',
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_forward_ios_outlined,
           ),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,

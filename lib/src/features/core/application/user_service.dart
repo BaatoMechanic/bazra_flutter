@@ -49,14 +49,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:bato_mechanic/src/common/core/repositories/user_repository/user_repository.dart';
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:bato_mechanic/src/features/core/data/user_repository/user_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../utils/exceptions/base_exception.dart';
-import '../../../utils/in_memory_store.dart';
 import '../../../utils/model_utils.dart';
-import '../../auth/data/auth_repository.dart';
 import '../../auth/domain/user.dart';
 
 class UserService {

@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
-import 'package:bato_mechanic/src/features/core/application/location_service.dart';
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_widget_controller.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
@@ -33,8 +30,8 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   late MapController _mapController = MapController();
   late AnimationController _animationController;
-  TextEditingController _searchController = TextEditingController();
-  FocusNode _searchFocusNode = FocusNode();
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
   List<OSMdata> _options = <OSMdata>[];
   Timer? _debounce;
   late double width;
@@ -350,7 +347,6 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
         ),
         child: ElevatedButton(
           onPressed: () {},
-          child: Text('Select this location'.hardcoded()),
           style: const ButtonStyle().copyWith(
             // foregroundColor: isDarkTheme
             //     ? MaterialStatePropertyAll<Color>(ThemeColor.black)
@@ -358,6 +354,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             foregroundColor:
                 const MaterialStatePropertyAll<Color>(ThemeColor.black),
           ),
+          child: Text('Select this location'.hardcoded()),
         ),
       ),
     );
@@ -365,8 +362,8 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
 
   Widget _buildListView() {
     return Container(
-      margin: EdgeInsets.only(top: AppMargin.m4),
-      padding: EdgeInsets.all(AppPadding.p4),
+      margin: const EdgeInsets.only(top: AppMargin.m4),
+      padding: const EdgeInsets.all(AppPadding.p4),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(AppRadius.r12),

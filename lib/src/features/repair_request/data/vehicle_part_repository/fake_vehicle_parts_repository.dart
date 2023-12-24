@@ -19,11 +19,9 @@
 
 import 'dart:io';
 
-import 'package:bato_mechanic/src/utils/constants/test_service_types.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 
 import '../../../../utils/constants/test_parts.dart';
-import '../../domain/vehicle_part.dart';
 import 'vehicle_parts_repository.dart';
 
 class FakeVehiclePartsRepository implements VehiclePartsRepository {

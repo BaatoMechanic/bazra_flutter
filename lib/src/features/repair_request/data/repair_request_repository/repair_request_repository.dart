@@ -1,11 +1,8 @@
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/repair_request/data/repair_request_repository/api_repair_request_repository.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../utils/constants/managers/color_manager.dart';
-import 'fake_repair_request_repository.dart';
 
 abstract class RepairRequestRepository {
   Future<dynamic> fetchVechicleRepairRequest(String repairRequestId);
@@ -13,8 +10,10 @@ abstract class RepairRequestRepository {
   Future<dynamic> addImagesToRepairRequest(
       String repairRequestId, List<File> images);
   Future<dynamic> fetchUserRepairRequest();
+  Future<dynamic> updateRepairRequest(
+      String repairRequestId, Map<String, dynamic> requestInfo);
 }
 
 final repairRequestRepositoryProvider =
-    Provider((ref) => FakeRepairRequestRepository());
-    // Provider((ref) => APIRepairRequestRepository(ref: ref));
+    // Provider((ref) => FakeRepairRequestRepository());
+    Provider((ref) => APIRepairRequestRepository(ref: ref));

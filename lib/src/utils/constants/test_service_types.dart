@@ -1,9 +1,4 @@
-import 'dart:developer';
 
-import 'package:bato_mechanic/src/features/repair_request/domain/service_type.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_part.dart';
-import 'package:bato_mechanic/src/utils/enums/service_type_options.dart';
 
 // final mTestServiceTypes = [
 //   ServiceType.BODY_REPAIR,

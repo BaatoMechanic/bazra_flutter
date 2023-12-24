@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/utils/enums/service_type_options.dart';
 
-import 'vehicle_part.dart';
 
 List<ServiceType> serviceTypesFromJson(List<dynamic> jsonList) {
   return jsonList.map((json) => ServiceType.fromMap(json)).toList();

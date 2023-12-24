@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/mechanic_tips/data/mechanic_tips_repository.dart';
-import 'package:bato_mechanic/src/features/profile/presentation/mechanic/mechanic_profile_screen.dart';
 
 import '../../../utils/model_utils.dart';
 
@@ -10,7 +9,7 @@ class FakeMechanicTipsRepository implements MechanicTipsRepository {
   @override
   Future<dynamic> fetchMechanicTips() async {
     return await Future.delayed(
-        Duration(seconds: 2),
+        const Duration(seconds: 2),
         () => Success(
               code: HttpStatus.ok,
               response: json.encode([

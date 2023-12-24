@@ -8,8 +8,6 @@ import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widge
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/reviews_and_rating.dart';
-import '../../../../profile/presentation/mechanic/mechanic_profile_screen_controller.dart';
 
 class MechanicReviewsListScreen extends ConsumerWidget {
   const MechanicReviewsListScreen({

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../common/core/repositories/user_settings_repository.dart';
@@ -210,5 +211,19 @@ class APIRepairRequestRepository implements RepairRequestRepository {
         errorResponse: ApiStrings.unknownErrorString,
       );
     }
+  }
+
+  @override
+  Future updateRepairRequest(
+      String repairRequestId, Map<String, dynamic> requestInfo) async {
+    var url = Uri.parse(
+        '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/$repairRequestId/');
+
+    return await HttpHelper.guard(
+        () => http.patch(url, body: jsonEncode(requestInfo), headers: {
+              HttpHeaders.authorizationHeader:
+                  "BM ${ref.read(sharedPreferencesProvider).getString('access')!}",
+            }),
+        ref);
   }
 }

@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:bato_mechanic/src/utils/constants/test_categories.dart';
-import 'package:bato_mechanic/src/utils/constants/test_vehicles.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/vehicle_category_repository/vehicle_category_repository.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_category.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 
 class FakeVehicleCategoryRepository implements VehicleCategoryRepository {

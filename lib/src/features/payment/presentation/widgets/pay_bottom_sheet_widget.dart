@@ -1,9 +1,6 @@
-import 'package:bato_mechanic/src/common/widgets/butons/khalti_button.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class PayBottomSheetWidget extends StatelessWidget {
   PayBottomSheetWidget({super.key, required this.children});

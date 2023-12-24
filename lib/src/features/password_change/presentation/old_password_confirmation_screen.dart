@@ -32,7 +32,7 @@ class _ConfirmOldPasswordScreenState extends State<ConfirmOldPasswordScreen> {
               'Please enter your old password'.hardcoded(),
               style: Theme.of(context).textTheme.displaySmall,
             ),
-            SizedBox(
+            const SizedBox(
               height: AppHeight.h50,
             ),
             const SizedBox(height: 16.0),

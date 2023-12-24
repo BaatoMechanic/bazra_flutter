@@ -1,14 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:bato_mechanic/src/features/core/data/user_repository/user_repository.dart';
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
-import 'package:http/http.dart';
 
 import '../../auth/domain/user.dart';
 import '../data/mechanic_repository/mechanic_repository.dart';
-import '../../repair_request/application/vechicle_category_service.dart';
 
 class MechanicService {
   MechanicService({
@@ -21,14 +20,14 @@ class MechanicService {
   Stream<User?> mechanicStateChanges() => _mechanicState.stream;
   User? get assignedMechanic => _mechanicState.value;
 
-  void setAssignedMechanic(User mechanic) {
+  void setAssignedMechanic(User? mechanic) {
     _mechanicState.value = mechanic;
   }
 
   Future<List<User>> fetchRecommendedMechanics(
       String vehicleCategoryId, String vehiclePartId) async {
     final response = await ref
-        .watch(mechanicRepositoryProvider)
+        .watch(userRepositoryProvider)
         .fetchRecommendedMechanics(vehicleCategoryId, vehiclePartId);
 
     if (response is Success) {
@@ -41,10 +40,13 @@ class MechanicService {
     return [];
   }
 
+  // Future<dynamic> _fetchMechanic(String mechanicId) async {
+  //   return await ref
+  //       .watch(mechanicRepositoryProvider)
+  //       .fetchMechanicInfo(mechanicId);
+  // }
   Future<dynamic> _fetchMechanic(String mechanicId) async {
-    return await ref
-        .watch(mechanicRepositoryProvider)
-        .fetchMechanicInfo(mechanicId);
+    return await ref.watch(userRepositoryProvider).fetchUserInfo(mechanicId);
   }
 
   Future<void> fetchAssignedMechanic(String mechanicId) async {
@@ -72,11 +74,16 @@ class MechanicService {
     return null;
   }
 
-  Future<bool> rateAndReviewMechanic(
-      String mechanicId, int stars, String review) async {
-    final response = await ref
-        .read(mechanicRepositoryProvider)
-        .rateAndReviewMechanic(mechanicId, stars, review);
+  Future<bool> rateAndReviewMechanic(String mechanicIdx,
+      String repairRequestIdx, int stars, String review) async {
+    Map<String, dynamic> body = {
+      "rating": stars,
+      "review": review,
+      "user": mechanicIdx,
+      "repair_request": repairRequestIdx,
+    };
+    final response =
+        await ref.read(userRepositoryProvider).rateAndReviewUser(body);
     if (response is Success) {
       return true;
     }

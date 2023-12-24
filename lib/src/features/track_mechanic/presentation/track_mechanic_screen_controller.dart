@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:bato_mechanic/src/features/payment/application/payment_service.dart';
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
@@ -12,7 +11,6 @@ import 'package:bato_mechanic/src/features/core/data/mechanic_repository/mechani
 
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -97,20 +95,13 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
     return response;
   }
 
-  Future<User> fetchMechanicInfo(String mechanicId) async {
-    final response = await ref
-        .read(mechanicRepositoryProvider)
-        .fetchMechanicInfo(mechanicId);
-    final mechanic = User.fromJson(jsonDecode(response.body));
-    ref.read(mechanicServiceProvider).setAssignedMechanic(mechanic);
-    // state = state.copyWith(mechanicInfo: mechanic);
+  Future<User?> fetchMechanicInfo(String mechanicId) async {
+    final user =
+        await ref.read(mechanicServiceProvider).fetchMechanicInfo(mechanicId);
 
-    // mechanicPositionStreamController.add(mechanic.currentLocation!);
-    // state = state.copyWith(
-    //     currentMechanicLocation: mechanicPositionStreamController.stream);
-    // state = state.copyWith(currentUserLocation: mechanic.currentLocation);
+    ref.read(mechanicServiceProvider).setAssignedMechanic(user);
 
-    return mechanic;
+    return user;
   }
 
   int getEstimateArrivalTime() {

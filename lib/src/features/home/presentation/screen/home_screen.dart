@@ -1,39 +1,28 @@
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
-import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen_controller.dart';
 import 'package:bato_mechanic/src/features/home/presentation/widget/service_buttons_grid_shimmer.dart';
-import 'package:bato_mechanic/src/features/mechanic_tips/applicatoin/mechanic_tips_service.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/presentaiton/widgets/tips_carousel_shimmer.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/service_type_service.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/presentaiton/widgets/tips_carousel.dart';
 import 'package:bato_mechanic/src/features/menu/presentation/widgets/user_profile_menu.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
-import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../auth/domain/user.dart';
-import '../../../repair_request/domain/vehicle_repair_request.dart';
-import '../../../repair_request/presentation/request_mechanic/repair_request_controller.dart';
 import '../../../track_mechanic/presentation/track_mechanic_screen.dart';
 import '../widget/service_buttons_grid.dart';
-import '../widget/service_type_button.dart';
 
 class BuildHomeScreen extends ConsumerWidget {
   BuildHomeScreen({super.key});
@@ -79,7 +68,7 @@ class TempScreen extends StatelessWidget {
 }
 
 class HomeScreen extends ConsumerStatefulWidget {
-  HomeScreen({super.key, required this.flipCardController});
+  const HomeScreen({super.key, required this.flipCardController});
   final FlipCardController flipCardController;
 
   @override
@@ -88,9 +77,9 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen>
     with WidgetsBindingObserver {
-  TextEditingController _searchTextController = TextEditingController();
+  final TextEditingController _searchTextController = TextEditingController();
 
-  FocusNode _searchFocusNode = FocusNode();
+  final FocusNode _searchFocusNode = FocusNode();
 
 // Set this to true when first loading data when the app starts
   bool _loadingData = false;
@@ -225,7 +214,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                       )),
                       child: Image.asset('assets/images/parts/wheel.png'),
                     ),
-          drawer: Drawer(
+          drawer: const Drawer(
             child: UserProfileMenu(),
           ),
           appBar: AppBar(

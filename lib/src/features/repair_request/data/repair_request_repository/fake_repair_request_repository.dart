@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/utils/model_utils.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 
-import '../../../../utils/constants/managers/api_values_manager.dart';
 import 'repair_request_repository.dart';
 
 class FakeRepairRequestRepository implements RepairRequestRepository {
@@ -30,7 +28,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
     };
     Response response = Response(jsonEncode(responseBody), HttpStatus.created);
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     return Success(code: HttpStatus.created, response: response);
   }
 
@@ -74,7 +72,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
     };
     Response response = Response(jsonEncode(responseBody), HttpStatus.created);
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     return Success(code: HttpStatus.created, response: response);
     //   return Failure(
     //       code: HttpStatus.accepted,
@@ -104,7 +102,8 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
             "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
             "assigned_mechanic": null,
             // "status": "waiting_for_advance_payment"
-            "status": "pending"
+            "status": "waiting_for_completion_acceptance"
+            // "status": "pending"
           },
           {
             "idx": "5xBBkkGbKTwEzuAkX46K8H",
@@ -116,12 +115,33 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
             "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
             "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
             "assigned_mechanic": null,
-            "status": "pending"
+            "status": "waiting_for_completion_acceptance"
           },
         ]),
         HttpStatus.created);
 
     await Future.delayed(const Duration(seconds: 1));
     return Success(code: HttpStatus.ok, response: response);
+  }
+
+  @override
+  Future updateRepairRequest(
+      String repairRequestId, Map<String, dynamic> requestInfo) {
+    return Future.delayed(
+        const Duration(seconds: 1),
+        () => Success(
+              code: 200,
+              response: jsonEncode({
+                "idx": "NqCYPG6oX2jrjsePXZg42Z",
+                "title": "Bike is not startingg",
+                "description":
+                    "The engine just suddenly shut off and is now not starting",
+                "user": "itLGCnD7vf9P7eucZf3Kgo",
+                "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
+                "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
+                "assigned_mechanic": null,
+                "status": "complete"
+              }),
+            ));
   }
 }

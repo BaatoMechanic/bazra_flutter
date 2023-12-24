@@ -1,9 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:geolocator/geolocator.dart';
 
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
 // List<UserPosition> userPositionsFromJson(String str) =>
 //     List<UserPosition>.from(json.decode(str).map((x) {

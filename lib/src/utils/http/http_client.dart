@@ -6,7 +6,6 @@ import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 import '../constants/managers/strings_manager.dart';
@@ -26,9 +25,11 @@ class HttpHelper {
               ref.read(sharedPreferencesProvider).getString('refresh');
           if (refreshToken == null) {
             throw BaseException(
-                statusCode: response.statusCode,
-                errorCode: code,
-                message: "Session expired, please log in again");
+              statusCode: response.statusCode,
+              errorCode: code,
+              message: "Session expired, please log in again",
+              redirectLink: APP_ROUTE.login.name,
+            );
           }
           // Removing refresh token from shared preferences to prevent using it again and encountering infinite loop
           // because when the status code is 401 during refreshing token, it will try to use old refresh token again

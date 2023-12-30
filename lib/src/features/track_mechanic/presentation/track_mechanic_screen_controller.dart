@@ -104,6 +104,11 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
     return user;
   }
 
+  Stream<UserPosition?> getUserAndMechanicPosition() {
+    return ref.read(repairRequestServiceProvider).watchUsersLocation(
+        ref.read(repairRequestServiceProvider).activeRepairRequest!.idx);
+  }
+
   int getEstimateArrivalTime() {
     // final UserPosition? userLocation = state.currentUserLocation;
     // final UserPosition? mechanicLocation = state.currentUserLocation;

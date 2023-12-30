@@ -196,6 +196,13 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      ElevatedButton(
+                        onPressed: () => ref
+                            .read(
+                                trackMechanicScreenControllerProvider.notifier)
+                            .getUserAndMechanicPosition(),
+                        child: Text('Press me'),
+                      ),
                       Column(
                         children: [
                           assignedMechanic == null

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bato_mechanic/src/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../../common/core/repositories/user_settings_repository.dart';
 import '../../../../utils/constants/managers/api_values_manager.dart';
@@ -11,6 +12,7 @@ import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../../utils/model_utils.dart';
 import 'repair_request_repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:web_socket_channel/status.dart' as status;
 
 class APIRepairRequestRepository implements RepairRequestRepository {
   APIRepairRequestRepository({required this.ref});
@@ -225,5 +227,20 @@ class APIRepairRequestRepository implements RepairRequestRepository {
                   "BM ${ref.read(sharedPreferencesProvider).getString('access')!}",
             }),
         ref);
+  }
+
+  @override
+  Future<dynamic> watchUsersLocation(String repairRequestId) async {
+    var url = Uri.parse(
+        "${RemoteManager.WEB_SOCKET_BASE_URI}repair_userslocation/$repairRequestId");
+    final channel = WebSocketChannel.connect(url);
+
+    await channel.ready;
+
+    channel.stream.listen((message) {
+      print(message);
+      channel.sink.add('received!');
+      channel.sink.close(status.goingAway);
+    });
   }
 }

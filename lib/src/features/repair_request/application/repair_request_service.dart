@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,6 +26,14 @@ class RepairRequestService {
 
   void setActiveRepairRequest(VehicleRepairRequest? request) {
     _repairRequestState.value = request;
+  }
+
+  Stream<UserPosition?> watchUsersLocation(String repairRequestId) {
+    var locations = ref
+        .read(repairRequestRepositoryProvider)
+        .watchUsersLocation(repairRequestId);
+
+    return Stream.empty();
   }
 
   Future<dynamic> createVehicleRepairRequest(

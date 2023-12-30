@@ -144,4 +144,10 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
               }),
             ));
   }
+
+  @override
+  Future watchUsersLocation(String repairRequestId) {
+    // TODO: implement watchUsersLocation
+    throw UnimplementedError();
+  }
 }

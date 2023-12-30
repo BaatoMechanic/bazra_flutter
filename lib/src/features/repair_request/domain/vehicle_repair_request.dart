@@ -5,6 +5,8 @@
 
 import 'dart:convert';
 
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
+
 VehicleRepairRequest vehicleRepairRequestFromJson(String str) =>
     VehicleRepairRequest.fromJson(json.decode(str));
 
@@ -37,6 +39,8 @@ class VehicleRepairRequest {
   String vehiclePartIdx;
   String? preferredMechanicIdx;
   String? assignedMechanicIdx;
+  UserPosition? userLocation;
+  UserPosition? mechanicLocation;
   VehicleRepairRequestStatus status;
 
   VehicleRepairRequest({
@@ -44,6 +48,8 @@ class VehicleRepairRequest {
     required this.userIdx,
     this.preferredMechanicIdx,
     this.assignedMechanicIdx,
+    this.userLocation,
+    this.mechanicLocation,
     required this.vehicleCategoryIdx,
     required this.vehiclePartIdx,
     required this.title,
@@ -66,7 +72,8 @@ class VehicleRepairRequest {
         //     json["images"].map((x) => VehicleRepairRequestImage.fromJson(x))),
         // videos: List<VehicleRepairRequestVideo>.from(
         //     json["videos"].map((x) => VehicleRepairRequestVideo.fromJson(x))),
-
+        userLocation: json["user_location"],
+        mechanicLocation: json["mechanic_location"],
         status: vehicleRepairRequestStatusFromJson(json['status']),
       );
 
@@ -82,6 +89,8 @@ class VehicleRepairRequest {
         "description": description,
         // "images": List<dynamic>.from(images.map((x) => x.toJson())),
         // "videos": List<dynamic>.from(videos.map((x) => x.toJson())),
+        "user_location": userLocation?.toJson(),
+        "mechanic_location": mechanicLocation?.toJson(),
         "status": status,
         // "created_at": createdAt.toIso8601String(),
       };
@@ -120,12 +129,12 @@ class VehicleRepairRequest {
     int? customerId,
     int? preferredMechanicId,
     int? assignedMechanicId,
-    String? locationName,
-    String? locationCoordinates,
     int? vehicleId,
     int? vehiclePartId,
     String? title,
     String? description,
+    UserPosition? userLocation,
+    UserPosition? mechanicLocation,
     List<VehicleRepairRequestImage>? images,
     List<VehicleRepairRequestVideo>? videos,
     DateTime? createdAt,
@@ -140,6 +149,8 @@ class VehicleRepairRequest {
       vehiclePartIdx: vehiclePartIdx,
       title: title ?? this.title,
       description: description ?? this.description,
+      userLocation: userLocation ?? this.userLocation,
+      mechanicLocation: mechanicLocation ?? this.mechanicLocation,
       // images: images ?? this.images,
       // videos: videos ?? this.videos,
       // createdAt: createdAt ?? this.createdAt,

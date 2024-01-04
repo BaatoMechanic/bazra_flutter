@@ -63,21 +63,8 @@ class UserService {
 
   final Ref ref;
 
-  Future<User?> fetchUserInfo(String userIdx) async {
-    final response =
-        await ref.read(userRepositoryProvider).fetchUserInfo(userIdx);
-
-    if (response is Success) {
-      return User.fromJson(jsonDecode((jsonEncode(response.response))));
-    }
-
-    if (response is Failure) {
-      throw BaseException(
-        message: response.errorResponse.toString(),
-        stackTrace: StackTrace.current,
-      );
-    }
-    return null;
+  Future<User> fetchUserInfo(String userIdx) async {
+    return await ref.read(userRepositoryProvider).fetchUserInfo(userIdx);
   }
 }
 

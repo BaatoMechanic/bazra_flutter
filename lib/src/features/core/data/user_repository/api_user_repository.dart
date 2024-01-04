@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/features/auth/domain/user.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
 import 'package:bato_mechanic/src/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,21 +18,23 @@ class APIUserRepository extends UserRepository {
   final Ref ref;
 
   @override
-  Future<dynamic> fetchUserInfo(String userIdx) async {
+  Future<User> fetchUserInfo(String userIdx) async {
     var url = Uri.parse('${RemoteManager.BASE_URI}autho/user_info/$userIdx');
 
-    return await HttpHelper.guard(
+    final response = await HttpHelper.guard(
         () => http.get(url, headers: {
               HttpHeaders.authorizationHeader:
                   'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
             }),
         ref);
+
+    return User.fromJson(response);
   }
 
   @override
-  Future<dynamic> rateAndReviewUser(Map<String, dynamic> body) async {
+  Future<ReviewAndRating> rateAndReviewUser(Map<String, dynamic> body) async {
     var url = Uri.parse('${RemoteManager.BASE_URI}autho/reviews/');
-    await HttpHelper.guard(
+    final response = await HttpHelper.guard(
         () => http.post(url,
             headers: {
               HttpHeaders.authorizationHeader:
@@ -38,6 +42,7 @@ class APIUserRepository extends UserRepository {
             },
             body: body),
         ref);
+    return ReviewAndRating.fromJson(response);
   }
 
   @override

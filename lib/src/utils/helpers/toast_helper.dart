@@ -289,6 +289,7 @@ class ToastHelper {
 
   static showNotification(BuildContext context, String message,
       {notificationDuration = 3}) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Theme.of(context).primaryColor,
       dismissDirection: DismissDirection.horizontal,
@@ -299,11 +300,6 @@ class ToastHelper {
             .textTheme
             .headlineMedium!
             .copyWith(color: ThemeColor.dark),
-        // style:  TextStyle(
-        //   fontSize: 16,
-        //   fontWeight: FontWeight.bold,
-        //   color: Colors.white,
-        // ),
       ),
       duration: Duration(seconds: notificationDuration),
     ));
@@ -321,10 +317,7 @@ class ToastHelper {
             .textTheme
             .headlineSmall!
             .copyWith(color: ThemeColor.dark),
-        // style: const TextStyle(
-        //   fontSize: 16,
-        //   fontWeight: FontWeight.bold,
-        //   color: Colors.white,
+
         // ),
       ),
       duration: notificationDuration != null

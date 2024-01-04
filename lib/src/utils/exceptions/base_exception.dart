@@ -20,7 +20,7 @@ class BaseException implements Exception {
   BaseException({
     required this.message,
     this.redirectLink,
-    this.alertType = ErrorAlertType.CENTER_ALERT_DIALOGUE,
+    // this.alertType = ErrorAlertType.CENTER_ALERT_DIALOGUE,
     this.statusCode = HttpStatus.seeOther,
     this.errorCode = 'baato_mechanic_error',
     required this.stackTrace,
@@ -29,7 +29,7 @@ class BaseException implements Exception {
   final String message;
   // Alert type is used to show different types of alerts like notification or center dialogue
   // see async_value_extension.dart to see the implementation
-  final ErrorAlertType alertType;
+  // final ErrorAlertType alertType;
   final int statusCode;
   final String errorCode;
   final String? redirectLink;
@@ -55,7 +55,7 @@ class BaseException implements Exception {
   }) {
     return BaseException(
       message: message ?? this.message,
-      alertType: alertType ?? this.alertType,
+      // alertType: alertType ?? this.alertType,
       statusCode: statusCode ?? this.statusCode,
       errorCode: errorCode ?? this.errorCode,
       redirectLink: redirectLink ?? this.redirectLink,

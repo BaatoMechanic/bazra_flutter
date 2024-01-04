@@ -21,56 +21,12 @@ class ApiReviewsAndRatingRepository implements ReviewsAndRatingRepository {
     var url = Uri.parse(
         '${RemoteManager.BASE_URI}autho/reviews/mechanic_reviews/?idx=$mechanicIdx');
 
-    return await HttpHelper.guard(
+    final response = await HttpHelper.guard(
         () => http.get(url, headers: {
               HttpHeaders.authorizationHeader:
                   'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
             }),
         ref);
+    return reviewsAndRatingsFromJson(jsonDecode(response));
   }
 }
-// class ApiReviewsAndRatingRepository implements ReviewsAndRatingRepository {
-//   ApiReviewsAndRatingRepository(this.ref);
-//   final Ref ref;
-
-//   @override
-//   Future<List<ReviewAndRating>> fetchMechanicReviews(String mechanicIdx) async {
-//     try {
-//       var url = Uri.parse(
-//           '${RemoteManager.BASE_URI}autho/reviews/mechanic_reviews/?idx=$mechanicIdx');
-
-//       var response = await http.get(url, headers: {
-//         HttpHeaders.authorizationHeader:
-//             'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
-//       });
-
-//       // if (response.statusCode == 200) {
-//       return reviewsAndRatingsFromJson(jsonDecode(response.body));
-//       // }
-//       // return Failure(
-//       //   code: response.statusCode,
-//       //   stackTrace: StackTrace.current,
-//       //   errorResponse: jsonDecode(response.body)['detail'],
-//       // );
-//     } on HttpException {
-//       return Failure(
-//         code: ApiStatusCode.httpError,
-//         stackTrace: StackTrace.current,
-//         errorResponse: ApiStrings.noInternetString,
-//       );
-//     } on FormatException {
-//       return Failure(
-//         code: ApiStatusCode.invalidResponse,
-//         stackTrace: StackTrace.current,
-//         errorResponse: ApiStrings.invalidFormatString,
-//       );
-//     } catch (e, st) {
-//       // return Failure(code: 103, errorResponse: e.toString());
-//       return Failure(
-//         code: ApiStatusCode.unknownError,
-//         stackTrace: st,
-//         errorResponse: ApiStrings.unknownErrorString,
-//       );
-//     }
-//   }
-// }

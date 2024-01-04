@@ -47,11 +47,13 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
   Future<User> getCurrentUserInfo(String token) async {
     var url = Uri.parse('${RemoteManager.BASE_URI}autho/user_info/me/');
 
-    return await HttpHelper.guard(
+    final response = await HttpHelper.guard(
         () => http.get(url, headers: {
               HttpHeaders.authorizationHeader: 'BM $token',
             }),
         ref);
+
+    return User.fromJson(response);
   }
 
   @override

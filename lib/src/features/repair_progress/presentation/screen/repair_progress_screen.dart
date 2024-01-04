@@ -91,7 +91,7 @@ class RepairProgressScreen extends ConsumerWidget {
                       onPressed: () {
                         context.goNamed(APP_ROUTE.reviewMechanic.name, extra: {
                           'repairRequestIdx': repairRequest.idx,
-                          // "mechanicIdx": activeRepariRequest?.assignedMechanicIdx
+                          "mechanicIdx": repairRequest.assignedMechanicIdx
                         });
                       }),
               ],

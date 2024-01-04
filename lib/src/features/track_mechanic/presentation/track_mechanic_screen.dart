@@ -170,7 +170,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     //   }
     // });
     AsyncValue<VehicleRepairRequest?> repairRequestValue =
-        AsyncValue.data(null);
+        const AsyncValue.data(null);
     if (ref.watch(activeRepairRequestProvider) != null) {
       repairRequestValue = ref.watch(fetchRepairRequestProvider(
           ref.read(activeRepairRequestProvider)!.idx));
@@ -202,7 +202,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                   repairRequest.assignedMechanicIdx.toString());
             }
             if (assignedMechanic == null) {
-              return WaitingMechanicAssignmentScreen();
+              return const WaitingMechanicAssignmentScreen();
             }
             return Scaffold(
               appBar: AppBar(
@@ -248,10 +248,10 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                           const SizedBox(height: 4),
                           assignedMechanic == null
                               ? const CircularProgressIndicator.adaptive()
-                              : Text(
+                              : const Text(
                                   "Kohalpur",
                                   // 'Mechanic Location: ${assignedMechanic.currentLocation!.locationName}',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -338,6 +338,38 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 8.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Flexible(
+                              flex: 2,
+                              child: Text(
+                                "Status",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              flex: 2,
+                              child: Text(
+                                repairRequest.status.name,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: ThemeColor.primary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -393,6 +425,16 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                           repairRequest.status ==
                               VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
                         ..._buildBaatoKharcha(context)
+                      else if (repairRequest.status ==
+                          VehicleRepairRequestStatus.COMPLETE)
+                        SubmitButton(
+                          label: 'Review Mechanic'.hardcoded(),
+                          onPressed: () => context
+                              .pushNamed(APP_ROUTE.reviewMechanic.name, extra: {
+                            "repairRequestIdx": repairRequest.idx,
+                            "mechanicIdx": repairRequest.assignedMechanicIdx,
+                          }),
+                        )
                       else
                         SubmitButton(
                           label: 'Check Progress'.hardcoded(),

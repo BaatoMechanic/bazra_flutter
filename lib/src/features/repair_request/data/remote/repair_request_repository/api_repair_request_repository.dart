@@ -117,12 +117,15 @@ class APIRepairRequestRepository implements RepairRequestRepository {
     var url = Uri.parse(
         '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/$repairRequestId/');
 
-    return await HttpHelper.guard(
-        () => http.patch(url, body: jsonEncode(requestInfo), headers: {
+    final response = await HttpHelper.guard(
+        () => http.patch(url, body: requestInfo, headers: {
+              HttpHeaders.acceptHeader: "application/json; charset=utf-8",
               HttpHeaders.authorizationHeader:
                   "BM ${ref.read(sharedPreferencesProvider).getString('access')!}",
             }),
         ref);
+
+    return VehicleRepairRequest.fromJson(jsonDecode(response));
   }
 
   @override

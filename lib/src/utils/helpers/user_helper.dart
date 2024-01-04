@@ -24,15 +24,9 @@ class UserHelperFunctions {
     if (attributes == null) {
       return '';
     }
-    String? partSpeciality = attributes['vehicle_part_speciality'];
-    String? vehicleSpeciality = attributes['vehicle_category_speciality'];
+    String? partSpeciality = attributes['vehicle_part'];
+    String? vehicleSpeciality = attributes['vehicle_category'];
 
     return "${(vehicleSpeciality as String).capitalize()}'s $partSpeciality";
   }
-
-  // static String getMechanicRating(Map<String, dynamic>? attributes) {
-  //   if (attributes == null) {
-  //     return '';
-  //   }
-  // }
 }

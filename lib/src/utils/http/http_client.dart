@@ -77,92 +77,24 @@ class HttpHelper {
   }
 
   static dynamic _handleResponse(Response response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       return response.body;
     }
+
+    final message = jsonDecode(response.body)['details'];
+
+    if (message is List) {
+      throw BaseException(
+        message: message[0],
+        statusCode: response.statusCode,
+        stackTrace: StackTrace.current,
+      );
+    }
+
     throw BaseException(
-      message: jsonDecode(response.body)['detail'],
+      message: message,
       statusCode: response.statusCode,
       stackTrace: StackTrace.current,
     );
   }
 }
-// class HttpHelper {
-//   static Future<dynamic> guard(
-//       Future<Response> Function() request, Ref ref) async {
-//     try {
-//       var response = await request();
-
-//       if (response.statusCode == 401) {
-//         String code = jsonDecode(response.body)['code'];
-//         if (code == 'token_not_valid'.hardcoded()) {
-//           String? refreshToken =
-//               ref.read(sharedPreferencesProvider).getString('refresh');
-//           if (refreshToken == null) {
-//             throw BaseException(
-//               statusCode: response.statusCode,
-//               errorCode: code,
-//               message: "Session expired, please log in again",
-//               redirectLink: APP_ROUTE.login.name,
-//             );
-//           }
-//           // Removing refresh token from shared preferences to prevent using it again and encountering infinite loop
-//           // because when the status code is 401 during refreshing token, it will try to use old refresh token again
-//           // to refresh the token causing the infinite loop
-//           await ref.read(sharedPreferencesProvider).remove('refresh');
-
-//           await ref.read(authServiceProvider).refreshToken(refreshToken);
-
-//           // If refresh is successful then append the same refresh token as refreshing will only give access token
-//           ref
-//               .read(sharedPreferencesProvider)
-//               .setString('refresh', refreshToken);
-
-//           await request();
-//         }
-//       }
-//       return _handleResponse(response);
-//     } on HttpException {
-//       return Failure(
-//         code: HttpStatus.httpVersionNotSupported,
-//         stackTrace: StackTrace.current,
-//         errorResponse: ApiStrings.httpErrorString,
-//       );
-//     } on FormatException {
-//       return Failure(
-//         code: HttpStatus.unprocessableEntity,
-//         stackTrace: StackTrace.current,
-//         errorResponse: ApiStrings.invalidFormatString,
-//       );
-//     } catch (exp, st) {
-//       if (exp is BaseException) {
-//         return Failure(
-//             code: exp.statusCode,
-//             errorCode: exp.errorCode,
-//             stackTrace: st,
-//             errorResponse: exp.message,
-//             redirectLink: exp.redirectLink);
-//       }
-
-//       return Failure(
-//           errorResponse: exp.toString(),
-//           stackTrace: st,
-//           code: ApiStatusCode.unknownError,
-//           errorCode: 'unknown_error');
-//     }
-//   }
-
-//   static dynamic _handleResponse(Response response) {
-//     if (response.statusCode == 200) {
-//       return Success(
-//         code: response.statusCode,
-//         response: response.body,
-//       );
-//     }
-//     return Failure(
-//       code: response.statusCode,
-//       stackTrace: StackTrace.current,
-//       errorResponse: jsonDecode(response.body)['detail'],
-//     );
-//   }
-// }

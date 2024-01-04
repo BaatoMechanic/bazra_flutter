@@ -12,22 +12,6 @@ class ReviewsAndRatingService {
     required this.ref,
   });
   final Ref ref;
-
-  // Future<dynamic> fetchMechanicReviews(String mechanicIdx) async {
-  //   await Future.delayed(const Duration(seconds: 2));
-  //   final response = await ref
-  //       .read(reviewsAndRatingRepositoryProvider)
-  //       .fetchMechanicReviews(mechanicIdx);
-
-  //   if (response is Success) {
-  //     List<ReviewAndRating> reviews =
-  //         reviewsAndRatingsFromJson(jsonDecode(response.response as String));
-  //     return reviews;
-  //   }
-  //   if (response is Failure) {
-  //     throw BaseException(message: response.errorResponse.toString());
-  //   }
-  // }
 }
 
 final reviewsAndRatingServiceProvider = Provider((ref) {

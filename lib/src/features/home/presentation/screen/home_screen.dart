@@ -120,7 +120,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         _loadingData = true;
       });
       // final isLoggedIn = ref.watch(authServiceProvider).currentUser != null;
-      final isLoggedIn = ref.watch(authStateProvider) != null;
+      final isLoggedIn = ref.watch(authStateProvider).user != null;
 
       if (!isLoggedIn) {
         final sharedPreferences = ref.read(sharedPreferencesProvider);

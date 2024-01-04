@@ -11,7 +11,7 @@ extension AsyncValueExtensions on AsyncValue {
     if (!isRefreshing && hasError) {
       if (error is BaseException) {
         final err = error as BaseException;
-        if (err.alertType == ErrorAlertType.NOTIFICATION) {
+        if (alertType == ErrorAlertType.NOTIFICATION) {
           ToastHelper.showNotification(context, err.message);
         } else {
           ToastHelper.showCenterAlert(context, err.message);
@@ -20,7 +20,6 @@ extension AsyncValueExtensions on AsyncValue {
         if (err.redirectLink != null) {
           context.goNamed(err.redirectLink!);
         }
-
         return;
       }
 

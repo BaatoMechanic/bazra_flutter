@@ -13,23 +13,30 @@ class ReviewsAndRatingService {
   });
   final Ref ref;
 
-  Future<dynamic> fetchMechanicReviews(String mechanicIdx) async {
-    await Future.delayed(const Duration(seconds: 2));
-    final response = await ref
-        .read(reviewsAndRatingRepositoryProvider)
-        .fetchMechanicReviews(mechanicIdx);
+  // Future<dynamic> fetchMechanicReviews(String mechanicIdx) async {
+  //   await Future.delayed(const Duration(seconds: 2));
+  //   final response = await ref
+  //       .read(reviewsAndRatingRepositoryProvider)
+  //       .fetchMechanicReviews(mechanicIdx);
 
-    if (response is Success) {
-      List<ReviewAndRating> reviews =
-          reviewsAndRatingsFromJson(jsonDecode(response.response as String));
-      return reviews;
-    }
-    if (response is Failure) {
-      throw BaseException(message: response.errorResponse.toString());
-    }
-  }
+  //   if (response is Success) {
+  //     List<ReviewAndRating> reviews =
+  //         reviewsAndRatingsFromJson(jsonDecode(response.response as String));
+  //     return reviews;
+  //   }
+  //   if (response is Failure) {
+  //     throw BaseException(message: response.errorResponse.toString());
+  //   }
+  // }
 }
 
 final reviewsAndRatingServiceProvider = Provider((ref) {
   return ReviewsAndRatingService(ref: ref);
+});
+
+final fetchMechanicReviewsProvider = FutureProvider.family
+    .autoDispose<List<ReviewAndRating>, String>((ref, mechanicIdx) async {
+  return await ref
+      .watch(reviewsAndRatingRepositoryProvider)
+      .fetchMechanicReviews(mechanicIdx);
 });

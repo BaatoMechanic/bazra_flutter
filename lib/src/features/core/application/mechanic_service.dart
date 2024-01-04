@@ -7,7 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 
 import '../../auth/domain/user.dart';
+import '../../track_mechanic/presentation/track_mechanic_screen_controller.dart';
+import '../data/map_repository/map_repository.dart';
 import '../data/mechanic_repository/mechanic_repository.dart';
+
+final assignedMechanicProvider = StateProvider<User?>((ref) => null);
 
 class MechanicService {
   MechanicService({
@@ -17,12 +21,12 @@ class MechanicService {
   final _mechanicState = InMemoryStore<User?>(null);
   final Ref ref;
 
-  Stream<User?> mechanicStateChanges() => _mechanicState.stream;
-  User? get assignedMechanic => _mechanicState.value;
+  // Stream<User?> mechanicStateChanges() => _mechanicState.stream;
+  // User? get assignedMechanic => _mechanicState.value;
 
-  void setAssignedMechanic(User? mechanic) {
-    _mechanicState.value = mechanic;
-  }
+  // void setAssignedMechanic(User? mechanic) {
+  //   _mechanicState.value = mechanic;
+  // }
 
   Future<List<User>> fetchRecommendedMechanics(
       String vehicleCategoryId, String vehiclePartId) async {
@@ -35,7 +39,10 @@ class MechanicService {
     }
     if (response is Failure) {
       // throw Exception(response.errorResponse);
-      throw BaseException(message: response.errorResponse.toString());
+      throw BaseException(
+        message: response.errorResponse.toString(),
+        stackTrace: StackTrace.current,
+      );
     }
     return [];
   }
@@ -52,13 +59,18 @@ class MechanicService {
   Future<void> fetchAssignedMechanic(String mechanicId) async {
     final response = await _fetchMechanic(mechanicId);
 
-    if (response is Success) {
-      User mechanic = User.fromJson(response.response.toString());
-      setAssignedMechanic(mechanic);
-    }
-    if (response is Failure) {
-      throw BaseException(message: response.errorResponse.toString());
-    }
+    ref.read(assignedMechanicProvider.notifier).state = response;
+
+    // if (response is Success) {
+    //   User mechanic = User.fromJson(response.response.toString());
+    //   ref.read(assignedMechanicProvider.notifier).state = mechanic;
+    // }
+    // if (response is Failure) {
+    //   throw BaseException(
+    //     message: response.errorResponse.toString(),
+    //     stackTrace: StackTrace.current,
+    //   );
+    // }
   }
 
   Future<User?> fetchMechanicInfo(String mechanicId) async {
@@ -69,7 +81,10 @@ class MechanicService {
       return mechanic;
     }
     if (response is Failure) {
-      throw BaseException(message: response.errorResponse.toString());
+      throw BaseException(
+        message: response.errorResponse.toString(),
+        stackTrace: StackTrace.current,
+      );
     }
     return null;
   }
@@ -99,14 +114,19 @@ final mechanicServiceProvider = Provider((ref) {
   return mechanicService;
 });
 
-final watchMechanicStateChangesProvider =
-    StreamProvider.autoDispose<User?>((ref) {
-  final mechanicService = ref.watch(mechanicServiceProvider);
-  return mechanicService.mechanicStateChanges();
-});
+// final watchMechanicStateChangesProvider =
+//     StreamProvider.autoDispose<User?>((ref) {
+//   final mechanicService = ref.watch(mechanicServiceProvider);
+//   return mechanicService.mechanicStateChanges();
+// });
 
 final fetchMechanicInfoProvider =
     FutureProvider.autoDispose.family<User?, String>((ref, mechanicId) {
   final mechanicService = ref.watch(mechanicServiceProvider);
   return mechanicService.fetchMechanicInfo(mechanicId);
 });
+
+final fetchMechanicRouteProvider = FutureProvider.autoDispose((ref) => ref
+    .watch(mapRepositoryProvider)
+    .getRoute('85.33033043146135,27.703292452047425',
+        '85.33825904130937,27.707645262018172'));

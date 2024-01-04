@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/application/reviews_and_rating_service.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +17,8 @@ import '../../../reviews_and_rating/presentation/widgets/mechanic_review_widget.
 import 'mechanic_profile_screen_controller.dart';
 
 class MechanicProfileScreen extends ConsumerWidget {
-  const MechanicProfileScreen({super.key, 
+  const MechanicProfileScreen({
+    super.key,
     required this.mechanicIdx,
   });
 
@@ -29,7 +31,7 @@ class MechanicProfileScreen extends ConsumerWidget {
 
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-    final assignedMechanic = ref.watch(watchMechanicStateChangesProvider).value;
+    final assignedMechanic = ref.watch(assignedMechanicProvider);
 
     return SafeArea(
       child: Scaffold(

@@ -23,6 +23,7 @@ class BaseException implements Exception {
     this.alertType = ErrorAlertType.CENTER_ALERT_DIALOGUE,
     this.statusCode = HttpStatus.seeOther,
     this.errorCode = 'baato_mechanic_error',
+    required this.stackTrace,
   });
 
   final String message;
@@ -32,15 +33,17 @@ class BaseException implements Exception {
   final int statusCode;
   final String errorCode;
   final String? redirectLink;
+  final StackTrace stackTrace;
 
-  factory BaseException.fromFailure(Failure failure) {
-    return BaseException(
-      message: failure.errorResponse.toString(),
-      statusCode: failure.code,
-      errorCode: failure.errorCode.toString(),
-      redirectLink: failure.redirectLink,
-    );
-  }
+  // factory BaseException.fromFailure(Failure failure) {
+  //   return BaseException(
+  //     message: failure.errorResponse.toString(),
+  //     statusCode: failure.code,
+  //     errorCode: failure.errorCode.toString(),
+  //     redirectLink: failure.redirectLink,
+  //     st: failure.stackTrace,
+  //   );
+  // }
 
   BaseException copyWith({
     String? message,
@@ -48,6 +51,7 @@ class BaseException implements Exception {
     int? statusCode,
     String? errorCode,
     String? redirectLink,
+    StackTrace? st,
   }) {
     return BaseException(
       message: message ?? this.message,
@@ -55,6 +59,7 @@ class BaseException implements Exception {
       statusCode: statusCode ?? this.statusCode,
       errorCode: errorCode ?? this.errorCode,
       redirectLink: redirectLink ?? this.redirectLink,
+      stackTrace: st ?? this.stackTrace,
     );
   }
 }

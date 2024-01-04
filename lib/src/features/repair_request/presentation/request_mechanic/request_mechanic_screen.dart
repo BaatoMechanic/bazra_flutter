@@ -176,7 +176,8 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                                         .style!
                                         .copyWith(
                                           backgroundColor:
-                                              const MaterialStatePropertyAll<Color>(
+                                              const MaterialStatePropertyAll<
+                                                      Color>(
                                                   ThemeColor.transparent),
                                         ),
                                     onPressed: () => ref
@@ -223,11 +224,13 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                     child: _videoController != null
                         ? Text(
                             'Change Video',
-                            style: const TextStyle().copyWith(color: ThemeColor.dark),
+                            style: const TextStyle()
+                                .copyWith(color: ThemeColor.dark),
                           )
                         : Text(
                             'Add Video',
-                            style: const TextStyle().copyWith(color: ThemeColor.dark),
+                            style: const TextStyle()
+                                .copyWith(color: ThemeColor.dark),
                           ),
                   ),
                   if (_videoController != null)

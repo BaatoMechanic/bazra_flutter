@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/application/auth_service.dart';
@@ -12,10 +13,11 @@ class SplashScreenController extends StateNotifier<AsyncValue<void>> {
 
   Future<bool> hasRepairRequest(String userId) async {
     await Future.delayed(const Duration(seconds: 2));
-    final response =
-        await ref.read(repairRequestServiceProvider).fetchUserRepairRequests();
+    final response = await ref
+        .read(repairRequestRepositoryProvider)
+        .fetchUserRepairRequest();
 
-    return response;
+    return response.isNotEmpty;
   }
 
   Future<bool> fetchUserInfo(String token) async {

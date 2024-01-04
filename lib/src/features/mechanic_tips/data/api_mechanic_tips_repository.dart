@@ -8,6 +8,7 @@ import '../../../common/core/repositories/user_settings_repository.dart';
 import '../../../utils/constants/managers/api_values_manager.dart';
 import 'package:http/http.dart' as http;
 
+import '../domain/mechanic_tip.dart';
 
 class APIMechanicTipsRepository implements MechanicTipsRepository {
   APIMechanicTipsRepository(this.ref);
@@ -15,14 +16,16 @@ class APIMechanicTipsRepository implements MechanicTipsRepository {
   final Ref ref;
 
   @override
-  Future<dynamic> fetchMechanicTips() async {
+  Future<List<MechanicTip>> fetchMechanicTips() async {
     var url = Uri.parse('${RemoteManager.BASE_URI}autho/mechanic_tips/');
 
-    return await HttpHelper.guard(
+    final response = await HttpHelper.guard(
         () => http.get(url, headers: {
               HttpHeaders.authorizationHeader:
                   'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
             }),
         ref);
+
+    return mechanicTipsFromJson(response);
   }
 }

@@ -15,11 +15,7 @@ class FakeMapRepository implements MapRepository {
       var url = Uri.parse(
           'https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf6248b60a25fd6a3d4feebc3315580a66b8e8&start=$sourcePoint&end=$destinationPoint');
 
-      var response = await http.get(
-        url,
-      );
-
-      // print(response);
+      var response = await http.get(url);
 
       if (response.statusCode == 200) {
         var data = json.decode(response.body);

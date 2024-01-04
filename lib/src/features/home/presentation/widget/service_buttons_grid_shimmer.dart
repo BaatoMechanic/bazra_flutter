@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/features/home/presentation/widget/service_type_button_shimmer.dart';
+import 'package:bato_mechanic/src/features/services/presentation/widgets/service_type_button_shimmer.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/managers/values_manager.dart';

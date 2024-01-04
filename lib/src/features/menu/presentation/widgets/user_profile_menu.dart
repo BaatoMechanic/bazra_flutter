@@ -1,6 +1,7 @@
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
+import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/widgets/butons/submit_button.dart';
+import '../../../auth/data/remote/fake_remote_auth_repository.dart';
 import 'menu_tile_section_widget.dart';
 import 'menu_tile_widget.dart';
 import '../../../../utils/constants/managers/color_manager.dart';
@@ -219,7 +221,7 @@ class UserProfileMenu extends ConsumerWidget {
       ),
     ];
 
-    final user = ref.watch(watchUserStateChangesProvider).value;
+    final user = ref.watch(authStateProvider).user;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(

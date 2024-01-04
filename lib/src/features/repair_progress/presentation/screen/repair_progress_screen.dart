@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
 import '../widgets/repair_step_widget.dart';
 
 class RepairProgressScreen extends ConsumerWidget {
@@ -20,10 +21,8 @@ class RepairProgressScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activeRepariRequest =
-        ref.watch(watchRepairRequestStateChangesProvider).value;
-
-    final repairStepsValue = ref.watch(watchRepairStepStateChangesProvider);
+    final repairStepsValue =
+        ref.watch(fetchRepairStepsProvider(repairRequestIdx));
 
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +37,10 @@ class RepairProgressScreen extends ConsumerWidget {
           itemCount: repairSteps.length,
           itemBuilder: (context, index) {
             final step = repairSteps[index];
-            return RepairStepWidget(step: step);
+            return RepairStepWidget(
+              repairRequestIdx: repairRequestIdx,
+              step: step,
+            );
           },
         ),
       ),
@@ -60,38 +62,41 @@ class RepairProgressScreen extends ConsumerWidget {
         ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (activeRepariRequest?.status ==
-                  VehicleRepairRequestStatus.WAITING_FOR_COMPLETION_ACCEPTANCE)
-                ElevatedButton(
-                    child: Text('Complete the process'.hardcoded()),
-                    onPressed: () async {
-                      if (await ref
-                          .read(repairProgressScreenControllerProvider.notifier)
-                          .completeRepair(repairRequestIdx)) {
-                        context
-                            .pushNamed(APP_ROUTE.reviewMechanic.name, extra: {
-                          'repairRequestIdx': repairRequestIdx,
-                          "mechanicIdx":
-                              activeRepariRequest?.assignedMechanicIdx
+          child: Consumer(builder: (context, ref, child) {
+            final repairRequest = ref.watch(activeRepairRequestProvider);
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (repairRequest!.status ==
+                    VehicleRepairRequestStatus
+                        .WAITING_FOR_COMPLETION_ACCEPTANCE)
+                  ElevatedButton(
+                      child: Text('Complete the process'.hardcoded()),
+                      onPressed: () async {
+                        if (await ref
+                            .read(
+                                repairProgressScreenControllerProvider.notifier)
+                            .completeRepair(repairRequest.idx)) {
+                          context
+                              .pushNamed(APP_ROUTE.reviewMechanic.name, extra: {
+                            'repairRequestIdx': repairRequest.idx,
+                            "mechanicIdx": repairRequest.assignedMechanicIdx
+                          });
+                        }
+                      }),
+                if (repairRequest.status == VehicleRepairRequestStatus.COMPLETE)
+                  ElevatedButton(
+                      child: Text('Review the mechanic'.hardcoded()),
+                      onPressed: () {
+                        context.goNamed(APP_ROUTE.reviewMechanic.name, extra: {
+                          'repairRequestIdx': repairRequest.idx,
+                          // "mechanicIdx": activeRepariRequest?.assignedMechanicIdx
                         });
-                      }
-                    }),
-              if (activeRepariRequest?.status ==
-                  VehicleRepairRequestStatus.COMPLETE)
-                ElevatedButton(
-                    child: Text('Review the mechanic'.hardcoded()),
-                    onPressed: () {
-                      context.goNamed(APP_ROUTE.reviewMechanic.name, extra: {
-                        'repairRequestIdx': repairRequestIdx,
-                        // "mechanicIdx": activeRepariRequest?.assignedMechanicIdx
-                      });
-                    }),
-            ],
-          ),
+                      }),
+              ],
+            );
+          }),
         ),
       ),
     );

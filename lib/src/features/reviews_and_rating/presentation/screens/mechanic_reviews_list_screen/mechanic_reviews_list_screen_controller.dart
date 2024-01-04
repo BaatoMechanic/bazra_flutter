@@ -11,28 +11,10 @@ class MechanicReviewsListScreenController
   MechanicReviewsListScreenController({
     required this.ref,
   }) : super(const AsyncData(null));
-
-  Future<List<ReviewAndRating>> fetchMechanicReviews(String mechanicIdx) async {
-    // state = const AsyncLoading();
-    state = await AsyncValue.guard(() => ref
-        .read(reviewsAndRatingServiceProvider)
-        .fetchMechanicReviews(mechanicIdx));
-    if (state.hasError) {
-      throw BaseException(message: state.error.toString());
-    }
-    return state.value as List<ReviewAndRating>;
-  }
 }
 
 final mechanicReviewsListScreenControllerControllerProvider =
     StateNotifierProvider<MechanicReviewsListScreenController,
         AsyncValue<void>>((ref) {
   return MechanicReviewsListScreenController(ref: ref);
-});
-
-final fetchMechanicReviewsProvider = FutureProvider.autoDispose
-    .family<List<ReviewAndRating>, String>((ref, mechanicIdx) {
-  return ref
-      .watch(mechanicReviewsListScreenControllerControllerProvider.notifier)
-      .fetchMechanicReviews(mechanicIdx);
 });

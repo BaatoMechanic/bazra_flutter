@@ -12,16 +12,16 @@ class VehiclesService {
   VehiclesService({
     required this.ref,
   });
-  final _selectedVehicleState = InMemoryStore<Vehicle?>(null);
   final Ref ref;
+  // final _selectedVehicleState = InMemoryStore<Vehicle?>(null);
 
-  Stream<Vehicle?> _selectedVehicleStateChanges() =>
-      _selectedVehicleState.stream;
-  Vehicle? get selectedVehicle => _selectedVehicleState.value;
+  // Stream<Vehicle?> _selectedVehicleStateChanges() =>
+  //     _selectedVehicleState.stream;
+  // Vehicle? get selectedVehicle => _selectedVehicleState.value;
 
-  void setSelectedVehicle(Vehicle category) {
-    _selectedVehicleState.value = category;
-  }
+  // void setSelectedVehicle(Vehicle category) {
+  //   _selectedVehicleState.value = category;
+  // }
 
   Future<List<Vehicle>> fetchCategoryVehicles(String categoryId) async {
     final response = await ref
@@ -36,17 +36,9 @@ class VehiclesService {
     }
     return [];
   }
-
-  void dispose() => _selectedVehicleState.close();
 }
 
 final vehicleServiceProvider = Provider((ref) {
   final serviceProvider = VehiclesService(ref: ref);
-  ref.onDispose(() => serviceProvider.dispose());
   return serviceProvider;
-});
-
-final watchSelectedVehicleProvider = StreamProvider<Vehicle?>((ref) {
-  final serviceProvider = ref.watch(vehicleServiceProvider);
-  return serviceProvider._selectedVehicleStateChanges();
 });

@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
+import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,7 +40,8 @@ class LocationService {
     String? locationName =
         await fetchLocationName(position.latitude, position.longitude);
 
-    User? user = ref.read(authServiceProvider).currentUser;
+    // User? user = ref.read(authServiceProvider).currentUser;
+    User? user = ref.read(authStateProvider.notifier).user;
 
     if (user == null) {
       return;
@@ -58,7 +60,7 @@ class LocationService {
         locationName: locationName,
       ),
     );
-    ref.read(authServiceProvider).setCurrentUser(user);
+    ref.read(authStateProvider.notifier).setUser(user);
   }
 
   fetchLocationName(double lat, double lon) async {
@@ -69,11 +71,7 @@ class LocationService {
       return response.response;
     }
 
-    if (response is Failure) {
-      // state = state.copyWith(
-      //     markerPosition:
-      //         AsyncValue.error(response.errorResponse, response.stackTrace));
-    }
+    if (response is Failure) {}
 
     return null;
   }

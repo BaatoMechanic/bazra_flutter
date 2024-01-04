@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
+import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
+import 'package:bato_mechanic/src/features/track_mechanic/presentation/waiting_mechanic_assignment_screen.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -33,16 +36,20 @@ import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 
 import '../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
 import '../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
+import '../../auth/data/remote/fake_remote_auth_repository.dart';
 import '../../auth/domain/user.dart';
+import '../../repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
 import 'track_mechanic_screen_controller.dart';
 
 class TrackMechanicScreen extends ConsumerStatefulWidget {
   const TrackMechanicScreen({
     Key? key,
     this.flipCardController,
+    // required this.repairRequestIdx,
   }) : super(key: key);
 
   final FlipCardController? flipCardController;
+  // final String repairRequestIdx;
 
   @override
   ConsumerState<TrackMechanicScreen> createState() =>
@@ -95,12 +102,12 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     final timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (mounted) {
         if (currentIndex < pathPoints.length - 1) {
-          User? user = ref.read(authServiceProvider).currentUser;
+          User? user = ref.read(authStateProvider).user;
           UserPosition? nextPosition = user?.currentLocation;
-          if (ref.read(watchMechanicStateChangesProvider).isLoading) {
-            print('dd');
-            return;
-          }
+          // if (ref.read(watchMechanicStateChangesProvider).isLoading) {
+          //   print('dd');
+          //   return;
+          // }
           if (nextPosition == null) {
             print('null');
             ref.read(repairRequestControllerProvider).repairRequest;
@@ -110,8 +117,8 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
               longitude: pathPoints[currentIndex].longitude,
             );
             ref
-                .read(authServiceProvider)
-                .setCurrentUser(user?.copyWith(currentLocation: nextPosition));
+                .read(authStateProvider.notifier)
+                .setUser(user?.copyWith(currentLocation: nextPosition));
 
             currentIndex++;
           }
@@ -127,41 +134,49 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Get user location if not present
-      if (ref.read(authServiceProvider).currentUser?.currentLocation == null) {
+      if (ref.read(authStateProvider).user?.currentLocation == null) {
         ref.read(locationServiceProvider).initializeUserLocation();
       }
-      // Directly go to progress screen if the repair request is in progress
-      if (ref.read(repairRequestServiceProvider).activeRepairRequest?.status ==
-          VehicleRepairRequestStatus.IN_PROGRESS) {
-        if (mounted) {
-          context.replaceNamed(APP_ROUTE.repairProgress.name);
-        }
-      }
+      // // Directly go to progress screen if the repair request is in progress
+      // if (widget.repairRequest.status ==
+      //     VehicleRepairRequestStatus.IN_PROGRESS) {
+      //   if (mounted) {
+      //     context.replaceNamed(APP_ROUTE.repairProgress.name);
+      //   }
+      // }
     });
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  // }
 
 // Setting this variable because the notification is shown every time the screen is rebuilt
   bool _isFirstTime = true;
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(watchRepairRequestStateChangesProvider, (previous, state) {
-      if (!state.isRefreshing && state.hasValue) {
-        if (_isFirstTime &&
-            state.value != null &&
-            state.value!.status ==
-                VehicleRepairRequestStatus.WAITING_FOR_ADVANCE_PAYMENT) {
-          ToastHelper.showNotificationWithCloseButton(
-              context, "Please pay baato kharcha to continue the process");
-          _isFirstTime = false;
-        }
-      }
-    });
+    // ref.listen(watchRepairRequestStateChangesProvider, (previous, state) {
+    //   if (!state.isRefreshing && state.hasValue) {
+    //     if (_isFirstTime &&
+    //         state.value != null &&
+    //         state.value!.status ==
+    //             VehicleRepairRequestStatus.WAITING_FOR_ADVANCE_PAYMENT) {
+    //       ToastHelper.showNotificationWithCloseButton(
+    //           context, "Please pay baato kharcha to continue the process");
+    //       _isFirstTime = false;
+    //     }
+    //   }
+    // });
+    AsyncValue<VehicleRepairRequest?> repairRequestValue =
+        AsyncValue.data(null);
+    if (ref.watch(activeRepairRequestProvider) != null) {
+      repairRequestValue = ref.watch(fetchRepairRequestProvider(
+          ref.read(activeRepairRequestProvider)!.idx));
+    }
 
-    final repairRequestValue =
-        ref.watch(watchRepairRequestStateChangesProvider);
-
-    final assignedMechanic = ref.watch(watchMechanicStateChangesProvider).value;
+    final assignedMechanic = ref.watch(assignedMechanicProvider);
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     return WillPopScope(
@@ -181,10 +196,13 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                 body: Center(child: CircularProgressIndicator.adaptive()),
               );
             }
-
-            if (assignedMechanic == null) {
+            if (assignedMechanic == null &&
+                repairRequest.assignedMechanicIdx != null) {
               ref.read(mechanicServiceProvider).fetchAssignedMechanic(
                   repairRequest.assignedMechanicIdx.toString());
+            }
+            if (assignedMechanic == null) {
+              return WaitingMechanicAssignmentScreen();
             }
             return Scaffold(
               appBar: AppBar(
@@ -196,13 +214,13 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ElevatedButton(
-                        onPressed: () => ref
-                            .read(
-                                trackMechanicScreenControllerProvider.notifier)
-                            .getUserAndMechanicPosition(),
-                        child: Text('Press me'),
-                      ),
+                      // ElevatedButton(
+                      //   onPressed: () => ref
+                      //       .read(
+                      //           trackMechanicScreenControllerProvider.notifier)
+                      //       .getUserAndMechanicPosition(),
+                      //   child: Text('Press me'),
+                      // ),
                       Column(
                         children: [
                           assignedMechanic == null
@@ -231,7 +249,8 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                           assignedMechanic == null
                               ? const CircularProgressIndicator.adaptive()
                               : Text(
-                                  'Mechanic Location: ${assignedMechanic.currentLocation!.locationName}',
+                                  "Kohalpur",
+                                  // 'Mechanic Location: ${assignedMechanic.currentLocation!.locationName}',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -316,9 +335,6 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                         subtitle: Text(
                           repairRequest.description ??
                               "No description provided",
-                          // style: TextStyle().copyWith(
-                          //   fontSize: 14,
-                          // ),
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
@@ -412,16 +428,16 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                 children: [
                   KhaltiButton(
                     onPressed: () async {
-                      final result = await ref
-                          .read(trackMechanicScreenControllerProvider.notifier)
-                          .payWithKhalti();
+                      // final result = await ref
+                      //     .read(trackMechanicScreenControllerProvider.notifier)
+                      //     .payWithKhalti();
                       Navigator.of(context).pop();
-                      if (result) {
-                        context.pushNamed(APP_ROUTE.repairProgress.name);
-                      } else {
-                        ToastHelper.showNotificationWithCloseButton(
-                            context, "Something went wrong, please try again");
-                      }
+                      // if (result) {
+                      //   context.pushNamed(APP_ROUTE.repairProgress.name);
+                      // } else {
+                      //   ToastHelper.showNotificationWithCloseButton(
+                      //       context, "Something went wrong, please try again");
+                      // }
                     },
                   ),
                   EsewaButton(
@@ -448,161 +464,154 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
 
   Widget _showMechanicTrackMap(BuildContext context) {
     LatLng cameraCenter = LatLng(27.703292452047425, 85.33033043146135);
-    final coordinatePointsValue = ref.watch(fetchTrackMechanicRouteProvider);
-    final mechanicPositionValue = ref.watch(watchMechanicStateChangesProvider);
+    final coordinatePointsValue = ref.watch(fetchMechanicRouteProvider);
+    final mechanicPositionValue = ref.watch(assignedMechanicProvider);
     // final userMarkerValue = ref.watch(watchUserPositionMarkerProvider);
-    return AsyncValueWidget(
-      value: mechanicPositionValue,
-      data: (mechanicPosition) => FlutterMap(
-        mapController: _mapController,
-        options: MapOptions(
-          onTap: (tapPosition, latLng) {
-            setState(() {
-              _showBigScreenMap = !_showBigScreenMap;
-            });
-          },
-          // onTap: (tapPosition, latLng) {
-          //   showDialog(
-          //     context: context,
-          //     builder: (BuildContext context) {
-          //       return AlertDialog(
-          //         insetPadding: EdgeInsets.zero,
-          //         contentPadding: EdgeInsets.zero,
-          //         content: SizedBox(
-          //             height: MediaQuery.of(context).size.height,
-          //             width: MediaQuery.of(context).size.width,
-          //             child: _showMechanicTrackMap(context)),
-          //       );
-          //     },
-          //   );
-          // },
-          center: cameraCenter,
-          zoom: 15.0,
-          bounds: LatLngBounds(LatLng(27.703292452047425, 85.33033043146135),
-              LatLng(27.707645262018172, 85.33825904130937)),
-        ),
-        nonRotatedChildren: [
-          ScaleLayerWidget(
-            options: ScaleLayerPluginOption(
-              lineColor: Colors.black,
-              lineWidth: 2,
-              textStyle: const TextStyle(
-                color: Colors.black,
-                fontSize: 12,
-              ),
-              padding: const EdgeInsets.all(10),
-            ),
-          ),
-          FlutterMapControlButtons(
-            minZoom: 4,
-            maxZoom: 19,
-            mini: false,
-            padding: 10,
-            alignment: Alignment.bottomRight,
-            mapController: _mapController,
-            animationController: _animationController,
-          ),
-          // if (userMarkerValue.value != null)
-          //   CurrentLocationLayer(
-          //     positionStream: userMarkerValue as Stream<LocationMarkerPosition>,
-          //   ),
-          // CurrentLocationLayer(),
-          const RichAttributionWidget(
-            popupInitialDisplayDuration: Duration(seconds: 5),
-            animationConfig: ScaleRAWA(),
-            showFlutterMapAttribution: false,
-            attributions: [
-              TextSourceAttribution(
-                'Full Screen Mode',
-                prependCopyright: false,
-              ),
-              TextSourceAttribution(
-                'Tap on the map to show full screen map',
-                prependCopyright: false,
-              ),
-            ],
-          ),
-        ],
-        children: [
-          TileLayer(
-            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-            tileProvider: NetworkTileProvider(),
-          ),
-          CurrentLocationLayer(),
-          MarkerLayer(
-            markers: [
-              Marker(
-                width: 80,
-                height: 80,
-                point: LatLng(27.703292452047425, 85.33033043146135),
-                builder: (ctx) => const Icon(
-                  Icons.location_on,
-                  color: Colors.orange,
-                  size: 40.0,
-                ),
-              ),
-              Marker(
-                width: 80,
-                height: 80,
-                point: LatLng(27.707645262018172, 85.33825904130937),
-                builder: (ctx) => const Icon(
-                  Icons.location_on,
-                  color: Colors.red,
-                  size: 40.0,
-                ),
-              ),
-              // AsyncValueWidget(value: ref.watch(watchUserStateChangesProvider) , data: data)
-              if (ref.watch(watchUserStateChangesProvider).value != null &&
-                  ref
-                          .watch(watchUserStateChangesProvider)
-                          .value!
-                          .currentLocation !=
-                      null)
-                Marker(
-                  width: 80,
-                  height: 80,
-                  point: LatLng(
-                      ref
-                          .watch(watchUserStateChangesProvider)
-                          .value!
-                          .currentLocation!
-                          .latitude!,
-                      ref
-                          .watch(watchUserStateChangesProvider)
-                          .value!
-                          .currentLocation!
-                          .longitude!),
-                  builder: (ctx) => const Icon(
-                    Icons.location_on,
-                    color: Colors.green,
-                    size: 40.0,
-                  ),
-                ),
-            ],
-          ),
-          AsyncValueWidget(
-              value: coordinatePointsValue,
-              data: (points) {
-                List<LatLng> routeCoordinatePoints = points
-                    .map((point) =>
-                        LatLng(point[1].toDouble(), point[0].toDouble()))
-                    .toList()
-                    .cast<LatLng>();
-
-                return PolylineLayer(
-                  polylines: [
-                    Polyline(
-                      points: routeCoordinatePoints,
-                      strokeWidth: 4,
-                      // color: Theme.of(context).primaryColor,
-                      color: Colors.purple,
-                    ),
-                  ],
-                );
-              })
-        ],
+    return FlutterMap(
+      mapController: _mapController,
+      options: MapOptions(
+        onTap: (tapPosition, latLng) {
+          setState(() {
+            _showBigScreenMap = !_showBigScreenMap;
+          });
+        },
+        // onTap: (tapPosition, latLng) {
+        //   showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       return AlertDialog(
+        //         insetPadding: EdgeInsets.zero,
+        //         contentPadding: EdgeInsets.zero,
+        //         content: SizedBox(
+        //             height: MediaQuery.of(context).size.height,
+        //             width: MediaQuery.of(context).size.width,
+        //             child: _showMechanicTrackMap(context)),
+        //       );
+        //     },
+        //   );
+        // },
+        center: cameraCenter,
+        zoom: 15.0,
+        bounds: LatLngBounds(LatLng(27.703292452047425, 85.33033043146135),
+            LatLng(27.707645262018172, 85.33825904130937)),
       ),
+      nonRotatedChildren: [
+        ScaleLayerWidget(
+          options: ScaleLayerPluginOption(
+            lineColor: Colors.black,
+            lineWidth: 2,
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+            ),
+            padding: const EdgeInsets.all(10),
+          ),
+        ),
+        FlutterMapControlButtons(
+          minZoom: 4,
+          maxZoom: 19,
+          mini: false,
+          padding: 10,
+          alignment: Alignment.bottomRight,
+          mapController: _mapController,
+          animationController: _animationController,
+        ),
+        // if (userMarkerValue.value != null)
+        //   CurrentLocationLayer(
+        //     positionStream: userMarkerValue as Stream<LocationMarkerPosition>,
+        //   ),
+        // CurrentLocationLayer(),
+        const RichAttributionWidget(
+          popupInitialDisplayDuration: Duration(seconds: 5),
+          animationConfig: ScaleRAWA(),
+          showFlutterMapAttribution: false,
+          attributions: [
+            TextSourceAttribution(
+              'Full Screen Mode',
+              prependCopyright: false,
+            ),
+            TextSourceAttribution(
+              'Tap on the map to show full screen map',
+              prependCopyright: false,
+            ),
+          ],
+        ),
+      ],
+      children: [
+        TileLayer(
+          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+          userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+          tileProvider: NetworkTileProvider(),
+        ),
+        CurrentLocationLayer(),
+        MarkerLayer(
+          markers: [
+            Marker(
+              width: 80,
+              height: 80,
+              point: LatLng(27.703292452047425, 85.33033043146135),
+              builder: (ctx) => const Icon(
+                Icons.location_on,
+                color: Colors.orange,
+                size: 40.0,
+              ),
+            ),
+            Marker(
+              width: 80,
+              height: 80,
+              point: LatLng(27.707645262018172, 85.33825904130937),
+              builder: (ctx) => const Icon(
+                Icons.location_on,
+                color: Colors.red,
+                size: 40.0,
+              ),
+            ),
+            // AsyncValueWidget(value: ref.watch(watchUserStateChangesProvider) , data: data)
+            if (ref.watch(authStateProvider).user != null &&
+                ref.watch(authStateProvider).user!.currentLocation != null)
+              Marker(
+                width: 80,
+                height: 80,
+                point: LatLng(
+                    ref
+                        .watch(authStateProvider)
+                        .user!
+                        .currentLocation!
+                        .latitude!,
+                    ref
+                        .watch(authStateProvider)
+                        .user!
+                        .currentLocation!
+                        .longitude!),
+                builder: (ctx) => const Icon(
+                  Icons.location_on,
+                  color: Colors.green,
+                  size: 40.0,
+                ),
+              ),
+          ],
+        ),
+        AsyncValueWidget(
+            value: coordinatePointsValue,
+            data: (points) {
+              List<LatLng> routeCoordinatePoints = points
+                  .map((point) =>
+                      LatLng(point[1].toDouble(), point[0].toDouble()))
+                  .toList()
+                  .cast<LatLng>();
+
+              return PolylineLayer(
+                polylines: [
+                  Polyline(
+                    points: routeCoordinatePoints,
+                    strokeWidth: 4,
+                    // color: Theme.of(context).primaryColor,
+                    color: Colors.purple,
+                  ),
+                ],
+              );
+            })
+      ],
     );
   }
 }

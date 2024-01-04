@@ -20,11 +20,11 @@ class RepairProgressScreenController extends StateNotifier<AsyncValue<void>> {
     return state.value as List<RepairStep>;
   }
 
-  Future<bool> updateRepairStepStatus(
+  Future<bool> updateRepairStepStatus(String repairRequest,
       String repairStepIdx, RepairStepStatus status) async {
     state = await AsyncValue.guard(() => ref
         .read(repairStepServiceProvider)
-        .updateRepairStepStatus(repairStepIdx, status));
+        .updateRepairStepStatus(repairRequest, repairStepIdx, status));
     return !state.hasError;
   }
 

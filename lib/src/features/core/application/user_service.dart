@@ -72,7 +72,10 @@ class UserService {
     }
 
     if (response is Failure) {
-      throw BaseException(message: response.errorResponse.toString());
+      throw BaseException(
+        message: response.errorResponse.toString(),
+        stackTrace: StackTrace.current,
+      );
     }
     return null;
   }

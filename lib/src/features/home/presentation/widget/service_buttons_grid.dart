@@ -1,10 +1,10 @@
-import 'package:bato_mechanic/src/features/repair_request/domain/service_type.dart';
+import 'package:bato_mechanic/src/features/services/domain/service_type.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/constants/managers/values_manager.dart';
-import 'service_type_button.dart';
+import '../../../services/presentation/widgets/service_type_button.dart';
 
 class ServiceButtonsGridWidget extends ConsumerWidget {
   ServiceButtonsGridWidget({

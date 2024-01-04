@@ -2,7 +2,6 @@ import 'package:bato_mechanic/src/features/repair_request/application/vechicles_
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 class VehiclesScreenController
     extends StateNotifier<AsyncValue<List<Vehicle>>> {
   VehiclesScreenController({required this.ref})
@@ -18,9 +17,9 @@ class VehiclesScreenController
     return state.hasValue ? (state.value as List<Vehicle>) : [];
   }
 
-  void setSelectedVehicle(Vehicle vehicle) {
-    ref.watch(vehicleServiceProvider).setSelectedVehicle(vehicle);
-  }
+  // void setSelectedVehicle(Vehicle vehicle) {
+  //   ref.watch(vehicleServiceProvider).setSelectedVehicle(vehicle);
+  // }
 }
 
 final vehiclesScreenControllerProvider = StateNotifierProvider.autoDispose<

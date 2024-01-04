@@ -1,5 +1,6 @@
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step_report.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,11 @@ import '../screen/repair_progress_screen_controller.dart';
 class RepairStepBottomSheet extends ConsumerWidget {
   const RepairStepBottomSheet({
     super.key,
+    required this.repairRequestIdx,
     required this.step,
   });
+
+  final String repairRequestIdx;
 
   final RepairStep step;
 
@@ -80,8 +84,8 @@ class RepairStepBottomSheet extends ConsumerWidget {
                 onPressed: () async {
                   if (await ref
                       .read(repairProgressScreenControllerProvider.notifier)
-                      .updateRepairStepStatus(
-                          step.idx, RepairStepStatus.IN_PROGRESS)) {
+                      .updateRepairStepStatus(repairRequestIdx, step.idx,
+                          RepairStepStatus.IN_PROGRESS)) {
                     Navigator.of(context).pop();
                   }
                 },
@@ -93,7 +97,10 @@ class RepairStepBottomSheet extends ConsumerWidget {
                   await ref
                       .read(repairProgressScreenControllerProvider.notifier)
                       .updateRepairStepStatus(
-                          step.idx, RepairStepStatus.COMPLETE);
+                        repairRequestIdx,
+                        step.idx,
+                        RepairStepStatus.COMPLETE,
+                      );
                 },
               ),
           ],

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
+import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_widget_controller.dart';
@@ -71,7 +72,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
       _searchController.text = placeName;
       _selectedPlaceName = placeName;
       UserPosition? userPosition =
-          ref.read(authServiceProvider).currentUser?.currentLocation;
+          ref.read(authStateProvider).user?.currentLocation;
 
       if (userPosition != null) {
         ref
@@ -399,10 +400,8 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   _mapController.center.latitude = positionToMove.latitude;
                   _mapController.center.longitude = positionToMove.longitude;
 
-                  UserPosition? userPosition = ref
-                      .read(authServiceProvider)
-                      .currentUser
-                      ?.currentLocation;
+                  UserPosition? userPosition =
+                      ref.read(authStateProvider).user?.currentLocation;
 
                   if (userPosition == null) {
                     userPosition = await MapHelper.getUserLocation();

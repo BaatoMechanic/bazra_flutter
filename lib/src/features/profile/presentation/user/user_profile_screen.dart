@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/menu/presentation/widgets/menu_tile_section_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../auth/data/remote/fake_remote_auth_repository.dart';
 import '../../../menu/presentation/widgets/menu_tile_widget.dart';
 import '../../../auth/application/auth_service.dart';
 
@@ -19,14 +21,13 @@ class UserProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-    final user = ref.watch(watchUserStateChangesProvider).value;
+    final user = ref.watch(authStateProvider).user;
 
     List<MenuTile> infoTiles = [
       MenuTile(
         leadingIcon: Icons.email,
         title: 'Email'.hardcoded(),
         trailingWidget: Text(
-          // 'mail@bato_mechanic.com',
           user?.email ?? "No Email".hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
@@ -37,7 +38,6 @@ class UserProfileScreen extends ConsumerWidget {
         leadingIcon: Icons.phone,
         title: 'Phone',
         trailingWidget: Text(
-          // '9863748593',
           user?.phone ?? "No phone".hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,

@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +10,11 @@ import 'repair_step_bottom_sheet.dart';
 class RepairStepWidget extends StatelessWidget {
   const RepairStepWidget({
     super.key,
+    required this.repairRequestIdx,
     required this.step,
   });
+
+  final String repairRequestIdx;
 
   final RepairStep step;
 
@@ -31,7 +35,10 @@ class RepairStepWidget extends StatelessWidget {
               ),
               context: context,
               builder: (BuildContext context) {
-                return RepairStepBottomSheet(step: step);
+                return RepairStepBottomSheet(
+                  repairRequestIdx: repairRequestIdx,
+                  step: step,
+                );
               },
             );
           },

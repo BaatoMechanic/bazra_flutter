@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
+import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:bato_mechanic/src/features/payment/application/payment_service.dart';
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
@@ -59,64 +60,55 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
         speed: position.speed,
         speedAccuracy: position.speedAccuracy,
         locationName: "Temp Name");
-    User currentUser = ref.read(authServiceProvider).currentUser!;
+    User currentUser = ref.read(authStateProvider).user!;
     currentUser = currentUser.copyWith(currentLocation: currentUserLocation);
-    ref.read(authServiceProvider).setCurrentUser(currentUser);
+    ref.read(authStateProvider.notifier).setUser(currentUser);
   }
 
-  Future<bool> payWithKhalti() async {
-    final result = await ref.read(paymentServiceProvider).payWithKhalti();
-    if (result) {
-      VehicleRepairRequest? request =
-          ref.watch(repairRequestServiceProvider).activeRepairRequest;
-      ref.read(repairRequestServiceProvider).setActiveRepairRequest(
-          request!.copyWith(status: VehicleRepairRequestStatus.IN_PROGRESS));
-      return true;
-    }
-    return false;
-  }
+  // Future<bool> payWithKhalti() async {
+  //   final result = await ref.read(paymentServiceProvider).payWithKhalti();
+  //   if (result) {
+  //     VehicleRepairRequest? request =
+  //         ref.watch(repairRequestServiceProvider).getActiveRepairRequest();
+  //     ref.read(repairRequestServiceProvider).setActiveRepairRequest(
+  //         request!.copyWith(status: VehicleRepairRequestStatus.IN_PROGRESS));
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
-  Future<bool> payWithEsewa() async {
-    final result = await ref.read(paymentServiceProvider).payWithEsewa();
-    if (result) {
-      VehicleRepairRequest? request =
-          ref.watch(repairRequestServiceProvider).activeRepairRequest;
-      ref.read(repairRequestServiceProvider).setActiveRepairRequest(
-          request!.copyWith(status: VehicleRepairRequestStatus.IN_PROGRESS));
-      return true;
-    }
-    return false;
-  }
-
-  Future<dynamic> fetchRoute() async {
-    final response = await ref.read(mapRepositoryProvider).getRoute(
-        '85.33033043146135,27.703292452047425',
-        '85.33825904130937, 27.707645262018172');
-    return response;
-  }
+  // Future<bool> payWithEsewa() async {
+  //   final result = await ref.read(paymentServiceProvider).payWithEsewa();
+  //   if (result) {
+  //     VehicleRepairRequest? request =
+  //         ref.watch(repairRequestServiceProvider).getActiveRepairRequest();
+  //     ref.read(repairRequestServiceProvider).setActiveRepairRequest(
+  //         request!.copyWith(status: VehicleRepairRequestStatus.IN_PROGRESS));
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   Future<User?> fetchMechanicInfo(String mechanicId) async {
     final user =
         await ref.read(mechanicServiceProvider).fetchMechanicInfo(mechanicId);
 
-    ref.read(mechanicServiceProvider).setAssignedMechanic(user);
+    ref.read(assignedMechanicProvider.notifier).state = user;
 
     return user;
   }
 
-  Stream<UserPosition?> getUserAndMechanicPosition() {
-    return ref.read(repairRequestServiceProvider).watchUsersLocation(
-        ref.read(repairRequestServiceProvider).activeRepairRequest!.idx);
-  }
+  // Stream<UserPosition?> getUserAndMechanicPosition() {
+  //   return ref.read(repairRequestServiceProvider).watchUsersLocation(
+  //       ref.read(repairRequestServiceProvider).getActiveRepairRequest()!.idx);
+  // }
 
   int getEstimateArrivalTime() {
-    // final UserPosition? userLocation = state.currentUserLocation;
-    // final UserPosition? mechanicLocation = state.currentUserLocation;
     final UserPosition? userLocation =
         // ref.read(authServiceProvider).currentUser!.currentLocation;
-        ref.read(mechanicServiceProvider).assignedMechanic?.currentLocation;
+        ref.read(assignedMechanicProvider)?.currentLocation;
     final UserPosition? mechanicLocation =
-        ref.read(mechanicServiceProvider).assignedMechanic?.currentLocation;
+        ref.read(assignedMechanicProvider)?.currentLocation;
     if (mechanicLocation == null) {
       // -1 is returned because it is used to check in formatter utility function to return Unknown string
       return -1;
@@ -162,6 +154,3 @@ double calculateHaversineDistance(
 final trackMechanicScreenControllerProvider = StateNotifierProvider.autoDispose<
     TrackMechanicScreenController,
     AsyncValue<void>>((ref) => TrackMechanicScreenController(ref: ref));
-
-final fetchTrackMechanicRouteProvider = FutureProvider.autoDispose((ref) =>
-    ref.watch(trackMechanicScreenControllerProvider.notifier).fetchRoute());

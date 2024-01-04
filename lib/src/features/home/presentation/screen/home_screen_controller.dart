@@ -1,8 +1,9 @@
 import 'package:bato_mechanic/src/features/mechanic_tips/applicatoin/mechanic_tips_service.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/domain/mechanic_tip.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/service_type_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/service_type.dart';
+import 'package:bato_mechanic/src/features/services/application/service_type_service.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
+import 'package:bato_mechanic/src/features/services/domain/service_type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../auth/application/auth_service.dart';
@@ -25,8 +26,9 @@ class HomeScreenController extends StateNotifier<AsyncValue<void>> {
 
   Future<bool> fetchUserRepairRequests() async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(
-        () => ref.read(repairRequestServiceProvider).fetchUserRepairRequests());
+    state = await AsyncValue.guard(() =>
+        // ref.read(repairRequestRepositoryProvider).fetchUserRepairRequest());
+        ref.read(repairRequestServiceProvider).fetchUserRepairRequest());
     return !state.hasError;
   }
 
@@ -42,19 +44,19 @@ class HomeScreenController extends StateNotifier<AsyncValue<void>> {
     return !state.hasError;
   }
 
-  Future<List<ServiceType>> fetchAllServices() async {
-    state = await AsyncValue.guard(
-        () => ref.read(serviceTypeServiceProvider).fetchAllSerivceTypes());
-
-    return state.value as List<ServiceType>;
-  }
-
-  Future<List<MechanicTip>> fetchAllMechanicTips() async {
-    state = await AsyncValue.guard(
-        () => ref.read(mechanicTipsServiceProvider).fetchMechanicTips());
-
-    return state.value as List<MechanicTip>;
-  }
+  //// Future<List<ServiceType>> fetchAllServices() async {
+  ////   state = await AsyncValue.guard(
+  ////       () => ref.read(serviceTypeServiceProvider).fetchAllSerivceTypes());
+//
+  ////   return state.value as List<ServiceType>;
+  //// }
+//
+  //// Future<List<MechanicTip>> fetchAllMechanicTips() async {
+  ////   state = await AsyncValue.guard(
+  ////       () => ref.read(mechanicTipsServiceProvider).fetchMechanicTips());
+//
+  ////   return state.value as List<MechanicTip>;
+  //// }
 }
 
 final homeScreenControllerProvider =
@@ -62,12 +64,7 @@ final homeScreenControllerProvider =
   return HomeScreenController(ref: ref);
 });
 
-final fetchAllServiceTypeProvider = FutureProvider<List<ServiceType>>((ref) {
-  final serviceProvider = ref.watch(homeScreenControllerProvider.notifier);
-  return serviceProvider.fetchAllServices();
-});
-
-final fetchAllMechanicTipsProvider = FutureProvider<List<MechanicTip>>((ref) {
-  final serviceProvider = ref.watch(homeScreenControllerProvider.notifier);
-  return serviceProvider.fetchAllMechanicTips();
-});
+//// final fetchAllMechanicTipsProvider = FutureProvider<List<MechanicTip>>((ref) {
+////   final serviceProvider = ref.watch(homeScreenControllerProvider.notifier);
+////   return serviceProvider.fetchAllMechanicTips();
+//// });

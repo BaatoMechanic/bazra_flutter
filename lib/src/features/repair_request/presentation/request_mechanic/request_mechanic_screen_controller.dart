@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/auth/domain/user.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/service_type_service.dart';
+import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
+import 'package:bato_mechanic/src/features/services/application/service_type_service.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/vechicle_category_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/vehicle_parts_service.dart';
+import 'package:bato_mechanic/src/features/vehicle_category/application/vechicle_category_service.dart';
+import 'package:bato_mechanic/src/features/vehicle_part/application/vehicle_parts_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 
 import 'package:bato_mechanic/src/utils/system_alerts_controller.dart';
@@ -30,43 +32,40 @@ class RequestMechanicScreenController
         );
   final Ref ref;
 
-  Future<dynamic> _createRepairRequest(Map<String, dynamic> requestInfo) async {
+  Future<VehicleRepairRequest?> _createRepairRequest(
+      Map<String, dynamic> requestInfo) async {
+    state = state.copyWith(value: AsyncLoading());
     var response = await AsyncValue.guard(() => ref
         .read(repairRequestServiceProvider)
         .createVehicleRepairRequest(requestInfo));
-    state = state.copyWith(value: response);
-    if (response.value is VehicleRepairRequest) {
-      ref
-          .read(repairRequestServiceProvider)
-          .setActiveRepairRequest(response.value);
-      response.value;
-    }
+    state = state.copyWith(value: AsyncData(response));
     return response.value;
   }
 
   Future<bool> _addImagesToRepairRequest(
       String requestId, List<File> images) async {
+    state = state.copyWith(selectedImages: AsyncData(images));
     state = state.copyWith(value: const AsyncLoading());
-    var response = await AsyncValue.guard(() => ref
+
+    final response = await AsyncValue.guard(() => ref
         .read(repairRequestServiceProvider)
         .addImagesToVechicleRepairRequest(requestId, images));
-    if (response.value is VehicleRepairRequest) {
-      ref
-          .read(repairRequestServiceProvider)
-          .setActiveRepairRequest(response.value);
-      state = state.copyWith(selectedImages: AsyncData(images));
-      return true;
+
+    if (response.hasError) {
+      state = state.copyWith(
+          value: AsyncError("Error adding Images", StackTrace.current));
+      return false;
     }
-    state = state.copyWith(
-        value: AsyncError("Error adding Images", StackTrace.current));
-    return false;
+
+    return true;
   }
 
-  Future<List<User>> fetchRecommendedMechanics() async {
-    final selectedCategory =
-        ref.read(vehicleCategoryServiceProvider).selectedVehicleCategory;
-    final selectedPart =
-        ref.read(vehiclePartsServiceProvider).selectedVehiclePart;
+  Future<List<User>> fetchRecommendedMechanics(
+      String vehicleCategoryIdx, String vehiclePartIdx) async {
+    final selectedCategory = vehicleCategoryIdx;
+    // ref.read(vehicleCategoryServiceProvider).selectedVehicleCategory;
+    final selectedPart = vehiclePartIdx;
+    // ref.read(vehiclePartsServiceProvider).selectedVehiclePart;
     final result = await AsyncValue.guard(
         () => ref.watch(mechanicServiceProvider).fetchRecommendedMechanics(
             // selectedCategory!.id.toString(), selectedPart!.id.toString()));
@@ -183,12 +182,11 @@ class RequestMechanicScreenController
       "selected_location": selectedPosition!.toJson(),
       // "location_coordinates": coordinates,
       // "vehicle": ref.read(vehicleServiceProvider).selectedVehicle!.id,
-      "vehicle_type":
-          ref.read(vehicleCategoryServiceProvider).selectedVehicleCategory!.id,
+      "vehicle_type": ref.read(selectedVehicleCategoryProvider)?.idx,
 
       // "vehicle_part":
       //     ref.read(vehiclePartsServiceProvider).selectedVehiclePart!.id,
-      "service_type": ref.read(serviceTypeServiceProvider).selectedServiceType,
+      "service_type": ref.read(selectedServiceProvider)?.idx,
 
       "description": issueDescription,
     };
@@ -203,11 +201,11 @@ class RequestMechanicScreenController
       if (await _addImagesToRepairRequest(
           response.idx.toString(), state.selectedImages.value!)) {
         // When repair request has been successfully created then fetch the additional infos like mechanicinfo, customerInfo, vehicleInfo, etc
-        ref.read(mechanicServiceProvider).fetchAssignedMechanic(ref
-            .read(repairRequestServiceProvider)
-            .activeRepairRequest!
-            .assignedMechanicIdx
-            .toString());
+        // ref.read(mechanicServiceProvider).fetchAssignedMechanic(ref
+        //     .read(fakeRepairRequestRepositoryProvider)
+        //     .activeRepairRequest!
+        //     .assignedMechanicIdx
+        //     .toString());
         return true;
       }
     }
@@ -224,5 +222,5 @@ final fetchRecommendedMechanicsProvider =
     FutureProvider.autoDispose<List<User>>((ref) {
   final requestMechanicController =
       ref.watch(requestMechanicScreenControllerProvider.notifier);
-  return requestMechanicController.fetchRecommendedMechanics();
+  return requestMechanicController.fetchRecommendedMechanics("232", "we3");
 });

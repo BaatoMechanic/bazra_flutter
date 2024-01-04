@@ -11,45 +11,20 @@ class MechanicTipsService {
 
   final Ref ref;
 
-  final _allMechanicTipsState = InMemoryStore<List<MechanicTip>>([]);
+  // final _allMechanicTipsState = InMemoryStore<List<MechanicTip>>([]);
 
-  Stream<List<MechanicTip>> _allMechanicTipsStateChanges() =>
-      _allMechanicTipsState.stream;
-  List<MechanicTip> get allMechanicTips => _allMechanicTipsState.value;
+  // Stream<List<MechanicTip>> _allMechanicTipsStateChanges() =>
+  //     _allMechanicTipsState.stream;
+  // List<MechanicTip> get allMechanicTips => _allMechanicTipsState.value;
 
-  void setAllMechanicTips(List<MechanicTip> mechanicTips) {
-    _allMechanicTipsState.value = mechanicTips;
-  }
-
-  Future<List<MechanicTip>> fetchMechanicTips() async {
-    if (allMechanicTips.isNotEmpty) {
-      return allMechanicTips;
-    }
-
-    var response =
-        await ref.read(mechanicTipRepositoryProvider).fetchMechanicTips();
-
-    if (response is Success) {
-      final List<MechanicTip> mechanicTips =
-          mechanicTipsFromJson(response.response as String);
-      setAllMechanicTips(mechanicTips);
-      return mechanicTips;
-    }
-    if (response is Failure) {
-      throw BaseException.fromFailure(response);
-      // throw BaseException (
-      //   statusCode: response.code,
-      //   errorCode: response.errorCode.toString(),
-      //   message: response.errorResponse.toString(),
-      // );
-    }
-    return [];
-  }
+  // void setAllMechanicTips(List<MechanicTip> mechanicTips) {
+  //   _allMechanicTipsState.value = mechanicTips;
+  // }
 }
 
 final mechanicTipsServiceProvider = Provider((ref) => MechanicTipsService(ref));
 
-final watchAllMechanicTipsProvider = StreamProvider<List<MechanicTip>>((ref) {
-  final serviceProvider = ref.watch(mechanicTipsServiceProvider);
-  return serviceProvider._allMechanicTipsStateChanges();
-});
+// final watchAllMechanicTipsProvider = StreamProvider<List<MechanicTip>>((ref) {
+//   final serviceProvider = ref.watch(mechanicTipsServiceProvider);
+//   return serviceProvider._allMechanicTipsStateChanges();
+// });

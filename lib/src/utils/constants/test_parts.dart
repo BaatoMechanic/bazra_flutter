@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_part.dart';
+import 'package:bato_mechanic/src/features/vehicle_part/domain/vehicle_part.dart';
 
 final mTestVehicleParts = [
   VehiclePart(

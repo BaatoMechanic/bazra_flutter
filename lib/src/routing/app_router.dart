@@ -4,6 +4,7 @@ import 'package:bato_mechanic/src/features/password_change/presentation/otp_conf
 import 'package:bato_mechanic/src/features/profile/presentation/user/user_profile_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen.dart';
+import 'package:bato_mechanic/src/features/temp/pres/temp.dart';
 import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen.dart';
@@ -20,7 +21,7 @@ import 'package:bato_mechanic/src/features/support_chat/presentation/support_cha
 
 import 'package:go_router/go_router.dart';
 
-import '../features/repair_request/presentation/vehicle_categories/vehicle_category_screen.dart';
+import '../features/vehicle_category/presentation/vehicle_category_screen.dart';
 import '../features/track_mechanic/presentation/track_mechanic_screen.dart';
 
 enum APP_ROUTE {
@@ -99,11 +100,8 @@ GoRouter goRouter() {
       GoRoute(
         path: '/',
         name: APP_ROUTE.home.name,
-        // builder: (context, state) => HomeScreen(),
+        // builder: (context, state) => TempScr(),
         builder: (context, state) => BuildHomeScreen(),
-        // builder: (context, state) => RepairProgressScreen(
-        //   repairRequestIdx: "NqCYPG6oX2jrjsePXZg42Z",
-        // ),
 
         routes: [
           GoRoute(

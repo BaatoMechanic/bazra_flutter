@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:provider/provider.dart';
 
 class FlutterMapControlButtons extends StatefulWidget {
   final double minZoom;

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 class BaatoIconTheme {
   BaatoIconTheme._();
 
-  static final lightIconTheme = IconThemeData(
+  static const lightIconTheme = IconThemeData(
     color: ThemeColor.dark,
   );
 
-  static final darkIconTheme = IconThemeData(
+  static const darkIconTheme = IconThemeData(
     color: ThemeColor.light,
   );
 }

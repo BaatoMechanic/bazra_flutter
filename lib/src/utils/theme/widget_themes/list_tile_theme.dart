@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 class BaatoListTileTheme {
   BaatoListTileTheme._();
 
-  static ListTileThemeData lightListTileThemeData = ListTileThemeData(
+  static ListTileThemeData lightListTileThemeData = const ListTileThemeData(
     iconColor: ThemeColor.dark,
     textColor: ThemeColor.dark,
   );
 
-  static ListTileThemeData darkListTileThemeData = ListTileThemeData(
+  static ListTileThemeData darkListTileThemeData = const ListTileThemeData(
     iconColor: ThemeColor.black,
     textColor: ThemeColor.black,
   );

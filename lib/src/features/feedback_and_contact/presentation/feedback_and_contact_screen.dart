@@ -22,7 +22,7 @@ class FeedbackContactScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16.0),
-            Text(
+            const Text(
               'Please provide your valuable feedback or contact us for any queries or assistance.',
               style: TextStyle(
                 fontSize: 16.0,

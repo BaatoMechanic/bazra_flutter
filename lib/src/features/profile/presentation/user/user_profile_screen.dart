@@ -1,10 +1,8 @@
-import 'package:bato_mechanic/src/common/widgets/menu_tile_section_widget.dart';
+import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
+import 'package:bato_mechanic/src/features/menu/presentation/widgets/menu_tile_section_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
-import 'package:bato_mechanic/src/features/menu/user_profile_menu.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
@@ -12,21 +10,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../common/widgets/mechanic_review_widget.dart';
-import '../../../../common/widgets/menu_tile_widget.dart';
+import '../../../auth/data/remote/fake_remote_auth_repository.dart';
+import '../../../menu/presentation/widgets/menu_tile_widget.dart';
+import '../../../auth/application/auth_service.dart';
 
-class UserProfileScreen extends StatelessWidget {
-  UserProfileScreen({super.key});
+class UserProfileScreen extends ConsumerWidget {
+  const UserProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
+    final user = ref.watch(authStateProvider).user;
+
     List<MenuTile> infoTiles = [
       MenuTile(
         leadingIcon: Icons.email,
-        title: 'Email',
+        title: 'Email'.hardcoded(),
         trailingWidget: Text(
-          'mail@bato_mechanic.com',
+          user?.email ?? "No Email".hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
               ),
@@ -36,7 +38,7 @@ class UserProfileScreen extends StatelessWidget {
         leadingIcon: Icons.phone,
         title: 'Phone',
         trailingWidget: Text(
-          '9863748593',
+          user?.phone ?? "No phone".hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
               ),
@@ -44,9 +46,9 @@ class UserProfileScreen extends StatelessWidget {
       ),
       MenuTile(
         leadingIcon: Icons.location_on,
-        title: 'Locaiont',
+        title: 'Location'.hardcoded(),
         trailingWidget: Text(
-          'Kathmandu',
+          'Kathmandu'.hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
               ),
@@ -58,7 +60,7 @@ class UserProfileScreen extends StatelessWidget {
     List<MenuTile> utilityTiles = [
       MenuTile(
         leadingIcon: Icons.connect_without_contact,
-        title: 'Connect with us',
+        title: 'Connect with us'.hardcoded(),
         trailingWidget: IconButton(
           iconSize: FontSize.s20,
           icon: Icon(
@@ -70,20 +72,20 @@ class UserProfileScreen extends StatelessWidget {
       ),
       MenuTile(
         leadingIcon: Icons.password,
-        title: 'Change password',
+        title: 'Change password'.hardcoded(),
         trailingWidget: IconButton(
           iconSize: FontSize.s20,
           icon: Icon(
             Icons.arrow_forward_ios_outlined,
             color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
           ),
-          onPressed: () => context.pushNamed(appRoute.confirmOldPassword.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.confirmOldPassword.name),
         ),
         isLast: true,
       ),
       MenuTile(
         leadingIcon: Icons.logout,
-        title: 'Logout',
+        title: 'Logout'.hardcoded(),
         trailingWidget: IconButton(
           iconSize: FontSize.s20,
           icon: Icon(
@@ -114,7 +116,8 @@ class UserProfileScreen extends StatelessWidget {
                         // radius: AppRadius.r60,
                         ),
                     Text(
-                      'Krishna Rimal',
+                      // 'Krishna Rimal',
+                      user?.name ?? "Unknown User".hardcoded(),
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                     Row(
@@ -142,7 +145,7 @@ class UserProfileScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () =>
-                          context.pushNamed(appRoute.editProfile.name),
+                          context.pushNamed(APP_ROUTE.editProfile.name),
                       child: Row(
                         children: [
                           const Icon(
@@ -169,7 +172,7 @@ class UserProfileScreen extends StatelessWidget {
                   height: AppHeight.h8,
                 ),
                 MenuTilesSection(tiles: infoTiles),
-                SizedBox(height: AppHeight.h50),
+                const SizedBox(height: AppHeight.h50),
                 Text(
                   'Utilites'.hardcoded(),
                   style: Theme.of(context).textTheme.headlineMedium,

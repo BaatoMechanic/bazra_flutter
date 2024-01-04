@@ -4,7 +4,7 @@ import '../../../utils/validators/validation.dart';
 import 'base_form_field.dart';
 
 class PhoneNumberField extends StatelessWidget {
-  PhoneNumberField({
+  const PhoneNumberField({
     Key? key,
     this.title,
     this.labelText,
@@ -46,7 +46,7 @@ class PhoneNumberField extends StatelessWidget {
       autovalidateMode: autovalidateMode,
       validator:
           validator ?? (value) => AppValidator.validatePhoneNumber(value),
-      textInputType: TextInputType.numberWithOptions(),
+      textInputType: const TextInputType.numberWithOptions(),
       onSaved: onSaved,
       onChanged: onChanged,
       textStyle: textStyle,

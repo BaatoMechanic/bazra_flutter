@@ -5,17 +5,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'error_message_widget.dart';
 
 class AsyncValueWidget<T> extends StatelessWidget {
-  const AsyncValueWidget({super.key, required this.value, required this.data});
+  const AsyncValueWidget(
+      {super.key,
+      required this.value,
+      required this.data,
+      this.loadingShimmer});
   final AsyncValue<T> value;
   final Widget Function(T) data;
+
+  final Widget? loadingShimmer;
 
   @override
   Widget build(BuildContext context) {
     return value.when(
       data: data,
       error: (e, st) => Center(child: ErrorMessageWidget(e.toString())),
-      // loading: () => const Center(child: CircularProgressIndicator()),
-      loading: () => HelperFunctions.loadingInidicator(context),
+      loading: () =>
+          loadingShimmer ?? HelperFunctions.loadingInidicator(context),
     );
   }
 }
@@ -23,16 +29,21 @@ class AsyncValueWidget<T> extends StatelessWidget {
 /// Sliver equivalent of [AsyncValueWidget]
 class AsyncValueSliverWidget<T> extends StatelessWidget {
   const AsyncValueSliverWidget(
-      {super.key, required this.value, required this.data});
+      {super.key,
+      required this.value,
+      required this.data,
+      this.loadingShimmer});
   final AsyncValue<T> value;
   final Widget Function(T) data;
+  final Widget? loadingShimmer;
 
   @override
   Widget build(BuildContext context) {
     return value.when(
       data: data,
-      loading: () => const SliverToBoxAdapter(
-          child: Center(child: CircularProgressIndicator())),
+      loading: () => SliverToBoxAdapter(
+          child: Center(
+              child: loadingShimmer ?? const CircularProgressIndicator())),
       error: (e, st) => SliverToBoxAdapter(
         child: Center(child: ErrorMessageWidget(e.toString())),
       ),

@@ -11,8 +11,10 @@ class LoginScreenController extends StateNotifier<AsyncValue<void>> {
 
   Future<bool> signInWithIdAndPassword(String uId, String password) async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() =>
-        ref.read(authServiceProvider).signInWithIdAndPassword(uId, password));
+    if (mounted) {
+      state = await AsyncValue.guard(() =>
+          ref.read(authServiceProvider).signInWithIdAndPassword(uId, password));
+    }
     return !state.hasError;
   }
 }

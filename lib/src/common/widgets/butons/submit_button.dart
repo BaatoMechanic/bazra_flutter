@@ -32,24 +32,25 @@ class _SubmitButtonState extends State<SubmitButton> {
   Widget build(BuildContext context) {
     final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return ElevatedButton(
-      onPressed: !widget.showSpinner
-          ? () async {
-              setState(() {
-                widget.showSpinner = !widget.showSpinner;
-              });
-              Future.delayed(const Duration(seconds: 1)).then((_) {
-                if (mounted) {
-                  setState(() {
-                    widget.showSpinner = !widget.showSpinner;
-                  });
-                }
-              });
-              await widget.onPressed();
-              setState(() {
-                widget.showSpinner = !widget.showSpinner;
-              });
-            }
-          : null,
+      // onPressed: !widget.showSpinner
+      //     ? () async {
+      //         setState(() {
+      //           widget.showSpinner = !widget.showSpinner;
+      //         });
+      //         Future.delayed(const Duration(seconds: 1)).then((_) {
+      //           if (mounted) {
+      //             setState(() {
+      //               widget.showSpinner = !widget.showSpinner;
+      //             });
+      //           }
+      //         });
+      //         await widget.onPressed();
+      //         setState(() {
+      //           widget.showSpinner = !widget.showSpinner;
+      //         });
+      //       }
+      //     : null,
+      onPressed: widget.showSpinner ? null : widget.onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

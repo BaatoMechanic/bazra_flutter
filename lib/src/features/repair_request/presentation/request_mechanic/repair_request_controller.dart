@@ -2,7 +2,6 @@ import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'request_mechanic_state.dart';
 
 class RepairRequestController extends StateNotifier<RepairRequestState> {
   RepairRequestController({required this.ref})

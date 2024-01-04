@@ -1,6 +1,5 @@
 import 'package:bato_mechanic/src/common/widgets/recent_repair_container_widget.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +37,7 @@ class RecentRepairsList extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   TextButton.icon(
-                    onPressed: () => context.goNamed(appRoute.categories.name),
+                    onPressed: () => context.goNamed(APP_ROUTE.categories.name),
                     icon:
                         Icon(Icons.add, color: Theme.of(context).primaryColor),
                     label: Text(
@@ -48,9 +47,9 @@ class RecentRepairsList extends StatelessWidget {
                   )
                 ],
               ),
-              RecentRepairContainerWidget(),
-              RecentRepairContainerWidget(),
-              RecentRepairContainerWidget(),
+              const RecentRepairContainerWidget(),
+              const RecentRepairContainerWidget(),
+              const RecentRepairContainerWidget(),
             ],
           ),
         ),

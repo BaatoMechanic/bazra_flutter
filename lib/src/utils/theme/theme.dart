@@ -2,8 +2,6 @@
 import 'package:bato_mechanic/src/utils/theme/widget_themes/searchbar_theme.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/text_button_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';

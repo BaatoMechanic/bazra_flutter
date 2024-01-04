@@ -1,17 +1,17 @@
-import 'dart:io';
+// import 'dart:io';
 
-abstract class StringOrAudio {
-  const StringOrAudio();
-}
+// abstract class StringOrAudio {
+//   const StringOrAudio();
+// }
 
-class StringData extends StringOrAudio {
-  final String stringValue;
+// class StringData extends StringOrAudio {
+//   final String stringValue;
 
-  StringData(this.stringValue);
-}
+//   StringData(this.stringValue);
+// }
 
-class AudioData extends StringOrAudio {
-  final File audioFile;
+// class AudioData extends StringOrAudio {
+//   final File audioFile;
 
-  AudioData(this.audioFile);
-}
+//   AudioData(this.audioFile);
+// }

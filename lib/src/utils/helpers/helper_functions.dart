@@ -1,5 +1,3 @@
-import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
 class HelperFunctions {
@@ -76,5 +74,9 @@ class HelperFunctions {
 
   static List<T> removeDuplicates<T>(List<T> list) {
     return list.toSet().toList();
+  }
+
+  static String humanizeString(String key) {
+    return key.replaceAll('_', ' ');
   }
 }

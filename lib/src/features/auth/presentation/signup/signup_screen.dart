@@ -1,10 +1,7 @@
-import 'package:bato_mechanic/src/common/widgets/form_fields/email_field.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/password_field.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen_controller.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -47,7 +44,7 @@ class SignUpScreen extends ConsumerWidget {
             context,
             'You have been registered successfully. Please login to continue'
                 .hardcoded());
-        context.replaceNamed(appRoute.login.name);
+        context.replaceNamed(APP_ROUTE.login.name);
       }
     }
   }
@@ -114,7 +111,7 @@ class SignUpScreen extends ConsumerWidget {
                     LoginSignUpLabel(
                       infoText: 'Already have an account ?'.hardcoded(),
                       labelText: 'Login'.hardcoded(),
-                      onPressed: () => context.goNamed(appRoute.login.name),
+                      onPressed: () => context.goNamed(APP_ROUTE.login.name),
                     ),
                   ],
                 ),

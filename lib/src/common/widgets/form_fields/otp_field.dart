@@ -1,8 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
 
-import 'package:bato_mechanic/src/utils/validators/validation.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/constants/managers/color_manager.dart';
@@ -65,7 +62,9 @@ class OTPField extends StatelessWidget {
                 focusNode: focusNodes[i],
                 nextFocusNode: i < otpLength - 1 ? focusNodes[i + 1] : null,
                 autovalidateMode: autovalidateMode,
-                validator: validator ?? (value) {},
+                validator: validator ?? (value) {
+                  return null;
+                },
                 textInputType: TextInputType.number,
                 onSaved: onSaved,
                 onChanged: (value) {

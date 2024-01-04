@@ -130,18 +130,15 @@
 //   }
 // }
 
-import 'dart:io';
 
 import 'package:bato_mechanic/src/common/widgets/form_fields/base_form_field.dart';
 import 'package:bato_mechanic/src/utils/validators/validation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utils/constants/managers/color_manager.dart';
-import '../../../utils/constants/managers/values_manager.dart';
 
 class IdField extends StatelessWidget {
-  IdField({
+  const IdField({
     Key? key,
     this.title,
     this.labelText,

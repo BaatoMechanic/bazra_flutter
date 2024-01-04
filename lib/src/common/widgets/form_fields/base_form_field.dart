@@ -6,10 +6,9 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/constants/managers/color_manager.dart';
 import '../../../utils/constants/managers/values_manager.dart';
-import '../../../utils/validators/validation.dart';
 
 class BaseFormField extends StatelessWidget {
-  BaseFormField(
+  const BaseFormField(
       {Key? key,
       this.title,
       this.labelText,
@@ -107,12 +106,12 @@ class BaseFormField extends StatelessWidget {
                       autovalidateMode ?? AutovalidateMode.onUserInteraction,
                   validator: (value) => validator(value),
                   style:
-                      textStyle ?? TextStyle().copyWith(color: ThemeColor.dark),
+                      textStyle ?? const TextStyle().copyWith(color: ThemeColor.dark),
                   textInputAction: nextFocusNode == null
                       ? TextInputAction.done
                       : TextInputAction.next,
                   keyboardType: textInputType,
-                  decoration: InputDecoration().copyWith(
+                  decoration: const InputDecoration().copyWith(
                     labelText: labelText,
                     hintText: hintText,
                     contentPadding: const EdgeInsets.symmetric(

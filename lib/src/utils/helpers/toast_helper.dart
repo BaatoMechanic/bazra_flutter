@@ -226,7 +226,7 @@ class ToastHelper {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
                 vertical: AppPadding.p4, horizontal: AppPadding.p4),
             content: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -262,7 +262,7 @@ class ToastHelper {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
                 vertical: AppPadding.p4, horizontal: AppPadding.p4),
             content: SizedBox(
               height: 150,
@@ -289,6 +289,7 @@ class ToastHelper {
 
   static showNotification(BuildContext context, String message,
       {notificationDuration = 3}) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Theme.of(context).primaryColor,
       dismissDirection: DismissDirection.horizontal,
@@ -299,11 +300,6 @@ class ToastHelper {
             .textTheme
             .headlineMedium!
             .copyWith(color: ThemeColor.dark),
-        // style:  TextStyle(
-        //   fontSize: 16,
-        //   fontWeight: FontWeight.bold,
-        //   color: Colors.white,
-        // ),
       ),
       duration: Duration(seconds: notificationDuration),
     ));
@@ -321,10 +317,7 @@ class ToastHelper {
             .textTheme
             .headlineSmall!
             .copyWith(color: ThemeColor.dark),
-        // style: const TextStyle(
-        //   fontSize: 16,
-        //   fontWeight: FontWeight.bold,
-        //   color: Colors.white,
+
         // ),
       ),
       duration: notificationDuration != null
@@ -339,5 +332,51 @@ class ToastHelper {
         },
       ),
     ));
+  }
+
+  static Future<bool> onWillPopToast(BuildContext context) async {
+    final shouldPop = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: ThemeColor.primary,
+          title: Text(
+            'Do you want to close the app?',
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                  color: ThemeColor.dark,
+                ),
+          ),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text(
+                'Yes',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: ThemeColor.dark,
+                    ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text(
+                'No',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: ThemeColor.dark,
+                    ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    if (shouldPop != null) {
+      return shouldPop;
+    }
+    return false;
   }
 }

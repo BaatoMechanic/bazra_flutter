@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 
@@ -9,6 +10,7 @@ import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:bato_mechanic/src/utils/system_alerts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +20,8 @@ import 'package:video_player/video_player.dart';
 
 import '../../../../common/widgets/form_fields/description_field.dart';
 import '../../../../utils/helpers/toast_helper.dart';
-import '../search_map/map_search_widget.dart';
+
+import '../../../search_map/presentation/widget/map_search_widget.dart';
 
 class RequestMechanicScreen extends ConsumerStatefulWidget {
   const RequestMechanicScreen({Key? key}) : super(key: key);
@@ -129,7 +132,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                         .pickImages,
                     child: Text(
                       'Add Photos',
-                      style: TextStyle().copyWith(color: ThemeColor.dark),
+                      style: const TextStyle().copyWith(color: ThemeColor.dark),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -173,7 +176,8 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                                         .style!
                                         .copyWith(
                                           backgroundColor:
-                                              MaterialStatePropertyAll<Color>(
+                                              const MaterialStatePropertyAll<
+                                                      Color>(
                                                   ThemeColor.transparent),
                                         ),
                                     onPressed: () => ref
@@ -181,7 +185,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                                             requestMechanicScreenControllerProvider
                                                 .notifier)
                                         .removeSelectedImage(image),
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.cancel,
                                       // color: Colors.amberAccent[200],
                                     ),
@@ -213,26 +217,46 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
               //         : const Text('Add Video'),
               //   );
               // }),
-              ElevatedButton(
-                onPressed: _pickVideo,
-                child: _videoController != null
-                    ? Text(
-                        'Change Video',
-                        style: TextStyle().copyWith(color: ThemeColor.dark),
-                      )
-                    : Text(
-                        'Add Video',
-                        style: TextStyle().copyWith(color: ThemeColor.dark),
-                      ),
-              ),
-              if (_videoController != null)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: AspectRatio(
-                    aspectRatio: _videoController!.value.aspectRatio,
-                    child: VideoPlayer(_videoController!),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: _pickVideo,
+                    child: _videoController != null
+                        ? Text(
+                            'Change Video',
+                            style: const TextStyle()
+                                .copyWith(color: ThemeColor.dark),
+                          )
+                        : Text(
+                            'Add Video',
+                            style: const TextStyle()
+                                .copyWith(color: ThemeColor.dark),
+                          ),
                   ),
-                ),
+                  if (_videoController != null)
+                    Padding(
+                      padding: const EdgeInsets.only(left: AppPadding.p12),
+                      child: Align(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth:
+                                  HelperFunctions.screenWidth(context) * 0.5,
+                              maxHeight:
+                                  HelperFunctions.screenHeight(context) * 0.2,
+                            ),
+                            child: AspectRatio(
+                              aspectRatio: _videoController!.value.aspectRatio,
+                              child: VideoPlayer(_videoController!),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+
               const SizedBox(height: 16),
 
               AsyncValueWidget(
@@ -383,7 +407,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                       ref
                           .read(systemAlertProvider.notifier)
                           .closeLoading(context);
-                      context.goNamed(appRoute.trackMechanic.name);
+                      context.goNamed(APP_ROUTE.trackMechanic.name);
                       return;
                     } else {
                       ref
@@ -399,7 +423,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                 },
                 child: Text(
                   'Request for a mechanic',
-                  style: TextStyle().copyWith(color: ThemeColor.dark),
+                  style: const TextStyle().copyWith(color: ThemeColor.dark),
                 ),
               ),
             ],

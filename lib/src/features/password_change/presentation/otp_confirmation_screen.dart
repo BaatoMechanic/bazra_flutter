@@ -9,7 +9,6 @@ import 'package:bato_mechanic/src/common/widgets/form_fields/otp_field.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../utils/constants/managers/color_manager.dart';
-import '../../../utils/constants/managers/font_manager.dart';
 
 class OTPConfirmationScreen extends StatelessWidget {
   // final TextEditingController _otpController = TextEditingController();
@@ -50,7 +49,7 @@ class OTPConfirmationScreen extends StatelessWidget {
             SubmitButton(
               label: "Submit OTP",
               onPressed: () =>
-                  context.replaceNamed(appRoute.changePassword.name),
+                  context.replaceNamed(APP_ROUTE.changePassword.name),
             ),
             TextButton(
               onPressed: () {},

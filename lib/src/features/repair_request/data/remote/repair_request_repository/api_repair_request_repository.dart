@@ -132,40 +132,4 @@ class APIRepairRequestRepository implements RepairRequestRepository {
 
     return VehicleRepairRequest.fromJson(jsonDecode(response));
   }
-
-  @override
-  Future watchUsersLocation(String repairRequestId) {
-    // TODO: implement watchUsersLocation
-    throw UnimplementedError();
-  }
-
-  // @override
-  // Stream<dynamic> watchUsersLocation(String repairRequestId) async {
-  //   var url = Uri.parse(
-  //       "${RemoteManager.WEB_SOCKET_BASE_URI}repair_userslocation/$repairRequestId");
-  //   final channel = WebSocketChannel.connect(url);
-
-  //   await channel.ready;
-
-  //   channel.stream.listen((message) {
-  //     print(message);
-  //     channel.sink.add('received!');
-  //     channel.sink.close(status.goingAway);
-  //   });
-  // }
 }
-
-final usersLocationProvider = StreamProvider((ref) async* {
-  var url = Uri.parse(
-      // "${RemoteManager.WEB_SOCKET_BASE_URI}repair_userslocation/$repairRequestId");
-      "${RemoteManager.WEB_SOCKET_BASE_URI}repair_userslocation/kj");
-  final channel = WebSocketChannel.connect(url);
-
-  await channel.ready;
-
-  // channel.stream.listen((message) {
-
-  //   channel.sink.close(status.goingAway);
-  // });
-  yield channel.stream;
-});

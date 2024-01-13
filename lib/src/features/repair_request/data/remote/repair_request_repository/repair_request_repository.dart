@@ -18,7 +18,7 @@ abstract class RepairRequestRepository {
   Future<List<VehicleRepairRequest>> fetchUserRepairRequest();
   Future<VehicleRepairRequest> updateRepairRequest(
       String repairRequestId, Map<String, dynamic> requestInfo);
-  Future watchUsersLocation(String repairRequestId);
+  // Future watchUsersLocation(String repairRequestId);
   // Stream<List<UserPosition>> watchUsersLocation(String repairRequestId);
 }
 

@@ -40,6 +40,7 @@ import '../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_optio
 import '../../auth/data/remote/fake_remote_auth_repository.dart';
 import '../../auth/domain/user.dart';
 import '../../repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
+import '../data/api_track_mechanic_repository.dart';
 import 'track_mechanic_screen_controller.dart';
 
 class TrackMechanicScreen extends ConsumerStatefulWidget {
@@ -174,8 +175,11 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     //   repairRequestValue =
     //       ref.watch(fetchRepairRequestProvider(widget.repairRequestIdx));
     // }
+
     final repairRequestValue =
-        ref.watch(fetchRepairRequestProvider(widget.repairRequestIdx));
+        ref.watch(watchRepairRequestProvider(widget.repairRequestIdx));
+    // final repairRequestValue =
+    //     ref.watch(fetchRepairRequestProvider(widget.repairRequestIdx));
 
     User? assignedMechanic = ref.watch(assignedMechanicProvider);
 

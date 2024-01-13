@@ -163,13 +163,6 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
       }),
     );
   }
-
-  @override
-  Future watchUsersLocation(String repairRequestId) {
-    // Stream<Map<String, dynamic>> watchUsersLocation(String repairRequestId) {
-    // TODO: implement watchUsersLocation
-    throw UnimplementedError();
-  }
 }
 
 final fakeRepairRequestRepositoryProvider =

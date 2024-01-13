@@ -81,7 +81,8 @@ class HttpHelper {
       return response.body;
     }
 
-    final message = jsonDecode(response.body)['details'];
+    final message = jsonDecode(response.body)['details'] ??
+        jsonDecode(response.body)['detail'];
 
     if (message is List) {
       throw BaseException(

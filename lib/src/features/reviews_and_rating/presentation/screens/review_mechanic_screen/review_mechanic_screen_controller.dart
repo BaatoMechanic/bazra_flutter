@@ -19,13 +19,13 @@ class ReviewMechanicScreenController extends StateNotifier<AsyncValue<void>> {
     return !state.hasError;
   }
 
-  Future<User?> fetchMechanicInfo(String mechanicIdx) async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(
-        () => ref.read(mechanicServiceProvider).fetchMechanicInfo(mechanicIdx));
-    // return state.value!;
-    return null;
-  }
+  // Future<User?> fetchMechanicInfo(String mechanicIdx) async {
+  //   state = const AsyncLoading();
+  //   state = await AsyncValue.guard(
+  //       () => ref.read(mechanicServiceProvider).fetchMechanicInfo(mechanicIdx));
+  //   // return state.value!;
+  //   return null;
+  // }
 }
 
 final reviewMechanicScreenControllerProvider =

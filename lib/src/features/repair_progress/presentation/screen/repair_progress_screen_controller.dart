@@ -29,11 +29,19 @@ class RepairProgressScreenController extends StateNotifier<AsyncValue<void>> {
   }
 
   Future<bool> completeRepair(String repairStepIdx) async {
+    state = const AsyncValue.loading();
     state = await AsyncValue.guard(() => ref
         .read(repairRequestServiceProvider)
         .updateVehicleRepairRequest(repairStepIdx,
             {"status": RepairStepStatus.COMPLETE.name.toLowerCase()}));
     return !state.hasError;
+  }
+
+  Future<void> tempFun() async {
+    state = const AsyncValue.loading();
+    await Future.delayed(const Duration(seconds: 20), () {
+      state = const AsyncValue.data(null);
+    });
   }
 }
 

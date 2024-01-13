@@ -89,14 +89,14 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
   //   return false;
   // }
 
-  Future<User?> fetchMechanicInfo(String mechanicId) async {
-    final user =
-        await ref.read(mechanicServiceProvider).fetchMechanicInfo(mechanicId);
+  // Future<User?> fetchMechanicInfo(String mechanicId) async {
+  //   final user =
+  //       await ref.read(mechanicServiceProvider).fetchMechanicInfo(mechanicId);
 
-    ref.read(assignedMechanicProvider.notifier).state = user;
+  //   ref.read(assignedMechanicProvider.notifier).state = user;
 
-    return user;
-  }
+  //   return user;
+  // }
 
   // Stream<UserPosition?> getUserAndMechanicPosition() {
   //   return ref.read(repairRequestServiceProvider).watchUsersLocation(

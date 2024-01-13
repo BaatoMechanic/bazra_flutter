@@ -7,9 +7,9 @@ import 'package:bato_mechanic/src/utils/model_utils.dart';
 
 class FakeServiceTypeRepository implements ServiceTypeRepository {
   @override
-  Future<List<ServiceType>> fetchAllServiceTypes() async {
+  Future<List<Service>> fetchAllServiceTypes() async {
     return Future.delayed(
-        const Duration(seconds: 5),
+        const Duration(seconds: 2),
         () => serviceTypesFromJson([
               {
                 "idx": "BWFdwSq9j2CZMh6wwRfwNm",

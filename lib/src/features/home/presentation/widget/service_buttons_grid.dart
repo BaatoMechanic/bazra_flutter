@@ -12,7 +12,7 @@ class ServiceButtonsGridWidget extends ConsumerWidget {
     required this.services,
   });
 
-  List<ServiceType> services;
+  List<Service> services;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

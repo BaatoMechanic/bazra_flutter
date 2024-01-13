@@ -46,23 +46,20 @@ class APIUserRepository extends UserRepository {
   }
 
   @override
-  Future fetchRecommendedMechanics(
-      String vehicleCategoryIdx, String vehiclePartIdx) async {
+  Future<List<User>> fetchRecommendedMechanics(
+      String vehicleCategoryIdx, String serviceIdx) async {
     var url = Uri.parse(
-        '${RemoteManager.BASE_URI}autho/user_info/recommended_mechanics/');
-    Map<String, dynamic> body = {
-      "vehicle_category": vehicleCategoryIdx,
-      "vehicle_part": vehiclePartIdx,
-    };
-    await HttpHelper.guard(
-        () => http.post(
+        '${RemoteManager.BASE_URI}autho/user_info/recommended_mechanics/?vehicle_category_speciality=$vehicleCategoryIdx&service_speciality=$serviceIdx');
+    var response = await HttpHelper.guard(
+        () => http.get(
               url,
               headers: {
                 HttpHeaders.authorizationHeader:
                     'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
               },
-              body: body,
             ),
         ref);
+
+    return usersFromJson(jsonDecode(response));
   }
 }

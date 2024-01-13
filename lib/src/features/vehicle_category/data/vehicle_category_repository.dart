@@ -1,15 +1,19 @@
+import 'package:bato_mechanic/src/features/vehicle_category/data/api_vehicle_category_repository.dart';
 import 'package:bato_mechanic/src/features/vehicle_category/data/fake_vehicle_category_repository.dart';
+import 'package:bato_mechanic/src/features/vehicle_category/domain/vehicle_category.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../main.dart';
+
 abstract class VehicleCategoryRepository {
-  Future<dynamic> fetchVehicleCategories();
+  Future<List<VehicleCategory>> fetchVehicleCategories();
+  Future<List<VehicleCategory>> fetchVehicleCategoriesForService(
+      String serviceId);
 }
 
-final vehicleCategoryRepositoryProvider =
-    Provider((ref) => FakeVehicleCategoryRepository());
-
-// final vehicleCategoryListFutureProvider = FutureProvider((ref) {
-//   final vehicleCategoryRepository =
-//       ref.watch(vehicleCategoryRepositoryProvider);
-//   return vehicleCategoryRepository.fetchVehicleCategories();
-// });
+final vehicleCategoryRepositoryProvider = Provider((ref) {
+  if (SHOW_FAKE) {
+    return FakeVehicleCategoryRepository();
+  }
+  return APIVehicleCategoryRepository(ref: ref);
+});

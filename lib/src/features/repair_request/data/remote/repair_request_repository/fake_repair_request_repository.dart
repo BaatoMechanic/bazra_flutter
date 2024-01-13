@@ -101,8 +101,9 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "user": "itLGCnD7vf9P7eucZf3Kgo",
         "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
         "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
-        "assigned_mechanic": null,
-        "status": "complete"
+        "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        // "status": "complete"
+        "status": "waiting_for_completion_acceptance"
       }),
     );
   }
@@ -134,7 +135,8 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
         "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
         "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
-        "assigned_mechanic": null,
+        // "assigned_mechanic": null,
+        "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
         "status": "waiting_for_completion_acceptance"
       },
     ]);

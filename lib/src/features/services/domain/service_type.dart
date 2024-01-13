@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/utils/enums/service_type_options.dart';
 
-List<ServiceType> serviceTypesFromJson(List<dynamic> jsonList) {
-  return jsonList.map((json) => ServiceType.fromMap(json)).toList();
+List<Service> serviceTypesFromJson(List<dynamic> jsonList) {
+  return jsonList.map((json) => Service.fromMap(json)).toList();
 }
 
-class ServiceType {
+class Service {
   final String idx;
   final String name;
   final ServiceTypeOption type;
   final IconData? icon;
   final List<String> partsIncludedIdx;
-  ServiceType({
+  Service({
     required this.idx,
     required this.name,
     required this.type,
@@ -24,14 +24,14 @@ class ServiceType {
     required this.partsIncludedIdx,
   });
 
-  ServiceType copyWith({
+  Service copyWith({
     String? idx,
     String? name,
     ServiceTypeOption? type,
     IconData? icon,
     List<String>? partsIncludedIdx,
   }) {
-    return ServiceType(
+    return Service(
       idx: idx ?? this.idx,
       name: name ?? this.name,
       type: type ?? this.type,
@@ -50,8 +50,8 @@ class ServiceType {
     };
   }
 
-  factory ServiceType.fromMap(Map<String, dynamic> map) {
-    return ServiceType(
+  factory Service.fromMap(Map<String, dynamic> map) {
+    return Service(
       idx: map['idx'] as String,
       name: map['name'] as String,
       // type: ServiceTypeOption.fromMap(map['type'] as Map<String,dynamic>),
@@ -67,8 +67,8 @@ class ServiceType {
 
   String toJson() => json.encode(toMap());
 
-  factory ServiceType.fromJson(String source) =>
-      ServiceType.fromMap(json.decode(source));
+  factory Service.fromJson(String source) =>
+      Service.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -76,7 +76,7 @@ class ServiceType {
   }
 
   @override
-  bool operator ==(covariant ServiceType other) {
+  bool operator ==(covariant Service other) {
     if (identical(this, other)) return true;
 
     return other.idx == idx &&

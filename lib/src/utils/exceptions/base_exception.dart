@@ -35,16 +35,6 @@ class BaseException implements Exception {
   final String? redirectLink;
   final StackTrace stackTrace;
 
-  // factory BaseException.fromFailure(Failure failure) {
-  //   return BaseException(
-  //     message: failure.errorResponse.toString(),
-  //     statusCode: failure.code,
-  //     errorCode: failure.errorCode.toString(),
-  //     redirectLink: failure.redirectLink,
-  //     st: failure.stackTrace,
-  //   );
-  // }
-
   BaseException copyWith({
     String? message,
     ErrorAlertType? alertType,

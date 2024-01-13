@@ -1,9 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
-
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/api_repair_request_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 import 'package:bato_mechanic/src/features/track_mechanic/presentation/waiting_mechanic_assignment_screen.dart';
+import 'package:bato_mechanic/src/utils/extensions/enum_extensions.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -45,11 +46,11 @@ class TrackMechanicScreen extends ConsumerStatefulWidget {
   const TrackMechanicScreen({
     Key? key,
     this.flipCardController,
-    // required this.repairRequestIdx,
+    required this.repairRequestIdx,
   }) : super(key: key);
 
   final FlipCardController? flipCardController;
-  // final String repairRequestIdx;
+  final String repairRequestIdx;
 
   @override
   ConsumerState<TrackMechanicScreen> createState() =>
@@ -147,11 +148,6 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     });
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  // }
-
 // Setting this variable because the notification is shown every time the screen is rebuilt
   bool _isFirstTime = true;
 
@@ -169,14 +165,26 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     //     }
     //   }
     // });
-    AsyncValue<VehicleRepairRequest?> repairRequestValue =
-        const AsyncValue.data(null);
-    if (ref.watch(activeRepairRequestProvider) != null) {
-      repairRequestValue = ref.watch(fetchRepairRequestProvider(
-          ref.read(activeRepairRequestProvider)!.idx));
+    // AsyncValue<VehicleRepairRequest?> repairRequestValue =
+    //     const AsyncValue.data(null);
+    // if (ref.watch(activeRepairRequestProvider) != null) {
+    //   repairRequestValue = ref.watch(fetchRepairRequestProvider(
+    //       ref.read(activeRepairRequestProvider)!.idx));
+    // } else {
+    //   repairRequestValue =
+    //       ref.watch(fetchRepairRequestProvider(widget.repairRequestIdx));
+    // }
+    final repairRequestValue =
+        ref.watch(fetchRepairRequestProvider(widget.repairRequestIdx));
+
+    User? assignedMechanic = ref.watch(assignedMechanicProvider);
+
+    if (assignedMechanic == null &&
+        repairRequestValue.value?.assignedMechanicIdx != null) {
+      ref.read(mechanicServiceProvider).fetchAssignedMechanic(
+          repairRequestValue.value!.assignedMechanicIdx!);
     }
 
-    final assignedMechanic = ref.watch(assignedMechanicProvider);
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     return WillPopScope(
@@ -196,17 +204,11 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                 body: Center(child: CircularProgressIndicator.adaptive()),
               );
             }
-            if (assignedMechanic == null &&
-                repairRequest.assignedMechanicIdx != null) {
-              ref.read(mechanicServiceProvider).fetchAssignedMechanic(
-                  repairRequest.assignedMechanicIdx.toString());
-            }
-            if (assignedMechanic == null) {
-              return const WaitingMechanicAssignmentScreen();
-            }
+
+            // final locationsValue = ref.watch(usersLocationProvider);
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Track Mechanic'),
+                title: const Center(child: Text('Track Mechanic')),
               ),
               body: SingleChildScrollView(
                 child: Padding(
@@ -214,6 +216,10 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // AsyncValueWidget(
+                      //     value: ref.watch(usersLocationProvider),
+                      //     data: (value) => Text(value.toString())),
+
                       // ElevatedButton(
                       //   onPressed: () => ref
                       //       .read(
@@ -224,7 +230,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                       Column(
                         children: [
                           assignedMechanic == null
-                              ? const CircularProgressIndicator.adaptive()
+                              ? Text('Waiting for mechanic'.hardcoded())
                               : TextButton(
                                   onPressed: () => context.pushNamed(
                                       APP_ROUTE.mechanicProfile.name,
@@ -246,16 +252,15 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                                   ),
                                 ),
                           const SizedBox(height: 4),
-                          assignedMechanic == null
-                              ? const CircularProgressIndicator.adaptive()
-                              : const Text(
-                                  "Kohalpur",
-                                  // 'Mechanic Location: ${assignedMechanic.currentLocation!.locationName}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                          if (assignedMechanic != null)
+                            const Text(
+                              "Kohalpur",
+                              // 'Mechanic Location: ${assignedMechanic.currentLocation!.locationName}',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           const SizedBox(height: 16),
                           GestureDetector(
                             onTap: () {
@@ -346,20 +351,17 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Flexible(
-                              flex: 2,
-                              child: Text(
-                                "Status",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            const Text(
+                              "Status",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Flexible(
-                              flex: 2,
                               child: Text(
-                                repairRequest.status.name,
+                                repairRequest.status.humanizeName,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -428,6 +430,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                       else if (repairRequest.status ==
                           VehicleRepairRequestStatus.COMPLETE)
                         SubmitButton(
+                          showSpinner: false,
                           label: 'Review Mechanic'.hardcoded(),
                           onPressed: () => context
                               .pushNamed(APP_ROUTE.reviewMechanic.name, extra: {

@@ -14,13 +14,14 @@ class SubmitButton extends StatefulWidget {
     Key? key,
     required this.label,
     this.spinnerText,
-    this.showSpinner = false,
+    this.showSpinner = true,
     required this.onPressed,
   }) : super(key: key);
 
   final String label;
   final String? spinnerText;
   final Function() onPressed;
+  // wether to show spinner when is process is ongoing
   bool showSpinner;
 
   @override
@@ -28,33 +29,27 @@ class SubmitButton extends StatefulWidget {
 }
 
 class _SubmitButtonState extends State<SubmitButton> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return ElevatedButton(
-      // onPressed: !widget.showSpinner
-      //     ? () async {
-      //         setState(() {
-      //           widget.showSpinner = !widget.showSpinner;
-      //         });
-      //         Future.delayed(const Duration(seconds: 1)).then((_) {
-      //           if (mounted) {
-      //             setState(() {
-      //               widget.showSpinner = !widget.showSpinner;
-      //             });
-      //           }
-      //         });
-      //         await widget.onPressed();
-      //         setState(() {
-      //           widget.showSpinner = !widget.showSpinner;
-      //         });
-      //       }
-      //     : null,
-      onPressed: widget.showSpinner ? null : widget.onPressed,
+      onPressed: isLoading
+          ? null
+          : () async {
+              setState(() {
+                isLoading = true;
+              });
+
+              await widget.onPressed();
+              setState(() {
+                isLoading = false;
+              });
+            },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (widget.showSpinner)
+          if (widget.showSpinner && isLoading)
             Padding(
               padding: const EdgeInsets.only(right: AppPadding.p12),
               child: SizedBox(
@@ -68,7 +63,7 @@ class _SubmitButtonState extends State<SubmitButton> {
                 ),
               ),
             ),
-          if (widget.showSpinner)
+          if (widget.showSpinner && isLoading)
             Row(
               children: [
                 Text(
@@ -91,86 +86,5 @@ class _SubmitButtonState extends State<SubmitButton> {
         ],
       ),
     );
-    // return GestureDetector(
-    //   onTap: !widget.showSpinner
-    //       ? () {
-    //           setState(() {
-    //             widget.showSpinner = !widget.showSpinner;
-    //           });
-    //           Future.delayed(const Duration(seconds: 1)).then((_) {
-    //             if (mounted) {
-    //               setState(() {
-    //                 widget.showSpinner = !widget.showSpinner;
-    //               });
-    //             }
-    //           });
-    //           widget.onPressed();
-    //         }
-    //       : null,
-    //   child: Container(
-    //     width: MediaQuery.of(context).size.width,
-    //     padding: const EdgeInsets.symmetric(vertical: AppHeight.h8),
-    //     alignment: Alignment.center,
-    //     decoration: BoxDecoration(
-    //       borderRadius: const BorderRadius.all(Radius.circular(5)),
-    //       boxShadow: <BoxShadow>[
-    //         BoxShadow(
-    //             color: isDarkTheme ? ThemeColor.darkerGrey : ThemeColor.grey,
-    //             offset: const Offset(2, 4),
-    //             blurRadius: 5,
-    //             spreadRadius: 2)
-    //       ],
-    //       color: widget.showSpinner ? ThemeColor.grey : null,
-    //       gradient: widget.showSpinner
-    //           ? null
-    //           : LinearGradient(
-    //               begin: Alignment.centerLeft,
-    //               end: Alignment.centerRight,
-    //               colors: [
-    //                   Theme.of(context).primaryColor.withAlpha(200),
-    //                   Theme.of(context).primaryColorDark.withAlpha(200),
-    //                 ]),
-    //     ),
-    //     child: Row(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: [
-    //         if (widget.showSpinner)
-    //           Padding(
-    //             padding: const EdgeInsets.only(right: AppPadding.p12),
-    //             child: SizedBox(
-    //               height: AppHeight.h20,
-    //               width: AppHeight.h20,
-    //               child: CircularProgressIndicator.adaptive(
-    //                 strokeWidth: 3,
-    //                 valueColor:
-    //                     const AlwaysStoppedAnimation<Color>(ThemeColor.white),
-    //                 backgroundColor: ColorManager.primary,
-    //               ),
-    //             ),
-    //           ),
-    //         if (widget.showSpinner)
-    //           Row(
-    //             children: [
-    //               Text(
-    //                 'Signing in'.hardcoded(),
-    //                 style: getBoldStyle().copyWith(
-    //                   fontSize: FontSize.s16,
-    //                   color: isDarkTheme ? ThemeColor.white : ThemeColor.black,
-    //                 ),
-    //               ),
-    //             ],
-    //           )
-    //         else
-    //           Text(
-    //             widget.label,
-    //             style: getBoldStyle().copyWith(
-    //               fontSize: FontSize.s16,
-    //               color: isDarkTheme ? ThemeColor.white : ThemeColor.black,
-    //             ),
-    //           ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }

@@ -32,14 +32,13 @@ class SerivceTypeService {
   //     _allServiceTypeState.stream;
   // List<ServiceType> get allServiceType => _allServiceTypeState.value;
 
-  Future<List<ServiceType>> fetchSerivceTypesForVehicle(
-      String vehicleId) async {
+  Future<List<Service>> fetchSerivceTypesForVehicle(String vehicleId) async {
     final response = await ref
         .watch(vehiclePartsRepositoryProvider)
         .fetchVehicleParts(vehicleId);
 
     if (response is Success) {
-      return response.response as List<ServiceType>;
+      return response.response as List<Service>;
     }
     if (response is Failure) {
       throw Exception('Something went wrong'.hardcoded());

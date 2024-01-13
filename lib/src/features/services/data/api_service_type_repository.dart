@@ -19,7 +19,7 @@ class APIServiceTypeRepository implements ServiceTypeRepository {
   final Ref ref;
 
   @override
-  Future<List<ServiceType>> fetchAllServiceTypes() async {
+  Future<List<Service>> fetchAllServiceTypes() async {
     var url = Uri.parse('${RemoteManager.BASE_URI}vehicle-repair/services/');
 
     var response = await HttpHelper.guard(

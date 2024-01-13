@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
@@ -37,13 +39,18 @@ class BuildHomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final activeRepair = ref.watch(activeRepairRequestProvider);
     return FlipCard(
       speed: 300,
       direction: FlipDirection.HORIZONTAL,
       flipOnTouch: false,
       controller: controller,
       front: HomeScreen(flipCardController: controller),
-      back: TrackMechanicScreen(flipCardController: controller),
+      back: activeRepair == null
+          ? Container()
+          : TrackMechanicScreen(
+              repairRequestIdx: activeRepair.idx,
+              flipCardController: controller),
     );
   }
 }

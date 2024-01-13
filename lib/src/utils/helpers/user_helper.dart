@@ -24,9 +24,9 @@ class UserHelperFunctions {
     if (attributes == null) {
       return '';
     }
-    String? partSpeciality = attributes['vehicle_part'];
-    String? vehicleSpeciality = attributes['vehicle_category'];
+    String? serviceSpeciality = attributes['service_speciality'];
+    String? vehicleSpeciality = attributes['vehicle_speciality'];
 
-    return "${(vehicleSpeciality as String).capitalize()}'s $partSpeciality";
+    return "${(vehicleSpeciality as String).capitalize()}'s $serviceSpeciality";
   }
 }

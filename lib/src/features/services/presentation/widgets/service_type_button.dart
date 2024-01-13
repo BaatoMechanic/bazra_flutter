@@ -18,7 +18,7 @@ class ServiceTypeButtonWidget extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
 
-  ServiceType serviceType;
+  Service serviceType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

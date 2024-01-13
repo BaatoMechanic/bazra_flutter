@@ -13,32 +13,6 @@ class VehicleCategoryService {
     required this.ref,
   });
   final Ref ref;
-  // final _selectedVehicleCategoryState = InMemoryStore<VehicleCategory?>(null);
-
-  // Stream<VehicleCategory?> _selectedVehicleCategoryStateChanges() =>
-  //     _selectedVehicleCategoryState.stream;
-  // VehicleCategory? get selectedVehicleCategory =>
-  //     _selectedVehicleCategoryState.value;
-
-  // void setSelectedCategory(VehicleCategory category) {
-  //   _selectedVehicleCategoryState.value = category;
-  // }
-
-  Future<List<VehicleCategory>> fetchVehicleCategories() async {
-    final response = await ref
-        .watch(vehicleCategoryRepositoryProvider)
-        .fetchVehicleCategories();
-
-    if (response is Success) {
-      return response.response as List<VehicleCategory>;
-    }
-    if (response is Failure) {
-      throw Exception('Something went wrong'.hardcoded());
-    }
-    return [];
-  }
-
-  // void dispose() => _selectedVehicleCategoryState.close();
 }
 
 final vehicleCategoryServiceProvider = Provider((ref) {
@@ -47,8 +21,9 @@ final vehicleCategoryServiceProvider = Provider((ref) {
   return serviceProvider;
 });
 
-// final watchSelectedVehicleCategoryProvider =
-//     StreamProvider.autoDispose<VehicleCategory?>((ref) {
-//   final serviceProvider = ref.watch(vehicleCategoryServiceProvider);
-//   return serviceProvider._selectedVehicleCategoryStateChanges();
-// });
+final fetchVehicleCategoriesForService = FutureProvider.autoDispose
+    .family<List<VehicleCategory>, String>((ref, serviceIdx) {
+  return ref
+      .watch(vehicleCategoryRepositoryProvider)
+      .fetchVehicleCategoriesForService(serviceIdx);
+});

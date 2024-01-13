@@ -23,13 +23,13 @@ class RepairRequestService {
 
   Ref ref;
 
-  Stream<UserPosition?> watchUsersLocation(String repairRequestId) {
-    var locations = ref
-        .read(repairRequestRepositoryProvider)
-        .watchUsersLocation(repairRequestId);
+  // Stream<UserPosition?> watchUsersLocation(String repairRequestId) {
+  //   var locations = ref
+  //       .read(repairRequestRepositoryProvider)
+  //       .watchUsersLocation(repairRequestId);
 
-    return Stream.empty();
-  }
+  //   return Stream.empty();
+  // }
 
   Future<VehicleRepairRequest> createVehicleRepairRequest(
       Map<String, dynamic> requestInfo) async {
@@ -81,3 +81,10 @@ final fetchRepairRequestProvider = FutureProvider.autoDispose
       .watch(repairRequestRepositoryProvider)
       .fetchVechicleRepairRequest(repairRequestIdx);
 });
+
+// final usersLocationProvider = StreamProvider.autoDispose
+//     .family<UserPosition?, String>((ref, repairRequestId) {
+//   return ref
+//       .watch(repairRequestRepositoryProvider)
+//       .watchUsersLocation(repairRequestId);
+// });

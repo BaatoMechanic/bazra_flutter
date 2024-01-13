@@ -107,7 +107,14 @@ GoRouter goRouter() {
           GoRoute(
             path: 'track_mechanic',
             name: APP_ROUTE.trackMechanic.name,
-            builder: (context, state) => const TrackMechanicScreen(),
+            builder: (context, state) {
+              final repairRequestIdx =
+                  (state.extra as Map?)?["repairRequestIdx"];
+
+              return TrackMechanicScreen(
+                repairRequestIdx: repairRequestIdx,
+              );
+            },
             routes: [
               GoRoute(
                 path: 'payment',

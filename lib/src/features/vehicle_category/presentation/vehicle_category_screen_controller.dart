@@ -9,18 +9,7 @@ class VehicleCategoryScreenController
       : super(const AsyncValue.data([]));
   final Ref ref;
 
-  Future<List<VehicleCategory>> fetchVehicleCategories() async {
-    // state = AsyncValue.loading();
-    if (mounted) {
-      state = await AsyncValue.guard(() =>
-          ref.watch(vehicleCategoryServiceProvider).fetchVehicleCategories());
-      return state.hasValue ? (state.value as List<VehicleCategory>) : [];
-    }
-    return [];
-  }
-
   void setSelectedCategory(VehicleCategory category) {
-    // ref.watch(vehicleCategoryServiceProvider).setSelectedCategory(category);
     ref.read(selectedVehicleCategoryProvider.notifier).state = category;
   }
 }
@@ -30,9 +19,3 @@ final vehicleCategoryScreenControllerProvider =
         AsyncValue<List<VehicleCategory>>>(
   (ref) => VehicleCategoryScreenController(ref: ref),
 );
-
-final fetchVehicleCategoriesProvideer = FutureProvider.autoDispose((ref) {
-  final vehicleCategoryScreenController =
-      ref.watch(vehicleCategoryScreenControllerProvider.notifier);
-  return vehicleCategoryScreenController.fetchVehicleCategories();
-});

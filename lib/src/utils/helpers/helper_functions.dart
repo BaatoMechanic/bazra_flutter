@@ -79,4 +79,20 @@ class HelperFunctions {
   static String humanizeString(String key) {
     return key.replaceAll('_', ' ');
   }
+
+  static Widget renderImage(String image, {double? height, double? width}) {
+    if (image.contains('https://') || image.contains('http://')) {
+      return Image.network(
+        image,
+        height: height,
+        width: width,
+      );
+    }
+    return Image.asset(
+      image,
+      height: height,
+      width: width,
+      fit: BoxFit.fill,
+    );
+  }
 }

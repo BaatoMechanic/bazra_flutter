@@ -38,29 +38,32 @@ class APIRepairRequestRepository implements RepairRequestRepository {
   @override
   Future<VehicleRepairRequest> requestForVehicleRepair(
       Map<String, dynamic> requestInfo) async {
-    var url = Uri.parse('${RemoteManager.BASE_URI}repair_requests/');
+    var url =
+        Uri.parse('${RemoteManager.BASE_URI}vehicle-repair/repair_requests/');
 
-    return await HttpHelper.guard(
+    final response = await HttpHelper.guard(
         () => http.post(
               url,
               headers: {
-                "Accept": "application/json; charset=utf-8",
-
-                "Access-Control-Allow-Origin":
-                    "*", // Required for CORS support to work
+                HttpHeaders.acceptHeader: "application/json",
+                HttpHeaders.authorizationHeader:
+                    'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
+                "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
                 HttpHeaders.contentTypeHeader: "application/json",
               },
-              body: json.encode(requestInfo),
+              body: jsonEncode(requestInfo),
             ),
         ref);
+
+    return VehicleRepairRequest.fromJson(jsonDecode(response));
   }
 
   @override
   Future<VehicleRepairRequest> addImagesToRepairRequest(
       String repairRequestId, List<File> images) async {
     var url = Uri.parse(
-        '${RemoteManager.BASE_URI}/repair_requests/$repairRequestId/images/');
+        '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/$repairRequestId/images/');
 
     var request = http.MultipartRequest("POST", url);
 
@@ -75,6 +78,8 @@ class APIRepairRequestRepository implements RepairRequestRepository {
 
     request.headers.addAll({
       // HttpHeaders.authorizationHeader: "SL " + loggedinSession.accessToken,
+      HttpHeaders.authorizationHeader:
+          'BM ${ref.read(sharedPreferencesProvider).getString('access')!}',
       "Accept": "application/json; charset=utf-8",
       "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
@@ -129,17 +134,38 @@ class APIRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
-  Future<dynamic> watchUsersLocation(String repairRequestId) async {
-    var url = Uri.parse(
-        "${RemoteManager.WEB_SOCKET_BASE_URI}repair_userslocation/$repairRequestId");
-    final channel = WebSocketChannel.connect(url);
-
-    await channel.ready;
-
-    channel.stream.listen((message) {
-      print(message);
-      channel.sink.add('received!');
-      channel.sink.close(status.goingAway);
-    });
+  Future watchUsersLocation(String repairRequestId) {
+    // TODO: implement watchUsersLocation
+    throw UnimplementedError();
   }
+
+  // @override
+  // Stream<dynamic> watchUsersLocation(String repairRequestId) async {
+  //   var url = Uri.parse(
+  //       "${RemoteManager.WEB_SOCKET_BASE_URI}repair_userslocation/$repairRequestId");
+  //   final channel = WebSocketChannel.connect(url);
+
+  //   await channel.ready;
+
+  //   channel.stream.listen((message) {
+  //     print(message);
+  //     channel.sink.add('received!');
+  //     channel.sink.close(status.goingAway);
+  //   });
+  // }
 }
+
+final usersLocationProvider = StreamProvider((ref) async* {
+  var url = Uri.parse(
+      // "${RemoteManager.WEB_SOCKET_BASE_URI}repair_userslocation/$repairRequestId");
+      "${RemoteManager.WEB_SOCKET_BASE_URI}repair_userslocation/kj");
+  final channel = WebSocketChannel.connect(url);
+
+  await channel.ready;
+
+  // channel.stream.listen((message) {
+
+  //   channel.sink.close(status.goingAway);
+  // });
+  yield channel.stream;
+});

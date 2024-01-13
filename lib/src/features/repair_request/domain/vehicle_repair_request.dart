@@ -31,31 +31,32 @@ enum VehicleRepairRequestStatus {
 }
 
 class VehicleRepairRequest {
+  VehicleRepairRequest({
+    required this.idx,
+    this.title,
+    this.description,
+    required this.userIdx,
+    required this.vehicleCategoryIdx,
+    required this.serviceTypeIdx,
+    this.preferredMechanicIdx,
+    this.assignedMechanicIdx,
+    this.userLocation,
+    this.mechanicLocation,
+    required this.status,
+  });
+
   String idx;
   String? title;
   String? description;
   String userIdx;
   String vehicleCategoryIdx;
-  String vehiclePartIdx;
+  // String vehiclePartIdx;
+  String serviceTypeIdx;
   String? preferredMechanicIdx;
   String? assignedMechanicIdx;
   UserPosition? userLocation;
   UserPosition? mechanicLocation;
   VehicleRepairRequestStatus status;
-
-  VehicleRepairRequest({
-    required this.idx,
-    required this.userIdx,
-    this.preferredMechanicIdx,
-    this.assignedMechanicIdx,
-    this.userLocation,
-    this.mechanicLocation,
-    required this.vehicleCategoryIdx,
-    required this.vehiclePartIdx,
-    required this.title,
-    required this.description,
-    required this.status,
-  });
 
   factory VehicleRepairRequest.fromJson(Map<String, dynamic> json) =>
       VehicleRepairRequest(
@@ -63,9 +64,9 @@ class VehicleRepairRequest {
         userIdx: json["user"],
         preferredMechanicIdx: json["preferred_mechanic"],
         assignedMechanicIdx: json["assigned_mechanic"],
-
         vehicleCategoryIdx: json["vehicle_type"],
-        vehiclePartIdx: json["vehicle_part"],
+        // vehiclePartIdx: json["vehicle_part"],
+        serviceTypeIdx: json["service_type"],
         title: json["title"],
         description: json["description"],
         // images: List<VehicleRepairRequestImage>.from(
@@ -84,7 +85,8 @@ class VehicleRepairRequest {
         "assigned_mechanic": assignedMechanicIdx,
 
         "vehicle": vehicleCategoryIdx,
-        "vehicle_part": vehiclePartIdx,
+        // "vehicle_part": vehiclePartIdx,
+        "service_type": serviceTypeIdx,
         "title": title,
         "description": description,
         // "images": List<dynamic>.from(images.map((x) => x.toJson())),
@@ -130,7 +132,8 @@ class VehicleRepairRequest {
     int? preferredMechanicId,
     int? assignedMechanicId,
     int? vehicleId,
-    int? vehiclePartId,
+    // int? vehiclePartId,
+    int? serviceTypeId,
     String? title,
     String? description,
     UserPosition? userLocation,
@@ -146,7 +149,8 @@ class VehicleRepairRequest {
       preferredMechanicIdx: preferredMechanicIdx,
       assignedMechanicIdx: assignedMechanicIdx,
       vehicleCategoryIdx: vehicleCategoryIdx,
-      vehiclePartIdx: vehiclePartIdx,
+      // vehiclePartIdx: vehiclePartIdx,
+      serviceTypeIdx: serviceTypeIdx,
       title: title ?? this.title,
       description: description ?? this.description,
       userLocation: userLocation ?? this.userLocation,

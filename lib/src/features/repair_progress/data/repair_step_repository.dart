@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'api_repair_step_repository.dart';
@@ -10,6 +11,7 @@ abstract class RepairStepRepository {
 }
 
 final repairStepRepositoryProvider = Provider<RepairStepRepository>((ref) {
+  if (SHOW_FAKE) return FakeRepairStepRepository();
   return APIRepairStepRepository(ref: ref);
   // return FakeRepairStepRepository();
 });

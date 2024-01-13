@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/common/fetch_and_watch_async_value_widget.dart';
+import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/repair_progress/application/repair_step_service.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/screen/repair_progress_screen_controller.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/repair_step_shimmer_widget.dart';
@@ -71,8 +72,11 @@ class RepairProgressScreen extends ConsumerWidget {
                 if (repairRequest!.status ==
                     VehicleRepairRequestStatus
                         .WAITING_FOR_COMPLETION_ACCEPTANCE)
-                  ElevatedButton(
-                      child: Text('Complete the process'.hardcoded()),
+                  SubmitButton(
+                      label: 'Complete the process'.hardcoded(),
+                      showSpinner: ref
+                          .watch(repairProgressScreenControllerProvider)
+                          .isLoading,
                       onPressed: () async {
                         if (await ref
                             .read(

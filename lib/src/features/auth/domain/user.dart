@@ -5,6 +5,10 @@ import 'package:flutter/foundation.dart';
 
 import '../../core/domain/user_position.dart';
 
+List<User> usersFromJson(List<dynamic> jsonList) {
+  return jsonList.map((json) => User.fromMap(json)).toList();
+}
+
 class User {
   User({
     required this.idx,

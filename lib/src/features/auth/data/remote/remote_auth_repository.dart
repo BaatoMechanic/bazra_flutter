@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/main.dart';
 import 'package:bato_mechanic/src/features/auth/data/remote/api_remote_auth_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,7 +15,10 @@ abstract class RemoteAuthRepository {
 }
 
 final authRepositoryProvider = Provider<RemoteAuthRepository>((ref) {
-  // return FakeRemoteAuthRepository();
-  return APIRemoteAuthRepository(ref: ref);
+  if (SHOW_FAKE) {
+    return FakeRemoteAuthRepository();
+  } else {
+    return APIRemoteAuthRepository(ref: ref);
+  }
   // return ref.watch(fakeAuthRepositoryProvider);
 });

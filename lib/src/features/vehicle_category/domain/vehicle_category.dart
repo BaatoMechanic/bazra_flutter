@@ -10,11 +10,6 @@ import 'dart:convert';
 // VehicleCategory vehicleCategoryFromJson(String str) =>
 //     VehicleCategory.fromJson(json.decode(str));
 
-// List<VehicleCategory> vehicleCategoriesFromJson(String str) =>
-//     List<VehicleCategory>.from(json.decode(str).map((x) {
-//       return VehicleCategory.fromJson(x);
-//     }));
-
 // String vehicleCategoryToJson(VehicleCategory data) =>
 //     json.encode(data.toJson());
 
@@ -53,6 +48,11 @@ import 'dart:convert';
 // To parse this JSON data, do
 //
 //     final vehicleCategory = vehicleCategoryFromJson(jsonString);
+
+List<VehicleCategory> vehicleCategoriesFromJson(String str) =>
+    List<VehicleCategory>.from(json.decode(str).map((x) {
+      return VehicleCategory.fromMap(x);
+    }));
 
 class VehicleCategory {
   String idx;

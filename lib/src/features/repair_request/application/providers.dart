@@ -8,4 +8,4 @@ final selectedVehicleCategoryProvider =
 
 final selectedVehiclePartProvider = StateProvider<VehiclePart?>((ref) => null);
 
-final selectedServiceProvider = StateProvider<ServiceType?>((ref) => null);
+final selectedServiceProvider = StateProvider<Service?>((ref) => null);

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bato_mechanic/main.dart';
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/api_repair_request_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
@@ -23,4 +24,7 @@ abstract class RepairRequestRepository {
 
 final repairRequestRepositoryProvider =
     // Provider((ref) => FakeRepairRequestRepository());
-    Provider((ref) => APIRepairRequestRepository(ref: ref));
+    Provider((ref) {
+  if (SHOW_FAKE) return FakeRepairRequestRepository();
+  return APIRepairRequestRepository(ref: ref);
+});

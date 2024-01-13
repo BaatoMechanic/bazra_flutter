@@ -77,37 +77,39 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
       if (userPosition != null) {
         ref
             .read(requestMechanicScreenControllerProvider.notifier)
-            .setSelectedPosition(
-              UserPosition(
-                latitude: lat,
-                longitude: lon,
-                timestamp: userPosition.timestamp,
-                accuracy: userPosition.accuracy,
-                altitude: userPosition.altitude,
-                heading: userPosition.heading,
-                speed: userPosition.speed,
-                speedAccuracy: userPosition.speedAccuracy,
-                locationName: placeName,
-              ),
-            );
+            .setSelectedLocation({
+          "latitude": lat,
+          "longitude": lon,
+          "locationName": placeName,
+          "accuracy": userPosition.accuracy,
+          "altitude": userPosition.altitude,
+          "timestamp": userPosition.timestamp.toString(),
+        });
       } else {
         userPosition = await MapHelper.getUserLocation();
         if (userPosition != null) {
           ref
               .read(requestMechanicScreenControllerProvider.notifier)
-              .setSelectedPosition(
-                UserPosition(
-                  latitude: lat,
-                  longitude: lon,
-                  timestamp: userPosition.timestamp,
-                  accuracy: userPosition.accuracy,
-                  altitude: userPosition.altitude,
-                  heading: userPosition.heading,
-                  speed: userPosition.speed,
-                  speedAccuracy: userPosition.speedAccuracy,
-                  locationName: placeName,
-                ),
-              );
+              .setSelectedLocation({
+            "latitude": lat,
+            "longitude": lon,
+            "locationName": placeName,
+            "accuracy": userPosition.accuracy,
+            "altitude": userPosition.altitude,
+            "timestamp": userPosition.timestamp.toString(),
+          }
+                  // UserPosition(
+                  //   latitude: lat,
+                  //   longitude: lon,
+                  //   timestamp: userPosition.timestamp,
+                  //   accuracy: userPosition.accuracy,
+                  //   altitude: userPosition.altitude,
+                  //   heading: userPosition.heading,
+                  //   speed: userPosition.speed,
+                  //   speedAccuracy: userPosition.speedAccuracy,
+                  //   locationName: placeName,
+                  // ),
+                  );
         }
       }
     } else {
@@ -409,19 +411,14 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                       ref
                           .read(
                               requestMechanicScreenControllerProvider.notifier)
-                          .setSelectedPosition(
-                            UserPosition(
-                              latitude: _options[index].latitude,
-                              longitude: _options[index].longitude,
-                              timestamp: userPosition.timestamp,
-                              accuracy: userPosition.accuracy,
-                              altitude: userPosition.altitude,
-                              heading: userPosition.heading,
-                              speed: userPosition.speed,
-                              speedAccuracy: userPosition.speedAccuracy,
-                              locationName: _options[index].displayname,
-                            ),
-                          );
+                          .setSelectedLocation({
+                        "latitude": _options[index].latitude,
+                        "longitude": _options[index].longitude,
+                        "locationName": _options[index].displayname,
+                        "accuracy": userPosition.accuracy,
+                        "altitude": userPosition.altitude,
+                        "timestamp": userPosition.timestamp.toString(),
+                      });
                       _searchController.text = _options[index].displayname;
                     }
                   }

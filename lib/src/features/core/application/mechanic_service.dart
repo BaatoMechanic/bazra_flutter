@@ -22,37 +22,34 @@ class MechanicService {
   final _mechanicState = InMemoryStore<User?>(null);
   final Ref ref;
 
-  Future<List<User>> fetchRecommendedMechanics(
-      String vehicleCategoryId, String vehiclePartId) async {
-    final response = await ref
-        .watch(userRepositoryProvider)
-        .fetchRecommendedMechanics(vehicleCategoryId, vehiclePartId);
+  // Future<List<User>> fetchRecommendedMechanics(
+  //     String vehicleCategoryId, String vehiclePartId) async {
+  //   final response = await ref
+  //       .watch(userRepositoryProvider)
+  //       .fetchRecommendedMechanics(vehicleCategoryId, vehiclePartId);
 
-    if (response is Success) {
-      return response.response as List<User>;
-    }
-    if (response is Failure) {
-      throw BaseException(
-        message: response.errorResponse.toString(),
-        stackTrace: StackTrace.current,
-      );
-    }
-    return [];
-  }
+  //   if (response is Success) {
+  //     return response.response as List<User>;
+  //   }
+  //   if (response is Failure) {
+  //     throw BaseException(
+  //       message: response.errorResponse.toString(),
+  //       stackTrace: StackTrace.current,
+  //     );
+  //   }
+  //   return [];
+  // }
 
-  Future<User> _fetchMechanic(String mechanicId) async {
-    return await ref.watch(userRepositoryProvider).fetchUserInfo(mechanicId);
-  }
-
-  Future<void> fetchAssignedMechanic(String mechanicId) async {
-    final response = await _fetchMechanic(mechanicId);
+  Future<void> fetchAssignedMechanic(String mechanicIdx) async {
+    final response =
+        await ref.watch(userRepositoryProvider).fetchUserInfo(mechanicIdx);
 
     ref.read(assignedMechanicProvider.notifier).state = response;
   }
 
-  Future<User?> fetchMechanicInfo(String mechanicId) async {
-    return await _fetchMechanic(mechanicId);
-  }
+  // Future<User?> fetchMechanicInfo(String mechanicId) async {
+  //   return await _fetchMechanic(mechanicId);
+  // }
 
   Future<ReviewAndRating> rateAndReviewMechanic(String mechanicIdx,
       String repairRequestIdx, int stars, String review) async {
@@ -76,11 +73,17 @@ final mechanicServiceProvider = Provider((ref) {
 
 final fetchMechanicInfoProvider =
     FutureProvider.autoDispose.family<User?, String>((ref, mechanicId) {
-  final mechanicService = ref.watch(mechanicServiceProvider);
-  return mechanicService.fetchMechanicInfo(mechanicId);
+  return ref.watch(userRepositoryProvider).fetchUserInfo(mechanicId);
 });
 
 final fetchMechanicRouteProvider = FutureProvider.autoDispose((ref) => ref
     .watch(mapRepositoryProvider)
     .getRoute('85.33033043146135,27.703292452047425',
         '85.33825904130937,27.707645262018172'));
+
+final fetchRecommendedMechanicsProvider = FutureProvider.autoDispose
+    .family<List<User>, Map<String, dynamic>>((ref, info) {
+  return ref
+      .watch(userRepositoryProvider)
+      .fetchRecommendedMechanics(info['vehicle_category'], info['service']);
+});

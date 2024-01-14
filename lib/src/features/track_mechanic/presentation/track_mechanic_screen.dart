@@ -5,6 +5,7 @@ import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_req
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 import 'package:bato_mechanic/src/features/track_mechanic/presentation/waiting_mechanic_assignment_screen.dart';
 import 'package:bato_mechanic/src/utils/extensions/enum_extensions.dart';
+import 'package:bato_mechanic/src/utils/helpers/map_helpers.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -134,11 +135,12 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     // Register this object as an observer
     WidgetsBinding.instance.addObserver(this);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Get user location if not present
-      if (ref.read(authStateProvider).user?.currentLocation == null) {
-        ref.read(locationServiceProvider).initializeUserLocation();
-      }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // // Get user location if not present
+      // if (ref.read(authStateProvider).user?.currentLocation == null) {
+      //   ref.read(locationServiceProvider).initializeUserLocation();
+      // }
+
       // // Directly go to progress screen if the repair request is in progress
       // if (widget.repairRequest.status ==
       //     VehicleRepairRequestStatus.IN_PROGRESS) {
@@ -516,8 +518,10 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     final coordinatePointsValue = ref.watch(fetchMechanicRouteProvider);
     final mechanicPositionValue = ref.watch(assignedMechanicProvider);
     // final userMarkerValue = ref.watch(watchUserPositionMarkerProvider);
-    final usersLocationValue = ref.watch(
-        watchRepairRequestUsersLocationProvider(widget.repairRequestIdx));
+    final mechanicLocationValue = ref.watch(
+        watchRepairRequestMechanicLocationProvider(widget.repairRequestIdx));
+
+    final userCurrentLocation = ref.watch(userCurrentLocationProvider);
 
     return FlutterMap(
       mapController: _mapController,
@@ -597,8 +601,8 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
         ),
         CurrentLocationLayer(),
         AsyncValueWidget(
-          value: usersLocationValue,
-          data: (locations) => MarkerLayer(
+          value: mechanicLocationValue,
+          data: (mechanicLocation) => MarkerLayer(
             markers: [
               Marker(
                 width: 80,
@@ -624,14 +628,12 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                   size: 40.0,
                 ),
               ),
-
               Marker(
                 width: 80,
                 height: 80,
-                // point: LatLng(27.707645262018172, 85.33825904130937),
                 point: LatLng(
-                  locations["user_location"]?.latitude ?? 0,
-                  locations["user_location"]?.longitude ?? 0,
+                  userCurrentLocation.value?.latitude ?? 0,
+                  userCurrentLocation.value?.longitude ?? 0,
                 ),
                 builder: (ctx) => const Icon(
                   Icons.location_on,
@@ -639,33 +641,19 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                   size: 40.0,
                 ),
               ),
-              // AsyncValueWidget(value: ref.watch(watchUserStateChangesProvider) , data: data)
-              if (ref.watch(authStateProvider).user != null &&
-                  ref.watch(authStateProvider).user!.currentLocation != null)
-                Marker(
-                  width: 80,
-                  height: 80,
-                  // point: LatLng(
-                  //     ref
-                  //         .watch(authStateProvider)
-                  //         .user!
-                  //         .currentLocation!
-                  //         .latitude!,
-                  //     ref
-                  //         .watch(authStateProvider)
-                  //         .user!
-                  //         .currentLocation!
-                  //         .longitude!),
-                  point: LatLng(
-                    locations["mechanic_location"]?.latitude ?? 0,
-                    locations["mechanic_location"]?.longitude ?? 0,
-                  ),
-                  builder: (ctx) => const Icon(
-                    Icons.location_on,
-                    color: Colors.green,
-                    size: 40.0,
-                  ),
+              Marker(
+                width: 80,
+                height: 80,
+                point: LatLng(
+                  mechanicLocation.latitude ?? 0,
+                  mechanicLocation.longitude ?? 0,
                 ),
+                builder: (ctx) => const Icon(
+                  Icons.location_on,
+                  color: Colors.green,
+                  size: 40.0,
+                ),
+              ),
             ],
           ),
         ),

@@ -13,7 +13,7 @@ class LocationService {
 
   final Ref ref;
 
-  initializeUserLocation() async {
+  Future<UserPosition?> initializeUserLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
     Position position;
@@ -22,7 +22,7 @@ class LocationService {
     if (!serviceEnabled) {
       serviceEnabled = await Geolocator.openLocationSettings();
       if (!serviceEnabled) {
-        return;
+        return null;
       }
     }
 
@@ -31,7 +31,7 @@ class LocationService {
       permission = await Geolocator.requestPermission();
       if (permission != LocationPermission.whileInUse &&
           permission != LocationPermission.always) {
-        return;
+        return null;
       }
     }
 
@@ -40,11 +40,10 @@ class LocationService {
     String? locationName =
         await fetchLocationName(position.latitude, position.longitude);
 
-    // User? user = ref.read(authServiceProvider).currentUser;
     User? user = ref.read(authStateProvider.notifier).user;
 
     if (user == null) {
-      return;
+      return null;
     }
 
     user = user.copyWith(
@@ -61,6 +60,7 @@ class LocationService {
       ),
     );
     ref.read(authStateProvider.notifier).setUser(user);
+    return user.currentLocation;
   }
 
   fetchLocationName(double lat, double lon) async {
@@ -99,4 +99,9 @@ class LocationService {
 
 final locationServiceProvider = Provider((ref) {
   return LocationService(ref: ref);
+});
+
+final userCurrentLocationProvider = FutureProvider<UserPosition?>((ref) {
+  final service = ref.watch(locationServiceProvider);
+  return service.initializeUserLocation();
 });

@@ -43,25 +43,23 @@ final watchRepairRequestProvider = StreamProvider.autoDispose
   }
 });
 
-final watchRepairRequestUsersLocationProvider = StreamProvider.autoDispose
-    .family<Map<String, UserPosition>, String>((ref, repairRequestIdx) async* {
-  // .family<dynamic, String>((ref, repairRequestIdx) async* {
+final watchRepairRequestMechanicLocationProvider = StreamProvider.autoDispose
+    .family<UserPosition, String>((ref, repairRequestIdx) async* {
   var url = Uri.parse(
-      "${RemoteManager.WEB_SOCKET_BASE_URI}repair-request-userslocation/$repairRequestIdx");
+      "${RemoteManager.WEB_SOCKET_BASE_URI}repair-request-mechanic-location/$repairRequestIdx");
   final channel = WebSocketChannel.connect(url);
 
   ref.onDispose(() => channel.sink.close());
 
   await for (final value in channel.stream) {
     final Map<String, dynamic> locations = jsonDecode(value);
-    final UserPosition userLocation =
-        UserPosition.fromJson(jsonEncode(locations['user_location']));
-    final UserPosition mechanicLocation =
-        UserPosition.fromJson(jsonEncode(locations['mechanic_location']));
+    // final UserPosition userLocation =
+    //     UserPosition.fromJson(jsonEncode(locations['user_location']));
+    yield UserPosition.fromJson(jsonEncode(locations['mechanic_location']));
 
-    yield {
-      'user_location': userLocation,
-      'mechanic_location': mechanicLocation
-    };
+    // yield {
+    //   'user_location': userLocation,
+    //   'mechanic_location': mechanicLocation
+    // };
   }
 });

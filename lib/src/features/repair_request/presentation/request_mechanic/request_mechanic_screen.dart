@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
 import 'package:bato_mechanic/src/features/track_mechanic/data/api_track_mechanic_repository.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
@@ -36,21 +37,25 @@ class RequestMechanicScreen extends ConsumerStatefulWidget {
 
 class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
     with WidgetsBindingObserver {
-  late TextEditingController _issueTextController;
-  late FocusNode _issueTextFocusNode;
+  late TextEditingController _issueTitleController;
+  late TextEditingController _issueDescriptionController;
+  late FocusNode _issueTitleFocusNode;
+  late FocusNode _issueDescriptionFocusNode;
   VideoPlayerController? _videoController;
 
   @override
   void initState() {
     super.initState();
-    _issueTextController = TextEditingController();
-    _issueTextFocusNode = FocusNode();
+    _issueTitleController = TextEditingController();
+    _issueDescriptionController = TextEditingController();
+    _issueTitleFocusNode = FocusNode();
+    _issueDescriptionFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
-    _issueTextController.dispose();
-    _issueTextFocusNode.dispose();
+    _issueDescriptionController.dispose();
+    _issueDescriptionFocusNode.dispose();
     super.dispose();
   }
 
@@ -110,6 +115,20 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
               ),
               const SizedBox(height: 16),
               const Text(
+                'Title the issue:',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              BaatoTextField(
+                controller: _issueTitleController,
+                focusNode: _issueTitleFocusNode,
+                hintText: 'Describe the issue in concise',
+              ),
+              const SizedBox(height: 16),
+              const Text(
                 'Describe the issue:',
                 style: TextStyle(
                   fontSize: 18,
@@ -118,8 +137,8 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
               ),
               const SizedBox(height: 8),
               DescriptionField(
-                controller: _issueTextController,
-                focusNode: _issueTextFocusNode,
+                controller: _issueDescriptionController,
+                focusNode: _issueDescriptionFocusNode,
                 hintText: 'Describe the issue',
               ),
               const SizedBox(height: 16),
@@ -387,8 +406,8 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                       .showLoadingWithMessageOptional(context);
                   ref
                       .read(requestMechanicScreenControllerProvider.notifier)
-                      .requestForVehicleRepair(
-                          _issueTextController.text, _videoController)
+                      .requestForVehicleRepair(_issueTitleController.text,
+                          _issueDescriptionController.text, _videoController)
                       .then((result) {
                     if (result != null) {
                       ref

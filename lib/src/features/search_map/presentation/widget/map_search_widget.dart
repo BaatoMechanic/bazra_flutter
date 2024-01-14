@@ -80,7 +80,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             .setSelectedLocation({
           "latitude": lat,
           "longitude": lon,
-          "locationName": placeName,
+          "location_name": placeName,
           "accuracy": userPosition.accuracy,
           "altitude": userPosition.altitude,
           "timestamp": userPosition.timestamp.toString(),
@@ -93,7 +93,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
               .setSelectedLocation({
             "latitude": lat,
             "longitude": lon,
-            "locationName": placeName,
+            "location_name": placeName,
             "accuracy": userPosition.accuracy,
             "altitude": userPosition.altitude,
             "timestamp": userPosition.timestamp.toString(),
@@ -414,7 +414,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                           .setSelectedLocation({
                         "latitude": _options[index].latitude,
                         "longitude": _options[index].longitude,
-                        "locationName": _options[index].displayname,
+                        "location_name": _options[index].displayname,
                         "accuracy": userPosition.accuracy,
                         "altitude": userPosition.altitude,
                         "timestamp": userPosition.timestamp.toString(),

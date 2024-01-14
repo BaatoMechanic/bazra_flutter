@@ -116,7 +116,7 @@ class RequestMechanicScreenController
 
   Map<String, dynamic>? get selectedLocation => state.selectedLocation;
 
-  Future<VehicleRepairRequest?> requestForVehicleRepair(
+  Future<VehicleRepairRequest?> requestForVehicleRepair(String issueTitle,
       String issueDescription, VideoPlayerController? videoController) async {
     // final customerRequestPosition =
     //     ref.read(searchMapWidgetControllerProvider).markerPosition.value;
@@ -136,6 +136,12 @@ class RequestMechanicScreenController
       return null;
     }
 
+    if (issueTitle.isEmpty) {
+      state = state.copyWith(
+          value: AsyncError(
+              "Please give a title to your issue", StackTrace.current));
+      return null;
+    }
     if (issueDescription.isEmpty) {
       state = state.copyWith(
           value: AsyncError(
@@ -168,12 +174,12 @@ class RequestMechanicScreenController
 
     // _issueDescriptionFocusNode.unfocus();
     Map<String, dynamic> requestData = {
-      "title": "This is a test title",
+      "title": issueTitle,
       "preferred_mechanic": state.preferredMechanic?.toJson(),
 
       "location_name": " Test location",
       // "selected_location": selectedPosition!.toJson(),
-      "selected_location": selectedLocation,
+      "location": selectedLocation,
       // "location_coordinates": coordinates,
       // "vehicle": ref.read(vehicleServiceProvider).selectedVehicle!.id,
       "vehicle_type": ref.read(selectedVehicleCategoryProvider)?.idx,

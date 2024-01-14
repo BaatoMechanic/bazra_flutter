@@ -40,8 +40,7 @@ class VehicleRepairRequest {
     required this.serviceTypeIdx,
     this.preferredMechanicIdx,
     this.assignedMechanicIdx,
-    this.userLocation,
-    this.mechanicLocation,
+    this.location,
     required this.status,
   });
 
@@ -54,8 +53,7 @@ class VehicleRepairRequest {
   String serviceTypeIdx;
   String? preferredMechanicIdx;
   String? assignedMechanicIdx;
-  UserPosition? userLocation;
-  UserPosition? mechanicLocation;
+  Map<String, dynamic>? location;
   VehicleRepairRequestStatus status;
 
   factory VehicleRepairRequest.fromJson(Map<String, dynamic> json) =>
@@ -73,8 +71,7 @@ class VehicleRepairRequest {
         //     json["images"].map((x) => VehicleRepairRequestImage.fromJson(x))),
         // videos: List<VehicleRepairRequestVideo>.from(
         //     json["videos"].map((x) => VehicleRepairRequestVideo.fromJson(x))),
-        userLocation: json["user_location"],
-        mechanicLocation: json["mechanic_location"],
+        location: json["location"],
         status: vehicleRepairRequestStatusFromJson(json['status']),
       );
 
@@ -91,8 +88,8 @@ class VehicleRepairRequest {
         "description": description,
         // "images": List<dynamic>.from(images.map((x) => x.toJson())),
         // "videos": List<dynamic>.from(videos.map((x) => x.toJson())),
-        "user_location": userLocation?.toJson(),
-        "mechanic_location": mechanicLocation?.toJson(),
+        "location": location,
+
         "status": status,
         // "created_at": createdAt.toIso8601String(),
       };
@@ -136,7 +133,7 @@ class VehicleRepairRequest {
     int? serviceTypeId,
     String? title,
     String? description,
-    UserPosition? userLocation,
+    Map<String, dynamic>? location,
     UserPosition? mechanicLocation,
     List<VehicleRepairRequestImage>? images,
     List<VehicleRepairRequestVideo>? videos,
@@ -153,8 +150,8 @@ class VehicleRepairRequest {
       serviceTypeIdx: serviceTypeIdx,
       title: title ?? this.title,
       description: description ?? this.description,
-      userLocation: userLocation ?? this.userLocation,
-      mechanicLocation: mechanicLocation ?? this.mechanicLocation,
+      location: location ?? this.location,
+
       // images: images ?? this.images,
       // videos: videos ?? this.videos,
       // createdAt: createdAt ?? this.createdAt,

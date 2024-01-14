@@ -65,29 +65,29 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
   late MapController _mapController;
   late AnimationController _animationController;
 
-  List<LatLng> pathPoints = [
-    LatLng(27.703309, 85.330293),
-    LatLng(27.703372, 85.330328),
-    LatLng(27.703433, 85.3304),
-    LatLng(27.703345, 85.331427),
-    LatLng(27.7033, 85.331973),
-    LatLng(27.70331, 85.332081),
-    LatLng(27.703411, 85.332267),
-    LatLng(27.703528, 85.332441),
-    LatLng(27.703606, 85.332502),
-    LatLng(27.703818, 85.332652),
-    LatLng(27.703918, 85.332654),
-    LatLng(27.703817, 85.332944),
-    LatLng(27.703525, 85.333931),
-    LatLng(27.703437, 85.334216),
-    LatLng(27.703365, 85.334465),
-    LatLng(27.703, 85.33565),
-    LatLng(27.70294, 85.335815),
-    LatLng(27.702783, 85.336285),
-    LatLng(27.702876, 85.336324),
-    LatLng(27.703198, 85.336223),
-    LatLng(27.70327, 85.33621)
-  ];
+  // List<LatLng> pathPoints = [
+  //   LatLng(27.703309, 85.330293),
+  //   LatLng(27.703372, 85.330328),
+  //   LatLng(27.703433, 85.3304),
+  //   LatLng(27.703345, 85.331427),
+  //   LatLng(27.7033, 85.331973),
+  //   LatLng(27.70331, 85.332081),
+  //   LatLng(27.703411, 85.332267),
+  //   LatLng(27.703528, 85.332441),
+  //   LatLng(27.703606, 85.332502),
+  //   LatLng(27.703818, 85.332652),
+  //   LatLng(27.703918, 85.332654),
+  //   LatLng(27.703817, 85.332944),
+  //   LatLng(27.703525, 85.333931),
+  //   LatLng(27.703437, 85.334216),
+  //   LatLng(27.703365, 85.334465),
+  //   LatLng(27.703, 85.33565),
+  //   LatLng(27.70294, 85.335815),
+  //   LatLng(27.702783, 85.336285),
+  //   LatLng(27.702876, 85.336324),
+  //   LatLng(27.703198, 85.336223),
+  //   LatLng(27.70327, 85.33621)
+  // ];
 
   @override
   void initState() {
@@ -99,37 +99,37 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
       duration: const Duration(seconds: 5),
     );
 
-    int currentIndex = 0;
+    // int currentIndex = 0;
 
-    final timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
-      if (mounted) {
-        if (currentIndex < pathPoints.length - 1) {
-          User? user = ref.read(authStateProvider).user;
-          UserPosition? nextPosition = user?.currentLocation;
-          // if (ref.read(watchMechanicStateChangesProvider).isLoading) {
-          //   print('dd');
-          //   return;
-          // }
-          if (nextPosition == null) {
-            print('null');
-            ref.read(repairRequestControllerProvider).repairRequest;
-          } else {
-            nextPosition = nextPosition.copyWith(
-              latitude: pathPoints[currentIndex].latitude,
-              longitude: pathPoints[currentIndex].longitude,
-            );
-            ref
-                .read(authStateProvider.notifier)
-                .setUser(user?.copyWith(currentLocation: nextPosition));
+    // final timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+    //   if (mounted) {
+    //     if (currentIndex < pathPoints.length - 1) {
+    //       User? user = ref.read(authStateProvider).user;
+    //       UserPosition? nextPosition = user?.currentLocation;
+    //       // if (ref.read(watchMechanicStateChangesProvider).isLoading) {
+    //       //   print('dd');
+    //       //   return;
+    //       // }
+    //       if (nextPosition == null) {
+    //         print('null');
+    //         ref.read(repairRequestControllerProvider).repairRequest;
+    //       } else {
+    //         nextPosition = nextPosition.copyWith(
+    //           latitude: pathPoints[currentIndex].latitude,
+    //           longitude: pathPoints[currentIndex].longitude,
+    //         );
+    //         ref
+    //             .read(authStateProvider.notifier)
+    //             .setUser(user?.copyWith(currentLocation: nextPosition));
 
-            currentIndex++;
-          }
-        } else {
-          print('reached to the location');
-          timer.cancel();
-        }
-      }
-    });
+    //         currentIndex++;
+    //       }
+    //     } else {
+    //       print('reached to the location');
+    //       timer.cancel();
+    //     }
+    //   }
+    // });
 
     // Register this object as an observer
     WidgetsBinding.instance.addObserver(this);
@@ -516,6 +516,9 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     final coordinatePointsValue = ref.watch(fetchMechanicRouteProvider);
     final mechanicPositionValue = ref.watch(assignedMechanicProvider);
     // final userMarkerValue = ref.watch(watchUserPositionMarkerProvider);
+    final usersLocationValue = ref.watch(
+        watchRepairRequestUsersLocationProvider(widget.repairRequestIdx));
+
     return FlutterMap(
       mapController: _mapController,
       options: MapOptions(
@@ -593,52 +596,78 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
           tileProvider: NetworkTileProvider(),
         ),
         CurrentLocationLayer(),
-        MarkerLayer(
-          markers: [
-            Marker(
-              width: 80,
-              height: 80,
-              point: LatLng(27.703292452047425, 85.33033043146135),
-              builder: (ctx) => const Icon(
-                Icons.location_on,
-                color: Colors.orange,
-                size: 40.0,
-              ),
-            ),
-            Marker(
-              width: 80,
-              height: 80,
-              point: LatLng(27.707645262018172, 85.33825904130937),
-              builder: (ctx) => const Icon(
-                Icons.location_on,
-                color: Colors.red,
-                size: 40.0,
-              ),
-            ),
-            // AsyncValueWidget(value: ref.watch(watchUserStateChangesProvider) , data: data)
-            if (ref.watch(authStateProvider).user != null &&
-                ref.watch(authStateProvider).user!.currentLocation != null)
+        AsyncValueWidget(
+          value: usersLocationValue,
+          data: (locations) => MarkerLayer(
+            markers: [
               Marker(
                 width: 80,
                 height: 80,
+                // point: LatLng(27.703292452047425, 85.33033043146135),
                 point: LatLng(
-                    ref
-                        .watch(authStateProvider)
-                        .user!
-                        .currentLocation!
-                        .latitude!,
-                    ref
-                        .watch(authStateProvider)
-                        .user!
-                        .currentLocation!
-                        .longitude!),
+                  ref
+                          .watch(watchRepairRequestProvider(
+                              widget.repairRequestIdx))
+                          .value
+                          ?.location?["latitude"] ??
+                      0,
+                  ref
+                          .watch(watchRepairRequestProvider(
+                              widget.repairRequestIdx))
+                          .value
+                          ?.location?["longitude"] ??
+                      0,
+                ),
                 builder: (ctx) => const Icon(
                   Icons.location_on,
-                  color: Colors.green,
+                  color: Colors.orange,
                   size: 40.0,
                 ),
               ),
-          ],
+
+              Marker(
+                width: 80,
+                height: 80,
+                // point: LatLng(27.707645262018172, 85.33825904130937),
+                point: LatLng(
+                  locations["user_location"]?.latitude ?? 0,
+                  locations["user_location"]?.longitude ?? 0,
+                ),
+                builder: (ctx) => const Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                  size: 40.0,
+                ),
+              ),
+              // AsyncValueWidget(value: ref.watch(watchUserStateChangesProvider) , data: data)
+              if (ref.watch(authStateProvider).user != null &&
+                  ref.watch(authStateProvider).user!.currentLocation != null)
+                Marker(
+                  width: 80,
+                  height: 80,
+                  // point: LatLng(
+                  //     ref
+                  //         .watch(authStateProvider)
+                  //         .user!
+                  //         .currentLocation!
+                  //         .latitude!,
+                  //     ref
+                  //         .watch(authStateProvider)
+                  //         .user!
+                  //         .currentLocation!
+                  //         .longitude!),
+                  point: LatLng(
+                    locations["mechanic_location"]?.latitude ?? 0,
+                    locations["mechanic_location"]?.longitude ?? 0,
+                  ),
+                  builder: (ctx) => const Icon(
+                    Icons.location_on,
+                    color: Colors.green,
+                    size: 40.0,
+                  ),
+                ),
+            ],
+          ),
         ),
         AsyncValueWidget(
             value: coordinatePointsValue,

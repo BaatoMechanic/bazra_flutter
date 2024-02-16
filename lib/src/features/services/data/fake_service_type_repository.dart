@@ -45,4 +45,10 @@ class FakeServiceTypeRepository implements ServiceTypeRepository {
               }
             ]));
   }
+
+  @override
+  Future<Service> fetchRepairRequestServiceType(String repairRequestIdx) {
+    // TODO: implement fetchServiceRepair
+    throw UnimplementedError();
+  }
 }

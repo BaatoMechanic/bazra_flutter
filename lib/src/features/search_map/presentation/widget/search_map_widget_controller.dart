@@ -48,48 +48,38 @@ class SearchMapWidgetController extends StateNotifier<SearchMapState> {
     state = state.copyWith(userPosition: AsyncValue.data(position));
   }
 
-  fetchLocationName(double lat, double lon) async {
-    // final markerPos = state.markerPosition.value;
+  Future<String?> fetchLocationName(double lat, double lon) async {
     state = state.copyWith(markerPosition: const AsyncValue.loading());
 
-    var response =
-        await ref.read(mapRepositoryProvider).fetchLocationName(lat, lon);
+    var response = await AsyncValue.guard(
+        () => ref.read(mapRepositoryProvider).fetchLocationName(lat, lon));
 
-    if (response is Success) {
-      // loading = false;
-      // state = state.copyWith()
-      state = state.copyWith(markerPosition: AsyncValue.data(LatLng(lat, lon)));
-      return response.response;
-    }
-
-    if (response is Failure) {
+    if (response.hasValue) {
       state = state.copyWith(
-          markerPosition:
-              AsyncValue.error(response.errorResponse, response.stackTrace));
-      // mapError = MapError(code: response.code, message: response.errorResponse);
+          selectedLocation: AsyncValue.data(response.value["display_name"]));
+      state = state.copyWith(
+        markerPosition: AsyncValue.data(
+          LatLng(double.parse(response.value["lat"]),
+              double.parse(response.value["lon"])),
+        ),
+      );
+      return response.value["display_name"];
     }
-    // loading = false;
+
     return null;
-    // return 'TEst location';
   }
 
-  fetchSearchLocations(String searchText) async {
-    // loading = true;
-    // var response = await MapApi.getSearchLocations(searchText);
-    var response =
-        await ref.read(locationServiceProvider).fetchSearchLocation(searchText);
+  Future<List<dynamic>> fetchSearchLocations(String searchText) async {
+    state = state.copyWith(searchLocations: const AsyncValue.loading());
+    var response = await AsyncValue.guard(
+        () => ref.read(mapRepositoryProvider).getSearchLocations(searchText));
 
-    if (response is Success) {
-      // loading = false;
-      return response.response;
+    if (response.hasValue) {
+      state = state.copyWith(searchLocations: AsyncValue.data(response.value));
+      return response.value;
     }
-
-    if (response is Failure) {
-      // mapError = MapError(code: response.code, message: response.errorResponse);
-    }
-    // loading = false;
-    // return null;
-    return 'TEst search result location';
+    return [];
+    // return 'TEst search result location';
   }
 
   void setMarkerPosition(LatLng position) {

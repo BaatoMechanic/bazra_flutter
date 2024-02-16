@@ -10,6 +10,7 @@ import '../../../../utils/constants/managers/api_values_manager.dart';
 import 'package:http/http.dart' as http;
 
 import '../../domain/user.dart';
+import '../../domain/user_back.dart';
 import 'remote_auth_repository.dart';
 
 class APIRemoteAuthRepository implements RemoteAuthRepository {
@@ -45,7 +46,8 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
 
   @override
   Future<User> getCurrentUserInfo(String token) async {
-    var url = Uri.parse('${RemoteManager.BASE_URI}autho/user_info/me/');
+    var url =
+        Uri.parse('${RemoteManager.BASE_URI}vehicle-repair/customers/me/');
 
     final response = await HttpHelper.guard(
         () => http.get(url, headers: {
@@ -53,7 +55,7 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
             }),
         ref);
 
-    return User.fromJson(response);
+    return User.fromJson(jsonDecode(response));
   }
 
   @override

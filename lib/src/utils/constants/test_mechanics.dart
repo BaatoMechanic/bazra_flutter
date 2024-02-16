@@ -1,31 +1,41 @@
-import 'package:bato_mechanic/src/features/auth/domain/user.dart';
+import 'package:bato_mechanic/src/features/auth/domain/user_back.dart';
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 
+import '../../features/auth/domain/mechanic.dart';
+import '../enums/dob_type.dart';
+
 final mTestMechanics = [
-  User(
+  Mechanic(
     idx: '1',
     name: "Krishna Rimal",
     phone: "9808144809",
     email: "mail@mechanic.com",
     primaryRole: 'mechanic',
     roles: [],
+    gender: "Male",
+    dateOfBirth: DateTime.now(),
+    dobType: DOBType.AD,
+    vehicleSpecialityIdx: "1",
+    serviceSpecialityIdx: "1",
+    description: "I am a mechanic",
+
     additionalAttributes: {
       "vehicleCategorySpeciality": "bike",
       "vehiclePartSpeciality": "wheel",
     },
     profilePic:
         "http://localhost:8000/media/store/images/mechanic/mechanic.png",
-    currentLocation: UserPosition(
-      accuracy: 99,
-      longitude: 85.33825904130937,
-      latitude: 27.707645262018172,
-      timestamp: DateTime.now(),
-      locationName: "Kohalpur",
-      altitude: 0,
-      heading: 0,
-      speed: 0,
-      speedAccuracy: 0,
-    ),
+    // currentLocation: UserPosition(
+    //   accuracy: 99,
+    //   longitude: 85.33825904130937,
+    //   latitude: 27.707645262018172,
+    //   timestamp: DateTime.now(),
+    //   locationName: "Kohalpur",
+    //   altitude: 0,
+    //   heading: 0,
+    //   speed: 0,
+    //   speedAccuracy: 0,
+    // ),
   ),
   // Mechanic(
   //   idx: '2',

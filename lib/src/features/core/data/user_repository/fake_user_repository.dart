@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/auth/domain/user.dart';
+import 'package:bato_mechanic/src/features/auth/domain/user_back.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 
+import '../../../auth/domain/user.dart';
 import 'user_repository.dart';
 
 class FakeUserRepository extends UserRepository {
@@ -12,21 +13,19 @@ class FakeUserRepository extends UserRepository {
   Future<User> fetchUserInfo(String token) async {
     await Future.delayed(const Duration(seconds: 1));
     return User.fromJson(
-      json.encode(
-        {
-          "idx": "4ebFHe3UfuBLr9WbEroijH",
-          "name": "Mechanic User",
-          "email": "user@mechanic.com",
-          "phone": null,
-          "image": null,
-          "primary_role": "Mechanic",
-          "roles": [],
-          "additional_attributes": {
-            "vehicle_part": "Engine",
-            "vehicle_category": "Car",
-          }
-        },
-      ),
+      {
+        "idx": "4ebFHe3UfuBLr9WbEroijH",
+        "name": "Mechanic User",
+        "email": "user@mechanic.com",
+        "phone": null,
+        "image": null,
+        "primary_role": "Mechanic",
+        "roles": [],
+        "additional_attributes": {
+          "vehicle_part": "Engine",
+          "vehicle_category": "Car",
+        }
+      },
     );
   }
 

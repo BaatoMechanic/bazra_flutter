@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:bato_mechanic/src/features/auth/domain/user.dart';
+import 'package:bato_mechanic/src/features/auth/domain/user_back.dart';
 
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
+
+import '../../auth/domain/mechanic.dart';
 
 class TrackMechanicScreenState {
   TrackMechanicScreenState({
@@ -13,12 +15,12 @@ class TrackMechanicScreenState {
 
   final UserPosition? currentUserLocation;
   final Stream<UserPosition?> currentMechanicLocation;
-  final User? mechanicInfo;
+  final Mechanic? mechanicInfo;
 
   TrackMechanicScreenState copyWith({
     UserPosition? currentUserLocation,
     Stream<UserPosition?>? currentMechanicLocation,
-    User? mechanicInfo,
+    Mechanic? mechanicInfo,
   }) {
     return TrackMechanicScreenState(
       currentUserLocation: currentUserLocation ?? this.currentUserLocation,

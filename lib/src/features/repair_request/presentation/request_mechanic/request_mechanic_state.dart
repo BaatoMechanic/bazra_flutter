@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bato_mechanic/src/features/auth/domain/user.dart';
+import 'package:bato_mechanic/src/features/auth/domain/user_back.dart';
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
+
+import '../../../auth/domain/mechanic.dart';
 
 // class RequestMechanicState {
 //   RequestMechanicState({
@@ -75,7 +77,7 @@ class RequestMechanicState {
 
   final List<File> selectedImages;
   final File? selectedVideo;
-  final User? preferredMechanic;
+  final Mechanic? preferredMechanic;
   final Map<String, dynamic> selectedLocation;
 
   final AsyncValue<void> value;
@@ -83,7 +85,7 @@ class RequestMechanicState {
   RequestMechanicState copyWith({
     List<File>? selectedImages,
     File? selectedVideo,
-    User? preferredMechanic,
+    Mechanic? preferredMechanic,
     Map<String, dynamic>? selectedLocation,
     AsyncValue<void>? value,
   }) {

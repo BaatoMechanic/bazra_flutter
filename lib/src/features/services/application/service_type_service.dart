@@ -54,6 +54,11 @@ final serviceTypeServiceProvider = Provider((ref) {
   return serviceProvider;
 });
 
+final fetchRepairRequestServiceProvider = FutureProvider.autoDispose
+    .family<Service, String>((ref, repairRequestIdx) => ref
+        .watch(serviceTypeRepositoryProvider)
+        .fetchRepairRequestServiceType(repairRequestIdx));
+
 // final watchSelectedServiceTypeProvider = StreamProvider<ServiceType?>((ref) {
 //   final serviceProvider = ref.watch(serviceTypeServiceProvider);
 //   return serviceProvider._selectedServiceTypeStateChanges();

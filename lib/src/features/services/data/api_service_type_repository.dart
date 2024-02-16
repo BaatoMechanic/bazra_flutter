@@ -30,4 +30,18 @@ class APIServiceTypeRepository implements ServiceTypeRepository {
         ref);
     return serviceTypesFromJson(jsonDecode(response));
   }
+
+  @override
+  Future<Service> fetchRepairRequestServiceType(String repairRequestIdx) async {
+    var url = Uri.parse(
+        '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/$repairRequestIdx/service_type/');
+
+    var response = await HttpHelper.guard(
+        () => http.get(url, headers: {
+              HttpHeaders.authorizationHeader:
+                  'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
+            }),
+        ref);
+    return Service.fromJson(response);
+  }
 }

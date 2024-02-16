@@ -3,6 +3,7 @@ import 'package:bato_mechanic/src/features/auth/data/remote/api_remote_auth_repo
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/user.dart';
+import '../../domain/user_back.dart';
 import 'fake_remote_auth_repository.dart';
 
 abstract class RemoteAuthRepository {

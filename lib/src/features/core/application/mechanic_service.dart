@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:bato_mechanic/src/features/auth/domain/mechanic.dart';
 import 'package:bato_mechanic/src/features/core/data/user_repository/user_repository.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
@@ -7,7 +8,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 
+import "package:latlong2/latlong.dart";
 import '../../auth/domain/user.dart';
+import '../../auth/domain/user_back.dart';
 import '../../track_mechanic/presentation/track_mechanic_screen_controller.dart';
 import '../data/map_repository/map_repository.dart';
 import '../data/mechanic_repository/mechanic_repository.dart';
@@ -72,14 +75,14 @@ final mechanicServiceProvider = Provider((ref) {
 });
 
 final fetchMechanicInfoProvider =
-    FutureProvider.autoDispose.family<User?, String>((ref, mechanicId) {
-  return ref.watch(userRepositoryProvider).fetchUserInfo(mechanicId);
+    FutureProvider.autoDispose.family<Mechanic, String>((ref, mechanicId) {
+  return ref.watch(mechanicRepositoryProvider).fetchMechanicInfo(mechanicId);
 });
 
 final fetchMechanicRouteProvider = FutureProvider.autoDispose((ref) => ref
     .watch(mapRepositoryProvider)
-    .getRoute('85.33033043146135,27.703292452047425',
-        '85.33825904130937,27.707645262018172'));
+    .getRoute(LatLng(27.987731866277297, 85.05683898925781),
+        LatLng(27.697740170751363, 85.3749704360962)));
 
 final fetchRecommendedMechanicsProvider = FutureProvider.autoDispose
     .family<List<User>, Map<String, dynamic>>((ref, info) {

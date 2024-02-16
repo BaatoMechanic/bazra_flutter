@@ -7,19 +7,26 @@ class SearchMapState {
   SearchMapState({
     this.userPosition = const AsyncValue.data(null),
     this.markerPosition = const AsyncValue.data(null),
+    this.searchLocations = const AsyncValue.data([]),
+    this.selectedLocation = const AsyncValue.data(null),
   });
 
   final AsyncValue<Position?> userPosition;
   final AsyncValue<LatLng?> markerPosition;
-  // LatLng markerPosition = LatLng(27.703292452047425, 85.33033043146135);
+  final AsyncValue<List<dynamic>> searchLocations;
+  final AsyncValue<String?> selectedLocation;
 
   SearchMapState copyWith({
     AsyncValue<Position?>? userPosition,
     AsyncValue<LatLng>? markerPosition,
+    AsyncValue<List<dynamic>>? searchLocations,
+    AsyncValue<String>? selectedLocation,
   }) {
     return SearchMapState(
       userPosition: userPosition ?? this.userPosition,
       markerPosition: markerPosition ?? this.markerPosition,
+      searchLocations: searchLocations ?? this.searchLocations,
+      selectedLocation: selectedLocation ?? this.selectedLocation,
     );
   }
 }

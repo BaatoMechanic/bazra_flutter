@@ -51,7 +51,7 @@ class MechanicProfileScreen extends ConsumerWidget {
                     children: [
                       CircleAvatar(
                         radius: AppHeight.h30,
-                        child: mechanic != null && mechanic.profilePic != null
+                        child: mechanic.profilePic != null
                             ? Image.network(mechanic.profilePic!)
                             : Image.asset(
                                 'assets/images/no-profile.png'.hardcoded(),
@@ -66,7 +66,7 @@ class MechanicProfileScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              mechanic?.name ?? "Mechanic User".hardcoded(),
+                              mechanic.name,
                               style: Theme.of(context).textTheme.displayLarge,
                             ),
                             Row(
@@ -75,7 +75,7 @@ class MechanicProfileScreen extends ConsumerWidget {
                                   Icon(Icons.star,
                                       color: Theme.of(context).primaryColor),
                                 Text(
-                                  '(${mechanic?.additionalAttributes['total_reviews'] ?? "0"} reviews)',
+                                  '(${mechanic.additionalAttributes['total_reviews'] ?? "0"} reviews)',
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
@@ -110,7 +110,7 @@ class MechanicProfileScreen extends ConsumerWidget {
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           Text(
-                            mechanic?.additionalAttributes['total_repairs']
+                            mechanic.additionalAttributes['total_repairs']
                                     ?.toString() ??
                                 '0'.hardcoded(),
                             style: Theme.of(context).textTheme.headlineLarge,
@@ -124,7 +124,7 @@ class MechanicProfileScreen extends ConsumerWidget {
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           Text(
-                            mechanic?.additionalAttributes['total_reviews']
+                            mechanic.additionalAttributes['total_reviews']
                                     ?.toString() ??
                                 '0'.hardcoded(),
                             style: Theme.of(context).textTheme.headlineLarge,
@@ -174,14 +174,14 @@ class MechanicProfileScreen extends ConsumerWidget {
                     height: AppHeight.h30,
                   ),
                   Text(
-                    '${"About".hardcoded()} ${mechanic?.name ?? "mechanic"}',
+                    '${"About".hardcoded()} ${mechanic.name}',
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   const SizedBox(
                     height: AppHeight.h8,
                   ),
                   Text(
-                    mechanic?.additionalAttributes['description']?.toString() ??
+                    mechanic.additionalAttributes['description']?.toString() ??
                         "No description".hardcoded(),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),

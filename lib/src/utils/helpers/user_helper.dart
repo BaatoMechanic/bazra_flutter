@@ -20,12 +20,20 @@ class UserHelperFunctions {
     return output;
   }
 
-  static String getMechanicExpertise(Map<String, dynamic>? attributes) {
+  static String? getMechanicExpertise(Map<String, dynamic>? attributes) {
     if (attributes == null) {
       return '';
     }
     String? serviceSpeciality = attributes['service_speciality'];
     String? vehicleSpeciality = attributes['vehicle_speciality'];
+
+    if (serviceSpeciality == null || vehicleSpeciality == null) {
+      return null;
+    }
+
+    if (serviceSpeciality == null) {
+      return serviceSpeciality.capitalize();
+    }
 
     return "${(vehicleSpeciality as String).capitalize()}'s $serviceSpeciality";
   }

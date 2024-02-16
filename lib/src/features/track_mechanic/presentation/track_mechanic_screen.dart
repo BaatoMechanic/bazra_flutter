@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/api_repair_request_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
+import 'package:bato_mechanic/src/features/services/application/service_type_service.dart';
 import 'package:bato_mechanic/src/features/track_mechanic/presentation/waiting_mechanic_assignment_screen.dart';
 import 'package:bato_mechanic/src/utils/extensions/enum_extensions.dart';
 import 'package:bato_mechanic/src/utils/helpers/map_helpers.dart';
@@ -39,7 +40,7 @@ import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import '../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
 import '../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
 import '../../auth/data/remote/fake_remote_auth_repository.dart';
-import '../../auth/domain/user.dart';
+import '../../auth/domain/user_back.dart';
 import '../../repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
 import '../data/api_track_mechanic_repository.dart';
 import 'track_mechanic_screen_controller.dart';
@@ -183,13 +184,12 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     // final repairRequestValue =
     //     ref.watch(fetchRepairRequestProvider(widget.repairRequestIdx));
 
-    User? assignedMechanic = ref.watch(assignedMechanicProvider);
-
-    if (assignedMechanic == null &&
-        repairRequestValue.value?.assignedMechanicIdx != null) {
-      ref.read(mechanicServiceProvider).fetchAssignedMechanic(
-          repairRequestValue.value!.assignedMechanicIdx!);
-    }
+    // if (assignedMechanic == null &&
+    //     repairRequestValue.value?.assignedMechanicIdx != null) {
+    //   ref.read(mechanicServiceProvider).fetchAssignedMechanic(
+    //       repairRequestValue.value!.assignedMechanicIdx!);
+    // }
+    final routeValue = ref.watch(fetchMechanicRouteProvider);
 
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
@@ -205,13 +205,6 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
       child: AsyncValueWidget(
           value: repairRequestValue,
           data: (repairRequest) {
-            if (repairRequest == null) {
-              return const Scaffold(
-                body: Center(child: CircularProgressIndicator.adaptive()),
-              );
-            }
-
-            // final locationsValue = ref.watch(usersLocationProvider);
             return Scaffold(
               appBar: AppBar(
                 title: const Center(child: Text('Track Mechanic')),
@@ -222,125 +215,154 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // AsyncValueWidget(
-                      //     value: ref.watch(usersLocationProvider),
-                      //     data: (value) => Text(value.toString())),
-
-                      // ElevatedButton(
-                      //   onPressed: () => ref
-                      //       .read(
-                      //           trackMechanicScreenControllerProvider.notifier)
-                      //       .getUserAndMechanicPosition(),
-                      //   child: Text('Press me'),
-                      // ),
                       Column(
                         children: [
-                          assignedMechanic == null
-                              ? Text('Waiting for mechanic'.hardcoded())
-                              : TextButton(
-                                  onPressed: () => context.pushNamed(
-                                      APP_ROUTE.mechanicProfile.name,
-                                      extra: {
-                                        'mechanicIdx': assignedMechanic.idx
-                                      }),
-                                  style:
-                                      Theme.of(context).textButtonTheme.style,
-                                  child: Text(
-                                    assignedMechanic.name,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge!
-                                        .copyWith(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            backgroundColor:
-                                                ThemeColor.transparent),
+                          if (repairRequest.assignedMechanicIdx == null)
+                            // Text('Waiting for mechanic'.hardcoded())
+                            Text('')
+                          else
+                            AsyncValueWidget(
+                              value: ref.watch(fetchMechanicInfoProvider(
+                                  repairRequest.assignedMechanicIdx!)),
+                              data: (assignedMechanic) => Column(
+                                children: [
+                                  TextButton(
+                                    onPressed: () => context.pushNamed(
+                                        APP_ROUTE.mechanicProfile.name,
+                                        extra: {
+                                          'mechanicIdx': assignedMechanic.idx
+                                        }),
+                                    style:
+                                        Theme.of(context).textButtonTheme.style,
+                                    child: Text(
+                                      assignedMechanic.name,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineLarge!
+                                          .copyWith(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              backgroundColor:
+                                                  ThemeColor.transparent),
+                                    ),
                                   ),
-                                ),
-                          const SizedBox(height: 4),
-                          if (assignedMechanic != null)
-                            const Text(
-                              "Kohalpur",
-                              // 'Mechanic Location: ${assignedMechanic.currentLocation!.locationName}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                  const SizedBox(height: 4),
+                                  AsyncValueWidget(
+                                    value: ref.watch(
+                                        watchRepairRequestMechanicLocationProvider(
+                                            repairRequest.idx)),
+                                    data: (location) => Text(
+                                      location.locationName ??
+                                          "Place: Unknown".hardcoded(),
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  AsyncValueWidget(
+                                    value: ref.watch(
+                                        watchRepairRequestMechanicLocationProvider(
+                                            repairRequest.idx)),
+                                    data: (location) => GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                FullScreenMapScreen(
+                                              mechanicLocation: location
+                                                      .locationName ??
+                                                  'Place: Unknown'.hardcoded(),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: SizedBox(
+                                        height: _showBigScreenMap
+                                            ? MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.75
+                                            : 400,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                          child: _showMechanicTrackMap(
+                                              context,
+                                              routeValue.value?[
+                                                      "routeCoordinates"] ??
+                                                  []),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          const SizedBox(height: 16),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FullScreenMapScreen(
-                                    mechanicLocation: assignedMechanic!
-                                            .currentLocation!.locationName ??
-                                        'Unknown',
-                                  ),
-                                ),
-                              );
-                            },
-                            child: SizedBox(
-                              height: _showBigScreenMap
-                                  ? MediaQuery.of(context).size.height * 0.75
-                                  : 400,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                child: _showMechanicTrackMap(context),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(8),
-                            padding: const EdgeInsets.all(8),
-                            width: 75,
-                            decoration: BoxDecoration(
-                              color: Colors.amberAccent[200],
-                              borderRadius: BorderRadius.circular(
-                                20,
-                              ),
-                            ),
-                            child: Image.asset(
-                              'assets/images/parts/wheel.png',
-                            ),
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              text: 'Estimated Arrival Time: ',
-                              style: const TextStyle().copyWith(
-                                color: isDarkTheme
-                                    ? ThemeColor.white
-                                    : ThemeColor.black,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: BaatoDateFormatter
-                                      .formatMinutesToGeneric(ref
-                                          .read(
-                                              trackMechanicScreenControllerProvider
-                                                  .notifier)
-                                          .getEstimateArrivalTime()),
-                                  style: const TextStyle(
-                                    color: ThemeColor.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
+                      if (repairRequest.status ==
+                          VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
+                        AsyncValueWidget(
+                          value: ref.watch(fetchRepairRequestServiceProvider(
+                              repairRequest.idx)),
+                          data: (service) => Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.amberAccent[200],
+                                  borderRadius: BorderRadius.circular(
+                                    20,
                                   ),
                                 ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                                child: service.icon != null
+                                    ? Icon(service.icon)
+                                    : Image.asset(
+                                        'assets/images/parts/wheel.png',
+                                      ),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Estimated Arrival Time: '.hardcoded(),
+                                  style: const TextStyle().copyWith(
+                                    color: isDarkTheme
+                                        ? ThemeColor.white
+                                        : ThemeColor.black,
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      // text: BaatoDateFormatter
+                                      //     .formatMinutesToGeneric(ref
+                                      //         .read(
+                                      //             trackMechanicScreenControllerProvider
+                                      //                 .notifier)
+                                      //         .getEstimateArrivalTime()),
+                                      text: BaatoDateFormatter
+                                          .formatSecondsToGeneric(
+                                              routeValue.value?["duration"] ??
+                                                  -1),
+                                      style: const TextStyle(
+                                        color: ThemeColor.primary,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ListTile(
                         title: Text(
-                          repairRequest.title ?? "",
+                          repairRequest.title ?? "No title provided",
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         subtitle: Text(
@@ -428,10 +450,8 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                         height: AppHeight.h12,
                       ),
                       if (repairRequest.status ==
-                              VehicleRepairRequestStatus
-                                  .WAITING_FOR_ADVANCE_PAYMENT ||
-                          repairRequest.status ==
-                              VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
+                          VehicleRepairRequestStatus
+                              .WAITING_FOR_ADVANCE_PAYMENT)
                         ..._buildBaatoKharcha(context)
                       else if (repairRequest.status ==
                           VehicleRepairRequestStatus.COMPLETE)
@@ -444,6 +464,11 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                             "mechanicIdx": repairRequest.assignedMechanicIdx,
                           }),
                         )
+                      else if (repairRequest.status ==
+                              VehicleRepairRequestStatus.PENDING ||
+                          repairRequest.status ==
+                              VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
+                        Container()
                       else
                         SubmitButton(
                           label: 'Check Progress'.hardcoded(),
@@ -513,9 +538,9 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     ];
   }
 
-  Widget _showMechanicTrackMap(BuildContext context) {
+  Widget _showMechanicTrackMap(
+      BuildContext context, List<LatLng> routeCoordinates) {
     LatLng cameraCenter = LatLng(27.703292452047425, 85.33033043146135);
-    final coordinatePointsValue = ref.watch(fetchMechanicRouteProvider);
     final mechanicPositionValue = ref.watch(assignedMechanicProvider);
     // final userMarkerValue = ref.watch(watchUserPositionMarkerProvider);
     final mechanicLocationValue = ref.watch(
@@ -526,6 +551,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     return FlutterMap(
       mapController: _mapController,
       options: MapOptions(
+        interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
         onTap: (tapPosition, latLng) {
           setState(() {
             _showBigScreenMap = !_showBigScreenMap;
@@ -572,11 +598,6 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
           mapController: _mapController,
           animationController: _animationController,
         ),
-        // if (userMarkerValue.value != null)
-        //   CurrentLocationLayer(
-        //     positionStream: userMarkerValue as Stream<LocationMarkerPosition>,
-        //   ),
-        // CurrentLocationLayer(),
         const RichAttributionWidget(
           popupInitialDisplayDuration: Duration(seconds: 5),
           animationConfig: ScaleRAWA(),
@@ -607,7 +628,6 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
               Marker(
                 width: 80,
                 height: 80,
-                // point: LatLng(27.703292452047425, 85.33033043146135),
                 point: LatLng(
                   ref
                           .watch(watchRepairRequestProvider(
@@ -657,26 +677,35 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
             ],
           ),
         ),
-        AsyncValueWidget(
-            value: coordinatePointsValue,
-            data: (points) {
-              List<LatLng> routeCoordinatePoints = points
-                  .map((point) =>
-                      LatLng(point[1].toDouble(), point[0].toDouble()))
-                  .toList()
-                  .cast<LatLng>();
+        // AsyncValueWidget(
+        //     value: routeCoordinates,
+        //     data: (routeCoordinatePoints) {
+        //       // data: (points) {
+        //       // List<LatLng> routeCoordinatePoints = points
+        //       //     .map((point) =>
+        //       //         LatLng(point[1].toDouble(), point[0].toDouble()))
+        //       //     .toList()
+        //       //     .cast<LatLng>();
 
-              return PolylineLayer(
-                polylines: [
-                  Polyline(
-                    points: routeCoordinatePoints,
-                    strokeWidth: 4,
-                    // color: Theme.of(context).primaryColor,
-                    color: Colors.purple,
-                  ),
-                ],
-              );
-            })
+        //       return PolylineLayer(
+        //         polylines: [
+        //           Polyline(
+        //             points: routeCoordinates,
+        //             strokeWidth: 4,
+        //             color: Colors.purple,
+        //           ),
+        //         ],
+        //       );
+        //     })
+        PolylineLayer(
+          polylines: [
+            Polyline(
+              points: routeCoordinates,
+              strokeWidth: 4,
+              color: Colors.purple,
+            ),
+          ],
+        ),
       ],
     );
   }

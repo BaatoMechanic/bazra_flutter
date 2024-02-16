@@ -6,6 +6,7 @@ import '../../../../common/core/repositories/user_settings_repository.dart';
 import '../../../../utils/in_memory_store.dart';
 
 import '../../domain/user.dart';
+import '../../domain/user_back.dart';
 import 'remote_auth_repository.dart';
 
 class FakeRemoteAuthRepository implements RemoteAuthRepository {
@@ -21,8 +22,15 @@ class FakeRemoteAuthRepository implements RemoteAuthRepository {
   @override
   Future<User> createUserWithIdAndPassword(String uId, String password) async {
     await Future.delayed(const Duration(seconds: 2));
-    return User.fromJson(
-        '{"idx": "itLGCnD7vf9P7eucZf3Kgo", "name": "Krishna Rimal", "email": null, "phone": "9808144809", "image": null, "primary_role": "Consumer", "roles": [] }');
+    return User.fromJson({
+      "idx": "itLGCnD7vf9P7eucZf3Kgo",
+      "name": "Krishna Rimal",
+      "email": null,
+      "phone": "9808144809",
+      "image": null,
+      "primary_role": "Consumer",
+      "roles": []
+    });
   }
 
   @override
@@ -37,7 +45,16 @@ class FakeRemoteAuthRepository implements RemoteAuthRepository {
   Future<User> getCurrentUserInfo(String token) async {
     await Future.delayed(const Duration(seconds: 1));
     final User user = User.fromJson(
-      '{"idx": "itLGCnD7vf9P7eucZf3Kgo", "name": "Krishna Rimal", "email": null,"phone": "9808144809", "image": null,"primary_role": "Consumer","roles": [], "additional_attributes": {} }',
+      {
+        "idx": "itLGCnD7vf9P7eucZf3Kgo",
+        "name": "Krishna Rimal",
+        "email": null,
+        "phone": "9808144809",
+        "image": null,
+        "primary_role": "Consumer",
+        "roles": [],
+        "additional_attributes": {}
+      },
     );
     // setCurrentUser(user);
     return user;

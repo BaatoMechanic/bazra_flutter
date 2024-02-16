@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/auth/domain/user.dart';
+import 'package:bato_mechanic/src/features/auth/domain/user_back.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
 
@@ -17,6 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../auth/domain/mechanic.dart';
 import '../../../core/domain/user_position.dart';
 import 'request_mechanic_state.dart';
 
@@ -106,7 +107,7 @@ class RequestMechanicScreenController
     state = state.copyWith();
   }
 
-  setPreferredMechanic(User mechanic) {
+  setPreferredMechanic(Mechanic mechanic) {
     state = state.copyWith(preferredMechanic: mechanic);
   }
 

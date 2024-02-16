@@ -17,6 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../auth/domain/user.dart';
+import '../../auth/domain/user_back.dart';
 
 class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
   TrackMechanicScreenController({required this.ref})
@@ -60,9 +61,10 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
         speed: position.speed,
         speedAccuracy: position.speedAccuracy,
         locationName: "Temp Name");
-    User currentUser = ref.read(authStateProvider).user!;
-    currentUser = currentUser.copyWith(currentLocation: currentUserLocation);
-    ref.read(authStateProvider.notifier).setUser(currentUser);
+    // TODO: Find solution for user location
+    // User currentUser = ref.read(authStateProvider).user!;
+    // currentUser = currentUser.copyWith(currentLocation: currentUserLocation);
+    // ref.read(authStateProvider.notifier).setUser(currentUser);
   }
 
   // Future<bool> payWithKhalti() async {
@@ -104,33 +106,33 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
   // }
 
   int getEstimateArrivalTime() {
-    final UserPosition? userLocation =
-        // ref.read(authServiceProvider).currentUser!.currentLocation;
-        ref.read(assignedMechanicProvider)?.currentLocation;
-    final UserPosition? mechanicLocation =
-        ref.read(assignedMechanicProvider)?.currentLocation;
-    if (mechanicLocation == null) {
-      // -1 is returned because it is used to check in formatter utility function to return Unknown string
-      return -1;
-    }
-    // Calculate distance using Haversine formula
-    double distance = calculateHaversineDistance(
-      userLocation!.latitude!,
-      userLocation.longitude!,
-      mechanicLocation.latitude!,
-      mechanicLocation.longitude!,
-    );
+    // final UserPosition? userLocation =
+    //     ref.read(assignedMechanicProvider)?.currentLocation;
+    // final UserPosition? mechanicLocation =
+    //     ref.read(assignedMechanicProvider)?.currentLocation;
+    // if (mechanicLocation == null) {
+    //   // -1 is returned because it is used to check in formatter utility function to return Unknown string
+    //   return -1;
+    // }
+    // // Calculate distance using Haversine formula
+    // double distance = calculateHaversineDistance(
+    //   userLocation!.latitude!,
+    //   userLocation.longitude!,
+    //   mechanicLocation.latitude!,
+    //   mechanicLocation.longitude!,
+    // );
 
-    // Assume an average speed of the mechanic (in kilometers per hour)
-    double averageSpeedOfMechanic = 30.0;
+    // // Assume an average speed of the mechanic (in kilometers per hour)
+    // double averageSpeedOfMechanic = 30.0;
 
-    //estimated time of arrival (in hours)
-    double estimatedTimeOfArrival = distance / averageSpeedOfMechanic;
+    // //estimated time of arrival (in hours)
+    // double estimatedTimeOfArrival = distance / averageSpeedOfMechanic;
 
-    // Convert the estimated time to minutes
-    int estimatedArrivalTimeInMinutes = (estimatedTimeOfArrival * 60).round();
+    // // Convert the estimated time to minutes
+    // int estimatedArrivalTimeInMinutes = (estimatedTimeOfArrival * 60).round();
 
-    return estimatedArrivalTimeInMinutes;
+    // return estimatedArrivalTimeInMinutes;
+    return 0;
   }
 }
 

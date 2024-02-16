@@ -29,4 +29,13 @@ class BaatoDateFormatter {
 
     return result;
   }
+
+  static String formatSecondsToGeneric(int seconds) {
+    if (seconds == -1.intHardcoded()) {
+      return "Unknown";
+    }
+    int minutes = seconds ~/ 60;
+
+    return formatMinutesToGeneric(minutes);
+  }
 }

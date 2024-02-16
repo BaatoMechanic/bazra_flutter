@@ -7,6 +7,7 @@ import 'fake_service_type_repository.dart';
 
 abstract class ServiceTypeRepository {
   Future<List<Service>> fetchAllServiceTypes();
+  Future<Service> fetchRepairRequestServiceType(String repairRequestIdx);
 }
 
 final serviceTypeRepositoryProvider = Provider<ServiceTypeRepository>((ref) {

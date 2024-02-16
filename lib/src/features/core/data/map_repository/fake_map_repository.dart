@@ -7,48 +7,26 @@ import '../../../../utils/constants/managers/strings_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../../utils/model_utils.dart';
 import 'map_repository.dart';
+import 'package:latlong2/latlong.dart';
 
 class FakeMapRepository implements MapRepository {
   @override
-  getRoute(String sourcePoint, String destinationPoint) async {
-    try {
-      var url = Uri.parse(
-          'https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf6248b60a25fd6a3d4feebc3315580a66b8e8&start=$sourcePoint&end=$destinationPoint');
+  // Future<List<LatLng>> getRoute(
+  Future<Map<String, dynamic>> getRoute(
+      LatLng sourcePoint, LatLng destinationPoint) async {
+    var url = Uri.parse(
+        'https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf6248b60a25fd6a3d4feebc3315580a66b8e8&start=$sourcePoint&end=$destinationPoint');
 
-      var response = await http.get(url);
+    var response = await http.get(url);
 
-      if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        var listOfCoordinatePoints =
-            data['features'][0]['geometry']['coordinates'];
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      var listOfCoordinatePoints =
+          data['features'][0]['geometry']['coordinates'];
 
-        return listOfCoordinatePoints;
-      }
-      return Failure(
-        code: ApiStatusCode.invalidResponse,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.invalidResponseString,
-      );
-    } on HttpException {
-      return Failure(
-        code: ApiStatusCode.httpError,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.noInternetString,
-      );
-    } on FormatException {
-      return Failure(
-        code: ApiStatusCode.invalidResponse,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.invalidFormatString,
-      );
-    } catch (e, st) {
-      // return Failure(code: 103, errorResponse: e.toString());
-      return Failure(
-        code: ApiStatusCode.unknownError,
-        stackTrace: st,
-        errorResponse: ApiStrings.unknownErrorString,
-      );
+      return {"coordinatres": listOfCoordinatePoints};
     }
+    return {};
   }
 
   @override

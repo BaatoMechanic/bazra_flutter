@@ -4,6 +4,7 @@ import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
+import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_state.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_widget_controller.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
@@ -39,7 +40,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   late double height;
   String _selectedPlaceName = 'lol';
 
-  bool _isFetchingSearchLocations = false;
+  // bool _isFetchingSearchLocations = false;
 
   @override
   void initState() {
@@ -71,47 +72,37 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
     if (placeName != null) {
       _searchController.text = placeName;
       _selectedPlaceName = placeName;
-      UserPosition? userPosition =
-          ref.read(authStateProvider).user?.currentLocation;
+      // UserPosition? userPosition =
+      //     ref.read(authStateProvider).user?.currentLocation;
 
-      if (userPosition != null) {
-        ref
-            .read(requestMechanicScreenControllerProvider.notifier)
-            .setSelectedLocation({
-          "latitude": lat,
-          "longitude": lon,
-          "location_name": placeName,
-          "accuracy": userPosition.accuracy,
-          "altitude": userPosition.altitude,
-          "timestamp": userPosition.timestamp.toString(),
-        });
-      } else {
-        userPosition = await MapHelper.getUserLocation();
-        if (userPosition != null) {
-          ref
-              .read(requestMechanicScreenControllerProvider.notifier)
-              .setSelectedLocation({
-            "latitude": lat,
-            "longitude": lon,
-            "location_name": placeName,
-            "accuracy": userPosition.accuracy,
-            "altitude": userPosition.altitude,
-            "timestamp": userPosition.timestamp.toString(),
-          }
-                  // UserPosition(
-                  //   latitude: lat,
-                  //   longitude: lon,
-                  //   timestamp: userPosition.timestamp,
-                  //   accuracy: userPosition.accuracy,
-                  //   altitude: userPosition.altitude,
-                  //   heading: userPosition.heading,
-                  //   speed: userPosition.speed,
-                  //   speedAccuracy: userPosition.speedAccuracy,
-                  //   locationName: placeName,
-                  // ),
-                  );
-        }
-      }
+      // if (userPosition != null) {
+      //   ref
+      //       .read(requestMechanicScreenControllerProvider.notifier)
+      //       .setSelectedLocation({
+      //     "latitude": lat,
+      //     "longitude": lon,
+      //     "location_name": placeName,
+      //     "accuracy": userPosition.accuracy,
+      //     "altitude": userPosition.altitude,
+      //     "timestamp": userPosition.timestamp.toString(),
+      //   });
+      // } else {
+      //   userPosition = await MapHelper.getUserLocation();
+      //   if (userPosition != null) {
+      //     ref
+      //         .read(requestMechanicScreenControllerProvider.notifier)
+      //         .setSelectedLocation({
+      //       "latitude": lat,
+      //       "longitude": lon,
+      //       "location_name": placeName,
+      //       "accuracy": userPosition.accuracy,
+      //       "altitude": userPosition.altitude,
+      //       "timestamp": userPosition.timestamp.toString(),
+      //     }
+
+      // );
+      // }
+      // }
     } else {
       print('here');
     }
@@ -158,11 +149,12 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(searchMapWidgetControllerProvider);
     return SafeArea(
       child: Stack(
         children: [
           _showMap(context),
-          _buildSearchBar(),
+          _buildSearchBar(state),
         ],
       ),
     );
@@ -258,7 +250,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
     });
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(SearchMapState state) {
     OutlineInputBorder inputBorder = OutlineInputBorder(
       borderSide: BorderSide(color: Theme.of(context).primaryColor),
     );
@@ -284,7 +276,8 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
               backgroundColor:
                   const MaterialStatePropertyAll<Color>(ThemeColor.light),
               trailing: [
-                _isFetchingSearchLocations
+                // _isFetchingSearchLocations
+                state.searchLocations.isLoading
                     ? HelperFunctions.loadingInidicator(
                         context,
                         radius: AppHeight.h20,
@@ -310,11 +303,11 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                 }
 
                 _debounce = Timer(const Duration(milliseconds: 20), () async {
-                  if (mounted) {
-                    setState(() {
-                      _isFetchingSearchLocations = true;
-                    });
-                  }
+                  // if (mounted) {
+                  //   setState(() {
+                  //     _isFetchingSearchLocations = true;
+                  //   });
+                  // }
                   var response = await ref
                       .read(searchMapWidgetControllerProvider.notifier)
                       .fetchSearchLocations(_searchController.text);
@@ -327,7 +320,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                               longitude: double.parse(e['lon'])))
                           .toList()
                           .cast<OSMdata>();
-                      _isFetchingSearchLocations = false;
+                      // _isFetchingSearchLocations = false;
                     });
                   }
                 });
@@ -402,26 +395,27 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   _mapController.center.latitude = positionToMove.latitude;
                   _mapController.center.longitude = positionToMove.longitude;
 
-                  UserPosition? userPosition =
-                      ref.read(authStateProvider).user?.currentLocation;
+                  // UserPosition? userPosition =
+                  //     ref.read(authStateProvider).user?.currentLocation;
 
-                  if (userPosition == null) {
-                    userPosition = await MapHelper.getUserLocation();
-                    if (userPosition != null) {
-                      ref
-                          .read(
-                              requestMechanicScreenControllerProvider.notifier)
-                          .setSelectedLocation({
-                        "latitude": _options[index].latitude,
-                        "longitude": _options[index].longitude,
-                        "location_name": _options[index].displayname,
-                        "accuracy": userPosition.accuracy,
-                        "altitude": userPosition.altitude,
-                        "timestamp": userPosition.timestamp.toString(),
-                      });
-                      _searchController.text = _options[index].displayname;
-                    }
-                  }
+                  // if (userPosition == null) {
+                  //   userPosition = await MapHelper.getUserLocation();
+                  //   if (userPosition != null) {
+                  //     ref
+                  //         .read(
+                  //             requestMechanicScreenControllerProvider.notifier)
+                  //         .setSelectedLocation({
+                  //       "latitude": _options[index].latitude,
+                  //       "longitude": _options[index].longitude,
+                  //       "location_name": _options[index].displayname,
+                  //       "accuracy": userPosition.accuracy,
+                  //       "altitude": userPosition.altitude,
+                  //       "timestamp": userPosition.timestamp.toString(),
+                  //     });
+                  //     _searchController.text = _options[index].displayname;
+                  //   }
+                  // }
+                  _searchController.text = _options[index].displayname;
 
                   _searchFocusNode.unfocus();
                   _options.clear();

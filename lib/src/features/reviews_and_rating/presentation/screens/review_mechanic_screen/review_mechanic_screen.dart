@@ -94,15 +94,18 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "${UserHelperFunctions.getMechanicExpertise(mechanic?.additionalAttributes)} Expert",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                      color: ThemeColor.dark,
-                                    ),
-                              ),
+                              if (UserHelperFunctions.getMechanicExpertise(
+                                      mechanic.additionalAttributes) !=
+                                  null)
+                                Text(
+                                  "${UserHelperFunctions.getMechanicExpertise(mechanic.additionalAttributes)} Expert",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                        color: ThemeColor.dark,
+                                      ),
+                                ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,

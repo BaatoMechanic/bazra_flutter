@@ -3,6 +3,7 @@ import 'package:bato_mechanic/src/features/password_change/presentation/old_pass
 import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/user_profile_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
+import 'package:bato_mechanic/src/features/repair_request/active_repairs/presentation/active_repairs_list_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen.dart';
 import 'package:bato_mechanic/src/features/temp/pres/temp.dart';
 import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
@@ -12,7 +13,7 @@ import 'package:bato_mechanic/src/features/feedback_and_contact/presentation/fee
 import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen.dart';
 import 'package:bato_mechanic/src/features/payment/presentation/screens/payment_integration_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/mechanic/mechanic_profile_screen.dart';
-import 'package:bato_mechanic/src/features/recent_repairs/recent_repairs_list.dart';
+import 'package:bato_mechanic/src/features/repair_request/recent_repairs/presentation/recent_repairs_list_screen.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/screen/repair_progress_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen.dart';
@@ -42,6 +43,7 @@ enum APP_ROUTE {
   supportChat,
   repairProgress,
   recentRepairs,
+  activeRepairs,
   buildHome,
   home,
   login,
@@ -152,7 +154,12 @@ GoRouter goRouter() {
           GoRoute(
             path: 'recent_repairs',
             name: APP_ROUTE.recentRepairs.name,
-            builder: (context, state) => const RecentRepairsList(),
+            builder: (context, state) => const RecentRepairsListScreen(),
+          ),
+          GoRoute(
+            path: 'active_repairs',
+            name: APP_ROUTE.activeRepairs.name,
+            builder: (context, state) => const ActiveRepairsListScreen(),
           ),
           GoRoute(
             path: 'repair_progress',

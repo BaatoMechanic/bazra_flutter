@@ -13,9 +13,9 @@ class RepairProgressScreenController extends StateNotifier<AsyncValue<void>> {
 
   Ref ref;
 
-  Future<List<RepairStep>> fetchRepairSteps(String repairStepIdx) async {
+  Future<List<RepairStep>> fetchRepairSteps(String repairRequestIdx) async {
     state = await AsyncValue.guard(() =>
-        ref.read(repairStepServiceProvider).fetchRepairSteps(repairStepIdx));
+        ref.read(repairStepServiceProvider).fetchRepairSteps(repairRequestIdx));
 
     return state.value as List<RepairStep>;
   }

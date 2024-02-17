@@ -42,6 +42,7 @@ class VehicleRepairRequest {
     this.assignedMechanicIdx,
     this.location,
     required this.status,
+    required this.createdAt,
   });
 
   String idx;
@@ -55,25 +56,26 @@ class VehicleRepairRequest {
   String? assignedMechanicIdx;
   Map<String, dynamic>? location;
   VehicleRepairRequestStatus status;
+  DateTime createdAt;
 
   factory VehicleRepairRequest.fromJson(Map<String, dynamic> json) =>
       VehicleRepairRequest(
-        idx: json["idx"],
-        userIdx: json["user"],
-        preferredMechanicIdx: json["preferred_mechanic"],
-        assignedMechanicIdx: json["assigned_mechanic"],
-        vehicleCategoryIdx: json["vehicle_type"],
-        // vehiclePartIdx: json["vehicle_part"],
-        serviceTypeIdx: json["service_type"],
-        title: json["title"],
-        description: json["description"],
-        // images: List<VehicleRepairRequestImage>.from(
-        //     json["images"].map((x) => VehicleRepairRequestImage.fromJson(x))),
-        // videos: List<VehicleRepairRequestVideo>.from(
-        //     json["videos"].map((x) => VehicleRepairRequestVideo.fromJson(x))),
-        location: json["location"],
-        status: vehicleRepairRequestStatusFromJson(json['status']),
-      );
+          idx: json["idx"],
+          userIdx: json["user"],
+          preferredMechanicIdx: json["preferred_mechanic"],
+          assignedMechanicIdx: json["assigned_mechanic"],
+          vehicleCategoryIdx: json["vehicle_type"],
+          // vehiclePartIdx: json["vehicle_part"],
+          serviceTypeIdx: json["service_type"],
+          title: json["title"],
+          description: json["description"],
+          // images: List<VehicleRepairRequestImage>.from(
+          //     json["images"].map((x) => VehicleRepairRequestImage.fromJson(x))),
+          // videos: List<VehicleRepairRequestVideo>.from(
+          //     json["videos"].map((x) => VehicleRepairRequestVideo.fromJson(x))),
+          location: json["location"],
+          status: vehicleRepairRequestStatusFromJson(json['status']),
+          createdAt: DateTime.parse(json["created_at"]));
 
   Map<String, dynamic> toJson() => {
         "id": idx,
@@ -91,7 +93,7 @@ class VehicleRepairRequest {
         "location": location,
 
         "status": status,
-        // "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt.toIso8601String(),
       };
 
   // Function to convert a JSON value to the enum
@@ -156,6 +158,7 @@ class VehicleRepairRequest {
       // videos: videos ?? this.videos,
       // createdAt: createdAt ?? this.createdAt,
       status: status ?? VehicleRepairRequestStatus.PENDING,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:intl/intl.dart';
 
 class BaatoDateFormatter {
   static String formatMinutesToGeneric(int minutes) {
@@ -37,5 +38,25 @@ class BaatoDateFormatter {
     int minutes = seconds ~/ 60;
 
     return formatMinutesToGeneric(minutes);
+  }
+
+  static String humanizeDateTime(DateTime dateTime) {
+    final day = DateFormat('d').format(dateTime);
+    final month = DateFormat('MMMM').format(dateTime);
+    final year = DateFormat('y').format(dateTime);
+
+    // Add the appropriate suffix for the day
+    String suffix;
+    if (day.endsWith('1') && day != '11') {
+      suffix = 'st';
+    } else if (day.endsWith('2') && day != '12') {
+      suffix = 'nd';
+    } else if (day.endsWith('3') && day != '13') {
+      suffix = 'rd';
+    } else {
+      suffix = 'th';
+    }
+
+    return '$day$suffix $month, $year';
   }
 }

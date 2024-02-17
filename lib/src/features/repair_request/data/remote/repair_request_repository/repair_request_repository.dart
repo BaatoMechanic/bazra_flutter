@@ -16,6 +16,8 @@ abstract class RepairRequestRepository {
   Future<dynamic> addImagesToRepairRequest(
       String repairRequestId, List<File> images);
   Future<List<VehicleRepairRequest>> fetchUserRepairRequest();
+  Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequest();
+  Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequest();
   Future<VehicleRepairRequest> updateRepairRequest(
       String repairRequestId, Map<String, dynamic> requestInfo);
   // Future watchUsersLocation(String repairRequestId);

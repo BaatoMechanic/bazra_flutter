@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../common/widgets/async_value_widget.dart';
 import '../../../repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
 import '../widgets/repair_step_widget.dart';
 
@@ -29,10 +30,12 @@ class RepairProgressScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Repair Progress'),
       ),
-      body: FetchAndWatchAsyncValueWidget(
+      // body: FetchAndWatchAsyncValueWidget(
+      body: AsyncValueWidget(
         loadingShimmer: const RepairStepShimmerWidget(),
-        fetchValue: ref.watch(fetchRepairStepsProvider(repairRequestIdx)),
-        watchValue: repairStepsValue,
+        // fetchValue: ref.watch(fetchRepairStepsProvider(repairRequestIdx)),
+        // watchValue: repairStepsValue,
+        value: ref.watch(fetchRepairStepsProvider(repairRequestIdx)),
         data: (repairSteps) => ListView.builder(
           shrinkWrap: true,
           itemCount: repairSteps.length,

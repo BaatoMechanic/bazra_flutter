@@ -78,7 +78,8 @@ class HttpHelper {
 
   static dynamic _handleResponse(Response response) {
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return response.body;
+      // return response.body;
+      return utf8.decode(response.bodyBytes);
     }
 
     final message = jsonDecode(response.body)['details'] ??

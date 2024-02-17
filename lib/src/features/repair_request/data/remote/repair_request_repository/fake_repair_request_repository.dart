@@ -146,6 +146,80 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
+  Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequest() async {
+    // Response response = Response(jsonEncode([]), HttpStatus.ok);
+    final response = jsonEncode([
+      {
+        "idx": "8aMD5vyNQZqpySEm9T38Y2",
+        "title": "Car is not startingg",
+        "description":
+            "The engine just suddenly shut off and is now not starting",
+        "user": "itLGCnD7vf9P7eucZf3Kgo",
+        "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
+        "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
+        "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        // "status": "waiting_for_advance_payment"
+        "status": "waiting_for_completion_acceptance"
+        // "status": "pending"
+      },
+      {
+        "idx": "5xBBkkGbKTwEzuAkX46K8H",
+        "title": "Car is not startingg",
+        "description":
+            "The engine just suddenly shut off and is now not starting",
+        "user": "itLGCnD7vf9P7eucZf3Kgo",
+        "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
+        "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
+        "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        // "assigned_mechanic": null,
+        "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        "status": "waiting_for_completion_acceptance"
+      },
+    ]);
+
+    await Future.delayed(const Duration(seconds: 1));
+    return vehicleRepairRequestsFromJson(response);
+  }
+
+  @override
+  Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequest() async {
+    // Response response = Response(jsonEncode([]), HttpStatus.ok);
+    final response = jsonEncode([
+      {
+        "idx": "8aMD5vyNQZqpySEm9T38Y2",
+        "title": "Car is not startingg",
+        "description":
+            "The engine just suddenly shut off and is now not starting",
+        "user": "itLGCnD7vf9P7eucZf3Kgo",
+        "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
+        "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
+        "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        // "status": "waiting_for_advance_payment"
+        "status": "waiting_for_completion_acceptance"
+        // "status": "pending"
+      },
+      {
+        "idx": "5xBBkkGbKTwEzuAkX46K8H",
+        "title": "Car is not startingg",
+        "description":
+            "The engine just suddenly shut off and is now not starting",
+        "user": "itLGCnD7vf9P7eucZf3Kgo",
+        "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
+        "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
+        "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        // "assigned_mechanic": null,
+        "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        "status": "waiting_for_completion_acceptance"
+      },
+    ]);
+
+    await Future.delayed(const Duration(seconds: 1));
+    return vehicleRepairRequestsFromJson(response);
+  }
+
+  @override
   Future<VehicleRepairRequest> updateRepairRequest(
       String repairRequestId, Map<String, dynamic> requestInfo) {
     return Future.delayed(

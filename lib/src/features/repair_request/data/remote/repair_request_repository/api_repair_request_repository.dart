@@ -117,6 +117,34 @@ class APIRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
+  Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequest() async {
+    var url = Uri.parse(
+        '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/user_active_repair_requests/');
+
+    final response = await HttpHelper.guard(
+        () => http.get(url, headers: {
+              HttpHeaders.authorizationHeader:
+                  "BM ${ref.read(sharedPreferencesProvider).getString('access')!}",
+            }),
+        ref);
+    return vehicleRepairRequestsFromJson(response);
+  }
+
+  @override
+  Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequest() async {
+    var url = Uri.parse(
+        '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/user_recent_repair_requests/');
+
+    final response = await HttpHelper.guard(
+        () => http.get(url, headers: {
+              HttpHeaders.authorizationHeader:
+                  "BM ${ref.read(sharedPreferencesProvider).getString('access')!}",
+            }),
+        ref);
+    return vehicleRepairRequestsFromJson(response);
+  }
+
+  @override
   Future<VehicleRepairRequest> updateRepairRequest(
       String repairRequestId, Map<String, dynamic> requestInfo) async {
     var url = Uri.parse(

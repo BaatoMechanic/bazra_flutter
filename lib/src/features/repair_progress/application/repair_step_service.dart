@@ -12,20 +12,22 @@ class RepairStepService {
   RepairStepService(this.ref);
   final Ref ref;
 
-  Future<List<RepairStep>> fetchRepairSteps(String repairStepIdx) async {
+  Future<List<RepairStep>> fetchRepairSteps(String repairRequestIdx) async {
     var response = await ref
         .read(repairStepRepositoryProvider)
-        .fetchRepairSteps(repairStepIdx);
+        .fetchRepairSteps(repairRequestIdx);
 
-    if (response is Success) {
-      final List<RepairStep> repairSteps =
-          repairStepsFromJson(response.response as String);
-      return repairSteps;
-    }
-    if (response is Failure) {
-      throw Exception(response.errorResponse.toString());
-    }
-    return [];
+    return repairStepsFromJson(response as String);
+
+    // if (response is Success) {
+    //   final List<RepairStep> repairSteps =
+    //       repairStepsFromJson(response.response as String);
+    //   return repairSteps;
+    // }
+    // if (response is Failure) {
+    //   throw Exception(response.errorResponse.toString());
+    // }
+    // return [];
   }
 
   Future<bool> updateRepairStepStatus(

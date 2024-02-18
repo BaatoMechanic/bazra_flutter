@@ -30,6 +30,8 @@ enum VehicleRepairRequestStatus {
   CANCELLED
 }
 
+enum AdvancePaymentStatus { PENDING, COMPLETE, PAYMENT_ON_ARRIVAL }
+
 class VehicleRepairRequest {
   VehicleRepairRequest({
     required this.idx,
@@ -42,6 +44,7 @@ class VehicleRepairRequest {
     this.assignedMechanicIdx,
     this.location,
     required this.status,
+    required this.advancePaymentStatus,
     required this.createdAt,
   });
 
@@ -56,6 +59,7 @@ class VehicleRepairRequest {
   String? assignedMechanicIdx;
   Map<String, dynamic>? location;
   VehicleRepairRequestStatus status;
+  AdvancePaymentStatus advancePaymentStatus;
   DateTime createdAt;
 
   factory VehicleRepairRequest.fromJson(Map<String, dynamic> json) =>
@@ -75,6 +79,8 @@ class VehicleRepairRequest {
           //     json["videos"].map((x) => VehicleRepairRequestVideo.fromJson(x))),
           location: json["location"],
           status: vehicleRepairRequestStatusFromJson(json['status']),
+          advancePaymentStatus:
+              advancePaymentStatusFromJson(json["advance_payment_status"]),
           createdAt: DateTime.parse(json["created_at"]));
 
   Map<String, dynamic> toJson() => {
@@ -93,6 +99,7 @@ class VehicleRepairRequest {
         "location": location,
 
         "status": status,
+        "advance_payment_status": advancePaymentStatus,
         "created_at": createdAt.toIso8601String(),
       };
 
@@ -125,6 +132,21 @@ class VehicleRepairRequest {
     }
   }
 
+  static AdvancePaymentStatus advancePaymentStatusFromJson(String status) {
+    switch (status.toUpperCase()) {
+      case "PENDING":
+        return AdvancePaymentStatus.PENDING;
+      case "COMPLETE":
+        return AdvancePaymentStatus.COMPLETE;
+      case "PAYMENT_ON_ARRIVAL":
+        return AdvancePaymentStatus.PAYMENT_ON_ARRIVAL;
+      default:
+        // Handle unknown or unsupported values
+        // throw Exception("Unsupported status value: $status");
+        return AdvancePaymentStatus.PENDING;
+    }
+  }
+
   VehicleRepairRequest copyWith({
     int? id,
     int? customerId,
@@ -141,6 +163,7 @@ class VehicleRepairRequest {
     List<VehicleRepairRequestVideo>? videos,
     DateTime? createdAt,
     VehicleRepairRequestStatus? status,
+    AdvancePaymentStatus? advancePaymentStatus,
   }) {
     return VehicleRepairRequest(
       idx: idx,
@@ -157,7 +180,8 @@ class VehicleRepairRequest {
       // images: images ?? this.images,
       // videos: videos ?? this.videos,
       // createdAt: createdAt ?? this.createdAt,
-      status: status ?? VehicleRepairRequestStatus.PENDING,
+      status: status ?? this.status,
+      advancePaymentStatus: advancePaymentStatus ?? this.advancePaymentStatus,
       createdAt: createdAt ?? this.createdAt,
     );
   }

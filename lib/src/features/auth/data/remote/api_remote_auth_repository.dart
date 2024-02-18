@@ -19,9 +19,26 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
   final Ref ref;
 
   @override
-  Future<User> createUserWithIdAndPassword(String uId, String password) {
-    // TODO: implement createUserWithIdAndPassword
-    throw UnimplementedError();
+  Future<User> createUserWithIdAndPassword(
+      String uId, String password, String fullName) async {
+    var url =
+        Uri.parse('${RemoteManager.BASE_URI}autho/users_management/register/');
+    var response = await HttpHelper.guard(
+        () => http.post(url, body: {
+              "user_identifier": uId,
+              "password": password,
+              "name": fullName,
+            }),
+        ref);
+
+    url = Uri.parse('${RemoteManager.BASE_URI}vehicle-repair/customers/');
+    response = await HttpHelper.guard(
+        () => http.post(url, body: {
+              "user_idx": jsonDecode(response)['idx'],
+            }),
+        ref);
+
+    return User.fromJson(jsonDecode(response));
   }
 
   @override

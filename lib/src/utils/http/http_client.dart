@@ -81,6 +81,10 @@ class HttpHelper {
       // return response.body;
       return utf8.decode(response.bodyBytes);
     }
+    if (response.statusCode == 500) {
+      throw BaseException(
+          message: "Something went worng!", stackTrace: StackTrace.current);
+    }
 
     final message = jsonDecode(response.body)['details'] ??
         jsonDecode(response.body)['detail'];

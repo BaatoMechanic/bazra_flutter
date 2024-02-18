@@ -31,6 +31,7 @@ class PayBottomSheetWidget extends StatelessWidget {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 20.0.doubleHardcoded(),
+                    mainAxisSpacing: 20.0.doubleHardcoded(),
                     childAspectRatio: MediaQuery.of(context).size.width /
                         (MediaQuery.of(context).size.height * 0.12),
                   ),

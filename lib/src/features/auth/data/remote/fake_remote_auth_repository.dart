@@ -20,7 +20,8 @@ class FakeRemoteAuthRepository implements RemoteAuthRepository {
   // void dispose() => _userState.close();
 
   @override
-  Future<User> createUserWithIdAndPassword(String uId, String password) async {
+  Future<User> createUserWithIdAndPassword(
+      String uId, String password, String fullName) async {
     await Future.delayed(const Duration(seconds: 2));
     return User.fromJson({
       "idx": "itLGCnD7vf9P7eucZf3Kgo",

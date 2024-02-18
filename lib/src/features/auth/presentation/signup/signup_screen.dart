@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/password_field.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
@@ -23,10 +24,11 @@ class SignUpScreen extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _idController = TextEditingController();
-
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   final _emailFocusNode = FocusNode();
+  final _nameFocusNode = FocusNode();
 
   final _passwordFocusNode = FocusNode();
 
@@ -37,8 +39,8 @@ class SignUpScreen extends ConsumerWidget {
 
       final response = await ref
           .read(signupScreenControllerProvider.notifier)
-          .createUserWithIdAndPassword(
-              _idController.text, _passwordController.text);
+          .createUserWithIdAndPassword(_idController.text,
+              _passwordController.text, _nameController.text);
       if (response) {
         ToastHelper.showNotification(
             context,
@@ -90,6 +92,16 @@ class SignUpScreen extends ConsumerWidget {
                       hintText: "Enter your password".hardcoded(),
                       controller: _passwordController,
                       focusNode: _passwordFocusNode,
+                    ),
+                    const SizedBox(
+                      height: DefaultManager.defaultSpace,
+                    ),
+                    BaatoTextField(
+                      title: "Name".hardcoded(),
+                      labelText: "Name".hardcoded(),
+                      hintText: "Enter your full name".hardcoded(),
+                      controller: _nameController,
+                      focusNode: _nameFocusNode,
                     ),
                     const SizedBox(
                       height: AppHeight.h30,

@@ -3,6 +3,8 @@ import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/repair_progress/application/repair_step_service.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/screen/repair_progress_screen_controller.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/repair_step_shimmer_widget.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/api_repair_request_repository.dart';
+import 'package:bato_mechanic/src/features/track_mechanic/data/api_track_mechanic_repository.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
@@ -35,7 +37,8 @@ class RepairProgressScreen extends ConsumerWidget {
         loadingShimmer: const RepairStepShimmerWidget(),
         // fetchValue: ref.watch(fetchRepairStepsProvider(repairRequestIdx)),
         // watchValue: repairStepsValue,
-        value: ref.watch(fetchRepairStepsProvider(repairRequestIdx)),
+        // value: ref.watch(fetchRepairStepsProvider(repairRequestIdx)),
+        value: ref.watch(watchRepairStepsProvider(repairRequestIdx)),
         data: (repairSteps) => ListView.builder(
           shrinkWrap: true,
           itemCount: repairSteps.length,
@@ -67,41 +70,49 @@ class RepairProgressScreen extends ConsumerWidget {
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Consumer(builder: (context, ref, child) {
-            final repairRequest = ref.watch(activeRepairRequestProvider);
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (repairRequest!.status ==
-                    VehicleRepairRequestStatus
-                        .WAITING_FOR_COMPLETION_ACCEPTANCE)
-                  SubmitButton(
-                      label: 'Complete the process'.hardcoded(),
-                      showSpinner: ref
-                          .watch(repairProgressScreenControllerProvider)
-                          .isLoading,
-                      onPressed: () async {
-                        if (await ref
-                            .read(
-                                repairProgressScreenControllerProvider.notifier)
-                            .completeRepair(repairRequest.idx)) {
+            // final repairRequest = ref.watch(activeRepairRequestProvider);
+            final repairRequestValue =
+                ref.watch(watchRepairRequestProvider(repairRequestIdx));
+            return AsyncValueWidget(
+              value: repairRequestValue,
+              data: (repairRequest) => Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (repairRequest.status ==
+                      VehicleRepairRequestStatus
+                          .WAITING_FOR_COMPLETION_ACCEPTANCE)
+                    SubmitButton(
+                        label: 'Complete the process'.hardcoded(),
+                        showSpinner: ref
+                            .watch(repairProgressScreenControllerProvider)
+                            .isLoading,
+                        onPressed: () async {
+                          if (await ref
+                              .read(repairProgressScreenControllerProvider
+                                  .notifier)
+                              .completeRepair(repairRequest.idx)) {
+                            context.pushNamed(APP_ROUTE.reviewMechanic.name,
+                                extra: {
+                                  'repairRequestIdx': repairRequest.idx,
+                                  "mechanicIdx":
+                                      repairRequest.assignedMechanicIdx
+                                });
+                          }
+                        }),
+                  if (repairRequest.status ==
+                      VehicleRepairRequestStatus.COMPLETE)
+                    ElevatedButton(
+                        child: Text('Review the mechanic'.hardcoded()),
+                        onPressed: () {
                           context
-                              .pushNamed(APP_ROUTE.reviewMechanic.name, extra: {
+                              .goNamed(APP_ROUTE.reviewMechanic.name, extra: {
                             'repairRequestIdx': repairRequest.idx,
                             "mechanicIdx": repairRequest.assignedMechanicIdx
                           });
-                        }
-                      }),
-                if (repairRequest.status == VehicleRepairRequestStatus.COMPLETE)
-                  ElevatedButton(
-                      child: Text('Review the mechanic'.hardcoded()),
-                      onPressed: () {
-                        context.goNamed(APP_ROUTE.reviewMechanic.name, extra: {
-                          'repairRequestIdx': repairRequest.idx,
-                          "mechanicIdx": repairRequest.assignedMechanicIdx
-                        });
-                      }),
-              ],
+                        }),
+                ],
+              ),
             );
           }),
         ),

@@ -3,12 +3,14 @@ import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
+import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen_controller.dart';
 import 'package:bato_mechanic/src/features/home/presentation/widget/service_buttons_grid_shimmer.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/data/mechanic_tips_repository.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/presentaiton/widgets/tips_carousel_shimmer.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
+import 'package:bato_mechanic/src/features/track_mechanic/data/api_track_mechanic_repository.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
@@ -37,6 +39,9 @@ class BuildHomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // ref.listen(watchRepairRequestProvider,
+    //     (previousState, state) => state.showError(context));
+
     final activeRepair = ref.watch(activeRepairRequestProvider);
     return FlipCard(
       speed: 300,

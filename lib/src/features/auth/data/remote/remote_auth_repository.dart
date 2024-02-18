@@ -10,7 +10,8 @@ abstract class RemoteAuthRepository {
   Future<Map<String, dynamic>> signInWithIdAndPassword(
       String uId, String password);
   Future<Map<String, dynamic>> refreshToken(String refreshToken);
-  Future<User> createUserWithIdAndPassword(String uId, String password);
+  Future<User> createUserWithIdAndPassword(
+      String uId, String password, String fullName);
   Future<User> getCurrentUserInfo(String token);
   Future<void> signOut(Ref ref);
 }

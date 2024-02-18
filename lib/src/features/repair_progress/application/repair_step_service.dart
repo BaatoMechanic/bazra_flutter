@@ -32,9 +32,10 @@ class RepairStepService {
 
   Future<bool> updateRepairStepStatus(
       String repairIdx, String repairStepIdx, RepairStepStatus status) async {
+    String statusName = status.name.toLowerCase().replaceAll(" ", "_");
     await ref
         .read(repairStepRepositoryProvider)
-        .updateRepairStepStatus(repairIdx, repairStepIdx, status.name);
+        .updateRepairStepStatus(repairIdx, repairStepIdx, statusName);
     return true;
   }
 }

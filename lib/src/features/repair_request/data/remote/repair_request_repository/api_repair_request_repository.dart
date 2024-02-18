@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
 import 'package:bato_mechanic/src/utils/http/http_client.dart';
@@ -161,3 +162,20 @@ class APIRepairRequestRepository implements RepairRequestRepository {
     return VehicleRepairRequest.fromJson(jsonDecode(response));
   }
 }
+
+final watchRepairStepsProvider = StreamProvider.autoDispose
+    .family<List<RepairStep>, String>((ref, repairRequestIdx) async* {
+  var url = Uri.parse(
+      "${RemoteManager.WEB_SOCKET_BASE_URI}repair-steps/$repairRequestIdx");
+  final channel = WebSocketChannel.connect(url);
+
+  ref.onDispose(() => channel.sink.close());
+
+  await for (final value in channel.stream) {
+    try {
+      yield repairStepsFromJson(value);
+    } catch (e) {
+      yield repairStepsFromJson(value);
+    }
+  }
+});

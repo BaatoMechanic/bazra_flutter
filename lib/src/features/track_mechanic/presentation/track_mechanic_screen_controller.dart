@@ -134,6 +134,19 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
     // return estimatedArrivalTimeInMinutes;
     return 0;
   }
+
+  Future<bool> setAdvancePaymentOnArrival(String repairStepIdx) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => ref
+            .read(repairRequestServiceProvider)
+            .updateVehicleRepairRequest(repairStepIdx, {
+          "advance_payment_status":
+              AdvancePaymentStatus.PAYMENT_ON_ARRIVAL.name.toLowerCase(),
+          "status": VehicleRepairRequestStatus.WAITING_FOR_MECHANIC.name
+              .toLowerCase(),
+        }));
+    return !state.hasError;
+  }
 }
 
 // Function to calculate distance using Haversine formula

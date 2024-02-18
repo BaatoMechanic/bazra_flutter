@@ -30,10 +30,12 @@ class APIRepairStepRepository implements RepairStepRepository {
   Future updateRepairStepStatus(
       String repairRequestIdx, String repairStepIdx, String status) async {
     var url = Uri.parse(
-        '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/$repairRequestIdx/repair_steps/$repairStepIdx/$status');
+        '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/$repairRequestIdx/repair_steps/$repairStepIdx/');
 
     return await HttpHelper.guard(
-        () => http.get(url, headers: {
+        () => http.patch(url, body: {
+              "status": status
+            }, headers: {
               HttpHeaders.authorizationHeader:
                   'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
             }),

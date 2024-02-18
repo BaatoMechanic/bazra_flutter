@@ -446,13 +446,45 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                           ],
                         ),
                       ),
+                      if (repairRequest.advancePaymentStatus ==
+                          AdvancePaymentStatus.PAYMENT_ON_ARRIVAL)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Baato Kharcha",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Flexible(
+                                child: Text(
+                                  repairRequest
+                                      .advancePaymentStatus.humanizeName,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: ThemeColor.primary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       const SizedBox(
                         height: AppHeight.h12,
                       ),
                       if (repairRequest.status ==
                           VehicleRepairRequestStatus
                               .WAITING_FOR_ADVANCE_PAYMENT)
-                        ..._buildBaatoKharcha(context)
+                        ..._buildBaatoKharcha(context, repairRequest.idx)
                       else if (repairRequest.status ==
                           VehicleRepairRequestStatus.COMPLETE)
                         SubmitButton(
@@ -485,7 +517,8 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     );
   }
 
-  List<Widget> _buildBaatoKharcha(BuildContext context) {
+  List<Widget> _buildBaatoKharcha(
+      BuildContext context, String repairRequestIdx) {
     return [
       Text(
         'Please pay baato kharcha to continue the process',
@@ -529,6 +562,29 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                       //   ToastHelper.showNotificationWithCloseButton(
                       //       context, "Something went wrong, please try again");
                       // }
+                    },
+                  ),
+                  PayButton(
+                    label: 'Cash on arrival'.hardcoded(),
+                    buttonColor: Theme.of(context).primaryColor,
+                    shouldShowSpinner: true,
+                    onPressed: () async {
+                      // Capture the context before the async operation
+                      final BuildContext currentContext = context;
+
+                      bool updated = await ref
+                          .read(trackMechanicScreenControllerProvider.notifier)
+                          .setAdvancePaymentOnArrival(repairRequestIdx);
+
+                      if (updated) {
+                        // Use the captured context within the async block
+                        Navigator.of(currentContext).pop();
+
+                        ToastHelper.showNotification(
+                          currentContext,
+                          "Mechanic is on the way".hardcoded(),
+                        );
+                      }
                     },
                   ),
                 ],

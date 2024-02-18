@@ -9,11 +9,12 @@ class SignUpScreenController extends StateNotifier<AsyncValue<void>> {
 
   final Ref ref;
 
-  Future<bool> createUserWithIdAndPassword(String uId, String password) async {
+  Future<bool> createUserWithIdAndPassword(
+      String uId, String password, String fullName) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() => ref
         .read(authServiceProvider)
-        .createUserWithIdAndPassword(uId, password));
+        .createUserWithIdAndPassword(uId, password, fullName));
     return !state.hasError;
   }
 }

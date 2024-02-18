@@ -44,10 +44,11 @@ class AuthService {
     ref.read(authStateProvider.notifier).setUser(response);
   }
 
-  Future<void> createUserWithIdAndPassword(String uId, String password) async {
+  Future<void> createUserWithIdAndPassword(
+      String uId, String password, String fullName) async {
     final response = await ref
         .read(authRepositoryProvider)
-        .createUserWithIdAndPassword(uId, password);
+        .createUserWithIdAndPassword(uId, password, fullName);
 
     ref.read(authStateProvider.notifier).setUser(response);
   }

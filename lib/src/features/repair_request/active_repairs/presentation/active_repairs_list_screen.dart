@@ -18,60 +18,62 @@ class ActiveRepairsListScreen extends ConsumerWidget {
     final recentRepairsValue = ref.watch(fetchUserActiveRepairRequests);
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(AppPadding.p18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Hi there, ${ref.watch(authStateProvider).user?.name}'
-                      .hardcoded(),
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
-                const SizedBox(
-                  height: AppHeight.h8,
-                ),
-                Text(
-                  "Let's get your vehicle back on the road".hardcoded(),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: AppHeight.h30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Active repairs',
-                      style: Theme.of(context).textTheme.headlineLarge,
+        body: Padding(
+          padding: const EdgeInsets.all(AppPadding.p18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Hi there, ${ref.watch(authStateProvider).user?.name}'
+                    .hardcoded(),
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+              const SizedBox(
+                height: AppHeight.h8,
+              ),
+              Text(
+                "Let's get your vehicle back on the road".hardcoded(),
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: AppHeight.h30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Active repairs',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  TextButton.icon(
+                    onPressed: () => context.goNamed(APP_ROUTE.home.name),
+                    icon:
+                        Icon(Icons.add, color: Theme.of(context).primaryColor),
+                    label: Text(
+                      "New Order".hardcoded(),
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                    TextButton.icon(
-                      onPressed: () => context.goNamed(APP_ROUTE.home.name),
-                      icon: Icon(Icons.add,
-                          color: Theme.of(context).primaryColor),
-                      label: Text(
-                        "New Order".hardcoded(),
-                        style: Theme.of(context).textTheme.headlineSmall,
+                  )
+                ],
+              ),
+              Expanded(
+                child: Flexible(
+                  child: AsyncValueWidget(
+                    value: recentRepairsValue,
+                    data: (repairRequests) => ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: repairRequests.length,
+                      itemBuilder: (context, index) =>
+                          RecentRepairContainerWidget(
+                        onPressed: () => context
+                            .pushNamed(APP_ROUTE.repairProgress.name, extra: {
+                          "repairRequestIdx": repairRequests[index].idx
+                        }),
+                        repairRequest: repairRequests[index],
                       ),
-                    )
-                  ],
-                ),
-                AsyncValueWidget(
-                  value: recentRepairsValue,
-                  data: (repairRequests) => ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: repairRequests.length,
-                    itemBuilder: (context, index) =>
-                        RecentRepairContainerWidget(
-                      onPressed: () => context
-                          .pushNamed(APP_ROUTE.repairProgress.name, extra: {
-                        "repairRequestIdx": repairRequests[index].idx
-                      }),
-                      repairRequest: repairRequests[index],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -35,10 +35,9 @@ final watchRepairRequestProvider = StreamProvider.autoDispose
 
   await for (final value in channel.stream) {
     try {
-      yield VehicleRepairRequest.fromJson(jsonDecode(value)['repair_request']);
+      yield VehicleRepairRequest.fromJson(jsonDecode(value));
     } catch (e) {
-      yield VehicleRepairRequest.fromJson(
-          jsonDecode(jsonDecode(jsonDecode(value))['repair_request']));
+      yield VehicleRepairRequest.fromJson(jsonDecode(jsonDecode(value)));
     }
   }
 });

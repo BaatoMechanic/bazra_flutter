@@ -3,8 +3,10 @@ import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step_re
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
+import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../common/widgets/audio_widget.dart';
 import '../../../../utils/constants/managers/font_manager.dart';
@@ -94,13 +96,18 @@ class RepairStepBottomSheet extends ConsumerWidget {
               SubmitButton(
                 label: "Complete the process".hardcoded(),
                 onPressed: () async {
-                  await ref
+                  bool updated = await ref
                       .read(repairProgressScreenControllerProvider.notifier)
                       .updateRepairStepStatus(
                         repairRequestIdx,
                         step.idx,
                         RepairStepStatus.COMPLETE,
                       );
+                  if (updated) {
+                    context.pop();
+                    ToastHelper.showNotification(context,
+                        "Step has been marked as complete.".hardcoded());
+                  }
                 },
               ),
           ],

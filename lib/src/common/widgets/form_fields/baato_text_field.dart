@@ -1,16 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
 
-import 'package:bato_mechanic/src/utils/validators/validation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utils/constants/managers/color_manager.dart';
-import '../../../utils/constants/managers/values_manager.dart';
 import 'base_form_field.dart';
 
 class BaatoTextField extends StatelessWidget {
-  BaatoTextField({
+  const BaatoTextField({
     Key? key,
     this.title,
     this.labelText,
@@ -50,7 +46,9 @@ class BaatoTextField extends StatelessWidget {
       focusNode: focusNode,
       nextFocusNode: nextFocusNode,
       autovalidateMode: autovalidateMode,
-      validator: validator ?? (value) {},
+      validator: validator ?? (value) {
+        return null;
+      },
       textInputType: TextInputType.text,
       onSaved: onSaved,
       onChanged: onChanged,

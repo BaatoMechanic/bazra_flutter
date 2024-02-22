@@ -19,6 +19,7 @@ class DefaultManager {
   static const double borderRadiusSm = AppRadius.r4;
   static const double borderRadiusMd = AppRadius.r8;
   static const double borderRadiusLg = AppRadius.r12;
+  static const double borderRadiusFull = AppRadius.r100;
 
   // Divider height
   static const double dividerHeight = AppHeight.h2;

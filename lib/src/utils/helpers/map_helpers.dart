@@ -1,4 +1,6 @@
-import 'package:bato_mechanic/src/features/repair_request/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/core/application/location_service.dart';
+import 'package:bato_mechanic/src/features/core/data/map_repository/fake_map_repository.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:geolocator/geolocator.dart';
 
 class MapHelper {
@@ -25,6 +27,10 @@ class MapHelper {
     }
 
     position = await Geolocator.getCurrentPosition();
+
+    String? locationName = await FakeMapRepository()
+        .fetchLocationName(position.latitude, position.longitude);
+
     return UserPosition(
       latitude: position.latitude,
       longitude: position.longitude,
@@ -34,7 +40,7 @@ class MapHelper {
       heading: position.heading,
       speed: position.speed,
       speedAccuracy: position.speedAccuracy,
-      locationName: null,
+      locationName: locationName,
     );
   }
 }

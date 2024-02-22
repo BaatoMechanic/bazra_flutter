@@ -1,13 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 
-import '../../utils/constants/managers/color_manager.dart';
 
 class InPlaceCarouselWidget extends StatefulWidget {
   const InPlaceCarouselWidget({
@@ -35,7 +32,6 @@ class _CarouselWithIndicatorState extends State<InPlaceCarouselWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // final List<Widget> tipSliders = widget.items.map((item) => item).toList();
     return SizedBox(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -62,8 +58,8 @@ class _CarouselWithIndicatorState extends State<InPlaceCarouselWidget> {
                 return GestureDetector(
                   onTap: () => _controller.animateToPage(entry.key),
                   child: Container(
-                    width: 12.0,
-                    height: 12.0,
+                    width: AppWidth.h8,
+                    height: AppWidth.h8,
                     margin: const EdgeInsets.symmetric(
                         vertical: 8.0, horizontal: 4.0),
                     decoration: BoxDecoration(

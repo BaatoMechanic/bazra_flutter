@@ -1,37 +1,67 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
+import 'package:bato_mechanic/src/features/core/domain/abstract_user_model.dart';
+import 'package:bato_mechanic/src/utils/enums/dob_type.dart';
 
-import 'package:flutter/foundation.dart';
+List<User> usersFromJson(List<dynamic> jsonList) {
+  return jsonList.map((json) => User.fromJson(json)).toList();
+}
 
-import '../../repair_request/domain/user_position.dart';
-
-class User {
+class User extends AbstractUserModel {
   User({
-    required this.idx,
-    required this.name,
-    required this.email,
-    required this.phone,
-    required this.profilePic,
-    this.currentLocation,
-    required this.primaryRole,
-    required this.roles,
+    required super.idx,
+    required super.name,
+    required super.email,
+    required super.phone,
+    required super.gender,
+    required super.profilePic,
+    required super.dobType,
+    required super.dateOfBirth,
+    required super.primaryRole,
+    required super.roles,
   });
-  final String idx;
-  final String name;
-  final String? email;
-  final String? phone;
-  final String? profilePic;
-  final UserPosition? currentLocation;
-  final String? primaryRole;
-  final List<String> roles;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'idx': idx,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'gender': gender,
+      'profile_pic': profilePic,
+      'dob_type': dobTypeToJson(dobType),
+      'date_of_birth': dateOfBirth,
+      'primary_role': primaryRole,
+      'roles': roles,
+    };
+  }
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      idx: json['idx'],
+      name: json['name'],
+      email: json['email'],
+      phone: json['phone'],
+      gender: json['gender'],
+      profilePic: json['profile_pic'],
+      dobType: dobTypeFromJson(json['dob_type']),
+      dateOfBirth: json['date_of_birth'],
+      primaryRole: json['primary_role'],
+      roles: (json['roles'] as List).map((e) => e as String).toList(),
+    );
+  }
 
   User copyWith({
     String? idx,
     String? name,
     String? email,
     String? phone,
+    String? gender,
     String? profilePic,
-    UserPosition? currentLocation,
+    bool? isPhoneVerified,
+    bool? isEmailVerified,
+    bool? isVerified,
+    DOBType? dobType,
+    DateTime? dateOfBirth,
     String? primaryRole,
     List<String>? roles,
   }) {
@@ -40,76 +70,12 @@ class User {
       name: name ?? this.name,
       email: email ?? this.email,
       phone: phone ?? this.phone,
+      gender: gender ?? this.gender,
       profilePic: profilePic ?? this.profilePic,
-      currentLocation: currentLocation ?? this.currentLocation,
+      dobType: dobType ?? this.dobType,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       primaryRole: primaryRole ?? this.primaryRole,
       roles: roles ?? this.roles,
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'idx': idx,
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'profilePic': profilePic,
-      'currentLocation': currentLocation?.toMap(),
-      'primaryRole': primaryRole,
-      'roles': roles,
-    };
-  }
-
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
-        idx: map['idx'] as String,
-        name: map['name'] as String,
-        email: map['email'] != null ? map['email'] as String : null,
-        phone: map['phone'] != null ? map['phone'] as String : null,
-        profilePic: map['image'] != null ? map['image'] as String : null,
-        currentLocation: map['currentLocation'] != null
-            ? UserPosition.fromMap(
-                map['currentLocation'] as Map<String, dynamic>)
-            : null,
-        primaryRole: map['primary_role'],
-        roles: List<String>.from(
-          (map['roles'] as List<dynamic>),
-        ));
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory User.fromJson(String source) =>
-      User.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'User(idx: $idx, name: $name, email: $email, phone: $phone, profilePic: $profilePic, currentLocation: $currentLocation, primaryRole: $primaryRole, roles: $roles)';
-  }
-
-  @override
-  bool operator ==(covariant User other) {
-    if (identical(this, other)) return true;
-
-    return other.idx == idx &&
-        other.name == name &&
-        other.email == email &&
-        other.phone == phone &&
-        other.profilePic == profilePic &&
-        other.currentLocation == currentLocation &&
-        other.primaryRole == primaryRole &&
-        listEquals(other.roles, roles);
-  }
-
-  @override
-  int get hashCode {
-    return idx.hashCode ^
-        name.hashCode ^
-        email.hashCode ^
-        phone.hashCode ^
-        profilePic.hashCode ^
-        currentLocation.hashCode ^
-        primaryRole.hashCode ^
-        roles.hashCode;
   }
 }

@@ -1,10 +1,8 @@
-import 'package:bato_mechanic/src/common/widgets/form_fields/email_field.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/password_field.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen_controller.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -26,10 +24,11 @@ class SignUpScreen extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _idController = TextEditingController();
-
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   final _emailFocusNode = FocusNode();
+  final _nameFocusNode = FocusNode();
 
   final _passwordFocusNode = FocusNode();
 
@@ -40,14 +39,14 @@ class SignUpScreen extends ConsumerWidget {
 
       final response = await ref
           .read(signupScreenControllerProvider.notifier)
-          .createUserWithIdAndPassword(
-              _idController.text, _passwordController.text);
+          .createUserWithIdAndPassword(_idController.text,
+              _passwordController.text, _nameController.text);
       if (response) {
         ToastHelper.showNotification(
             context,
             'You have been registered successfully. Please login to continue'
                 .hardcoded());
-        context.replaceNamed(appRoute.login.name);
+        context.replaceNamed(APP_ROUTE.login.name);
       }
     }
   }
@@ -95,6 +94,16 @@ class SignUpScreen extends ConsumerWidget {
                       focusNode: _passwordFocusNode,
                     ),
                     const SizedBox(
+                      height: DefaultManager.defaultSpace,
+                    ),
+                    BaatoTextField(
+                      title: "Name".hardcoded(),
+                      labelText: "Name".hardcoded(),
+                      hintText: "Enter your full name".hardcoded(),
+                      controller: _nameController,
+                      focusNode: _nameFocusNode,
+                    ),
+                    const SizedBox(
                       height: AppHeight.h30,
                     ),
                     SubmitButton(
@@ -114,7 +123,7 @@ class SignUpScreen extends ConsumerWidget {
                     LoginSignUpLabel(
                       infoText: 'Already have an account ?'.hardcoded(),
                       labelText: 'Login'.hardcoded(),
-                      onPressed: () => context.goNamed(appRoute.login.name),
+                      onPressed: () => context.goNamed(APP_ROUTE.login.name),
                     ),
                   ],
                 ),

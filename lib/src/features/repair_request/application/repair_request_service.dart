@@ -2,93 +2,89 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bato_mechanic/src/features/repair_request/data/repair_request_repository/repair_request_repository.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 import 'package:http/http.dart';
 
 import '../../../utils/model_utils.dart';
 import '../domain/vehicle_repair_request.dart';
+
+final activeRepairRequestProvider =
+    StateProvider<VehicleRepairRequest?>((ref) => null);
 
 class RepairRequestService {
   RepairRequestService({
     required this.ref,
   });
 
-  final _repairRequestState = InMemoryStore<VehicleRepairRequest?>(null);
   Ref ref;
 
-  Stream<VehicleRepairRequest?> _repairRequestStateChanges() =>
-      _repairRequestState.stream;
-  VehicleRepairRequest? get activeRepairRequest => _repairRequestState.value;
+  // Stream<UserPosition?> watchUsersLocation(String repairRequestId) {
+  //   var locations = ref
+  //       .read(repairRequestRepositoryProvider)
+  //       .watchUsersLocation(repairRequestId);
 
-  void setActiveRepairRequest(VehicleRepairRequest request) {
-    _repairRequestState.value = request;
-  }
+  //   return Stream.empty();
+  // }
 
-  Future<dynamic> createVehicleRepairRequest(
+  Future<VehicleRepairRequest> createVehicleRepairRequest(
       Map<String, dynamic> requestInfo) async {
     var response = await ref
         .read(repairRequestRepositoryProvider)
         .requestForVehicleRepair(requestInfo);
 
-    if (response is Success) {
-      VehicleRepairRequest repairRequest = VehicleRepairRequest.fromJson(
-          jsonDecode((response.response as Response).body.toString()));
-      return repairRequest;
-    }
-    return false;
-    // return response;
+    return response;
   }
 
-  Future<dynamic> addImagesToVechicleRepairRequest(
+  Future<VehicleRepairRequest> fetchUserRepairRequest() async {
+    var response = await ref
+        .read(repairRequestRepositoryProvider)
+        .fetchUserRepairRequest();
+
+    ref.read(activeRepairRequestProvider.notifier).state = response.first;
+
+    return response.first;
+  }
+
+  Future<VehicleRepairRequest> updateVehicleRepairRequest(
+      String requestId, Map<String, dynamic> requestInfo) async {
+    var response = await ref
+        .read(repairRequestRepositoryProvider)
+        .updateRepairRequest(requestId, requestInfo);
+
+    return response;
+  }
+
+  Future<VehicleRepairRequest> addImagesToVechicleRepairRequest(
       String requestId, List<File> images) async {
     var response = await ref
         .read(repairRequestRepositoryProvider)
         .addImagesToRepairRequest(requestId, images);
-    if (response is Success) {
-      VehicleRepairRequest repairRequest = VehicleRepairRequest.fromJson(
-          jsonDecode((response.response as Response).body.toString()));
-      _repairRequestState.value = repairRequest;
-      return repairRequest;
-    }
-    if (response is Failure) {
-      throw Exception("Couldn't add Images");
-    }
     return response;
   }
-
-  fetchUserRepairRequests(String userId) async {
-    await Future.delayed(Duration(seconds: 2));
-    final response = await ref
-        .read(repairRequestRepositoryProvider)
-        .fetchUserRepairRequest(userId);
-    if (response is Success) {
-      List<VehicleRepairRequest> repairRequests =
-          vehicleRepairRequestsFromJson((response.response as Response).body);
-      if (repairRequests.isEmpty) return false;
-      // ref
-      //     .read(repairRequestControllerProvider.notifier)
-      //     .setRepairRequest(repairRequests.first);
-      setActiveRepairRequest(repairRequests.first);
-      return true;
-    }
-    print('here');
-    return false;
-  }
-
-  void dispose() => _repairRequestState.close();
 }
 
 final repairRequestServiceProvider = Provider((ref) {
-  final serviceProvider = RepairRequestService(ref: ref);
-  ref.onDispose(() => serviceProvider.dispose());
-  return serviceProvider;
+  return RepairRequestService(ref: ref);
 });
 
-final watchRepairRequestStateChangesProvider = StreamProvider((ref) {
-  final serviceProvider = ref.watch(repairRequestServiceProvider);
-  return serviceProvider._repairRequestStateChanges();
+final fetchUserRepairRequestProvider = FutureProvider.autoDispose(
+    (ref) => ref.watch(repairRequestServiceProvider).fetchUserRepairRequest());
+
+final fetchRepairRequestProvider = FutureProvider.autoDispose
+    .family<VehicleRepairRequest, String>((ref, repairRequestIdx) {
+  return ref
+      .watch(repairRequestRepositoryProvider)
+      .fetchVechicleRepairRequest(repairRequestIdx);
 });
+
+// final usersLocationProvider = StreamProvider.autoDispose
+//     .family<UserPosition?, String>((ref, repairRequestId) {
+//   return ref
+//       .watch(repairRequestRepositoryProvider)
+//       .watchUsersLocation(repairRequestId);
+// });

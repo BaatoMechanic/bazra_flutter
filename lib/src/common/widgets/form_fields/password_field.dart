@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
-import 'package:bato_mechanic/src/utils/validators/validation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +8,7 @@ import '../../../utils/constants/managers/color_manager.dart';
 import '../../../utils/constants/managers/values_manager.dart';
 
 class PasswordField extends StatefulWidget {
-  PasswordField({
+  const PasswordField({
     Key? key,
     this.title,
     this.labelText,
@@ -34,7 +33,7 @@ class _PasswordFieldState extends State<PasswordField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +112,7 @@ class _PasswordFieldState extends State<PasswordField> {
                   controller: widget.controller,
                   obscureText: _obscurePassword,
                   focusNode: widget.focusNode,
-                  style: TextStyle().copyWith(color: ThemeColor.dark),
+                  style: const TextStyle().copyWith(color: ThemeColor.dark),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   // TODO: uncomment this line to enable validation after development
                   // validator: (value) => AppValidator.validatePassword(value),
@@ -122,7 +121,7 @@ class _PasswordFieldState extends State<PasswordField> {
                       : TextInputAction.next,
                   keyboardType: TextInputType.text,
                   textAlignVertical: TextAlignVertical.top,
-                  decoration: InputDecoration().copyWith(
+                  decoration: const InputDecoration().copyWith(
                     labelText: widget.labelText,
                     hintText: widget.hintText,
                     suffix: IconButton(
@@ -137,7 +136,7 @@ class _PasswordFieldState extends State<PasswordField> {
                             .style!
                             .copyWith(
                                 backgroundColor:
-                                    MaterialStatePropertyAll<Color>(
+                                    const MaterialStatePropertyAll<Color>(
                                         ThemeColor.transparent)),
                         onPressed: () {
                           setState(() {

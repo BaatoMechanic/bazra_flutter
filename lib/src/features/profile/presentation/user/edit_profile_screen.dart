@@ -4,11 +4,9 @@ import 'package:bato_mechanic/src/common/widgets/form_fields/email_field.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/phone_number_field.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../utils/constants/managers/font_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
@@ -53,7 +51,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData _theme = Theme.of(context);
+    ThemeData theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -115,7 +113,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ToastHelper.showCenterAlertWithListOptions(
                             context, [cameraOption, galleryOption]);
                       },
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                     ),
                   )
                 ],

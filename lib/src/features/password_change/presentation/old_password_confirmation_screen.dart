@@ -32,7 +32,7 @@ class _ConfirmOldPasswordScreenState extends State<ConfirmOldPasswordScreen> {
               'Please enter your old password'.hardcoded(),
               style: Theme.of(context).textTheme.displaySmall,
             ),
-            SizedBox(
+            const SizedBox(
               height: AppHeight.h50,
             ),
             const SizedBox(height: 16.0),
@@ -44,7 +44,7 @@ class _ConfirmOldPasswordScreenState extends State<ConfirmOldPasswordScreen> {
             ),
             const SizedBox(height: 16.0),
             SubmitButton(
-              onPressed: () => context.pushNamed(appRoute.confirmOTP.name),
+              onPressed: () => context.pushNamed(APP_ROUTE.confirmOTP.name),
               label: 'Change Password'.hardcoded(),
             ),
           ],

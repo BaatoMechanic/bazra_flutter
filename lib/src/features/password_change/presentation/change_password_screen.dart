@@ -3,6 +3,8 @@ import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
+
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
 }
@@ -28,14 +30,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               'Enter new password',
               style: Theme.of(context).textTheme.displayLarge,
             ),
-            SizedBox(
+            const SizedBox(
               height: AppHeight.h12,
             ),
             Text(
               'New password must be different from previously used password',
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            SizedBox(
+            const SizedBox(
               height: AppHeight.h50,
             ),
             const SizedBox(height: 16.0),

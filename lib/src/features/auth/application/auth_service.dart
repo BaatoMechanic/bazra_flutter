@@ -2,17 +2,11 @@
 import 'dart:convert';
 
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
-import 'package:bato_mechanic/src/features/auth/data/auth_repository.dart';
-import 'package:bato_mechanic/src/utils/model_utils.dart';
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bato_mechanic/src/features/auth/domain/user.dart';
-import 'package:bato_mechanic/src/utils/in_memory_store.dart';
-import 'package:http/http.dart';
-
-import '../../../utils/exceptions/base_exception.dart';
+import '../data/remote/remote_auth_repository.dart';
 
 class AuthService {
   AuthService({
@@ -22,52 +16,51 @@ class AuthService {
   final Ref ref;
 
   Future<void> signInWithIdAndPassword(String uId, String password) async {
-    final response = await ref
+    final responseBody = await ref
         .read(authRepositoryProvider)
         .signInWithIdAndPassword(uId, password);
 
-    if (response is Success) {
-      Map<String, dynamic> responseBody =
-          jsonDecode((response.response as Response).body);
+    ref
+        .read(sharedPreferencesProvider)
+        .setString('access', responseBody['access'] as String);
+    ref
+        .read(sharedPreferencesProvider)
+        .setString('refresh', responseBody['refresh'] as String);
 
-      ref
-          .read(sharedPreferencesProvider)
-          .setString('access', responseBody['access'] as String);
-      ref
-          .read(sharedPreferencesProvider)
-          .setString('refresh', responseBody['refresh'] as String);
-
-      final userInfo = await ref.read(authRepositoryProvider).getUserInfo(
-            responseBody['access'] as String,
-          );
-
-      if (userInfo is Success) {
-        User user = User.fromJson(jsonDecode((jsonEncode(userInfo.response))));
-        ref.read(userServiceProvider).setCurrentUser(user);
-      }
-
-      if (userInfo is Failure) {
-        throw BaseException(message: userInfo.errorResponse.toString());
-      }
-    }
-
-    if (response is Failure) {
-      throw BaseException(message: response.errorResponse.toString());
-    }
+    fetchCurrentUserInfo(responseBody['access'] as String);
   }
 
-  Future<void> createUserWithIdAndPassword(String uId, String password) async {
+  Future<void> refreshToken(String refreshToken) async {
+    final response =
+        await ref.read(authRepositoryProvider).refreshToken(refreshToken);
+    ref
+        .read(sharedPreferencesProvider)
+        .setString('access', response['access'] as String);
+  }
+
+  Future<void> fetchCurrentUserInfo(String accessToken) async {
+    final response =
+        await ref.read(authRepositoryProvider).getCurrentUserInfo(accessToken);
+    ref.read(authStateProvider.notifier).setUser(response);
+  }
+
+  Future<void> createUserWithIdAndPassword(
+      String uId, String password, String fullName) async {
     final response = await ref
         .read(authRepositoryProvider)
-        .createUserWithIdAndPassword(uId, password);
+        .createUserWithIdAndPassword(uId, password, fullName);
 
-    if (response is Success) {
-      User user = User.fromJson(jsonEncode(response.response));
-      ref.read(userServiceProvider).setCurrentUser(user);
-    }
+    ref.read(authStateProvider.notifier).setUser(response);
+  }
+
+  bool logOut() {
+    ref.read(sharedPreferencesProvider).remove('access');
+    ref.read(sharedPreferencesProvider).remove('refresh');
+    return true;
   }
 }
 
 final authServiceProvider = Provider((ref) {
-  return AuthService(ref: ref);
+  final service = AuthService(ref: ref);
+  return service;
 });

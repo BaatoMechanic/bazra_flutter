@@ -5,6 +5,8 @@
 
 import 'dart:convert';
 
+import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
+
 VehicleRepairRequest vehicleRepairRequestFromJson(String str) =>
     VehicleRepairRequest.fromJson(json.decode(str));
 
@@ -23,86 +25,88 @@ enum VehicleRepairRequestStatus {
   WAITING_FOR_MECHANIC,
   IN_PROGRESS,
   HALT,
-  WAITING_COMPLETION_ACCEPTANCE,
-  COMPLETED,
+  WAITING_FOR_COMPLETION_ACCEPTANCE,
+  COMPLETE,
   CANCELLED
 }
 
-class VehicleRepairRequest {
-  int id;
-  int customerId;
-  int? preferredMechanicId;
-  int? assignedMechanicId;
-  String locationName;
-  String locationCoordinates;
-  int vehicleCategoryId;
-  int vehiclePartId;
-  String? title;
-  String? description;
-  List<VehicleRepairRequestImage> images;
-  List<VehicleRepairRequestVideo> videos;
-  VehicleRepairRequestStatus status;
-  DateTime createdAt;
+enum AdvancePaymentStatus { PENDING, COMPLETE, PAYMENT_ON_ARRIVAL }
 
+class VehicleRepairRequest {
   VehicleRepairRequest({
-    required this.id,
-    required this.customerId,
-    this.preferredMechanicId,
-    this.assignedMechanicId,
-    required this.locationName,
-    required this.locationCoordinates,
-    required this.vehicleCategoryId,
-    required this.vehiclePartId,
-    required this.title,
-    required this.description,
-    required this.images,
-    required this.videos,
+    required this.idx,
+    this.title,
+    this.description,
+    required this.userIdx,
+    required this.vehicleCategoryIdx,
+    required this.serviceTypeIdx,
+    this.preferredMechanicIdx,
+    this.assignedMechanicIdx,
+    this.location,
     required this.status,
+    required this.advancePaymentStatus,
     required this.createdAt,
   });
 
+  String idx;
+  String? title;
+  String? description;
+  String userIdx;
+  String vehicleCategoryIdx;
+  // String vehiclePartIdx;
+  String serviceTypeIdx;
+  String? preferredMechanicIdx;
+  String? assignedMechanicIdx;
+  Map<String, dynamic>? location;
+  VehicleRepairRequestStatus status;
+  AdvancePaymentStatus advancePaymentStatus;
+  DateTime createdAt;
+
   factory VehicleRepairRequest.fromJson(Map<String, dynamic> json) =>
       VehicleRepairRequest(
-        id: json["id"],
-        customerId: json["customer"],
-        preferredMechanicId: json["preferred_mechanic"],
-        assignedMechanicId: json["assigned_mechanic"],
-        locationName: json["location_name"],
-        locationCoordinates: json["location_coordinates"],
-        vehicleCategoryId: json["vehicle"],
-        vehiclePartId: json["vehicle_part"],
-        title: json["title"],
-        description: json["description"],
-        images: List<VehicleRepairRequestImage>.from(
-            json["images"].map((x) => VehicleRepairRequestImage.fromJson(x))),
-        videos: List<VehicleRepairRequestVideo>.from(
-            json["videos"].map((x) => VehicleRepairRequestVideo.fromJson(x))),
-        // status: json['status'],
-        status: vehicleRepairRequestStatusFromJson(json['status']),
-        createdAt: DateTime.parse(json["created_at"]),
-      );
+          idx: json["idx"],
+          userIdx: json["user"],
+          preferredMechanicIdx: json["preferred_mechanic"],
+          assignedMechanicIdx: json["assigned_mechanic"],
+          vehicleCategoryIdx: json["vehicle_type"],
+          // vehiclePartIdx: json["vehicle_part"],
+          serviceTypeIdx: json["service_type"],
+          title: json["title"],
+          description: json["description"],
+          // images: List<VehicleRepairRequestImage>.from(
+          //     json["images"].map((x) => VehicleRepairRequestImage.fromJson(x))),
+          // videos: List<VehicleRepairRequestVideo>.from(
+          //     json["videos"].map((x) => VehicleRepairRequestVideo.fromJson(x))),
+          location: json["location"],
+          status: vehicleRepairRequestStatusFromJson(json['status']),
+          advancePaymentStatus:
+              advancePaymentStatusFromJson(json["advance_payment_status"]),
+          createdAt: DateTime.parse(json["created_at"]));
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "customer": customerId,
-        "preferred_mechanic": preferredMechanicId,
-        "assigned_mechanic": assignedMechanicId,
-        "location_name": locationName,
-        "location_coordinates": locationCoordinates,
-        "vehicle": vehicleCategoryId,
-        "vehicle_part": vehiclePartId,
+        "id": idx,
+        "customer": userIdx,
+        "preferred_mechanic": preferredMechanicIdx,
+        "assigned_mechanic": assignedMechanicIdx,
+
+        "vehicle": vehicleCategoryIdx,
+        // "vehicle_part": vehiclePartIdx,
+        "service_type": serviceTypeIdx,
         "title": title,
         "description": description,
-        "images": List<dynamic>.from(images.map((x) => x.toJson())),
-        "videos": List<dynamic>.from(videos.map((x) => x.toJson())),
+        // "images": List<dynamic>.from(images.map((x) => x.toJson())),
+        // "videos": List<dynamic>.from(videos.map((x) => x.toJson())),
+        "location": location,
+
         "status": status,
+        "advance_payment_status": advancePaymentStatus,
         "created_at": createdAt.toIso8601String(),
       };
 
   // Function to convert a JSON value to the enum
   static VehicleRepairRequestStatus vehicleRepairRequestStatusFromJson(
       String status) {
-    switch (status) {
+    switch (status.toUpperCase()) {
       case "PENDING":
         return VehicleRepairRequestStatus.PENDING;
       case "WAITING_FOR_ADVANCE_PAYMENT":
@@ -115,10 +119,10 @@ class VehicleRepairRequest {
         return VehicleRepairRequestStatus.IN_PROGRESS;
       case "HALT":
         return VehicleRepairRequestStatus.HALT;
-      case "WAITING_COMPLETION_ACCEPTANCE":
-        return VehicleRepairRequestStatus.WAITING_COMPLETION_ACCEPTANCE;
-      case "COMPLETED":
-        return VehicleRepairRequestStatus.COMPLETED;
+      case "WAITING_FOR_COMPLETION_ACCEPTANCE":
+        return VehicleRepairRequestStatus.WAITING_FOR_COMPLETION_ACCEPTANCE;
+      case "COMPLETE":
+        return VehicleRepairRequestStatus.COMPLETE;
       case "CANCELLED":
         return VehicleRepairRequestStatus.CANCELLED;
       default:
@@ -128,37 +132,57 @@ class VehicleRepairRequest {
     }
   }
 
+  static AdvancePaymentStatus advancePaymentStatusFromJson(String status) {
+    switch (status.toUpperCase()) {
+      case "PENDING":
+        return AdvancePaymentStatus.PENDING;
+      case "COMPLETE":
+        return AdvancePaymentStatus.COMPLETE;
+      case "PAYMENT_ON_ARRIVAL":
+        return AdvancePaymentStatus.PAYMENT_ON_ARRIVAL;
+      default:
+        // Handle unknown or unsupported values
+        // throw Exception("Unsupported status value: $status");
+        return AdvancePaymentStatus.PENDING;
+    }
+  }
+
   VehicleRepairRequest copyWith({
     int? id,
     int? customerId,
     int? preferredMechanicId,
     int? assignedMechanicId,
-    String? locationName,
-    String? locationCoordinates,
     int? vehicleId,
-    int? vehiclePartId,
+    // int? vehiclePartId,
+    int? serviceTypeId,
     String? title,
     String? description,
+    Map<String, dynamic>? location,
+    UserPosition? mechanicLocation,
     List<VehicleRepairRequestImage>? images,
     List<VehicleRepairRequestVideo>? videos,
     DateTime? createdAt,
     VehicleRepairRequestStatus? status,
+    AdvancePaymentStatus? advancePaymentStatus,
   }) {
     return VehicleRepairRequest(
-      id: id ?? this.id,
-      customerId: customerId ?? this.customerId,
-      preferredMechanicId: preferredMechanicId ?? this.preferredMechanicId,
-      assignedMechanicId: assignedMechanicId ?? this.assignedMechanicId,
-      locationName: locationName ?? this.locationName,
-      locationCoordinates: locationCoordinates ?? this.locationCoordinates,
-      vehicleCategoryId: vehicleId ?? this.vehicleCategoryId,
-      vehiclePartId: vehiclePartId ?? this.vehiclePartId,
+      idx: idx,
+      userIdx: userIdx,
+      preferredMechanicIdx: preferredMechanicIdx,
+      assignedMechanicIdx: assignedMechanicIdx,
+      vehicleCategoryIdx: vehicleCategoryIdx,
+      // vehiclePartIdx: vehiclePartIdx,
+      serviceTypeIdx: serviceTypeIdx,
       title: title ?? this.title,
       description: description ?? this.description,
-      images: images ?? this.images,
-      videos: videos ?? this.videos,
+      location: location ?? this.location,
+
+      // images: images ?? this.images,
+      // videos: videos ?? this.videos,
+      // createdAt: createdAt ?? this.createdAt,
+      status: status ?? this.status,
+      advancePaymentStatus: advancePaymentStatus ?? this.advancePaymentStatus,
       createdAt: createdAt ?? this.createdAt,
-      status: status ?? VehicleRepairRequestStatus.PENDING,
     );
   }
 }

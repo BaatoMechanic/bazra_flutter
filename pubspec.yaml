@@ -32,9 +32,9 @@ dependencies:
   audioplayers: ^5.2.0
   carousel_slider: ^4.2.1
   cupertino_icons: ^1.0.2
+  flip_card: ^0.7.0
   flutter:
     sdk: flutter
-  flutter_flip_card: ^0.0.4
   flutter_map: ^4.0.0
   flutter_map_location_marker: ^6.0.0
   flutter_riverpod: ^2.4.4
@@ -43,11 +43,15 @@ dependencies:
   go_router: ^11.1.4
   http: ^0.13.5
   image_picker: ^0.8.4+2
+  intl: ^0.18.0
   location_picker_flutter_map: ^1.2.1
   provider: ^6.0.5
   rxdart: ^0.27.7
+  sembast: ^3.5.0+1
   shared_preferences: ^2.2.1
+  shimmer: ^3.0.0
   video_player: ^2.2.5
+  web_socket_channel: ^2.4.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

@@ -1,27 +1,26 @@
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/test_vehicles.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/vehicle_categories/vehicle_category_screen_controller.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../utils/constants/managers/values_manager.dart';
-import '../../application/vechicle_category_service.dart';
+import '../../../vehicle_category/application/vechicle_category_service.dart';
 
 class VehiclesScreen extends ConsumerWidget {
   const VehiclesScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedCategory =
-        ref.watch(vehicleCategoryServiceProvider).selectedVehicleCategory;
+    // final selectedCategory =
+    //     ref.watch(vehicleCategoryServiceProvider).selectedVehicleCategory;
+    final selectedCategory = ref.watch(selectedVehicleCategoryProvider);
     final vehiclesValue =
-        ref.watch(fetchVehiclesProvider(selectedCategory!.id.toString()));
+        ref.watch(fetchVehiclesProvider(selectedCategory!.idx.toString()));
     return Scaffold(
         body: AsyncValueWidget(
       value: vehiclesValue,
@@ -46,10 +45,10 @@ class VehiclesScreen extends ConsumerWidget {
                 ),
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
-                    ref
-                        .read(vehiclesScreenControllerProvider.notifier)
-                        .setSelectedVehicle(vehicles[index]);
-                    context.goNamed(appRoute.parts.name);
+                    // ref
+                    //     .read(vehiclesScreenControllerProvider.notifier)
+                    //     .setSelectedVehicle(vehicles[index]);
+                    context.goNamed(APP_ROUTE.parts.name);
                   },
                   child: Card(
                     margin: const EdgeInsets.all(AppMargin.m8),

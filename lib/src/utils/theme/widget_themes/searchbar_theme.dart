@@ -1,5 +1,4 @@
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/int_extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/managers/color_manager.dart';

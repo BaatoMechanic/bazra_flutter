@@ -1,4 +1,5 @@
 class ApiStrings {
+  static const String httpErrorString = "Http Error";
   static const String invalidResponseString = "Invalid Response";
   static const String noInternetString = "No Internet";
   static const String invalidFormatString = "Invalid Format";

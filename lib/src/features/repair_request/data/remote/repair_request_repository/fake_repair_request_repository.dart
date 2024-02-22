@@ -102,8 +102,11 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
         "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
         "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        "service_type": "4ebFHe3UfuBLr9WbEroijH",
         // "status": "complete"
-        "status": "waiting_for_completion_acceptance"
+        "status": "waiting_for_completion_acceptance",
+        "advance_payment_status": "pending",
+        "created_at": "2023-10-05T17:19:44.893829Z"
       }),
     );
   }
@@ -122,8 +125,11 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
         "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
         "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        "service_type": "4ebFHe3UfuBLr9WbEroijH",
+        "advance_payment_status": "pending",
         // "status": "waiting_for_advance_payment"
-        "status": "waiting_for_completion_acceptance"
+        "status": "waiting_for_completion_acceptance",
+        "created_at": "2023-10-05T17:19:44.893829Z"
         // "status": "pending"
       },
       {
@@ -135,9 +141,12 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
         "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
         "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        "advance_payment_status": "pending",
         // "assigned_mechanic": null,
+        "service_type": "4ebFHe3UfuBLr9WbEroijH",
         "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
-        "status": "waiting_for_completion_acceptance"
+        "status": "waiting_for_completion_acceptance",
+        "created_at": "2023-10-05T17:19:44.893829Z"
       },
     ]);
 
@@ -160,7 +169,9 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
         "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
         // "status": "waiting_for_advance_payment"
-        "status": "waiting_for_completion_acceptance"
+        "status": "waiting_for_completion_acceptance",
+        "advance_payment_status": "pending",
+        "created_at": "2023-10-05T17:19:44.893829Z"
         // "status": "pending"
       },
       {
@@ -172,9 +183,11 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
         "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
         "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        "advance_payment_status": "pending",
         // "assigned_mechanic": null,
         "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
-        "status": "waiting_for_completion_acceptance"
+        "status": "waiting_for_completion_acceptance",
+        "created_at": "2023-10-05T17:19:44.893829Z"
       },
     ]);
 
@@ -197,7 +210,10 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
         "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
         // "status": "waiting_for_advance_payment"
-        "status": "waiting_for_completion_acceptance"
+        "status": "waiting_for_completion_acceptance",
+        "advance_payment_status": "pending",
+        "created_at": "2023-10-05T17:19:44.893829Z"
+
         // "status": "pending"
       },
       {
@@ -209,9 +225,11 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
         "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
         "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
+        "advance_payment_status": "pending",
         // "assigned_mechanic": null,
         "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
-        "status": "waiting_for_completion_acceptance"
+        "status": "waiting_for_completion_acceptance",
+        "created_at": "2023-10-05T17:19:44.893829Z"
       },
     ]);
 
@@ -233,7 +251,9 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "vehicle_type": "dgxThbdwDARVmQxDMzmuYt",
         "vehicle_part": "mNyhe7hNaDL3MpqtkofyS5",
         "assigned_mechanic": null,
-        "status": "complete"
+        "advance_payment_status": "pending",
+        "status": "complete",
+        "created_at": "2023-10-05T17:19:44.893829Z"
       }),
     );
   }

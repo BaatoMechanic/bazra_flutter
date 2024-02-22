@@ -30,7 +30,8 @@ class FakeRemoteAuthRepository implements RemoteAuthRepository {
       "phone": "9808144809",
       "image": null,
       "primary_role": "Consumer",
-      "roles": []
+      "roles": [],
+      "dob_type": "AD",
     });
   }
 
@@ -54,7 +55,8 @@ class FakeRemoteAuthRepository implements RemoteAuthRepository {
         "image": null,
         "primary_role": "Consumer",
         "roles": [],
-        "additional_attributes": {}
+        "additional_attributes": {},
+        "dob_type": "AD",
       },
     );
     // setCurrentUser(user);

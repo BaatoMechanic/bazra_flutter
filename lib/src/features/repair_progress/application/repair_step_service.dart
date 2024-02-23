@@ -1,12 +1,8 @@
 import 'package:bato_mechanic/src/features/repair_progress/data/repair_step_repository.dart';
 import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 import 'package:bato_mechanic/src/utils/enums/repair_setp_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../utils/in_memory_store.dart';
-import '../../../utils/model_utils.dart';
 
 class RepairStepService {
   RepairStepService(this.ref);

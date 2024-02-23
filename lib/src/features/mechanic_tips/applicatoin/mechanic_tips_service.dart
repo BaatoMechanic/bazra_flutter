@@ -1,10 +1,5 @@
-import 'package:bato_mechanic/src/features/mechanic_tips/data/mechanic_tips_repository.dart';
-import 'package:bato_mechanic/src/features/mechanic_tips/domain/mechanic_tip.dart';
-import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../utils/in_memory_store.dart';
-import '../../../utils/model_utils.dart';
 
 class MechanicTipsService {
   MechanicTipsService(this.ref);

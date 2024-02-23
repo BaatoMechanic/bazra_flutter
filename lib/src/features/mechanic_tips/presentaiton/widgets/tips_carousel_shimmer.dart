@@ -3,7 +3,6 @@ import 'package:bato_mechanic/src/common/widgets/shimmer_widget.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
-
 import '../../../../utils/constants/managers/color_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
 
@@ -16,7 +15,7 @@ class TipsCarouselShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    // final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
       decoration: const BoxDecoration().copyWith(

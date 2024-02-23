@@ -1,16 +1,12 @@
 import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
-import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
-import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen_controller.dart';
 import 'package:bato_mechanic/src/features/home/presentation/widget/service_buttons_grid_shimmer.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/data/mechanic_tips_repository.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/presentaiton/widgets/tips_carousel_shimmer.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
-import 'package:bato_mechanic/src/features/track_mechanic/data/api_track_mechanic_repository.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
@@ -26,9 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../mechanic_tips/applicatoin/mechanic_tips_service.dart';
-import '../../../repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
-import '../../../services/application/service_type_service.dart';
 import '../../../services/data/service_type_repository.dart';
 import '../../../track_mechanic/presentation/track_mechanic_screen.dart';
 import '../widget/service_buttons_grid.dart';

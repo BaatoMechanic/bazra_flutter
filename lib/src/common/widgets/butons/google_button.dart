@@ -5,8 +5,6 @@ import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../utils/helpers/helper_functions.dart';
-
 class GoogleButton extends StatelessWidget {
   const GoogleButton({
     Key? key,
@@ -18,7 +16,7 @@ class GoogleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkTheme = HelperFunctions.isDarkMode(context);
+    // final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return ElevatedButton(
       onPressed: onPressed,
       style: const ButtonStyle().copyWith(

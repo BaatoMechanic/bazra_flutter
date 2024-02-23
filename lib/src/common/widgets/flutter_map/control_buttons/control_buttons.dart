@@ -4,6 +4,7 @@ import 'package:flutter_map/plugin_api.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
+// ignore: must_be_immutable
 class FlutterMapControlButtons extends StatefulWidget {
   final double minZoom;
   final double maxZoom;

@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:bato_mechanic/src/features/password_change/presentation/change_password_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/old_password_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
@@ -5,7 +7,6 @@ import 'package:bato_mechanic/src/features/profile/presentation/user/user_profil
 import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/active_repairs/presentation/active_repairs_list_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen.dart';
-import 'package:bato_mechanic/src/features/temp/pres/temp.dart';
 import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen.dart';

@@ -10,12 +10,9 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../../../common/core/repositories/user_settings_repository.dart';
 import '../../../../../utils/constants/managers/api_values_manager.dart';
-import '../../../../../utils/constants/managers/strings_manager.dart';
 import '../../../../../utils/constants/managers/values_manager.dart';
-import '../../../../../utils/model_utils.dart';
 import 'repair_request_repository.dart';
 import 'package:http/http.dart' as http;
-import 'package:web_socket_channel/status.dart' as status;
 
 class APIRepairRequestRepository implements RepairRequestRepository {
   APIRepairRequestRepository({required this.ref});
@@ -89,18 +86,19 @@ class APIRepairRequestRepository implements RepairRequestRepository {
     var response = await request.send();
 
     //Get the response from the server
-    var responseData = await response.stream.toBytes();
+    // var responseData = await response.stream.toBytes();
 
-    var responseBody = String.fromCharCodes(responseData);
+    // var responseBody = String.fromCharCodes(responseData);
 
     if (response.statusCode == ApiStatusCode.responseCreated) {
       return await fetchVechicleRepairRequest(repairRequestId);
-    } else
+    } else {
       throw BaseException(
         message: response.toString(),
         stackTrace: StackTrace.current,
         statusCode: response.statusCode,
       );
+    }
   }
 
   @override

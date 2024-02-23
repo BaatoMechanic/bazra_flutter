@@ -1,15 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/api_values_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import "package:http/http.dart" as http;
 
-import '../../../../utils/constants/managers/strings_manager.dart';
-import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../../utils/http/http_client.dart';
-import '../../../../utils/model_utils.dart';
 import 'package:latlong2/latlong.dart';
 
 class APIMapRepository implements MapRepository {

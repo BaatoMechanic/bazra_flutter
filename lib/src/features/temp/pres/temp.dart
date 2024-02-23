@@ -1,7 +1,5 @@
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../reviews_and_rating/application/reviews_and_rating_service.dart';

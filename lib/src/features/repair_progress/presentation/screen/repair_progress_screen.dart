@@ -1,12 +1,9 @@
-import 'package:bato_mechanic/src/common/fetch_and_watch_async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
-import 'package:bato_mechanic/src/features/repair_progress/application/repair_step_service.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/screen/repair_progress_screen_controller.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/repair_step_shimmer_widget.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/api_repair_request_repository.dart';
 import 'package:bato_mechanic/src/features/track_mechanic/data/api_track_mechanic_repository.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -15,7 +12,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/widgets/async_value_widget.dart';
-import '../../../repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
 import '../widgets/repair_step_widget.dart';
 
 class RepairProgressScreen extends ConsumerWidget {
@@ -25,8 +21,8 @@ class RepairProgressScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final repairStepsValue =
-        ref.watch(fetchRepairStepsProvider(repairRequestIdx));
+    // final repairStepsValue =
+    //     ref.watch(fetchRepairStepsProvider(repairRequestIdx));
 
     return Scaffold(
       appBar: AppBar(
@@ -92,6 +88,7 @@ class RepairProgressScreen extends ConsumerWidget {
                               .read(repairProgressScreenControllerProvider
                                   .notifier)
                               .completeRepair(repairRequest.idx)) {
+                            // ignore: use_build_context_synchronously
                             context.pushNamed(APP_ROUTE.reviewMechanic.name,
                                 extra: {
                                   'repairRequestIdx': repairRequest.idx,

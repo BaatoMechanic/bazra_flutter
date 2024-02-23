@@ -7,14 +7,14 @@ import '../../../../utils/helpers/helper_functions.dart';
 import 'menu_tile_widget.dart';
 
 class MenuTilesSection extends StatelessWidget {
-  MenuTilesSection({
+  const MenuTilesSection({
     Key? key,
     required this.tiles,
     this.sectionTitle,
   }) : super(key: key);
 
-  String? sectionTitle;
-  List<MenuTile> tiles;
+  final String? sectionTitle;
+  final List<MenuTile> tiles;
   @override
   Widget build(BuildContext context) {
     final bool isDarkTheme = HelperFunctions.isDarkMode(context);

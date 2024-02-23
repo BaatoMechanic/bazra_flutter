@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:bato_mechanic/src/features/mechanic_tips/data/mechanic_tips_repository.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/domain/mechanic_tip.dart';
 
-import '../../../utils/model_utils.dart';
 
 class FakeMechanicTipsRepository implements MechanicTipsRepository {
   @override

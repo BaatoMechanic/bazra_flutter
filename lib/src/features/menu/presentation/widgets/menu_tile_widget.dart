@@ -4,10 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/constants/managers/color_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
-import '../../../../utils/helpers/helper_functions.dart';
 
 class MenuTile extends ConsumerWidget {
-  MenuTile({
+  const MenuTile({
     Key? key,
     required this.title,
     required this.leadingIcon,
@@ -15,14 +14,14 @@ class MenuTile extends ConsumerWidget {
     this.isLast = false,
   }) : super(key: key);
 
-  String title;
-  IconData leadingIcon;
-  Widget? trailingWidget;
-  bool isLast;
+  final String title;
+  final IconData leadingIcon;
+  final Widget? trailingWidget;
+  final bool isLast;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isDarkTheme = HelperFunctions.isDarkMode(context);
+    // final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return Container(
       padding: const EdgeInsets.symmetric(),
       decoration: BoxDecoration(

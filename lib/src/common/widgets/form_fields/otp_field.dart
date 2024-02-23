@@ -6,6 +6,7 @@ import '../../../utils/constants/managers/color_manager.dart';
 import '../../../utils/constants/managers/values_manager.dart';
 import 'base_form_field.dart';
 
+// ignore: must_be_immutable
 class OTPField extends StatelessWidget {
   OTPField({
     Key? key,
@@ -35,7 +36,7 @@ class OTPField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final Function(String?)? onSaved;
   final Function(String?)? onChanged;
-  final String? Function(String?)? validator;
+  String? Function(String?)? validator;
 
   final int otpLength;
   String enteredOtp = "";
@@ -62,9 +63,10 @@ class OTPField extends StatelessWidget {
                 focusNode: focusNodes[i],
                 nextFocusNode: i < otpLength - 1 ? focusNodes[i + 1] : null,
                 autovalidateMode: autovalidateMode,
-                validator: validator ?? (value) {
-                  return null;
-                },
+                validator: validator ??
+                    (value) {
+                      return null;
+                    },
                 textInputType: TextInputType.number,
                 onSaved: onSaved,
                 onChanged: (value) {

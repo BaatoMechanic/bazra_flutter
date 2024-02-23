@@ -2,11 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
-import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart';
 
-import '../../../../../utils/in_memory_store.dart';
 import 'repair_request_repository.dart';
 
 class FakeRepairRequestRepository implements RepairRequestRepository {

@@ -18,4 +18,5 @@ void main() async {
   );
 }
 
+// ignore: constant_identifier_names
 const SHOW_FAKE = false;

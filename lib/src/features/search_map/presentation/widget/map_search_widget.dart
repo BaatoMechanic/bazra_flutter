@@ -1,16 +1,10 @@
 import 'dart:async';
 
-import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
-import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_state.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_widget_controller.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
-import 'package:bato_mechanic/src/utils/helpers/map_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -38,6 +32,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   Timer? _debounce;
   late double width;
   late double height;
+  // ignore: unused_field
   String _selectedPlaceName = 'lol';
 
   // bool _isFetchingSearchLocations = false;
@@ -104,6 +99,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
       // }
       // }
     } else {
+      // ignore: avoid_print
       print('here');
     }
   }
@@ -251,12 +247,12 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   }
 
   Widget _buildSearchBar(SearchMapState state) {
-    OutlineInputBorder inputBorder = OutlineInputBorder(
-      borderSide: BorderSide(color: Theme.of(context).primaryColor),
-    );
-    OutlineInputBorder inputFocusBorder = OutlineInputBorder(
-      borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 3.0),
-    );
+    // OutlineInputBorder inputBorder = OutlineInputBorder(
+    //   borderSide: BorderSide(color: Theme.of(context).primaryColor),
+    // );
+    // OutlineInputBorder inputFocusBorder = OutlineInputBorder(
+    //   borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 3.0),
+    // );
 
     return Positioned(
       top: 0,
@@ -333,28 +329,28 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
     );
   }
 
-  Widget _buildSelectButton() {
-    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 15,
-        ),
-        child: ElevatedButton(
-          onPressed: () {},
-          style: const ButtonStyle().copyWith(
-            // foregroundColor: isDarkTheme
-            //     ? MaterialStatePropertyAll<Color>(ThemeColor.black)
-            //     : null,
-            foregroundColor:
-                const MaterialStatePropertyAll<Color>(ThemeColor.black),
-          ),
-          child: Text('Select this location'.hardcoded()),
-        ),
-      ),
-    );
-  }
+  // Widget _buildSelectButton() {
+  //   // final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+  //   return Align(
+  //     alignment: Alignment.bottomCenter,
+  //     child: Padding(
+  //       padding: const EdgeInsets.only(
+  //         bottom: 15,
+  //       ),
+  //       child: ElevatedButton(
+  //         onPressed: () {},
+  //         style: const ButtonStyle().copyWith(
+  //           // foregroundColor: isDarkTheme
+  //           //     ? MaterialStatePropertyAll<Color>(ThemeColor.black)
+  //           //     : null,
+  //           foregroundColor:
+  //               const MaterialStatePropertyAll<Color>(ThemeColor.black),
+  //         ),
+  //         child: Text('Select this location'.hardcoded()),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildListView() {
     return Container(

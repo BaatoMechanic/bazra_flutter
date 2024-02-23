@@ -51,7 +51,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    // ThemeData theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(

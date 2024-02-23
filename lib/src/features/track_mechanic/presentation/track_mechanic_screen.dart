@@ -1,12 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
-import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/api_repair_request_repository.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 import 'package:bato_mechanic/src/features/services/application/service_type_service.dart';
-import 'package:bato_mechanic/src/features/track_mechanic/presentation/waiting_mechanic_assignment_screen.dart';
 import 'package:bato_mechanic/src/utils/extensions/enum_extensions.dart';
-import 'package:bato_mechanic/src/utils/helpers/map_helpers.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -22,13 +17,9 @@ import 'package:bato_mechanic/src/common/widgets/butons/khalti_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/pay_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/payment/presentation/widgets/pay_bottom_sheet_widget.dart';
-import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/core/application/location_service.dart';
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
-import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/repair_request_controller.dart';
 
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
@@ -39,9 +30,6 @@ import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 
 import '../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
 import '../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
-import '../../auth/data/remote/fake_remote_auth_repository.dart';
-import '../../auth/domain/user_back.dart';
-import '../../repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
 import '../data/api_track_mechanic_repository.dart';
 import 'track_mechanic_screen_controller.dart';
 
@@ -62,7 +50,7 @@ class TrackMechanicScreen extends ConsumerStatefulWidget {
 
 class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
-  final double _animationValue = 0.0;
+  // final double _animationValue = 0.0;
   bool _showBigScreenMap = false;
   late MapController _mapController;
   late AnimationController _animationController;
@@ -153,7 +141,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
   }
 
 // Setting this variable because the notification is shown every time the screen is rebuilt
-  bool _isFirstTime = true;
+  // final bool _isFirstTime = true;
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +207,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                         children: [
                           if (repairRequest.assignedMechanicIdx == null)
                             // Text('Waiting for mechanic'.hardcoded())
-                            Text('')
+                            const Text('')
                           else
                             AsyncValueWidget(
                               value: ref.watch(fetchMechanicInfoProvider(
@@ -578,9 +566,11 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
 
                       if (updated) {
                         // Use the captured context within the async block
+                        // ignore: use_build_context_synchronously
                         Navigator.of(currentContext).pop();
 
                         ToastHelper.showNotification(
+                          // ignore: use_build_context_synchronously
                           currentContext,
                           "Mechanic is on the way".hardcoded(),
                         );
@@ -597,7 +587,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
   Widget _showMechanicTrackMap(
       BuildContext context, List<LatLng> routeCoordinates) {
     LatLng cameraCenter = LatLng(27.703292452047425, 85.33033043146135);
-    final mechanicPositionValue = ref.watch(assignedMechanicProvider);
+    // final mechanicPositionValue = ref.watch(assignedMechanicProvider);
     // final userMarkerValue = ref.watch(watchUserPositionMarkerProvider);
     final mechanicLocationValue = ref.watch(
         watchRepairRequestMechanicLocationProvider(widget.repairRequestIdx));

@@ -19,7 +19,6 @@ class User extends AbstractUserModel {
     required super.roles,
   });
 
-  @override
   Map<String, dynamic> toJson() {
     return {
       'idx': idx,

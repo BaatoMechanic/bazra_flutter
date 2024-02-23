@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DividerField extends StatelessWidget {
-  DividerField({super.key, this.text});
-  String? text;
+  const DividerField({super.key, this.text});
+  final String? text;
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,4 @@
 import 'package:bato_mechanic/src/features/core/domain/abstract_user_model.dart';
-import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
 import 'package:bato_mechanic/src/utils/enums/dob_type.dart';
 
 List<Mechanic> mechanicsFromJson(List<dynamic> jsonList) {
@@ -29,7 +28,6 @@ class Mechanic extends AbstractUserModel {
   final String? description;
   final Map<String, dynamic> additionalAttributes;
 
-  @override
   Map<String, dynamic> toJson() {
     return {
       'idx': idx,

@@ -1,10 +1,8 @@
-import 'package:bato_mechanic/src/features/core/application/location_service.dart';
 import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../../../../utils/model_utils.dart';
 import 'search_map_state.dart';
 
 class SearchMapWidgetController extends StateNotifier<SearchMapState> {

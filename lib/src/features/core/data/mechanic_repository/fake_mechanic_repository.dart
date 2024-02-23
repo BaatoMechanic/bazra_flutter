@@ -1,12 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:bato_mechanic/src/features/auth/domain/user.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
 import 'package:bato_mechanic/src/utils/constants/test_mechanics.dart';
 import 'package:bato_mechanic/src/features/core/data/mechanic_repository/mechanic_repository.dart';
 
-import 'package:bato_mechanic/src/utils/model_utils.dart';
 
 import '../../../auth/domain/mechanic.dart';
 

@@ -4,7 +4,6 @@ import 'package:bato_mechanic/src/features/repair_request/data/vehicle_repositor
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 
 import '../domain/vehicle.dart';
 

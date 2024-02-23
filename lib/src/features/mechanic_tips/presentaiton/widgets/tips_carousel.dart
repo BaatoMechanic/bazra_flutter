@@ -35,7 +35,7 @@ class TipsCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    // final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     final List<Widget> tipSliderItems = tips
         .map(
           (item) => Row(

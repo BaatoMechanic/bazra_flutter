@@ -1,7 +1,6 @@
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../auth/domain/user_back.dart';
 
 class ReviewMechanicScreenController extends StateNotifier<AsyncValue<void>> {
   ReviewMechanicScreenController({required this.ref})

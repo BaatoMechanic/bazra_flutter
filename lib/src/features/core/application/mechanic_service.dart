@@ -2,16 +2,12 @@
 import 'package:bato_mechanic/src/features/auth/domain/mechanic.dart';
 import 'package:bato_mechanic/src/features/core/data/user_repository/user_repository.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
-import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
-import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 
 import "package:latlong2/latlong.dart";
 import '../../auth/domain/user.dart';
-import '../../auth/domain/user_back.dart';
-import '../../track_mechanic/presentation/track_mechanic_screen_controller.dart';
 import '../data/map_repository/map_repository.dart';
 import '../data/mechanic_repository/mechanic_repository.dart';
 

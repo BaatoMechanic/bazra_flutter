@@ -2,7 +2,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/user.dart';
-import '../domain/user_back.dart';
 
 class AuthState {
   AuthState({required this.isAuthenticated, this.user});

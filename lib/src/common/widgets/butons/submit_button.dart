@@ -9,6 +9,7 @@ import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import '../../../utils/constants/managers/color_manager.dart';
 import '../../../utils/constants/managers/values_manager.dart';
 
+// ignore: must_be_immutable
 class SubmitButton extends StatefulWidget {
   SubmitButton({
     Key? key,

@@ -1,23 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 
-import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
-import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
-import 'package:bato_mechanic/src/features/payment/application/payment_service.dart';
-import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/core/data/mechanic_repository/mechanic_repository.dart';
 
-import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
-
-import '../../auth/domain/user.dart';
-import '../../auth/domain/user_back.dart';
 
 class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
   TrackMechanicScreenController({required this.ref})
@@ -51,16 +40,16 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
 
     position = await Geolocator.getCurrentPosition();
 
-    final UserPosition currentUserLocation = UserPosition(
-        latitude: position.latitude,
-        longitude: position.longitude,
-        timestamp: position.timestamp,
-        accuracy: position.accuracy,
-        altitude: position.altitude,
-        heading: position.heading,
-        speed: position.speed,
-        speedAccuracy: position.speedAccuracy,
-        locationName: "Temp Name");
+    // final UserPosition currentUserLocation = UserPosition(
+    //     latitude: position.latitude,
+    //     longitude: position.longitude,
+    //     timestamp: position.timestamp,
+    //     accuracy: position.accuracy,
+    //     altitude: position.altitude,
+    //     heading: position.heading,
+    //     speed: position.speed,
+    //     speedAccuracy: position.speedAccuracy,
+    //     locationName: "Temp Name");
     // TODO: Find solution for user location
     // User currentUser = ref.read(authStateProvider).user!;
     // currentUser = currentUser.copyWith(currentLocation: currentUserLocation);

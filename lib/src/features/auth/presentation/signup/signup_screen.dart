@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/password_field.dart';

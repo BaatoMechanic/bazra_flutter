@@ -1,5 +1,4 @@
 import 'package:bato_mechanic/main.dart';
-import 'package:bato_mechanic/src/features/auth/domain/user_back.dart';
 import 'package:bato_mechanic/src/features/core/data/user_repository/api_user_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

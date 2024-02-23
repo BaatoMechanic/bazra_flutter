@@ -31,10 +31,6 @@ class UserHelperFunctions {
       return null;
     }
 
-    if (serviceSpeciality == null) {
-      return serviceSpeciality.capitalize();
-    }
-
-    return "${(vehicleSpeciality as String).capitalize()}'s $serviceSpeciality";
+    return "${(vehicleSpeciality).capitalize()}'s $serviceSpeciality";
   }
 }

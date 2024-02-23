@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/auth/domain/user_back.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
 import 'package:bato_mechanic/src/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -7,12 +7,12 @@ import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../services/presentation/widgets/service_type_button.dart';
 
 class ServiceButtonsGridWidget extends ConsumerWidget {
-  ServiceButtonsGridWidget({
+  const ServiceButtonsGridWidget({
     super.key,
     required this.services,
   });
 
-  List<Service> services;
+  final List<Service> services;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -1,9 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import '../../../utils/constants/managers/color_manager.dart';
 import '../../../utils/constants/managers/values_manager.dart';
 
+// ignore: must_be_immutable
 class PayButton extends StatefulWidget {
   PayButton({
     Key? key,
@@ -16,7 +16,7 @@ class PayButton extends StatefulWidget {
 
   final String label;
   final Function() onPressed;
-  bool shouldShowSpinner;
+  final bool shouldShowSpinner;
   bool showSpinner = false;
   final Color? buttonColor;
   final Color? textColor;

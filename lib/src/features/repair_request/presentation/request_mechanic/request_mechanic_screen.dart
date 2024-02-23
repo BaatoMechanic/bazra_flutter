@@ -1,15 +1,10 @@
 import 'dart:io';
 
-import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
-import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
-import 'package:bato_mechanic/src/features/track_mechanic/data/api_track_mechanic_repository.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -24,7 +19,6 @@ import 'package:video_player/video_player.dart';
 import '../../../../common/widgets/form_fields/description_field.dart';
 import '../../../../utils/helpers/toast_helper.dart';
 
-import '../../../core/application/mechanic_service.dart';
 import '../../../search_map/presentation/widget/map_search_widget.dart';
 
 class RequestMechanicScreen extends ConsumerStatefulWidget {

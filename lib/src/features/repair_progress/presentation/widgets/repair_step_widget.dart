@@ -1,4 +1,3 @@
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 

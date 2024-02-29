@@ -3,7 +3,7 @@ import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
-import 'package:bato_mechanic/src/features/mechanic_tips/domain/mechanic_tip.dart';
+import 'package:bato_mechanic/src/features/mechanic_tips/domain/mechanic_tip/mechanic_tip.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:go_router/go_router.dart';
 

@@ -1,5 +1,5 @@
 import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
-import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position/user_position.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 

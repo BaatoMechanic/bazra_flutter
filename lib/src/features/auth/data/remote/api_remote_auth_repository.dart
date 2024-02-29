@@ -9,7 +9,7 @@ import '../../../../utils/constants/managers/api_values_manager.dart';
 
 import 'package:http/http.dart' as http;
 
-import '../../domain/user.dart';
+import '../../domain/user/user.dart';
 import 'remote_auth_repository.dart';
 
 class APIRemoteAuthRepository implements RemoteAuthRepository {

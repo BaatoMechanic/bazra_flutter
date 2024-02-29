@@ -7,7 +7,7 @@ import 'package:bato_mechanic/src/utils/extensions/datetime_extensions.dart';
 import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -2,7 +2,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../domain/vehicle_category.dart';
+import '../domain/vehicle_category/vehicle_category.dart';
 
 class VehicleCategoryState {
   VehicleCategoryState({

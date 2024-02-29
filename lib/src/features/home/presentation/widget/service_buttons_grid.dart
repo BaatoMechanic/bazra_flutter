@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/features/services/domain/service_type.dart';
+import 'package:bato_mechanic/src/features/services/domain/service/service.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

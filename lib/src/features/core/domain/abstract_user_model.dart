@@ -1,11 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:bato_mechanic/src/utils/enums/dob_type.dart';
-
-
-// List<User> usersFromJson(List<dynamic> jsonList) {
-//   return jsonList.map((json) => User.fromMap(json)).toList();
-// }
 
 abstract class AbstractUserModel {
   final String idx;

@@ -19,7 +19,7 @@ import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/payment/presentation/widgets/pay_bottom_sheet_widget.dart';
 import 'package:bato_mechanic/src/features/core/application/location_service.dart';
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';

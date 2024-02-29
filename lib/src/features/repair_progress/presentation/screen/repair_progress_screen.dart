@@ -4,7 +4,7 @@ import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/api_repair_request_repository.dart';
 import 'package:bato_mechanic/src/features/track_mechanic/data/api_track_mechanic_repository.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:flutter/material.dart';

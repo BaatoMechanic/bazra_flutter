@@ -1,5 +1,5 @@
 import 'package:bato_mechanic/src/features/core/data/map_repository/fake_map_repository.dart';
-import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position/user_position.dart';
 import 'package:geolocator/geolocator.dart';
 
 class MapHelper {

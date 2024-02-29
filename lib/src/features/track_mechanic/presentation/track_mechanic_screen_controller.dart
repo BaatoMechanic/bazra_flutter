@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';

@@ -1,5 +1,5 @@
 import 'package:bato_mechanic/src/features/repair_request/application/vechicles_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle/vehicle.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class VehiclesScreenController

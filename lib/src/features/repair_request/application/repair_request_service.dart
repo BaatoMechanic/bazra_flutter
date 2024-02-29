@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 
-import '../domain/vehicle_repair_request.dart';
+import '../domain/vehicle_repair_request/vehicle_repair_request.dart';
 
 final activeRepairRequestProvider =
     StateProvider<VehicleRepairRequest?>((ref) => null);

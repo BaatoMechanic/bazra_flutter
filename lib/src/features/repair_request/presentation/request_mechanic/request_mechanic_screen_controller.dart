@@ -4,14 +4,14 @@ import 'package:bato_mechanic/src/features/repair_request/application/providers.
 
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 
 import 'package:bato_mechanic/src/utils/system_alerts_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../auth/domain/mechanic.dart';
+import '../../../auth/domain/mechanic/mechanic.dart';
 import 'request_mechanic_state.dart';
 
 class RequestMechanicScreenController

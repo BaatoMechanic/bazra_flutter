@@ -6,8 +6,7 @@ import 'package:bato_mechanic/src/features/vehicle_part/data/vehicle_parts_repos
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-import '../domain/service_type.dart';
+import '../domain/service/service.dart';
 
 class SerivceTypeService {
   SerivceTypeService({

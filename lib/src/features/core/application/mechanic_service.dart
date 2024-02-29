@@ -1,13 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:bato_mechanic/src/features/auth/domain/mechanic.dart';
+import 'package:bato_mechanic/src/features/auth/domain/mechanic/mechanic.dart';
 import 'package:bato_mechanic/src/features/core/data/user_repository/user_repository.dart';
-import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 
 import "package:latlong2/latlong.dart";
-import '../../auth/domain/user.dart';
+import '../../auth/domain/user/user.dart';
 import '../data/map_repository/map_repository.dart';
 import '../data/mechanic_repository/mechanic_repository.dart';
 

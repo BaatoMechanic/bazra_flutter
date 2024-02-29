@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle/vehicle.dart';
 
 final mTestVehicles = [
   Vehicle(

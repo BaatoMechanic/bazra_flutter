@@ -1,8 +1,7 @@
 import 'package:bato_mechanic/src/features/repair_progress/data/repair_step_repository.dart';
-import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step.dart';
+import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step/repair_step.dart';
 import 'package:bato_mechanic/src/utils/enums/repair_setp_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 class RepairStepService {
   RepairStepService(this.ref);
@@ -13,7 +12,7 @@ class RepairStepService {
         .read(repairStepRepositoryProvider)
         .fetchRepairSteps(repairRequestIdx);
 
-    return repairStepsFromJson(response as String);
+    return repairStepsFromJson(response);
 
     // if (response is Success) {
     //   final List<RepairStep> repairSteps =

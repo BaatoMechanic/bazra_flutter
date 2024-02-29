@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bato_mechanic/src/features/vehicle_category/domain/vehicle_category.dart';
+import 'package:bato_mechanic/src/features/vehicle_category/domain/vehicle_category/vehicle_category.dart';
 
 import '../data/vehicle_category_repository.dart';
 

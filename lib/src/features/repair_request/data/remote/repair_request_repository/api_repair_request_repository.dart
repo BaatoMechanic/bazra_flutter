@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step/repair_step.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
 import 'package:bato_mechanic/src/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

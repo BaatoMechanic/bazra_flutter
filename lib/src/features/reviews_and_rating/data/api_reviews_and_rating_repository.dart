@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/reviews_and_rating/data/reviews_and_rating_repository.dart';
-import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
 import 'package:bato_mechanic/src/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;

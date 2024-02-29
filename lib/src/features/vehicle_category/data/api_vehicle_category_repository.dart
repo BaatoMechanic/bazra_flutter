@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/vehicle_category/domain/vehicle_category.dart';
+import 'package:bato_mechanic/src/features/vehicle_category/domain/vehicle_category/vehicle_category.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common/core/repositories/user_settings_repository.dart';

@@ -51,7 +51,7 @@
 import 'package:bato_mechanic/src/features/core/data/user_repository/user_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../auth/domain/user.dart';
+import '../../auth/domain/user/user.dart';
 
 class UserService {
   UserService({

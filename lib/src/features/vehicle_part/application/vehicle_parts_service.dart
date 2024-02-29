@@ -4,8 +4,7 @@ import 'package:bato_mechanic/src/features/vehicle_part/data/vehicle_parts_repos
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-import '../domain/vehicle_part.dart';
+import '../domain/vehicle_part/vehicle_part.dart';
 
 class VehiclePartsService {
   VehiclePartsService({

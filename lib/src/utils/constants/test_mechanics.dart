@@ -1,5 +1,4 @@
-
-import '../../features/auth/domain/mechanic.dart';
+import '../../features/auth/domain/mechanic/mechanic.dart';
 import '../enums/dob_type.dart';
 
 final mTestMechanics = [

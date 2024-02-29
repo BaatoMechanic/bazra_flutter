@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position/user_position.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/features/track_mechanic/data/track_mechanic_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -54,7 +54,7 @@ final watchRepairRequestMechanicLocationProvider = StreamProvider.autoDispose
     final Map<String, dynamic> locations = jsonDecode(value);
     // final UserPosition userLocation =
     //     UserPosition.fromJson(jsonEncode(locations['user_location']));
-    yield UserPosition.fromJson(jsonEncode(locations['mechanic_location']));
+    yield UserPosition.fromJson(locations['mechanic_location']);
 
     // yield {
     //   'user_location': userLocation,

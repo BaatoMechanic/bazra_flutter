@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:bato_mechanic/main.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_state.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_widget_controller.dart';
+import 'package:bato_mechanic/src/logging/logger.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
@@ -13,7 +16,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 import '../../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
-import '../../domain/osm_data.dart';
+import '../../domain/osm_data/osm_data.dart';
 
 class MapSearchWidget extends ConsumerStatefulWidget {
   const MapSearchWidget({super.key});
@@ -28,7 +31,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   late AnimationController _animationController;
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
-  List<OSMdata> _options = <OSMdata>[];
+  List<OSMData> _options = <OSMData>[];
   Timer? _debounce;
   late double width;
   late double height;
@@ -99,8 +102,8 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
       // }
       // }
     } else {
-      // ignore: avoid_print
-      print('here');
+      final logger = BMLogger().logger;
+      logger.e("Place name not found".hardcoded());
     }
   }
 
@@ -310,12 +313,12 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   if (mounted) {
                     setState(() {
                       _options = response
-                          .map((e) => OSMdata(
+                          .map((e) => OSMData(
                               displayname: e['display_name'],
                               latitude: double.parse(e['lat']),
                               longitude: double.parse(e['lon'])))
                           .toList()
-                          .cast<OSMdata>();
+                          .cast<OSMData>();
                       // _isFetchingSearchLocations = false;
                     });
                   }

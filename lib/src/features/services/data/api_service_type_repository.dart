@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/services/data/service_type_repository.dart';
-import 'package:bato_mechanic/src/features/services/domain/service_type.dart';
+import 'package:bato_mechanic/src/features/services/domain/service/service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common/core/repositories/user_settings_repository.dart';
@@ -25,7 +25,7 @@ class APIServiceTypeRepository implements ServiceTypeRepository {
                   'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
             }),
         ref);
-    return serviceTypesFromJson(jsonDecode(response));
+    return servicesFromJson(jsonDecode(response));
   }
 
   @override

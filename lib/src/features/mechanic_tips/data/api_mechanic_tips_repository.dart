@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/mechanic_tips/data/mechanic_tips_repository.dart';
@@ -8,7 +9,7 @@ import '../../../common/core/repositories/user_settings_repository.dart';
 import '../../../utils/constants/managers/api_values_manager.dart';
 import 'package:http/http.dart' as http;
 
-import '../domain/mechanic_tip.dart';
+import '../domain/mechanic_tip/mechanic_tip.dart';
 
 class APIMechanicTipsRepository implements MechanicTipsRepository {
   APIMechanicTipsRepository(this.ref);
@@ -26,6 +27,6 @@ class APIMechanicTipsRepository implements MechanicTipsRepository {
             }),
         ref);
 
-    return mechanicTipsFromJson(response);
+    return mechanicTipsFromJson(jsonDecode(response));
   }
 }

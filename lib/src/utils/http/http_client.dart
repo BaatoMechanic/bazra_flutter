@@ -93,7 +93,7 @@ class HttpHelper {
       // Log response details
       logger.i("Response Body: ${utf8.decode(response.bodyBytes)}");
 
-      return utf8.decode(response.bodyBytes);
+      return jsonDecode(utf8.decode(response.bodyBytes));
     }
     if (response.statusCode == 500) {
       throw BaseException(

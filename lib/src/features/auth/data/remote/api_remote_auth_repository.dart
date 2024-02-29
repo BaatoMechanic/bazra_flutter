@@ -71,7 +71,7 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
             }),
         ref);
 
-    return User.fromJson(jsonDecode(response));
+    return User.fromJson(response);
   }
 
   @override

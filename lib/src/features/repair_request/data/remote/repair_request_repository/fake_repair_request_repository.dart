@@ -111,7 +111,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
   @override
   Future<List<VehicleRepairRequest>> fetchUserRepairRequest() async {
     // Response response = Response(jsonEncode([]), HttpStatus.ok);
-    final response = jsonEncode([
+    final response = [
       {
         "idx": "8aMD5vyNQZqpySEm9T38Y2",
         "title": "Car is not startingg",
@@ -145,7 +145,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "status": "waiting_for_completion_acceptance",
         "created_at": "2023-10-05T17:19:44.893829Z"
       },
-    ]);
+    ];
 
     await Future.delayed(const Duration(seconds: 1));
     return vehicleRepairRequestsFromJson(response);
@@ -154,7 +154,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
   @override
   Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequest() async {
     // Response response = Response(jsonEncode([]), HttpStatus.ok);
-    final response = jsonEncode([
+    final response = [
       {
         "idx": "8aMD5vyNQZqpySEm9T38Y2",
         "title": "Car is not startingg",
@@ -186,7 +186,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "status": "waiting_for_completion_acceptance",
         "created_at": "2023-10-05T17:19:44.893829Z"
       },
-    ]);
+    ];
 
     await Future.delayed(const Duration(seconds: 1));
     return vehicleRepairRequestsFromJson(response);
@@ -195,7 +195,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
   @override
   Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequest() async {
     // Response response = Response(jsonEncode([]), HttpStatus.ok);
-    final response = jsonEncode([
+    final response = [
       {
         "idx": "8aMD5vyNQZqpySEm9T38Y2",
         "title": "Car is not startingg",
@@ -228,7 +228,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "status": "waiting_for_completion_acceptance",
         "created_at": "2023-10-05T17:19:44.893829Z"
       },
-    ]);
+    ];
 
     await Future.delayed(const Duration(seconds: 1));
     return vehicleRepairRequestsFromJson(response);

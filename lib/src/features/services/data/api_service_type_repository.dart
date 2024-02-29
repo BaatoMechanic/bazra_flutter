@@ -25,7 +25,7 @@ class APIServiceTypeRepository implements ServiceTypeRepository {
                   'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
             }),
         ref);
-    return servicesFromJson(jsonDecode(response));
+    return servicesFromJson(response);
   }
 
   @override

@@ -19,11 +19,10 @@ class APIMapRepository implements MapRepository {
         '${RemoteManager.BASE_URI}gis/reverse-geocode/?lat=$lat&lon=$lon');
 
     final response = await HttpHelper.guard(() => http.get(url), ref);
-    Map<String, dynamic> data = jsonDecode(response);
     return {
-      "display_name": data["display_name"],
-      "lat": data["lat"],
-      "lon": data["lon"],
+      "display_name": response["display_name"],
+      "lat": response["lat"],
+      "lon": response["lon"],
     };
   }
 
@@ -35,11 +34,10 @@ class APIMapRepository implements MapRepository {
         '${RemoteManager.BASE_URI}gis/route/?source_lon=${sourcePoint.longitude}&source_lat=${sourcePoint.latitude}&destination_lon=${destinationPoint.longitude}&destination_lat=${destinationPoint.latitude}');
 
     final response = await HttpHelper.guard(() => http.get(url), ref);
-    final data = jsonDecode(response);
     var listOfCoordinatePoints = [];
     // data['routes'][0]["legs"][0]["steps"][0]['geometry'];
-    for (var i = 0; i < data['routes'][0]["legs"][0]["steps"].length; i++) {
-      var innerList = data['routes'][0]["legs"][0]["steps"][i]['geometry'];
+    for (var i = 0; i < response['routes'][0]["legs"][0]["steps"].length; i++) {
+      var innerList = response['routes'][0]["legs"][0]["steps"][i]['geometry'];
       listOfCoordinatePoints.addAll(innerList);
     }
 
@@ -50,7 +48,7 @@ class APIMapRepository implements MapRepository {
 
     return {
       "routeCoordinates": routeCoordinates,
-      "duration": data['routes'][0]["duration"],
+      "duration": response['routes'][0]["duration"],
     };
   }
 

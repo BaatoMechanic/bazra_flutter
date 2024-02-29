@@ -169,7 +169,10 @@ final watchRepairStepsProvider = StreamProvider.autoDispose
 
   ref.onDispose(() => channel.sink.close());
 
-  await for (final value in channel.stream) {
+  await for (var value in channel.stream) {
+    if (value is String) {
+      value = jsonDecode(value);
+    }
     try {
       yield repairStepsFromJson(value);
     } catch (e) {

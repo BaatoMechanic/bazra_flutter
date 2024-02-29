@@ -35,9 +35,10 @@ enum AdvancePaymentStatus {
   PAYMENT_ON_ARRIVAL,
 }
 
-List<VehicleRepairRequest> vehicleRepairRequestsFromJson(String str) =>
-    List<VehicleRepairRequest>.from(
-        json.decode(str).map((x) => VehicleRepairRequest.fromJson(x)));
+List<VehicleRepairRequest> vehicleRepairRequestsFromJson(
+        List<dynamic> jsonList) =>
+    List<VehicleRepairRequest>.from(jsonList.map(
+        (item) => VehicleRepairRequest.fromJson(item as Map<String, dynamic>)));
 
 @freezed
 class VehicleRepairRequest with _$VehicleRepairRequest {

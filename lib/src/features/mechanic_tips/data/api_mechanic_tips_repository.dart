@@ -27,6 +27,6 @@ class APIMechanicTipsRepository implements MechanicTipsRepository {
             }),
         ref);
 
-    return mechanicTipsFromJson(jsonDecode(response));
+    return mechanicTipsFromJson(response);
   }
 }

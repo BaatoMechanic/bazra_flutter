@@ -28,7 +28,7 @@ class APIMechanicRepository extends MechanicRepository {
             }),
         ref);
 
-    return Mechanic.fromJson(jsonDecode(response));
+    return Mechanic.fromJson(response);
   }
 
   @override

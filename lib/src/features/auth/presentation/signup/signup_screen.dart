@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/password_field.dart';
@@ -45,10 +43,7 @@ class SignUpScreen extends ConsumerWidget {
               _passwordController.text, _nameController.text);
       if (response) {
         ToastHelper.showNotification(
-            context,
-            'Welcome to Baato Mechanic'
-                // 'You have been registered successfully. Please login to continue'
-                .hardcoded());
+            context, 'Welcome to Baato Mechanic'.hardcoded());
         context.replaceNamed(APP_ROUTE.home.name);
       }
     }
@@ -70,14 +65,6 @@ class SignUpScreen extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // EmailField(
-                    //   title: 'Id'.hardcoded(),
-                    //   labelText: "Phone/email".hardcoded(),
-                    //   hintText: "Enter your number or your valid email address"
-                    //       .hardcoded(),
-                    //   controller: _idController,
-                    //   focusNode: _emailFocusNode,
-                    // ),
                     IdField(
                       title: 'Id'.hardcoded(),
                       labelText: "Phone/email".hardcoded(),

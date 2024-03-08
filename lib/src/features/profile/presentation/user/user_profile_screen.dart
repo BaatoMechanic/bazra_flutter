@@ -110,11 +110,8 @@ class UserProfileScreen extends ConsumerWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const UserCircleAvatar(
-                        // radius: AppRadius.r60,
-                        ),
+                    const UserCircleAvatar(),
                     Text(
-                      // 'Krishna Rimal',
                       user?.name ?? "Unknown User".hardcoded(),
                       style: Theme.of(context).textTheme.displayLarge,
                     ),

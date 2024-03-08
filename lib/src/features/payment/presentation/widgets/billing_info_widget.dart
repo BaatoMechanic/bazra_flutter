@@ -70,206 +70,120 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                     const SizedBox(
                       height: AppHeight.h4,
                     ),
-                    Container(
-                      decoration: const BoxDecoration(
-                          // border: Border.all(
-                          //   color: Colors.grey,
-                          //   width: 1.0,
-                          //   style: BorderStyle.solid,
-                          // ),
-                          ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Form(
-                            key: _form,
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          // initialValue: _userProvider
-                                          //         .bookProvider.billingInfo
-                                          //         .containsKey('first_name')
-                                          //     ? _userProvider.bookProvider
-                                          //         .billingInfo['first_name']
-                                          //     : null,
-                                          initialValue: 'Krishna Rimal',
-                                          cursorColor:
-                                              Theme.of(context).primaryColor,
-                                          // focusNode: _userProvider
-                                          //     .billingInfoViewModelFirstNameFocusNode,
-                                          decoration: const InputDecoration(
-                                            labelText: 'First Name',
-                                            focusColor: Colors.redAccent,
-                                          ),
-                                          textInputAction: TextInputAction.next,
-                                          autovalidateMode:
-                                              AutovalidateMode.always,
-                                          onFieldSubmitted: (_) {
-                                            // FocusScope.of(context)
-                                            //     .requestFocus(_userProvider
-                                            //         .billingInfoViewModelLastNameFocusNode);
-                                          },
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please provide the first name';
-                                            }
-                                            return null;
-                                          },
-                                          // onSaved: (value) {
-                                          //   _userProvider.bookProvider
-                                          //           .billingInfo['first_name'] =
-                                          //       value.toString();
-                                          // }
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Form(
+                          key: _form,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        initialValue: 'Krishna Rimal',
+                                        cursorColor:
+                                            Theme.of(context).primaryColor,
+                                        decoration: const InputDecoration(
+                                          labelText: 'First Name',
+                                          focusColor: Colors.redAccent,
                                         ),
+                                        textInputAction: TextInputAction.next,
+                                        autovalidateMode:
+                                            AutovalidateMode.always,
+                                        onFieldSubmitted: (_) {},
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Please provide the first name';
+                                          }
+                                          return null;
+                                        },
                                       ),
                                     ),
-                                    Flexible(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          // initialValue: _userProvider
-                                          //         .bookProvider.billingInfo
-                                          //         .containsKey('last_name')
-                                          //     ? _userProvider.bookProvider
-                                          //         .billingInfo['last_name']
-                                          //     : null,
-                                          keyboardType: TextInputType.text,
-                                          cursorColor:
-                                              Theme.of(context).primaryColor,
-                                          // focusNode: _userProvider
-                                          //     .billingInfoViewModelLastNameFocusNode,
-                                          decoration: const InputDecoration(
-                                            labelText: 'Last Name',
-                                          ),
-                                          textInputAction: TextInputAction.next,
-                                          autovalidateMode:
-                                              AutovalidateMode.always,
-                                          onFieldSubmitted: (_) {
-                                            // FocusScope.of(context).requestFocus(
-                                            //     _userProvider
-                                            //         .billingInfoViewModelEmailFocusNode);
-                                          },
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please provide the last name';
-                                            }
-                                            return null;
-                                          },
-                                          // onSaved: (value) {
-                                          //   _userProvider.bookProvider
-                                          //           .billingInfo['last_name'] =
-                                          //       value.toString();
-                                          // },
+                                  ),
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.text,
+                                        cursorColor:
+                                            Theme.of(context).primaryColor,
+                                        decoration: const InputDecoration(
+                                          labelText: 'Last Name',
                                         ),
+                                        textInputAction: TextInputAction.next,
+                                        autovalidateMode:
+                                            AutovalidateMode.always,
+                                        onFieldSubmitted: (_) {},
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Please provide the last name';
+                                          }
+                                          return null;
+                                        },
                                       ),
                                     ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    // initialValue: _userProvider
-                                    //         .bookProvider.billingInfo
-                                    //         .containsKey('email')
-                                    //     ? _userProvider
-                                    //         .bookProvider.billingInfo['email']
-                                    //     : null,
-                                    // focusNode: _userProvider
-                                    //     .billingInfoViewModelEmailFocusNode,
-                                    keyboardType: TextInputType.text,
-                                    cursorColor: Theme.of(context).primaryColor,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Email Address',
-                                    ),
-                                    textInputAction: TextInputAction.next,
-                                    autovalidateMode: AutovalidateMode.always,
-                                    onFieldSubmitted: (_) {
-                                      // FocusScope.of(context).requestFocus(
-                                      //     _userProvider
-                                      //         .billingInfoViewModelPhoneNumberFocusNode);
-                                    },
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please provide email to receive notifications';
-                                      }
-                                      return null;
-                                    },
-                                    // onSaved: (value) {
-                                    //   _userProvider.bookProvider
-                                    //           .billingInfo['email'] =
-                                    //       value.toString();
-                                    // }
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    // initialValue: _userProvider
-                                    //         .bookProvider.billingInfo
-                                    //         .containsKey('phone')
-                                    //     ? _userProvider
-                                    //         .bookProvider.billingInfo['phone']
-                                    //     : null,
-                                    // focusNode: _userProvider
-                                    //     .billingInfoViewModelPhoneNumberFocusNode,
-                                    keyboardType: TextInputType.number,
-                                    cursorColor: Theme.of(context).primaryColor,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Phone Number',
-                                    ),
-                                    textInputAction: TextInputAction.next,
-                                    autovalidateMode: AutovalidateMode.always,
-                                    onFieldSubmitted: (_) {
-                                      // FocusScope.of(context).requestFocus(
-                                      //     _userProvider
-                                      //         .billingInfoViewModelSideNoteFocusNode);
-                                    },
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please provide the phone number to be contacted';
-                                      }
-                                      return null;
-                                    },
-                                    // onSaved: (value) {
-                                    //   _userProvider.bookProvider
-                                    //           .billingInfo['phone'] =
-                                    //       value.toString();
-                                    // }
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.text,
+                                  cursorColor: Theme.of(context).primaryColor,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Email Address',
                                   ),
+                                  textInputAction: TextInputAction.next,
+                                  autovalidateMode: AutovalidateMode.always,
+                                  onFieldSubmitted: (_) {},
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please provide email to receive notifications';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    // initialValue: _edittedUser.description,
-                                    // focusNode: _userProvider
-                                    //     .billingInfoViewModelSideNoteFocusNode,
-                                    keyboardType: TextInputType.multiline,
-                                    cursorColor: Theme.of(context).primaryColor,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Side Note',
-                                    ),
-                                    textInputAction: TextInputAction.newline,
-                                    autovalidateMode: AutovalidateMode.always,
-                                    minLines: 3,
-                                    maxLines: 7,
-
-                                    // onSaved: (value) {
-                                    //   _userProvider.bookProvider
-                                    //           .billingInfo['side_note'] =
-                                    //       value.toString();
-                                    // },
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  cursorColor: Theme.of(context).primaryColor,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Phone Number',
                                   ),
+                                  textInputAction: TextInputAction.next,
+                                  autovalidateMode: AutovalidateMode.always,
+                                  onFieldSubmitted: (_) {},
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please provide the phone number to be contacted';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                              ],
-                            ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.multiline,
+                                  cursorColor: Theme.of(context).primaryColor,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Side Note',
+                                  ),
+                                  textInputAction: TextInputAction.newline,
+                                  autovalidateMode: AutovalidateMode.always,
+                                  minLines: 3,
+                                  maxLines: 7,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -301,35 +215,6 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
                         width: 1.0,
                         style: BorderStyle.solid,
                       )),
-                      // child: DropdownButtonHideUnderline(
-                      // child: DropdownButton(
-                      //     isExpanded: true,
-                      //     style: getBoldStyle(
-                      //         color: ColorManager.primaryShade100),
-                      //     // value: _userProvider.bookProvider
-                      //     //     .billingInfo['convenient_location'],
-                      //     // value: _locationOptions[0],
-                      //     items: _userProvider.bookProvider.locationOptions
-                      //         .map((option) => DropdownMenuItem(
-                      //               child: Padding(
-                      //                 padding: const EdgeInsets.only(
-                      //                   left: AppPadding.p12,
-                      //                 ),
-                      //                 child: Text(
-                      //                   option,
-                      //                 ),
-                      //               ),
-                      //               value: option,
-                      //             ))
-                      //         .toList(),
-                      //     onChanged: (value) {
-                      //       setState(() {
-                      //         _userProvider.bookProvider
-                      //                 .billingInfo['convenient_location'] =
-                      //             value as String;
-                      //       });
-                      //     }),
-                      // ),
                     ),
                   ],
                 ),
@@ -354,74 +239,34 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
 
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-
-                      // ColorManager.green,
-                      Colors.green,
+                  backgroundColor: Colors.green,
                   fixedSize: Size.fromWidth(
                     MediaQuery.of(context).size.width,
                   ),
                 ),
-                onPressed: () async {
-                  // setState(() {
-                  // _userProvider.billingInfoViewModelPaymentMethod =
-                  //     PaymentMethod.Esewa;
-                  // });
-                },
+                onPressed: () async {},
                 child: const Text("Pay with e-Sewa"),
               ),
 
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-
-                      // ColorManager.lighterGrey,
-                      Colors.grey,
+                  backgroundColor: Colors.grey,
                   fixedSize: Size.fromWidth(
                     MediaQuery.of(context).size.width,
                   ),
                 ),
-                onPressed: () async {
-                  // _payWithKhalti();
-                  // setState(() {
-                  //   _userProvider.billingInfoViewModelPaymentMethod =
-                  //       PaymentMethod.Khalti;
-                  // });
-                },
+                onPressed: () async {},
                 child: const Text("Pay with Khalti"),
               ),
 
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-
-                      // ColorManager.lighterGrey,
-                      Colors.grey,
+                  backgroundColor: Colors.grey,
                   fixedSize: Size.fromWidth(
                     MediaQuery.of(context).size.width,
                   ),
                 ),
-                onPressed: () async {
-                  // setState(() {
-                  //   _userProvider.billingInfoViewModelPaymentMethod =
-                  //       PaymentMethod.Cash;
-                  // });
-                  // Initiate Ewsea payment
-                  // EwseaResult result = await Ewsea.initializePayment(
-                  //   "your-ewsea-key",
-                  //   100.0, // payment amount
-                  //   "USD", // currency code
-                  // );
-
-                  // // Handle payment response
-                  // if (result.success) {
-                  //   setState(() {
-                  //     paymentGateway = "Ewsea";
-                  //   });
-                  // } else {
-                  //   // Handle payment error
-                  // }
-                },
+                onPressed: () async {},
                 child: const Text("Pay with Cash"),
               ),
 
@@ -439,7 +284,6 @@ class _BillingInfoWidgetState extends State<BillingInfoWidget> {
         decoration: const BoxDecoration(
           border: Border(
             top: BorderSide(
-              // color: ColorManager.lighterGrey,
               color: Colors.grey,
               width: 1,
             ),

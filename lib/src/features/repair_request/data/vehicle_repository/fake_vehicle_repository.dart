@@ -1,7 +1,4 @@
-import 'dart:io';
 
-import 'package:bato_mechanic/src/features/vehicle_category/domain/vehicle_category/vehicle_category.dart';
-import 'package:bato_mechanic/src/utils/model_utils.dart';
 
 import '../../../../utils/constants/test_vehicles.dart';
 import '../../domain/vehicle/vehicle.dart';

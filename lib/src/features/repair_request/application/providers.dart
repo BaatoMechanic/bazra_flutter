@@ -1,11 +1,8 @@
-import 'package:bato_mechanic/main.dart';
 import 'package:bato_mechanic/src/features/services/domain/service/service.dart';
 import 'package:bato_mechanic/src/features/vehicle_category/domain/vehicle_category/vehicle_category.dart';
 import 'package:bato_mechanic/src/features/vehicle_part/domain/vehicle_part/vehicle_part.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../logging/logger.dart';
 
 part 'providers.g.dart';
 

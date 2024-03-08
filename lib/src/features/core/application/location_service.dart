@@ -66,26 +66,6 @@ class LocationService {
 
     return null;
   }
-
-  // fetchSearchLocation(String searchText) async {
-  //   var response =
-  //       await ref.read(mapRepositoryProvider).getSearchLocations(searchText);
-
-  //   if (response is Success) {
-  //     return Success(
-  //       code: response.code,
-  //       response: response.response,
-  //     );
-  //   }
-
-  //   if (response is Failure) {
-  //     // state = state.copyWith(
-  //     //     markerPosition:
-  //     //         AsyncValue.error(response.errorResponse, response.stackTrace));
-  //   }
-
-  //   return null;
-  // }
 }
 
 @riverpod

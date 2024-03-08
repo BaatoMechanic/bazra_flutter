@@ -5,7 +5,6 @@ import 'package:bato_mechanic/src/features/repair_request/application/repair_req
 
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,9 +19,6 @@ class RepairProgressScreenController extends _$RepairProgressScreenController {
   FutureOr<void> build() {
     // pass
   }
-
-  // final StreamController<UserPosition> mechanicPositionStreamController =
-  //     StreamController<UserPosition>();
 
   Future<void> initializeLocation() async {
     bool serviceEnabled;
@@ -186,14 +182,6 @@ double calculateHaversineDistance(
   final double c = 2 * atan2(sqrt(a), sqrt(1 - a));
   return earthRadius * c;
 }
-
-// final fetchRepairStepsProvider = FutureProvider.autoDispose
-//     .family<List<RepairStep>, String>((ref, repairStepIdx) {
-//   return ref
-//       // .watch(repairProgressScreenControllerProvider.notifier)
-//       .watch(repairProgressScreenControllerProvider.notifier)
-//       .fetchRepairSteps(repairStepIdx);
-// });
 
 @riverpod
 Future<List<RepairStep>> fetchRepairSteps(

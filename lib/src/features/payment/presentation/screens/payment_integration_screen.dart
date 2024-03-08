@@ -31,9 +31,7 @@ class PaymentIntegrationScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32.0),
             GestureDetector(
-              onTap: () {
-                // Handle credit/debit card payment
-              },
+              onTap: () {},
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
@@ -61,9 +59,7 @@ class PaymentIntegrationScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16.0),
             GestureDetector(
-              onTap: () {
-                // Handle digital wallet payment
-              },
+              onTap: () {},
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
@@ -91,9 +87,7 @@ class PaymentIntegrationScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16.0),
             GestureDetector(
-              onTap: () {
-                // Handle cash on delivery payment
-              },
+              onTap: () {},
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),

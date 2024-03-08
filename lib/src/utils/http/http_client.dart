@@ -54,19 +54,9 @@ class HttpHelper {
     } on HttpException {
       logger.e("Http error");
       throw HttpError(stackTrace: StackTrace.current);
-      // return Failure(
-      //   code: HttpStatus.httpVersionNotSupported,
-      //   stackTrace: StackTrace.current,
-      //   errorResponse: ApiStrings.httpErrorString,
-      // );
     } on FormatException {
       logger.e("Format error");
       throw FormatError(stackTrace: StackTrace.current);
-      // return Failure(
-      //   code: HttpStatus.unprocessableEntity,
-      //   stackTrace: StackTrace.current,
-      //   errorResponse: ApiStrings.invalidFormatString,
-      // );
     } catch (exp, st) {
       if (exp is BaseException) {
         logger.e(exp.message);

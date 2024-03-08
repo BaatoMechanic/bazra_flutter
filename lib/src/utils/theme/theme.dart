@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/utils/theme/widget_themes/searchbar_theme.dart';
 import 'package:bato_mechanic/src/utils/theme/widget_themes/text_button_theme.dart';
 import 'package:flutter/material.dart';

@@ -24,5 +24,4 @@ abstract class AbstractUserModel {
       required this.dateOfBirth,
       required this.primaryRole,
       required this.roles});
-  // final Map<String, dynamic> additionalAttributes;
 }

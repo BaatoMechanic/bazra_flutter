@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/features/auth/domain/mechanic.dart';
 import 'package:bato_mechanic/src/features/core/data/user_repository/user_repository.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';

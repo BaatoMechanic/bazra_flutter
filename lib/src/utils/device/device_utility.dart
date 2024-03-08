@@ -113,6 +113,4 @@ class DeviceUtils {
       throw 'Could not launch $url';
     }
   }
-
-// Add more device utility methods as per your specific requirements.
 }

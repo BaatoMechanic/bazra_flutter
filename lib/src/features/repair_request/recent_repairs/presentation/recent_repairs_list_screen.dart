@@ -63,10 +63,6 @@ class RecentRepairsListScreen extends ConsumerWidget {
                       itemCount: repairRequests.length,
                       itemBuilder: (context, index) =>
                           RecentRepairContainerWidget(
-                        // onPressed: () => context
-                        //     .pushNamed(APP_ROUTE.repairProgress.name, extra: {
-                        //   "repairRequestIdx": repairRequests[index].idx
-                        // }),
                         onPressed: () {},
                         repairRequest: repairRequests[index],
                       ),

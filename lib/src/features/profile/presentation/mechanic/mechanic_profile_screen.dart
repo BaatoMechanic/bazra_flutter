@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/application/reviews_and_rating_service.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,14 +27,6 @@ class RepairRequestService {
   });
 
   Ref ref;
-
-  // Stream<UserPosition?> watchUsersLocation(String repairRequestId) {
-  //   var locations = ref
-  //       .read(repairRequestRepositoryProvider)
-  //       .watchUsersLocation(repairRequestId);
-
-  //   return Stream.empty();
-  // }
 
   Future<VehicleRepairRequest> createVehicleRepairRequest(
       Map<String, dynamic> requestInfo) async {

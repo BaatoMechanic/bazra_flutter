@@ -54,13 +54,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
       if (accessToken != null) {
         if (!await _fetchUserInfoWithAccessToken(ref, accessToken)) {
-          // ignore: use_build_context_synchronously
           _navigateToLogin(context);
           return;
         }
       } else if (refreshToken != null) {
         if (!await _refreshTokenAndFetchUserInfo(ref, refreshToken)) {
-          // ignore: use_build_context_synchronously
           _navigateToLogin(context);
           return;
         }
@@ -89,7 +87,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       // }
 
       if (mounted) context.replaceNamed(APP_ROUTE.home.name);
-      // if (mounted) context.replaceNamed(appRoute.buildHome.name);
       return;
     });
   }

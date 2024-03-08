@@ -41,7 +41,6 @@ class UserProfileMenu extends ConsumerWidget {
           iconSize: AppSize.s20,
           icon: const Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          // onPressed: () => context.pushNamed(APP_ROUTE.repairProgress.name),
           onPressed: () => context.pushNamed(APP_ROUTE.activeRepairs.name),
         ),
       ),

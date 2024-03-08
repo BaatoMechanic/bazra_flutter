@@ -227,14 +227,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                 ),
               ),
               const SizedBox(height: 8),
-              // Builder(builder: (context) {
-              //   return ElevatedButton(
-              //     onPressed: _pickVideo,
-              //     child: _videoController != null
-              //         ? const Text('Change Video')
-              //         : const Text('Add Video'),
-              //   );
-              // }),
+
               Row(
                 children: [
                   ElevatedButton(
@@ -422,11 +415,6 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                       ref
                           .read(systemAlertProvider.notifier)
                           .closeLoading(context);
-                      // ToastHelper.showNotification(
-                      //   context,
-                      //   'Something went wrong'.hardcoded(),
-                      //   notificationDuration: 2,
-                      // );
                     }
                   });
                 },

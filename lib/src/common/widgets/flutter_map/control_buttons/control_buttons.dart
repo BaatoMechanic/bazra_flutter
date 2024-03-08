@@ -47,10 +47,6 @@ class FlutterMapControlButtons extends StatefulWidget {
     this.showCurrentLocationButton = true,
     required this.mapController,
     required this.animationController,
-
-    // required this.map,
-
-    // this.currentLocation,
   });
 
   @override
@@ -67,13 +63,13 @@ class _FlutterMapControlButtonsState extends State<FlutterMapControlButtons>
   void initState() {
     super.initState();
 
-    // _animationController = AnimationController(
-    //     duration: const Duration(milliseconds: 500), vsync: this);
+    widget.animationController = AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
   }
 
   @override
   void dispose() {
-    // _animationController.dispose();
+    widget.animationController.dispose();
     super.dispose();
   }
 
@@ -113,7 +109,6 @@ class _FlutterMapControlButtonsState extends State<FlutterMapControlButtons>
   @override
   Widget build(BuildContext context) {
     final map = FlutterMapState.of(context);
-    // final map = widget.map;
 
     return Align(
       alignment: widget.alignment,
@@ -141,13 +136,10 @@ class _FlutterMapControlButtonsState extends State<FlutterMapControlButtons>
                       zoom = widget.maxZoom;
                     }
 
-                    // _animatedMapMove(centerZoom.center, zoom);
                     _animatedMapMove(centerZoom.center, zoom, mounted, this);
                   },
                   child: Icon(
                     widget.zoomInIcon,
-                    // color:
-                    //     widget.zoomInColorIcon ?? IconTheme.of(context).color,
                     color: ThemeColor.dark,
                   ),
                 ),
@@ -168,14 +160,11 @@ class _FlutterMapControlButtonsState extends State<FlutterMapControlButtons>
                       zoom = widget.minZoom;
                     }
 
-                    // _animatedMapMove(centerZoom.center, zoom);
                     _animatedMapMove(centerZoom.center, zoom, mounted, this);
                   },
                   child: Icon(
                     widget.zoomOutIcon,
-                    color:
-                        // widget.zoomOutColorIcon ?? IconTheme.of(context).color,
-                        ThemeColor.dark,
+                    color: ThemeColor.dark,
                   ),
                 ),
               ),
@@ -191,13 +180,6 @@ class _FlutterMapControlButtonsState extends State<FlutterMapControlButtons>
                     Position userPosition =
                         await Geolocator.getCurrentPosition();
 
-                    // String? placeName =
-                    //     await mapSearchWidgetViewModel.getLocationName(
-                    //         userPosition.latitude, userPosition.longitude);
-                    // if (placeName != null) {
-                    //   mapSearchWidgetViewModel.selectedPlaceName = placeName;
-                    // }
-
                     _animatedMapMove(
                         LatLng(userPosition.latitude, userPosition.longitude),
                         15.0,
@@ -206,8 +188,6 @@ class _FlutterMapControlButtonsState extends State<FlutterMapControlButtons>
                   },
                   child: Icon(
                     widget.currentLocationIcon,
-                    // color: widget.currentLocationColorIcon ??
-                    //     IconTheme.of(context).color,
                     color: ThemeColor.dark,
                   ),
                 ),

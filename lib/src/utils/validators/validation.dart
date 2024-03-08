@@ -79,6 +79,4 @@ class AppValidator {
     // Return null if the entered id is valid
     return null;
   }
-
-// Add more custom validators as needed for your specific requirements.
 }

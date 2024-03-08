@@ -6,17 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'repair_request_repository.dart';
 
 class FakeRepairRequestRepository implements RepairRequestRepository {
-  // final _repairRequestState = InMemoryStore<VehicleRepairRequest?>(null);
-  // Stream<VehicleRepairRequest?> _repairRequestStateChanges() =>
-  //     _repairRequestState.stream;
-  // VehicleRepairRequest? get activeRepairRequest => _repairRequestState.value;
-
-  // void setActiveRepairRequest(VehicleRepairRequest? request) {
-  //   _repairRequestState.value = request;
-  // }
-
-  // void dispose() => _repairRequestState.close();
-
   @override
   Future<VehicleRepairRequest> requestForVehicleRepair(
       Map<String, dynamic> requestInfo) async {
@@ -109,7 +98,6 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
 
   @override
   Future<List<VehicleRepairRequest>> fetchUserRepairRequest() async {
-    // Response response = Response(jsonEncode([]), HttpStatus.ok);
     final response = [
       {
         "idx": "8aMD5vyNQZqpySEm9T38Y2",
@@ -124,9 +112,9 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "service_type": "4ebFHe3UfuBLr9WbEroijH",
         "advance_payment_status": "pending",
         // "status": "waiting_for_advance_payment"
+        // "status": "pending"
         "status": "waiting_for_completion_acceptance",
         "created_at": "2023-10-05T17:19:44.893829Z"
-        // "status": "pending"
       },
       {
         "idx": "5xBBkkGbKTwEzuAkX46K8H",
@@ -152,7 +140,6 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
 
   @override
   Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequest() async {
-    // Response response = Response(jsonEncode([]), HttpStatus.ok);
     final response = [
       {
         "idx": "8aMD5vyNQZqpySEm9T38Y2",
@@ -165,10 +152,10 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
         "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
         // "status": "waiting_for_advance_payment"
+        // "status": "pending"
         "status": "waiting_for_completion_acceptance",
         "advance_payment_status": "pending",
         "created_at": "2023-10-05T17:19:44.893829Z"
-        // "status": "pending"
       },
       {
         "idx": "5xBBkkGbKTwEzuAkX46K8H",
@@ -193,7 +180,6 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
 
   @override
   Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequests() async {
-    // Response response = Response(jsonEncode([]), HttpStatus.ok);
     final response = [
       {
         "idx": "8aMD5vyNQZqpySEm9T38Y2",
@@ -206,11 +192,10 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
         "preferred_mechanic": "4ebFHe3UfuBLr9WbEroijH",
         "assigned_mechanic": "4ebFHe3UfuBLr9WbEroijH",
         // "status": "waiting_for_advance_payment"
+        // "status": "pending"
         "status": "waiting_for_completion_acceptance",
         "advance_payment_status": "pending",
         "created_at": "2023-10-05T17:19:44.893829Z"
-
-        // "status": "pending"
       },
       {
         "idx": "5xBBkkGbKTwEzuAkX46K8H",
@@ -254,12 +239,3 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
     );
   }
 }
-
-final fakeRepairRequestRepositoryProvider =
-    Provider((ref) => FakeRepairRequestRepository());
-
-// final watchRepairRequestStateChangesProvider = StreamProvider((ref) {
-//   final serviceProvider = ref.watch(fakeRepairRequestRepositoryProvider);
-//   ref.onDispose(() => serviceProvider.dispose());
-//   return serviceProvider._repairRequestStateChanges();
-// });

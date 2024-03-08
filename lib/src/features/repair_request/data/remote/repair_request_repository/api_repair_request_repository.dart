@@ -68,14 +68,12 @@ class APIRepairRequestRepository implements RepairRequestRepository {
     for (var i = 0; i < images.length; i++) {
       var pic = await http.MultipartFile.fromPath(
         'images',
-        // 'image ${i + 1}',
         images[i].path,
       );
       request.files.add(pic);
     }
 
     request.headers.addAll({
-      // HttpHeaders.authorizationHeader: "SL " + loggedinSession.accessToken,
       HttpHeaders.authorizationHeader:
           'BM ${ref.read(sharedPreferencesProvider).getString('access')!}',
       "Accept": "application/json; charset=utf-8",
@@ -84,11 +82,6 @@ class APIRepairRequestRepository implements RepairRequestRepository {
     });
 
     var response = await request.send();
-
-    //Get the response from the server
-    // var responseData = await response.stream.toBytes();
-
-    // var responseBody = String.fromCharCodes(responseData);
 
     if (response.statusCode == ApiStatusCode.responseCreated) {
       return await fetchVechicleRepairRequest(repairRequestId);

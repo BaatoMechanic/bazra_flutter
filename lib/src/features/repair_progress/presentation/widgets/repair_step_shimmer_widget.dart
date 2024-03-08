@@ -8,18 +8,6 @@ class RepairStepShimmerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return const Card(
-    //   margin: EdgeInsets.all(8),
-    //   child: ListTile(
-    //     title: ShimmerWidget.roundedRectangular(
-    //       width: AppWidth.h100,
-    //     ),
-    //     subtitle: ShimmerWidget.roundedRectangular(
-    //       width: AppWidth.h400,
-    //     ),
-    //   ),
-    //   // trailing: ShimmerWidget.circular(),
-    // );
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: AppMargin.m8,

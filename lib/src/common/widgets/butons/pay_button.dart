@@ -79,6 +79,3 @@ class _PayButtonState extends State<PayButton> {
     );
   }
 }
-
-
-// color: widget.showSpinner ? ColorManager.lightestGrey : null,

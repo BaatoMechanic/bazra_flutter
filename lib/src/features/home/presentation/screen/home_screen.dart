@@ -122,7 +122,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       setState(() {
         _loadingData = true;
       });
-      // final isLoggedIn = ref.watch(authServiceProvider).currentUser != null;
       final isLoggedIn = ref.watch(authStateNotifierProvider).user != null;
 
       if (!isLoggedIn) {
@@ -163,26 +162,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       await ref
           .read(homeScreenControllerProvider.notifier)
           .fetchUserRepairRequests();
-      // if (result) {
-      //   VehicleRepairRequest? repairRequest =
-      //       ref.read(repairRequestServiceProvider).activeRepairRequest;
 
-      //   if (repairRequest != null) {
-      //     if (repairRequest.status == VehicleRepairRequestStatus.IN_PROGRESS) {
-      //       // if (mounted) context.pushNamed(appRoute.repairProgress.name);
-      //       if (mounted) context.goNamed(appRoute.repairProgress.name);
-      //       return;
-      //     }
-      //     // if (mounted) context.pushNamed(appRoute.trackMechanic.name);
-      //     if (mounted) context.goNamed(appRoute.trackMechanic.name);
-      //     return;
-      //   }
-      // }
       setState(() {
         _loadingData = false;
       });
-      // if (mounted) context.replaceNamed(appRoute.home.name);
-      // if (mounted) context.replaceNamed(appRoute.buildHome.name);
     });
   }
 

@@ -11,7 +11,6 @@ import 'package:go_router/go_router.dart';
 import '../../../utils/constants/managers/color_manager.dart';
 
 class OTPConfirmationScreen extends StatelessWidget {
-  // final TextEditingController _otpController = TextEditingController();
   const OTPConfirmationScreen({
     Key? key,
     required this.otpType,
@@ -42,9 +41,7 @@ class OTPConfirmationScreen extends StatelessWidget {
             Text('Enter the OTP sent to your ${_getOTPTitle()}',
                 style: Theme.of(context).textTheme.headlineLarge),
             const SizedBox(height: 16.0),
-            OTPField(
-                // otpLength: 4,
-                ),
+            OTPField(),
             const SizedBox(height: 32.0),
             SubmitButton(
               label: "Submit OTP",

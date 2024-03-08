@@ -10,7 +10,7 @@ class PayBottomSheetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
-        minHeight: AppHeight.h100, // Set the minimum height here
+        minHeight: AppHeight.h100,
       ),
       child: BottomSheet(
           onClosing: () {},

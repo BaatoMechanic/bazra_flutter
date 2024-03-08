@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
@@ -8,7 +7,6 @@ import 'package:bato_mechanic/src/features/repair_request/application/repair_req
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 
 import 'package:bato_mechanic/src/utils/system_alerts_controller.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:video_player/video_player.dart';
@@ -147,16 +145,10 @@ class RequestMechanicScreenController
     Map<String, dynamic> requestData = {
       "title": issueTitle,
       "preferred_mechanic": state.preferredMechanic?.toJson(),
-
       "location_name": selectedLocation?["location_name"],
-      // "selected_location": selectedPosition!.toJson(),
       "location": selectedLocation,
-      // "location_coordinates": coordinates,
-      // "vehicle": ref.read(vehicleServiceProvider).selectedVehicle!.id,
       "vehicle_type": ref.read(selectedVehicleCategoryProvider)?.idx,
-
       "service_type": ref.read(selectedServiceProvider)?.idx,
-
       "description": issueDescription,
     };
     ref

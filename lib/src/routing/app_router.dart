@@ -1,5 +1,3 @@
-// ignore_for_file: camel_case_types
-
 import 'package:bato_mechanic/src/features/password_change/presentation/change_password_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/old_password_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
@@ -53,28 +51,6 @@ enum APP_ROUTE {
   changePassword,
 }
 
-// final repairSteps = [
-//   RepairStep(
-//       name: 'Inception',
-//       detail: AudioData(File('audios/sample_audio.mp3')),
-//       status: RepairStepStatus.COMPLETED,
-//       report: RepairStepReport(reportFields: [
-//         {
-//           "bill_images": [
-//             "assets/images/parts/body.png",
-//             "assets/images/parts/wheel.png",
-//             "assets/images/vehicle/jcb.png",
-//           ]
-//         }
-//       ])),
-//   RepairStep(
-//     name: 'Step 2 details',
-//     detail: StringData("Did the inception"),
-//     status: RepairStepStatus.PENDING,
-//   ),
-//   // Add more steps as needed
-// ];
-
 GoRouter goRouter() {
   return GoRouter(
     initialLocation: '/',
@@ -101,29 +77,8 @@ GoRouter goRouter() {
       GoRoute(
         path: '/',
         name: APP_ROUTE.home.name,
-        // builder: (context, state) => TempScr(),
         builder: (context, state) => BuildHomeScreen(),
-
         routes: [
-          // GoRoute(
-          //   path: 'repair_progress',
-          //   name: APP_ROUTE.repairProgress.name,
-          //   builder: (context, state) {
-          //     final repairRequestIdx =
-          //         (state.extra as Map?)?["repairRequestIdx"];
-
-          //     return RepairProgressScreen(
-          //       repairRequestIdx: repairRequestIdx,
-          //     );
-          //   },
-          //   routes: [
-          //     GoRoute(
-          //       path: 'payment',
-          //       name: APP_ROUTE.payment.name,
-          //       builder: (context, state) => const PaymentIntegrationScreen(),
-          //     ),
-          //   ],
-          // ),
           GoRoute(
             path: 'confirm-old-password',
             name: APP_ROUTE.confirmOldPassword.name,
@@ -226,19 +181,6 @@ GoRouter goRouter() {
                 name: APP_ROUTE.vehicles.name,
                 builder: (context, state) => const VehiclesScreen(),
                 routes: [
-                  // GoRoute(
-                  //   path: 'parts',
-                  //   name: appRoute.parts.name,
-                  //   builder: (context, state) => const VehiclePartsScreen(),
-                  //   routes: [
-                  //     GoRoute(
-                  //       path: 'request',
-                  //       name: appRoute.requestMechanic.name,
-                  //       builder: (context, state) =>
-                  //           const RequestMechanicScreen(),
-                  //     ),
-                  //   ],
-                  // ),
                   GoRoute(
                     path: 'request',
                     name: APP_ROUTE.requestMechanic.name,

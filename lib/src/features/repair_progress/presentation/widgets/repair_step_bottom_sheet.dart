@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step_report.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';

@@ -14,8 +14,6 @@ import '../../../../utils/constants/managers/values_manager.dart';
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
 
-  // static const String routeName = '/user-profile-edit';
-
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
@@ -43,16 +41,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       setState(() {
         imageFile = File(image.path);
       });
-      // setState(() {
-      //   profileImage = imageFile.path;
-      // });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // ThemeData theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -171,7 +164,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: BaatoTextField(
                         initialValue: "345432",
-                        // controller: _liscenseNumberController,
                         focusNode: _liscenseNumberFocusNode,
                         labelText: 'Your liscence number',
                         validator: (value) {

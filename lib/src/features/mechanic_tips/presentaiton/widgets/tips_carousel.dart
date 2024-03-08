@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:flutter/material.dart';
 
@@ -12,19 +11,6 @@ import '../../../../utils/constants/managers/values_manager.dart';
 
 const String title = 'Best Mechanic Tips';
 
-// const List<Map<String, dynamic>> tipList = [
-//   {
-//     'tip':
-//         "First Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-//     "mechanic_image": "assets/images/no-profile.png",
-//   },
-//   {
-//     'tip':
-//         "Second Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-//     "mechanic_image": "assets/images/no-profile.png",
-//   },
-// ];
-
 class TipsCarousel extends StatelessWidget {
   const TipsCarousel({
     Key? key,
@@ -35,7 +21,6 @@ class TipsCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     final List<Widget> tipSliderItems = tips
         .map(
           (item) => Row(

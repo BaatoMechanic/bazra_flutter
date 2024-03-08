@@ -1,5 +1,4 @@
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'review_mechanic_screen_controller.g.dart';

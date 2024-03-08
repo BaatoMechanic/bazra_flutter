@@ -1,5 +1,4 @@
 import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -82,7 +81,6 @@ class SearchMapWidgetController extends _$SearchMapWidgetController {
     }
     state = state.copyWith(value: const AsyncValue.data(null));
     return [];
-    // return 'TEst search result location';
   }
 
   void setMarkerPosition(LatLng position) {

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ServiceHistoryScreen extends StatelessWidget {
-  // const ServiceHistoryPage({Key? key, required this.serviceRecords})
-  //     : super(key: key);
   ServiceHistoryScreen({Key? key}) : super(key: key);
 
-  // final List<ServiceRecord> serviceRecords;
   final List<ServiceRecord> serviceRecords = [
     ServiceRecord(
       date: 'June 1, 2023',
@@ -19,7 +16,6 @@ class ServiceHistoryScreen extends StatelessWidget {
       repairDetails: 'Performed engine tune-up and oil change.',
       warrantyInformation: 'No warranty available for this service.',
     ),
-    // Add more service records as needed
   ];
 
   @override
@@ -45,12 +41,6 @@ class ServiceHistoryScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-
-                    //   ],
-                    // ),
                     Text(
                       'Service Date: ${serviceRecord.date}',
                       style: const TextStyle(
@@ -73,7 +63,6 @@ class ServiceHistoryScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     Text(
                       serviceRecord.repairDetails,
                       style: TextStyle(
@@ -89,7 +78,6 @@ class ServiceHistoryScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     Text(
                       serviceRecord.warrantyInformation,
                       style: TextStyle(

@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:bato_mechanic/src/common/widgets/butons/facebook_button.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/google_button.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/divider_field.dart';

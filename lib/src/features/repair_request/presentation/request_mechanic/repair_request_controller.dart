@@ -1,5 +1,4 @@
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'repair_request_controller.g.dart';
@@ -8,7 +7,7 @@ part 'repair_request_controller.g.dart';
 class RepairRequestController extends _$RepairRequestController {
   @override
   FutureOr<VehicleRepairRequest?> build() {
-    // pass
+    return null;
   }
 
   void setRepairRequest(VehicleRepairRequest repairRequest) {

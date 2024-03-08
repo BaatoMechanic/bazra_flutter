@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -46,9 +44,10 @@ class BaatoTextField extends StatelessWidget {
       focusNode: focusNode,
       nextFocusNode: nextFocusNode,
       autovalidateMode: autovalidateMode,
-      validator: validator ?? (value) {
-        return null;
-      },
+      validator: validator ??
+          (value) {
+            return null;
+          },
       textInputType: TextInputType.text,
       onSaved: onSaved,
       onChanged: onChanged,

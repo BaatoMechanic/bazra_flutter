@@ -1,24 +1,12 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../common/core/repositories/user_settings_repository.dart';
 
 import '../../domain/user.dart';
 import 'remote_auth_repository.dart';
 
-// part 'fake_remote_auth_repository.g.dart';
-
 class FakeRemoteAuthRepository implements RemoteAuthRepository {
-  // final _userState = InMemoryStore<User?>(null);
-
-  // Stream<User?> userStateChanges() => _userState.stream;
-  // User? get currentUser => _userState.value;
-
-  // void setCurrentUser(User? user) => _userState.value = user;
-
-  // void dispose() => _userState.close();
-
   @override
   Future<User> createUserWithIdAndPassword(
       String uId, String password, String fullName) async {
@@ -59,7 +47,6 @@ class FakeRemoteAuthRepository implements RemoteAuthRepository {
         "dob_type": "AD",
       },
     );
-    // setCurrentUser(user);
     return user;
   }
 
@@ -77,8 +64,3 @@ class FakeRemoteAuthRepository implements RemoteAuthRepository {
     );
   }
 }
-
-// @riverpod
-// FakeRemoteAuthRepository fakeAuthRepository(FakeAuthRepositoryRef ref) {
-//   return FakeRemoteAuthRepository();
-// }

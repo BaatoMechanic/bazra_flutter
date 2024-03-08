@@ -24,9 +24,6 @@ class VehicleCategoryScreen extends ConsumerWidget {
     final vehicleCategoriesValue = ref.watch(
         fetchVehicleCategoriesForServiceProvider(
             ref.watch(selectedServiceProvider)!.idx));
-    // final vehicleCategoriesValue = ref.watch(
-    //     fetchVehicleCategoriesForServiceProvider(
-    //         ref.watch(selectedServiceProvider)!));
 
     return Scaffold(
       body: Padding(
@@ -57,12 +54,6 @@ class VehicleCategoryScreen extends ConsumerWidget {
                                 .notifier)
                             .setSelectedCategory(vehicleCategories[index]);
                         context.pushNamed(APP_ROUTE.requestMechanic.name);
-                        // final selectedService = ref
-                        //     .read(serviceTypeServiceProvider)
-                        //     .selectedServiceType;
-                        // if(selectedService != null && selectedService.partsIncluded){
-
-                        // }
                       },
                       child: Card(
                         margin: const EdgeInsets.all(AppMargin.m8),

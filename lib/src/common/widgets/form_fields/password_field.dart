@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -51,7 +50,6 @@ class _PasswordFieldState extends State<PasswordField> {
                   controller: widget.controller,
                   obscureText: _obscurePassword,
                   placeholder: widget.labelText,
-
                   focusNode: widget.focusNode,
                   textInputAction: widget.nextFocusNode == null
                       ? TextInputAction.done
@@ -67,7 +65,6 @@ class _PasswordFieldState extends State<PasswordField> {
                       });
                     },
                   ),
-
                   decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
@@ -92,21 +89,7 @@ class _PasswordFieldState extends State<PasswordField> {
                     if (widget.nextFocusNode != null) {
                       FocusScope.of(context).requestFocus(widget.nextFocusNode);
                     }
-                    // else
-                    // _userProvider.loginScreenSaveForm(
-                    //     context, _form, mounted);
                   },
-                  // onChanged: (value) {
-                  //   if (isPassword) {
-                  //     setState(() {
-                  //       _userProvider.loginScreenUserpassword = value;
-                  //     });
-                  //   } else {
-                  //     setState(() {
-                  //       _userProvider.loginScreenUsernameOrEmail = value;
-                  //     });
-                  //   }
-                  // },
                 )
               : TextFormField(
                   controller: widget.controller,
@@ -149,18 +132,7 @@ class _PasswordFieldState extends State<PasswordField> {
                     if (widget.nextFocusNode != null) {
                       FocusScope.of(context).requestFocus(widget.nextFocusNode);
                     }
-                    // else {
-                    //   _userProvider.loginScreenSaveForm(
-                    //       context, _form, mounted);
-                    // }
                   },
-                  // onSaved: (value) {
-                  //   if (isPassword) {
-                  //     _userProvider.loginScreenUserpassword = value;
-                  //   } else {
-                  //     _userProvider.loginScreenUsernameOrEmail = value;
-                  //   }
-                  // },
                 ),
         ],
       ),

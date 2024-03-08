@@ -8,8 +8,12 @@ import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
-class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
-  TrackMechanicScreenController({required this.ref})
+import '../../../utils/enums/repair_setp_status.dart';
+import '../application/repair_step_service.dart';
+import '../domain/repair_step/repair_step.dart';
+
+class RepairProgressScreenController extends StateNotifier<AsyncValue<void>> {
+  RepairProgressScreenController({required this.ref})
       : super(const AsyncValue.data(null));
   final Ref ref;
 
@@ -136,6 +140,30 @@ class TrackMechanicScreenController extends StateNotifier<AsyncValue<void>> {
         }));
     return !state.hasError;
   }
+
+  Future<List<RepairStep>> fetchRepairSteps(String repairRequestIdx) async {
+    state = await AsyncValue.guard(() =>
+        ref.read(repairStepServiceProvider).fetchRepairSteps(repairRequestIdx));
+
+    return state.value as List<RepairStep>;
+  }
+
+  Future<bool> updateRepairStepStatus(String repairRequest,
+      String repairStepIdx, RepairStepStatus status) async {
+    state = await AsyncValue.guard(() => ref
+        .read(repairStepServiceProvider)
+        .updateRepairStepStatus(repairRequest, repairStepIdx, status));
+    return !state.hasError;
+  }
+
+  Future<bool> completeRepair(String repairStepIdx) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => ref
+        .read(repairRequestServiceProvider)
+        .updateVehicleRepairRequest(repairStepIdx,
+            {"status": RepairStepStatus.COMPLETE.name.toLowerCase()}));
+    return !state.hasError;
+  }
 }
 
 // Function to calculate distance using Haversine formula
@@ -155,6 +183,14 @@ double calculateHaversineDistance(
   return earthRadius * c;
 }
 
-final trackMechanicScreenControllerProvider = StateNotifierProvider.autoDispose<
-    TrackMechanicScreenController,
-    AsyncValue<void>>((ref) => TrackMechanicScreenController(ref: ref));
+final repairProgressScreenControllerProvider =
+    StateNotifierProvider.autoDispose<RepairProgressScreenController,
+        AsyncValue<void>>((ref) => RepairProgressScreenController(ref: ref));
+
+final fetchRepairStepsProvider = FutureProvider.autoDispose
+    .family<List<RepairStep>, String>((ref, repairStepIdx) {
+  return ref
+      // .watch(repairProgressScreenControllerProvider.notifier)
+      .watch(repairProgressScreenControllerProvider.notifier)
+      .fetchRepairSteps(repairStepIdx);
+});

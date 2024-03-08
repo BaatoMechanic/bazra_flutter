@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'package:bato_mechanic/src/features/services/application/service_type_service.dart';
+import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/repair_steps_widget.dart';
 import 'package:bato_mechanic/src/utils/extensions/enum_extensions.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,10 @@ import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import '../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
 import '../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
 import '../data/api_track_mechanic_repository.dart';
-import 'track_mechanic_screen_controller.dart';
+import 'repair_progress_screen_controller.dart';
 
-class TrackMechanicScreen extends ConsumerStatefulWidget {
-  const TrackMechanicScreen({
+class RepairProgressScreen extends ConsumerStatefulWidget {
+  const RepairProgressScreen({
     Key? key,
     this.flipCardController,
     required this.repairRequestIdx,
@@ -44,40 +45,15 @@ class TrackMechanicScreen extends ConsumerStatefulWidget {
   final String repairRequestIdx;
 
   @override
-  ConsumerState<TrackMechanicScreen> createState() =>
-      _TrackMechanicScreenState();
+  ConsumerState<RepairProgressScreen> createState() =>
+      _RepairProgressScreenState();
 }
 
-class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
+class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
-  // final double _animationValue = 0.0;
   bool _showBigScreenMap = false;
   late MapController _mapController;
   late AnimationController _animationController;
-
-  // List<LatLng> pathPoints = [
-  //   LatLng(27.703309, 85.330293),
-  //   LatLng(27.703372, 85.330328),
-  //   LatLng(27.703433, 85.3304),
-  //   LatLng(27.703345, 85.331427),
-  //   LatLng(27.7033, 85.331973),
-  //   LatLng(27.70331, 85.332081),
-  //   LatLng(27.703411, 85.332267),
-  //   LatLng(27.703528, 85.332441),
-  //   LatLng(27.703606, 85.332502),
-  //   LatLng(27.703818, 85.332652),
-  //   LatLng(27.703918, 85.332654),
-  //   LatLng(27.703817, 85.332944),
-  //   LatLng(27.703525, 85.333931),
-  //   LatLng(27.703437, 85.334216),
-  //   LatLng(27.703365, 85.334465),
-  //   LatLng(27.703, 85.33565),
-  //   LatLng(27.70294, 85.335815),
-  //   LatLng(27.702783, 85.336285),
-  //   LatLng(27.702876, 85.336324),
-  //   LatLng(27.703198, 85.336223),
-  //   LatLng(27.70327, 85.33621)
-  // ];
 
   @override
   void initState() {
@@ -89,55 +65,9 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
       duration: const Duration(seconds: 5),
     );
 
-    // int currentIndex = 0;
-
-    // final timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
-    //   if (mounted) {
-    //     if (currentIndex < pathPoints.length - 1) {
-    //       User? user = ref.read(authStateProvider).user;
-    //       UserPosition? nextPosition = user?.currentLocation;
-    //       // if (ref.read(watchMechanicStateChangesProvider).isLoading) {
-    //       //   print('dd');
-    //       //   return;
-    //       // }
-    //       if (nextPosition == null) {
-    //         print('null');
-    //         ref.read(repairRequestControllerProvider).repairRequest;
-    //       } else {
-    //         nextPosition = nextPosition.copyWith(
-    //           latitude: pathPoints[currentIndex].latitude,
-    //           longitude: pathPoints[currentIndex].longitude,
-    //         );
-    //         ref
-    //             .read(authStateProvider.notifier)
-    //             .setUser(user?.copyWith(currentLocation: nextPosition));
-
-    //         currentIndex++;
-    //       }
-    //     } else {
-    //       print('reached to the location');
-    //       timer.cancel();
-    //     }
-    //   }
-    // });
-
-    // Register this object as an observer
     WidgetsBinding.instance.addObserver(this);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // // Get user location if not present
-      // if (ref.read(authStateProvider).user?.currentLocation == null) {
-      //   ref.read(locationServiceProvider).initializeUserLocation();
-      // }
-
-      // // Directly go to progress screen if the repair request is in progress
-      // if (widget.repairRequest.status ==
-      //     VehicleRepairRequestStatus.IN_PROGRESS) {
-      //   if (mounted) {
-      //     context.replaceNamed(APP_ROUTE.repairProgress.name);
-      //   }
-      // }
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {});
   }
 
 // Setting this variable because the notification is shown every time the screen is rebuilt
@@ -157,30 +87,24 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
     //     }
     //   }
     // });
-    // AsyncValue<VehicleRepairRequest?> repairRequestValue =
-    //     const AsyncValue.data(null);
-    // if (ref.watch(activeRepairRequestProvider) != null) {
-    //   repairRequestValue = ref.watch(fetchRepairRequestProvider(
-    //       ref.read(activeRepairRequestProvider)!.idx));
-    // } else {
-    //   repairRequestValue =
-    //       ref.watch(fetchRepairRequestProvider(widget.repairRequestIdx));
-    // }
 
     final repairRequestValue =
         ref.watch(watchRepairRequestProvider(widget.repairRequestIdx));
-    // final repairRequestValue =
-    //     ref.watch(fetchRepairRequestProvider(widget.repairRequestIdx));
 
-    // if (assignedMechanic == null &&
-    //     repairRequestValue.value?.assignedMechanicIdx != null) {
-    //   ref.read(mechanicServiceProvider).fetchAssignedMechanic(
-    //       repairRequestValue.value!.assignedMechanicIdx!);
-    // }
     final routeValue = ref.watch(fetchMechanicRouteProvider);
 
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
+    // return PopScope(
+    //   canPop: true,
+    //   onPopInvoked: (didPop) async {
+    //     if (mounted) {
+    //       if (widget.flipCardController != null) {
+    //         widget.flipCardController!.toggleCard();
+    //       }
+    //     }
+    //     return Future.value(false);
+    //   },
     return WillPopScope(
       onWillPop: () async {
         if (mounted) {
@@ -205,10 +129,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                     children: [
                       Column(
                         children: [
-                          if (repairRequest.assignedMechanicIdx == null)
-                            // Text('Waiting for mechanic'.hardcoded())
-                            const Text('')
-                          else
+                          if (repairRequest.assignedMechanicIdx != null)
                             AsyncValueWidget(
                               value: ref.watch(fetchMechanicInfoProvider(
                                   repairRequest.assignedMechanicIdx!)),
@@ -234,120 +155,129 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                                                   ThemeColor.transparent),
                                     ),
                                   ),
-                                  const SizedBox(height: 4),
-                                  AsyncValueWidget(
-                                    value: ref.watch(
-                                        watchRepairRequestMechanicLocationProvider(
-                                            repairRequest.idx)),
-                                    data: (location) => Text(
-                                      location.locationName ??
-                                          "Place: Unknown".hardcoded(),
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  AsyncValueWidget(
-                                    value: ref.watch(
-                                        watchRepairRequestMechanicLocationProvider(
-                                            repairRequest.idx)),
-                                    data: (location) => GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                FullScreenMapScreen(
-                                              mechanicLocation: location
-                                                      .locationName ??
-                                                  'Place: Unknown'.hardcoded(),
+                                  if (repairRequest.status ==
+                                      VehicleRepairRequestStatus
+                                          .WAITING_FOR_MECHANIC)
+                                    Column(
+                                      children: [
+                                        const SizedBox(height: 4),
+                                        AsyncValueWidget(
+                                          value: ref.watch(
+                                              watchRepairRequestMechanicLocationProvider(
+                                                  repairRequest.idx)),
+                                          data: (location) => Text(
+                                            location.locationName ??
+                                                "Place: Unknown".hardcoded(),
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                        );
-                                      },
-                                      child: SizedBox(
-                                        height: _showBigScreenMap
-                                            ? MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.75
-                                            : 400,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                          child: _showMechanicTrackMap(
-                                              context,
-                                              routeValue.value?[
-                                                      "routeCoordinates"] ??
-                                                  []),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ),
+                                  if (repairRequest.status ==
+                                      VehicleRepairRequestStatus
+                                          .WAITING_FOR_MECHANIC)
+                                    Column(
+                                      children: [
+                                        const SizedBox(height: 16),
+                                        AsyncValueWidget(
+                                          value: ref.watch(
+                                              watchRepairRequestMechanicLocationProvider(
+                                                  repairRequest.idx)),
+                                          data: (location) => AnimatedContainer(
+                                            duration: const Duration(
+                                                milliseconds: 120),
+                                            height: _showBigScreenMap
+                                                ? MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.75
+                                                : 400,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              child: _showMechanicTrackMap(
+                                                context,
+                                                routeValue.value?[
+                                                        "routeCoordinates"] ??
+                                                    [],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                 ],
                               ),
                             ),
                         ],
                       ),
-                      const SizedBox(height: 20),
                       if (repairRequest.status ==
                           VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
-                        AsyncValueWidget(
-                          value: ref.watch(fetchRepairRequestServiceProvider(
-                              repairRequest.idx)),
-                          data: (service) => Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.all(8),
-                                padding: const EdgeInsets.all(8),
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.amberAccent[200],
-                                  borderRadius: BorderRadius.circular(
-                                    20,
-                                  ),
-                                ),
-                                child: service.icon != null
-                                    ? Icon(service.icon)
-                                    : Image.asset(
-                                        'assets/images/parts/wheel.png',
-                                      ),
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Estimated Arrival Time: '.hardcoded(),
-                                  style: const TextStyle().copyWith(
-                                    color: isDarkTheme
-                                        ? ThemeColor.white
-                                        : ThemeColor.black,
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      // text: BaatoDateFormatter
-                                      //     .formatMinutesToGeneric(ref
-                                      //         .read(
-                                      //             trackMechanicScreenControllerProvider
-                                      //                 .notifier)
-                                      //         .getEstimateArrivalTime()),
-                                      text: BaatoDateFormatter
-                                          .formatSecondsToGeneric(
-                                              routeValue.value?["duration"] ??
-                                                  -1),
-                                      style: const TextStyle(
-                                        color: ThemeColor.primary,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
+                        Column(
+                          children: [
+                            const SizedBox(height: 20),
+                            AsyncValueWidget(
+                              value: ref.watch(
+                                  fetchRepairRequestServiceProvider(
+                                      repairRequest.idx)),
+                              data: (service) => Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.amberAccent[200],
+                                      borderRadius: BorderRadius.circular(
+                                        20,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                                    child: service.icon != null
+                                        ? Icon(service.icon)
+                                        : Image.asset(
+                                            'assets/images/parts/wheel.png',
+                                          ),
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      text: 'Estimated Arrival Time: '
+                                          .hardcoded(),
+                                      style: const TextStyle().copyWith(
+                                        color: isDarkTheme
+                                            ? ThemeColor.white
+                                            : ThemeColor.black,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          // text: BaatoDateFormatter
+                                          //     .formatMinutesToGeneric(ref
+                                          //         .read(
+                                          //             trackMechanicScreenControllerProvider
+                                          //                 .notifier)
+                                          //         .getEstimateArrivalTime()),
+                                          text: BaatoDateFormatter
+                                              .formatSecondsToGeneric(routeValue
+                                                      .value?["duration"] ??
+                                                  -1),
+                                          style: const TextStyle(
+                                            color: ThemeColor.primary,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
+
                       ListTile(
                         title: Text(
                           repairRequest.title ?? "No title provided",
@@ -391,48 +321,53 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                       const SizedBox(
                         height: 30,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 16.0,
                           vertical: 8.0,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              flex: 4,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                        child: repairRequest.advancePaymentStatus ==
+                                AdvancePaymentStatus.COMPLETE
+                            ? const SizedBox.shrink()
+                            : const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'Mechanic baato karcha',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                                  Flexible(
+                                    flex: 4,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Mechanic baato karcha',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Khaana included',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Text(
-                                    'Khaana included',
-                                    style: TextStyle(
-                                      fontSize: 14,
+                                  Flexible(
+                                    flex: 1,
+                                    child: Text(
+                                      'Rs. 3000',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: ThemeColor.primary,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Text(
-                                'Rs. 3000',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: ThemeColor.primary,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                       if (repairRequest.advancePaymentStatus ==
                           AdvancePaymentStatus.PAYMENT_ON_ARRIVAL)
@@ -485,19 +420,99 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                           }),
                         )
                       else if (repairRequest.status ==
-                              VehicleRepairRequestStatus.PENDING ||
-                          repairRequest.status ==
-                              VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
-                        Container()
-                      else
-                        SubmitButton(
-                          label: 'Check Progress'.hardcoded(),
-                          onPressed: () => context.pushNamed(
-                              APP_ROUTE.repairProgress.name,
-                              extra: {"repairRequestIdx": repairRequest.idx}),
+                          VehicleRepairRequestStatus.IN_PROGRESS)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Repair Steps".hardcoded(),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              RepairStepsWidget(
+                                  repairRequestIdx: repairRequest.idx)
+                            ],
+                          ),
                         )
+
+                      // else if (repairRequest.status ==
+                      //         VehicleRepairRequestStatus.PENDING ||
+                      //     repairRequest.status ==
+                      //         VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
+                      //   Container()
+                      // else
+                      //   SubmitButton(
+                      //     label: 'Check Progress'.hardcoded(),
+                      //     onPressed: () => context.pushNamed(
+                      //         APP_ROUTE.repairProgress.name,
+                      //         extra: {"repairRequestIdx": repairRequest.idx}),
+                      //   )
                     ],
                   ),
+                ),
+              ),
+              bottomSheet: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppPadding.p16,
+                ),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Consumer(builder: (context, ref, child) {
+                    final repairRequestValue = ref
+                        .watch(watchRepairRequestProvider(repairRequest.idx));
+                    return AsyncValueWidget(
+                      value: repairRequestValue,
+                      data: (repairRequest) => Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (repairRequest.status ==
+                              VehicleRepairRequestStatus
+                                  .WAITING_FOR_COMPLETION_ACCEPTANCE)
+                            SubmitButton(
+                              label: 'Complete the process'.hardcoded(),
+                              showSpinner: ref
+                                  .watch(repairProgressScreenControllerProvider)
+                                  .isLoading,
+                              onPressed: () async {
+                                if (await ref
+                                    .read(repairProgressScreenControllerProvider
+                                        .notifier)
+                                    .completeRepair(repairRequest.idx)) {
+                                  // ignore: use_build_context_synchronously
+                                  context.pushNamed(
+                                      APP_ROUTE.reviewMechanic.name,
+                                      extra: {
+                                        'repairRequestIdx': repairRequest.idx,
+                                        "mechanicIdx":
+                                            repairRequest.assignedMechanicIdx
+                                      });
+                                }
+                              },
+                            ),
+                          if (repairRequest.status ==
+                              VehicleRepairRequestStatus.COMPLETE)
+                            ElevatedButton(
+                                child: Text('Review the mechanic'.hardcoded()),
+                                onPressed: () {
+                                  context.goNamed(APP_ROUTE.reviewMechanic.name,
+                                      extra: {
+                                        'repairRequestIdx': repairRequest.idx,
+                                        "mechanicIdx":
+                                            repairRequest.assignedMechanicIdx
+                                      });
+                                }),
+                        ],
+                      ),
+                    );
+                  }),
                 ),
               ),
             );
@@ -561,7 +576,7 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
                       final BuildContext currentContext = context;
 
                       bool updated = await ref
-                          .read(trackMechanicScreenControllerProvider.notifier)
+                          .read(repairProgressScreenControllerProvider.notifier)
                           .setAdvancePaymentOnArrival(repairRequestIdx);
 
                       if (updated) {
@@ -753,31 +768,6 @@ class _TrackMechanicScreenState extends ConsumerState<TrackMechanicScreen>
           ],
         ),
       ],
-    );
-  }
-}
-
-class FullScreenMapScreen extends StatelessWidget {
-  final String mechanicLocation;
-
-  const FullScreenMapScreen({Key? key, required this.mechanicLocation})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Full Screen Map'),
-      ),
-      body: const Center(
-        child: Text(
-          'Full screen map goes here',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
     );
   }
 }

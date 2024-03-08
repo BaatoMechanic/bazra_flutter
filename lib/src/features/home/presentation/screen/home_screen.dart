@@ -23,7 +23,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../services/data/service_type_repository.dart';
-import '../../../track_mechanic/presentation/track_mechanic_screen.dart';
+import '../../../repair_progress/presentation/repair_progress_screen.dart';
 import '../widget/service_buttons_grid.dart';
 
 class BuildHomeScreen extends ConsumerWidget {
@@ -44,7 +44,7 @@ class BuildHomeScreen extends ConsumerWidget {
       front: HomeScreen(flipCardController: controller),
       back: activeRepair == null
           ? Container()
-          : TrackMechanicScreen(
+          : RepairProgressScreen(
               repairRequestIdx: activeRepair.idx,
               flipCardController: controller),
     );
@@ -193,6 +193,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
     final mechanicTipsVAlue = ref.watch(fetchMechanicTipsProvider);
 
+    // return PopScope(
+    //   canPop: true,
+    //   onPopInvoked: (didPop) => ToastHelper.onWillPopToast(context),
     return WillPopScope(
       onWillPop: () => ToastHelper.onWillPopToast(context),
       child: SafeArea(

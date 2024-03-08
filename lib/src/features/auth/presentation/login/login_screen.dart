@@ -54,6 +54,9 @@ class LoginScreen extends ConsumerWidget {
         (previous, state) => state.showError(context));
 
     final state = ref.watch(loginScreenControllerProvider);
+    // return PopScope(
+    //   canPop: true,
+    //   onPopInvoked: (didPop) => ToastHelper.onWillPopToast(context),
     return WillPopScope(
       onWillPop: () => ToastHelper.onWillPopToast(context),
       child: SafeArea(

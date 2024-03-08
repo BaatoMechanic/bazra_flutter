@@ -16,6 +16,8 @@ class HttpHelper {
     final logger = BMLogger().logger;
     try {
       var response = await request();
+      logger.i(
+          "${response.request?.method} ${response.request?.url.origin}${response.request?.url.path}");
 
       if (response.statusCode == 401) {
         logger.e("Unauthorized request");
@@ -66,11 +68,12 @@ class HttpHelper {
       //   errorResponse: ApiStrings.invalidFormatString,
       // );
     } catch (exp, st) {
-      logger.e(exp);
       if (exp is BaseException) {
+        logger.e(exp.message);
         rethrow;
       }
 
+      logger.e(exp);
       throw BaseException(
         message: exp.toString(),
         stackTrace: st,
@@ -82,22 +85,16 @@ class HttpHelper {
   static dynamic _handleResponse(Response response) {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       final logger = BMLogger().logger;
-
-      // Log request details
-      // logger.i("Request URL: ${response.request?.url}");
-      // logger.i("Request Method: ${response.request?.method}");
       logger.i(response.request);
-      // logger
-      //     .i("Request Body: ${utf8.decode(response.request?.bodyBytes ?? [])}");
 
-      // Log response details
       logger.i("Response Body: ${utf8.decode(response.bodyBytes)}");
 
       return jsonDecode(utf8.decode(response.bodyBytes));
     }
     if (response.statusCode == 500) {
       throw BaseException(
-          message: "Something went worng!", stackTrace: StackTrace.current);
+          message: response.reasonPhrase ?? "Something went worng!",
+          stackTrace: StackTrace.current);
     }
 
     final message = jsonDecode(response.body)['details'] ??

@@ -30,7 +30,7 @@ class APIRepairRequestRepository implements RepairRequestRepository {
                   'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
             }),
         ref);
-    return VehicleRepairRequest.fromJson(jsonDecode(response));
+    return VehicleRepairRequest.fromJson(response);
   }
 
   @override
@@ -54,7 +54,7 @@ class APIRepairRequestRepository implements RepairRequestRepository {
             ),
         ref);
 
-    return VehicleRepairRequest.fromJson(jsonDecode(response));
+    return VehicleRepairRequest.fromJson(response);
   }
 
   @override
@@ -157,7 +157,7 @@ class APIRepairRequestRepository implements RepairRequestRepository {
             }),
         ref);
 
-    return VehicleRepairRequest.fromJson(jsonDecode(response));
+    return VehicleRepairRequest.fromJson(response);
   }
 }
 

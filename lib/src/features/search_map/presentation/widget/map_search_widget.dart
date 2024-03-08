@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bato_mechanic/main.dart';
+import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_state.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_widget_controller.dart';
 import 'package:bato_mechanic/src/logging/logger.dart';
@@ -58,49 +58,29 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                 as LatLng);
       }
       if (event is MapEventMoveEnd) {
-        _showLocationName(event.center.latitude, event.center.longitude);
+        final double lat = event.center.latitude;
+        final double lon = event.center.longitude;
+
+        String? placeName = await ref
+            .read(searchMapWidgetControllerProvider.notifier)
+            .fetchLocationName(lat, lon);
+        _showLocationName(placeName);
+        ref
+            .read(requestMechanicScreenControllerProvider.notifier)
+            .setSelectedLocation({
+          "latitude": lat,
+          "longitude": lon,
+          "location_name": placeName,
+          "timestamp": DateTime.now().toString(),
+        });
       }
     });
   }
 
-  _showLocationName(double lat, double lon) async {
-    String? placeName = await ref
-        .read(searchMapWidgetControllerProvider.notifier)
-        .fetchLocationName(lat, lon);
+  _showLocationName(String? placeName) async {
     if (placeName != null) {
       _searchController.text = placeName;
       _selectedPlaceName = placeName;
-      // UserPosition? userPosition =
-      //     ref.read(authStateProvider).user?.currentLocation;
-
-      // if (userPosition != null) {
-      //   ref
-      //       .read(requestMechanicScreenControllerProvider.notifier)
-      //       .setSelectedLocation({
-      //     "latitude": lat,
-      //     "longitude": lon,
-      //     "location_name": placeName,
-      //     "accuracy": userPosition.accuracy,
-      //     "altitude": userPosition.altitude,
-      //     "timestamp": userPosition.timestamp.toString(),
-      //   });
-      // } else {
-      //   userPosition = await MapHelper.getUserLocation();
-      //   if (userPosition != null) {
-      //     ref
-      //         .read(requestMechanicScreenControllerProvider.notifier)
-      //         .setSelectedLocation({
-      //       "latitude": lat,
-      //       "longitude": lon,
-      //       "location_name": placeName,
-      //       "accuracy": userPosition.accuracy,
-      //       "altitude": userPosition.altitude,
-      //       "timestamp": userPosition.timestamp.toString(),
-      //     }
-
-      // );
-      // }
-      // }
     } else {
       final logger = BMLogger().logger;
       logger.e("Place name not found".hardcoded());
@@ -171,7 +151,10 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             ref
                 .read(searchMapWidgetControllerProvider.notifier)
                 .setMarkerPosition(latLng);
-            await _showLocationName(latLng.latitude, latLng.longitude);
+            String? placeName = await ref
+                .read(searchMapWidgetControllerProvider.notifier)
+                .fetchLocationName(latLng.latitude, latLng.longitude);
+            await _showLocationName(placeName);
             _animatedMapMove(latLng, _mapController.zoom, mounted, this);
           },
           center:
@@ -394,26 +377,14 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   _mapController.center.latitude = positionToMove.latitude;
                   _mapController.center.longitude = positionToMove.longitude;
 
-                  // UserPosition? userPosition =
-                  //     ref.read(authStateProvider).user?.currentLocation;
-
-                  // if (userPosition == null) {
-                  //   userPosition = await MapHelper.getUserLocation();
-                  //   if (userPosition != null) {
-                  //     ref
-                  //         .read(
-                  //             requestMechanicScreenControllerProvider.notifier)
-                  //         .setSelectedLocation({
-                  //       "latitude": _options[index].latitude,
-                  //       "longitude": _options[index].longitude,
-                  //       "location_name": _options[index].displayname,
-                  //       "accuracy": userPosition.accuracy,
-                  //       "altitude": userPosition.altitude,
-                  //       "timestamp": userPosition.timestamp.toString(),
-                  //     });
-                  //     _searchController.text = _options[index].displayname;
-                  //   }
-                  // }
+                  ref
+                      .read(requestMechanicScreenControllerProvider.notifier)
+                      .setSelectedLocation({
+                    "latitude": _options[index].latitude,
+                    "longitude": _options[index].longitude,
+                    "location_name": _options[index].displayname,
+                    "timestamp": DateTime.now().toString()
+                  });
                   _searchController.text = _options[index].displayname;
 
                   _searchFocusNode.unfocus();

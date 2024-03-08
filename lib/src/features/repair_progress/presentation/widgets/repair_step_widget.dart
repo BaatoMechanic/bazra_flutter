@@ -20,7 +20,6 @@ class RepairStepWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(8),
       child: ListTile(
         title: Text(step.name),
         subtitle: Text(

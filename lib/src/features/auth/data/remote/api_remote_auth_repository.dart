@@ -37,7 +37,7 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
             }),
         ref);
 
-    return User.fromJson(jsonDecode(response));
+    return User.fromJson(response);
   }
 
   @override
@@ -49,7 +49,7 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
         () => http
             .post(url, body: {"user_identifier": uId, "password": password}),
         ref);
-    return jsonDecode(response);
+    return response;
   }
 
   @override

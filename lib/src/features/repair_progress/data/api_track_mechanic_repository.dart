@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:bato_mechanic/src/features/core/domain/user_position/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
-import 'package:bato_mechanic/src/features/track_mechanic/data/track_mechanic_repository.dart';
+import 'package:bato_mechanic/src/features/repair_progress/data/track_mechanic_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -33,11 +33,14 @@ final watchRepairRequestProvider = StreamProvider.autoDispose
 
   ref.onDispose(() => channel.sink.close());
 
-  await for (final value in channel.stream) {
+  await for (var value in channel.stream) {
+    if (value is String) {
+      value = jsonDecode(value);
+    }
     try {
-      yield VehicleRepairRequest.fromJson(jsonDecode(value));
+      yield VehicleRepairRequest.fromJson(value);
     } catch (e) {
-      yield VehicleRepairRequest.fromJson(jsonDecode(jsonDecode(value)));
+      yield VehicleRepairRequest.fromJson(jsonDecode(value));
     }
   }
 });

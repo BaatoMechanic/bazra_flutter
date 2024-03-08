@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/auth/domain/mechanic/mechanic.dart';

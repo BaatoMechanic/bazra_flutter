@@ -13,16 +13,6 @@ class RepairStepService {
         .fetchRepairSteps(repairRequestIdx);
 
     return repairStepsFromJson(response);
-
-    // if (response is Success) {
-    //   final List<RepairStep> repairSteps =
-    //       repairStepsFromJson(response.response as String);
-    //   return repairSteps;
-    // }
-    // if (response is Failure) {
-    //   throw Exception(response.errorResponse.toString());
-    // }
-    // return [];
   }
 
   Future<bool> updateRepairStepStatus(
@@ -38,9 +28,3 @@ class RepairStepService {
 final repairStepServiceProvider = Provider<RepairStepService>((ref) {
   return RepairStepService(ref);
 });
-
-// final watchRepairStepStateChangesProvider =
-//     StreamProvider<List<RepairStep>>((ref) {
-//   final repairStepService = ref.watch(repairStepServiceProvider);
-//   return repairStepService._allRepairStepsStateChanges();
-// });

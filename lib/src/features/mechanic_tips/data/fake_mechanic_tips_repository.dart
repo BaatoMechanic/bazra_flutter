@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:bato_mechanic/src/features/mechanic_tips/data/mechanic_tips_repository.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/domain/mechanic_tip/mechanic_tip.dart';

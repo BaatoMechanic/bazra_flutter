@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/api_values_manager.dart';
@@ -58,6 +57,6 @@ class APIMapRepository implements MapRepository {
         '${RemoteManager.BASE_URI}gis/location-search/?search=$searchText');
 
     final response = await HttpHelper.guard(() => http.get(url), ref);
-    return jsonDecode(response);
+    return response;
   }
 }

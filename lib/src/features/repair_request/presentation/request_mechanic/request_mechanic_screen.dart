@@ -5,7 +5,6 @@ import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 
-
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
@@ -415,7 +414,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                       ref
                           .read(systemAlertProvider.notifier)
                           .closeLoading(context);
-                      context.goNamed(APP_ROUTE.trackMechanic.name,
+                      context.goNamed(APP_ROUTE.repairProgress.name,
                           extra: {"repairRequestIdx": result.idx});
                       return;
                     } else {

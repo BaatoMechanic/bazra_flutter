@@ -4,8 +4,8 @@ import 'package:bato_mechanic/src/features/core/domain/user_position/user_positi
 
 import '../../auth/domain/mechanic/mechanic.dart';
 
-class TrackMechanicScreenState {
-  TrackMechanicScreenState({
+class RepairProgressScreenState {
+  RepairProgressScreenState({
     required this.currentUserLocation,
     required this.currentMechanicLocation,
     required this.mechanicInfo,
@@ -15,12 +15,12 @@ class TrackMechanicScreenState {
   final Stream<UserPosition?> currentMechanicLocation;
   final Mechanic? mechanicInfo;
 
-  TrackMechanicScreenState copyWith({
+  RepairProgressScreenState copyWith({
     UserPosition? currentUserLocation,
     Stream<UserPosition?>? currentMechanicLocation,
     Mechanic? mechanicInfo,
   }) {
-    return TrackMechanicScreenState(
+    return RepairProgressScreenState(
       currentUserLocation: currentUserLocation ?? this.currentUserLocation,
       currentMechanicLocation:
           currentMechanicLocation ?? this.currentMechanicLocation,
@@ -33,7 +33,7 @@ class TrackMechanicScreenState {
       'TrackMechanicScreenState(currentUserLocation: $currentUserLocation, currentMechanicLocation: $currentMechanicLocation, mechanicInfo: $mechanicInfo)';
 
   @override
-  bool operator ==(covariant TrackMechanicScreenState other) {
+  bool operator ==(covariant RepairProgressScreenState other) {
     if (identical(this, other)) return true;
 
     return other.currentUserLocation == currentUserLocation &&

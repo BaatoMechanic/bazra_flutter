@@ -8,7 +8,7 @@ import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart'
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen_controller.dart';
-import 'package:bato_mechanic/src/features/auth/presentation/login_signup_label.dart';
+import 'package:bato_mechanic/src/features/auth/presentation/widgets/login_signup_label.dart';
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/password_field.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
@@ -50,7 +50,7 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // No need to check isRefreshing and hasError here as this is checked in extension function
-    ref.listen<AsyncValue>(loginScreenControllerProvider,
+    ref.listen(loginScreenControllerProvider,
         (previous, state) => state.showError(context));
 
     final state = ref.watch(loginScreenControllerProvider);

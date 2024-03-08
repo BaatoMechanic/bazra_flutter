@@ -42,7 +42,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final isLoggedIn = ref.watch(authStateProvider).isAuthenticated;
+      final isLoggedIn = ref.watch(authStateNotifierProvider).isAuthenticated;
       if (!isLoggedIn) {
         _navigateToLogin(context);
         return;

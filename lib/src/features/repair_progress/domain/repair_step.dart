@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../../../utils/enums/repair_setp_status.dart';
-import '../repair_step_report/repair_step_report.dart';
+import '../../../utils/enums/repair_setp_status.dart';
+import 'repair_step_report.dart';
 
 part 'repair_step.freezed.dart';
 part 'repair_step.g.dart';

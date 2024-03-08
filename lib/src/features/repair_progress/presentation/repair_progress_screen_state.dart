@@ -2,7 +2,7 @@
 
 import 'package:bato_mechanic/src/features/core/domain/user_position/user_position.dart';
 
-import '../../auth/domain/mechanic/mechanic.dart';
+import '../../auth/domain/mechanic.dart';
 
 class RepairProgressScreenState {
   RepairProgressScreenState({

@@ -18,7 +18,7 @@ import '../../../../common/widgets/butons/google_button.dart';
 import '../../../../common/widgets/form_fields/divider_field.dart';
 import '../../../../common/widgets/form_fields/id_field.dart';
 import '../../../../utils/constants/managers/default_manager.dart';
-import '../login_signup_label.dart';
+import '../widgets/login_signup_label.dart';
 
 class SignUpScreen extends ConsumerWidget {
   SignUpScreen({super.key});
@@ -40,24 +40,25 @@ class SignUpScreen extends ConsumerWidget {
       FocusScope.of(context).unfocus();
 
       final response = await ref
-          .read(signupScreenControllerProvider.notifier)
+          .read(signUpScreenControllerProvider.notifier)
           .createUserWithIdAndPassword(_idController.text,
               _passwordController.text, _nameController.text);
       if (response) {
         ToastHelper.showNotification(
             context,
-            'You have been registered successfully. Please login to continue'
+            'Welcome to Baato Mechanic'
+                // 'You have been registered successfully. Please login to continue'
                 .hardcoded());
-        context.replaceNamed(APP_ROUTE.login.name);
+        context.replaceNamed(APP_ROUTE.home.name);
       }
     }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<AsyncValue>(signupScreenControllerProvider,
+    ref.listen<AsyncValue>(signUpScreenControllerProvider,
         (previous, state) => state.showError(context));
-    final state = ref.watch(signupScreenControllerProvider);
+    final state = ref.watch(signUpScreenControllerProvider);
     return SafeArea(
       child: Scaffold(
         body: Center(

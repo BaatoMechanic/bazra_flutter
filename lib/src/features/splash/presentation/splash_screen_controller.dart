@@ -1,14 +1,17 @@
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../auth/application/auth_service.dart';
 
-class SplashScreenController extends StateNotifier<AsyncValue<void>> {
-  SplashScreenController({
-    required this.ref,
-  }) : super(const AsyncValue.data(null));
+part 'splash_screen_controller.g.dart';
 
-  Ref ref;
+@riverpod
+class SplashScreenController extends _$SplashScreenController {
+  @override
+  FutureOr<void> build() {
+    // pass
+  }
 
   Future<bool> hasRepairRequest(String userId) async {
     await Future.delayed(const Duration(seconds: 2));
@@ -31,8 +34,3 @@ class SplashScreenController extends StateNotifier<AsyncValue<void>> {
     return !state.hasError;
   }
 }
-
-final splashScreenControllerProvider =
-    StateNotifierProvider<SplashScreenController, AsyncValue<void>>((ref) {
-  return SplashScreenController(ref: ref);
-});

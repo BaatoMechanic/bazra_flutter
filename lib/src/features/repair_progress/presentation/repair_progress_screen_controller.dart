@@ -7,15 +7,19 @@ import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../utils/enums/repair_setp_status.dart';
 import '../application/repair_step_service.dart';
-import '../domain/repair_step/repair_step.dart';
+import '../domain/repair_step.dart';
+part 'repair_progress_screen_controller.g.dart';
 
-class RepairProgressScreenController extends StateNotifier<AsyncValue<void>> {
-  RepairProgressScreenController({required this.ref})
-      : super(const AsyncValue.data(null));
-  final Ref ref;
+@riverpod
+class RepairProgressScreenController extends _$RepairProgressScreenController {
+  @override
+  FutureOr<void> build() {
+    // pass
+  }
 
   // final StreamController<UserPosition> mechanicPositionStreamController =
   //     StreamController<UserPosition>();
@@ -183,14 +187,17 @@ double calculateHaversineDistance(
   return earthRadius * c;
 }
 
-final repairProgressScreenControllerProvider =
-    StateNotifierProvider.autoDispose<RepairProgressScreenController,
-        AsyncValue<void>>((ref) => RepairProgressScreenController(ref: ref));
+// final fetchRepairStepsProvider = FutureProvider.autoDispose
+//     .family<List<RepairStep>, String>((ref, repairStepIdx) {
+//   return ref
+//       // .watch(repairProgressScreenControllerProvider.notifier)
+//       .watch(repairProgressScreenControllerProvider.notifier)
+//       .fetchRepairSteps(repairStepIdx);
+// });
 
-final fetchRepairStepsProvider = FutureProvider.autoDispose
-    .family<List<RepairStep>, String>((ref, repairStepIdx) {
-  return ref
-      // .watch(repairProgressScreenControllerProvider.notifier)
-      .watch(repairProgressScreenControllerProvider.notifier)
-      .fetchRepairSteps(repairStepIdx);
-});
+@riverpod
+Future<List<RepairStep>> fetchRepairSteps(
+        FetchRepairStepsRef ref, String repairStepIdx) =>
+    ref
+        .watch(repairProgressScreenControllerProvider.notifier)
+        .fetchRepairSteps(repairStepIdx);

@@ -21,8 +21,8 @@ class HttpHelper {
 
       if (response.statusCode == 401) {
         logger.e("Unauthorized request");
-        String code = jsonDecode(response.body)['code'];
-        if (code == 'token_not_valid'.hardcoded()) {
+        String? code = jsonDecode(response.body)['code'];
+        if (code != null && code == 'token_not_valid'.hardcoded()) {
           String? refreshToken =
               ref.read(sharedPreferencesProvider).getString('refresh');
           if (refreshToken == null) {
@@ -109,7 +109,7 @@ class HttpHelper {
     }
 
     throw BaseException(
-      message: message,
+      message: message ?? response.reasonPhrase,
       statusCode: response.statusCode,
       stackTrace: StackTrace.current,
     );

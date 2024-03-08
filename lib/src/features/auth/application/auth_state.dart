@@ -1,7 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../domain/user/user.dart';
+import '../domain/user.dart';
+part 'auth_state.g.dart';
 
 class AuthState {
   AuthState({required this.isAuthenticated, this.user});
@@ -20,8 +20,12 @@ class AuthState {
   }
 }
 
-class AuthStateNotifier extends StateNotifier<AuthState> {
-  AuthStateNotifier() : super(AuthState(isAuthenticated: false));
+@riverpod
+class AuthStateNotifier extends _$AuthStateNotifier {
+  @override
+  dynamic build() {
+    return AuthState(isAuthenticated: false);
+  }
 
   void setUser(User? user) {
     state = state.copyWith(user: user);
@@ -35,8 +39,3 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     state = state.copyWith(user: null);
   }
 }
-
-final authStateProvider =
-    StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
-  return AuthStateNotifier();
-});

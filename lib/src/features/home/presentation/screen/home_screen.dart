@@ -123,7 +123,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         _loadingData = true;
       });
       // final isLoggedIn = ref.watch(authServiceProvider).currentUser != null;
-      final isLoggedIn = ref.watch(authStateProvider).user != null;
+      final isLoggedIn = ref.watch(authStateNotifierProvider).user != null;
 
       if (!isLoggedIn) {
         final sharedPreferences = ref.read(sharedPreferencesProvider);
@@ -292,7 +292,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   ],
                 ),
                 Consumer(builder: (context, ref, child) {
-                  final servicesValue = ref.watch(fetchAllServiceTypeProvider);
+                  final servicesValue = ref.watch(fetchAllServiceTypesProvider);
                   return AsyncValueWidget(
                     loadingShimmer: const ServiceButtonsGridShimmerWidget(),
                     value: servicesValue,

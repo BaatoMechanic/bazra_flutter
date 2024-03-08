@@ -2,25 +2,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:bato_mechanic/src/features/vehicle_category/domain/vehicle_category/vehicle_category.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/vehicle_category_repository.dart';
 
-class VehicleCategoryService {
-  VehicleCategoryService({
-    required this.ref,
-  });
-  final Ref ref;
-}
+part 'vehicle_category_service.g.dart';
 
-final vehicleCategoryServiceProvider = Provider((ref) {
-  final serviceProvider = VehicleCategoryService(ref: ref);
-
-  return serviceProvider;
-});
-
-final fetchVehicleCategoriesForService = FutureProvider.autoDispose
-    .family<List<VehicleCategory>, String>((ref, serviceIdx) {
+@riverpod
+Future<List<VehicleCategory>> fetchVehicleCategoriesForService(
+    FetchVehicleCategoriesForServiceRef ref, String serviceIdx) {
   return ref
       .watch(vehicleCategoryRepositoryProvider)
       .fetchVehicleCategoriesForService(serviceIdx);
-});
+}

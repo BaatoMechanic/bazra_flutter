@@ -19,7 +19,7 @@ class UserProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-    final user = ref.watch(authStateProvider).user;
+    final user = ref.watch(authStateNotifierProvider).user;
 
     List<MenuTile> infoTiles = [
       MenuTile(

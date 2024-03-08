@@ -1,9 +1,12 @@
 import 'package:bato_mechanic/main.dart';
 import 'package:bato_mechanic/src/features/auth/data/remote/api_remote_auth_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../domain/user/user.dart';
+import '../../domain/user.dart';
 import 'fake_remote_auth_repository.dart';
+
+part 'remote_auth_repository.g.dart';
 
 abstract class RemoteAuthRepository {
   Future<Map<String, dynamic>> signInWithIdAndPassword(
@@ -15,11 +18,11 @@ abstract class RemoteAuthRepository {
   Future<void> signOut(Ref ref);
 }
 
-final authRepositoryProvider = Provider<RemoteAuthRepository>((ref) {
+@riverpod
+RemoteAuthRepository authRepository(AuthRepositoryRef ref) {
   if (SHOW_FAKE) {
     return FakeRemoteAuthRepository();
   } else {
     return APIRemoteAuthRepository(ref: ref);
   }
-  // return ref.watch(fakeAuthRepositoryProvider);
-});
+}

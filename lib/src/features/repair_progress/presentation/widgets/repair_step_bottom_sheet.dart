@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
-import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step_report/repair_step_report.dart';
+import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step_report.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
@@ -14,7 +14,7 @@ import '../../../../utils/constants/managers/font_manager.dart';
 import '../../../../utils/constants/managers/style_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../../utils/enums/repair_setp_status.dart';
-import '../../domain/repair_step/repair_step.dart';
+import '../../domain/repair_step.dart';
 import '../repair_progress_screen_controller.dart';
 
 class RepairStepBottomSheet extends ConsumerWidget {

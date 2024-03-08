@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+part 'user_settings_repository.g.dart';
 
 class UserSettingsRepository {
   const UserSettingsRepository(this.ref);
@@ -26,23 +28,29 @@ class UserSettingsRepository {
       orElse: () => ThemeMode.system,
     );
   }
+}
+
+@Riverpod(keepAlive: true)
+UserSettingsRepository userSettingsRepository(UserSettingsRepositoryRef ref) =>
+    UserSettingsRepository(ref);
+
+@riverpod
+class BThemeMode extends _$BThemeMode {
+  @override
+  ThemeMode build() {
+    final userSettingsRepository = ref.watch(userSettingsRepositoryProvider);
+    return userSettingsRepository.getThemeMode();
+  }
 
   Future<void> setThemeMode(ThemeMode themeMode) {
-    final sharedPreferences = ref.read(sharedPreferencesProvider);
-    ref.read(themeModeProvider.notifier).state = themeMode;
+    final SharedPreferences sharedPreferences =
+        ref.read<SharedPreferences>(sharedPreferencesProvider);
+    state = themeMode;
     return sharedPreferences.setString('themeMode', themeMode.name);
   }
 }
 
-final userSettingsRepositoryProvider = Provider<UserSettingsRepository>((ref) {
-  return UserSettingsRepository(ref);
-});
-
-final themeModeProvider = StateProvider<ThemeMode>((ref) {
-  final userSettingsRepository = ref.watch(userSettingsRepositoryProvider);
-  return userSettingsRepository.getThemeMode();
-});
-
-final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
+@Riverpod(keepAlive: true)
+SharedPreferences sharedPreferences(SharedPreferencesRef ref) {
   throw UnimplementedError();
-});
+}

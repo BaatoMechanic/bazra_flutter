@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utils/constants/managers/color_manager.dart';
+import '../../../../utils/constants/managers/color_manager.dart';
 
 class LoginSignUpLabel extends StatelessWidget {
   const LoginSignUpLabel({

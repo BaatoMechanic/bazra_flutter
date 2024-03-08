@@ -9,7 +9,7 @@ import '../../../../utils/constants/managers/api_values_manager.dart';
 
 import 'package:http/http.dart' as http;
 
-import '../../domain/user/user.dart';
+import '../../domain/user.dart';
 import 'remote_auth_repository.dart';
 
 class APIRemoteAuthRepository implements RemoteAuthRepository {
@@ -30,11 +30,26 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
             }),
         ref);
 
+    final String uIdx = response["idx"];
+
+    response = await signInWithIdAndPassword(uId, password);
+
+    // Setting the access and refresh tokens from repository only on this case because it access token is required to create a customer profile and thus sign in is needed here. But in other cases, saving aceess and refresh token should be done from services or other providers to maintain the convention
+    String accessToken = response['access'] as String;
+    ref.read(sharedPreferencesProvider).setString('access', accessToken);
+    ref
+        .read(sharedPreferencesProvider)
+        .setString('refresh', response['refresh'] as String);
+
     url = Uri.parse('${RemoteManager.BASE_URI}vehicle-repair/customers/');
     response = await HttpHelper.guard(
-        () => http.post(url, body: {
-              "user_idx": jsonDecode(response)['idx'],
-            }),
+        () => http.post(
+              url,
+              headers: {HttpHeaders.authorizationHeader: 'BM $accessToken'},
+              body: {
+                "user_idx": uIdx,
+              },
+            ),
         ref);
 
     return User.fromJson(response);

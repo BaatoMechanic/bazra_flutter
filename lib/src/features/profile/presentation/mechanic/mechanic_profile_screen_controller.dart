@@ -1,16 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+part 'mechanic_profile_screen_controller.g.dart';
 
-class MechanicProfileScreenController extends StateNotifier<AsyncValue<void>> {
-  final Ref ref;
-
-  MechanicProfileScreenController({
-    required this.ref,
-  }) : super(const AsyncData(null));
+@riverpod
+class MechanicProfileScreenController
+    extends _$MechanicProfileScreenController {
+  @override
+  FutureOr<void> build() {
+    // pass
+  }
 }
-
-final mechanicProfileScreenControllerProvider =
-    StateNotifierProvider<MechanicProfileScreenController, AsyncValue<void>>(
-        (ref) {
-  return MechanicProfileScreenController(ref: ref);
-});

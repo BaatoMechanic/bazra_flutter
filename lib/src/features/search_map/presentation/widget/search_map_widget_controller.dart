@@ -2,19 +2,22 @@ import 'package:bato_mechanic/src/features/core/data/map_repository/map_reposito
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'search_map_state.dart';
 
-class SearchMapWidgetController extends StateNotifier<SearchMapState> {
-  SearchMapWidgetController({required this.ref})
-      : super(
-          SearchMapState(
-            userPosition: const AsyncValue.data(null),
-            markerPosition:
-                AsyncValue.data(LatLng(27.703292452047425, 85.33033043146135)),
-          ),
-        );
-  final Ref ref;
+part 'search_map_widget_controller.g.dart';
+
+@riverpod
+class SearchMapWidgetController extends _$SearchMapWidgetController {
+  @override
+  SearchMapState build() {
+    return SearchMapState(
+      userPosition: const AsyncValue.data(null),
+      markerPosition:
+          AsyncValue.data(LatLng(27.703292452047425, 85.33033043146135)),
+    );
+  }
 
   initializeLocation() async {
     bool serviceEnabled;
@@ -85,15 +88,3 @@ class SearchMapWidgetController extends StateNotifier<SearchMapState> {
     state = state.copyWith(markerPosition: AsyncValue.data(position));
   }
 }
-
-final searchMapWidgetControllerProvider = StateNotifierProvider.autoDispose<
-    SearchMapWidgetController, SearchMapState>(
-  (ref) => SearchMapWidgetController(ref: ref),
-);
-
-// final fetchSearchLocationsProvider =
-//     FutureProvider.autoDispose.family<String, String>((ref, searchText) {
-//   final searchMapWidgetController =
-//       ref.watch(searchMapWidgetControllerProvider.notifier);
-//   return searchMapWidgetController.fetchSearchLocations(searchText);
-// });

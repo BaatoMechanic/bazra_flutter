@@ -19,6 +19,7 @@
 
 import 'dart:io';
 
+import 'package:bato_mechanic/src/features/vehicle_part/domain/vehicle_part/vehicle_part.dart';
 import 'package:bato_mechanic/src/utils/model_utils.dart';
 
 import '../../../utils/constants/test_parts.dart';
@@ -26,11 +27,9 @@ import 'vehicle_parts_repository.dart';
 
 class FakeVehiclePartsRepository implements VehiclePartsRepository {
   @override
-  Future<dynamic> fetchVehicleParts(String vehicleId) async {
+  Future<List<VehiclePart>> fetchVehicleParts(String vehicleId) async {
     await Future.delayed(const Duration(seconds: 1));
-    // List<ServiceType> vehicleParts = mTestServiceTypes
-    //     .where((serviceType) => serviceType.vehicleId == int.parse(vehicleId))
-    //     .toList();
-    return Success(code: HttpStatus.ok, response: mTestVehicleParts);
+
+    return mTestVehicleParts;
   }
 }

@@ -18,9 +18,6 @@ class MechanicReviewsListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ref.listen(mechanicProfileScreenControllerProvider,
-    //     (previous, state) => state.showError(context));
-
     final reviewsValue = ref.watch(fetchMechanicReviewsProvider(mechanicIdx));
 
     return SafeArea(

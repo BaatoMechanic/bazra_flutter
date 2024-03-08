@@ -31,7 +31,10 @@ class ServiceTypeButtonWidget extends ConsumerWidget {
           ),
           child: IconButton(
             onPressed: () {
-              ref.read(selectedServiceProvider.notifier).state = serviceType;
+              ref
+                  .read(selectedServiceProvider.notifier)
+                  .setSelectedService(serviceType);
+
               context.pushNamed(APP_ROUTE.categories.name);
             },
             icon: Icon(serviceType.icon ?? Icons.hourglass_empty),

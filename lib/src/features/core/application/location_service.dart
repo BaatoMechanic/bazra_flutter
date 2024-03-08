@@ -2,8 +2,11 @@ import 'package:bato_mechanic/src/features/core/data/map_repository/map_reposito
 import 'package:bato_mechanic/src/features/core/domain/user_position/user_position.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../utils/model_utils.dart';
+
+part 'location_service.g.dart';
 
 class LocationService {
   LocationService({required this.ref});
@@ -85,11 +88,12 @@ class LocationService {
   // }
 }
 
-final locationServiceProvider = Provider((ref) {
-  return LocationService(ref: ref);
-});
+@riverpod
+LocationService locationService(LocationServiceRef ref) =>
+    LocationService(ref: ref);
 
-final userCurrentLocationProvider = FutureProvider<UserPosition?>((ref) {
+@riverpod
+Future<UserPosition?> userCurrentLocation(UserCurrentLocationRef ref) {
   final service = ref.watch(locationServiceProvider);
   return service.initializeUserLocation();
-});
+}

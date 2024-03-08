@@ -1,5 +1,6 @@
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
+import 'package:bato_mechanic/src/features/repair_request/application/vehicle_service.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -18,8 +19,8 @@ class VehiclesScreen extends ConsumerWidget {
     // final selectedCategory =
     //     ref.watch(vehicleCategoryServiceProvider).selectedVehicleCategory;
     final selectedCategory = ref.watch(selectedVehicleCategoryProvider);
-    final vehiclesValue =
-        ref.watch(fetchVehiclesProvider(selectedCategory!.idx.toString()));
+    final vehiclesValue = ref.watch(
+        fetchVehiclesByCategoryProvider(selectedCategory!.idx.toString()));
     return Scaffold(
         body: AsyncValueWidget(
       value: vehiclesValue,

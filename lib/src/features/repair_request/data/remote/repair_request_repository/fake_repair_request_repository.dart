@@ -192,7 +192,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
-  Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequest() async {
+  Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequests() async {
     // Response response = Response(jsonEncode([]), HttpStatus.ok);
     final response = [
       {

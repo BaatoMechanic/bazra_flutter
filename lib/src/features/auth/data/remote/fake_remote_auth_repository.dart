@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../common/core/repositories/user_settings_repository.dart';
 
-import '../../domain/user/user.dart';
+import '../../domain/user.dart';
 import 'remote_auth_repository.dart';
+
+// part 'fake_remote_auth_repository.g.dart';
 
 class FakeRemoteAuthRepository implements RemoteAuthRepository {
   // final _userState = InMemoryStore<User?>(null);
@@ -75,12 +78,7 @@ class FakeRemoteAuthRepository implements RemoteAuthRepository {
   }
 }
 
-final fakeAuthRepositoryProvider = Provider<FakeRemoteAuthRepository>((ref) {
-  return FakeRemoteAuthRepository();
-});
-
-// final watchUserStateChangesProvider = StreamProvider.autoDispose<User?>((ref) {
-//   final authService = ref.watch(fakeAuthRepositoryProvider);
-//   ref.onDispose(() => authService.dispose());
-//   return authService.userStateChanges();
-// });
+// @riverpod
+// FakeRemoteAuthRepository fakeAuthRepository(FakeAuthRepositoryRef ref) {
+//   return FakeRemoteAuthRepository();
+// }

@@ -221,7 +221,7 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                             const SizedBox(height: 20),
                             AsyncValueWidget(
                               value: ref.watch(
-                                  fetchRepairRequestServiceProvider(
+                                  fetchRepairRequestServiceTypeProvider(
                                       repairRequest.idx)),
                               data: (service) => Row(
                                 mainAxisAlignment: MainAxisAlignment.start,

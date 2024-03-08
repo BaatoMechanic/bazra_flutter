@@ -76,7 +76,7 @@ class UserProfileMenu extends ConsumerWidget {
                 ),
                 onTap: () {
                   ref
-                      .read(userSettingsRepositoryProvider)
+                      .read(bThemeModeProvider.notifier)
                       .setThemeMode(ThemeMode.dark);
                   return;
                 });
@@ -91,7 +91,7 @@ class UserProfileMenu extends ConsumerWidget {
                 ),
                 onTap: () {
                   ref
-                      .read(userSettingsRepositoryProvider)
+                      .read(bThemeModeProvider.notifier)
                       .setThemeMode(ThemeMode.light);
                   return;
                 });
@@ -106,7 +106,7 @@ class UserProfileMenu extends ConsumerWidget {
                 ),
                 onTap: () {
                   ref
-                      .read(userSettingsRepositoryProvider)
+                      .read(bThemeModeProvider.notifier)
                       .setThemeMode(ThemeMode.system);
                   return;
                 });
@@ -221,7 +221,7 @@ class UserProfileMenu extends ConsumerWidget {
       ),
     ];
 
-    final user = ref.watch(authStateProvider).user;
+    final user = ref.watch(authStateNotifierProvider).user;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(

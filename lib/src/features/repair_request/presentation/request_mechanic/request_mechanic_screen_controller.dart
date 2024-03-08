@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
@@ -9,23 +10,26 @@ import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_
 import 'package:bato_mechanic/src/utils/system_alerts_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../auth/domain/mechanic/mechanic.dart';
+import '../../../auth/domain/mechanic.dart';
 import 'request_mechanic_state.dart';
 
+part 'request_mechanic_screen_controller.g.dart';
+
+@riverpod
 class RequestMechanicScreenController
-    extends StateNotifier<RequestMechanicState> {
-  RequestMechanicScreenController({required this.ref})
-      : super(
-          RequestMechanicState(
-            selectedImages: [],
-            selectedVideo: null,
-            preferredMechanic: null,
-            selectedLocation: const {},
-          ),
-        );
-  final Ref ref;
+    extends _$RequestMechanicScreenController {
+  @override
+  RequestMechanicState build() {
+    return RequestMechanicState(
+      selectedImages: [],
+      selectedVideo: null,
+      preferredMechanic: null,
+      selectedLocation: const {},
+    );
+  }
 
   Future<VehicleRepairRequest?> _createRepairRequest(
       Map<String, dynamic> requestInfo) async {
@@ -54,22 +58,6 @@ class RequestMechanicScreenController
 
     return true;
   }
-
-  // Future<List<User>> fetchRecommendedMechanics(
-  //     String vehicleCategoryIdx, String serviceIdx) async {
-  //   state = state.copyWith(value: const AsyncLoading());
-  //   final result = await AsyncValue.guard(
-  //       () => ref.watch(mechanicServiceProvider).fetchRecommendedMechanics(
-  //             vehicleCategoryIdx,
-  //             serviceIdx,
-  //           ));
-  //   state = state.copyWith(value : result);
-  //   if (result.hasValue) {
-  //     return result.value!;
-  //   } else {
-  //     return [];
-  //   }
-  // }
 
   Future<void> pickImages() async {
     final List<XFile> images = await ImagePicker().pickMultiImage(
@@ -112,17 +100,6 @@ class RequestMechanicScreenController
 
   Future<VehicleRepairRequest?> requestForVehicleRepair(String issueTitle,
       String issueDescription, VideoPlayerController? videoController) async {
-    // final customerRequestPosition =
-    //     ref.read(searchMapWidgetControllerProvider).markerPosition.value;
-    // if (customerRequestPosition == null) {
-    //   state = state.copyWith(
-    //       value:
-    //           AsyncError("Please provide your location", StackTrace.current));
-    //   return false;
-    // }
-    // String coordinates =
-    //     '${customerRequestPosition.latitude},${customerRequestPosition.longitude}';
-
     if (selectedLocation == null) {
       state = state.copyWith(
           value:
@@ -171,15 +148,13 @@ class RequestMechanicScreenController
       "title": issueTitle,
       "preferred_mechanic": state.preferredMechanic?.toJson(),
 
-      "location_name": " Test location",
+      "location_name": selectedLocation?["location_name"],
       // "selected_location": selectedPosition!.toJson(),
       "location": selectedLocation,
       // "location_coordinates": coordinates,
       // "vehicle": ref.read(vehicleServiceProvider).selectedVehicle!.id,
       "vehicle_type": ref.read(selectedVehicleCategoryProvider)?.idx,
 
-      // "vehicle_part":
-      //     ref.read(vehiclePartsServiceProvider).selectedVehiclePart!.id,
       "service_type": ref.read(selectedServiceProvider)?.idx,
 
       "description": issueDescription,
@@ -206,8 +181,3 @@ class RequestMechanicScreenController
     return null;
   }
 }
-
-final requestMechanicScreenControllerProvider = StateNotifierProvider
-    .autoDispose<RequestMechanicScreenController, RequestMechanicState>(
-  (ref) => RequestMechanicScreenController(ref: ref),
-);

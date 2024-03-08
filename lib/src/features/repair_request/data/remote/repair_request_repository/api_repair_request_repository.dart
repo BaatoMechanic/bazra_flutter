@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step/repair_step.dart';
+import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
 import 'package:bato_mechanic/src/utils/http/http_client.dart';
@@ -109,7 +109,7 @@ class APIRepairRequestRepository implements RepairRequestRepository {
     final response = await HttpHelper.guard(
         () => http.get(url, headers: {
               HttpHeaders.authorizationHeader:
-                  "BM ${ref.read(sharedPreferencesProvider).getString('access')!}",
+                  "BM ${ref.read(sharedPreferencesProvider).getString('access')}",
             }),
         ref);
     return vehicleRepairRequestsFromJson(response);
@@ -130,7 +130,7 @@ class APIRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
-  Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequest() async {
+  Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequests() async {
     var url = Uri.parse(
         '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/user_recent_repair_requests/');
 

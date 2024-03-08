@@ -2,7 +2,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bato_mechanic/src/features/vehicle_part/domain/vehicle_part.dart';
+import 'package:bato_mechanic/src/features/vehicle_part/domain/vehicle_part/vehicle_part.dart';
 
 class VehiclePartsState {
   VehiclePartsState({

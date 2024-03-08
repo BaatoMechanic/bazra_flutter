@@ -9,8 +9,7 @@ import '../../../../utils/constants/managers/api_values_manager.dart';
 
 import 'package:http/http.dart' as http;
 
-import '../../domain/user.dart';
-import '../../domain/user_back.dart';
+import '../../domain/user/user.dart';
 import 'remote_auth_repository.dart';
 
 class APIRemoteAuthRepository implements RemoteAuthRepository {
@@ -38,7 +37,7 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
             }),
         ref);
 
-    return User.fromJson(jsonDecode(response));
+    return User.fromJson(response);
   }
 
   @override
@@ -50,7 +49,7 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
         () => http
             .post(url, body: {"user_identifier": uId, "password": password}),
         ref);
-    return jsonDecode(response);
+    return response;
   }
 
   @override
@@ -72,7 +71,7 @@ class APIRemoteAuthRepository implements RemoteAuthRepository {
             }),
         ref);
 
-    return User.fromJson(jsonDecode(response));
+    return User.fromJson(response);
   }
 
   @override

@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/auth/domain/mechanic.dart';
+import 'package:bato_mechanic/src/features/auth/domain/mechanic/mechanic.dart';
 import 'package:bato_mechanic/src/features/core/data/mechanic_repository/mechanic_repository.dart';
-import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../common/core/repositories/user_settings_repository.dart';
@@ -28,7 +27,7 @@ class APIMechanicRepository extends MechanicRepository {
             }),
         ref);
 
-    return Mechanic.fromJson(jsonDecode(response));
+    return Mechanic.fromJson(response);
   }
 
   @override

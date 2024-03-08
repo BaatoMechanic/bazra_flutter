@@ -1,7 +1,4 @@
-import 'package:bato_mechanic/src/features/auth/domain/user_back.dart';
-import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
-
-import '../../features/auth/domain/mechanic.dart';
+import '../../features/auth/domain/mechanic/mechanic.dart';
 import '../enums/dob_type.dart';
 
 final mTestMechanics = [

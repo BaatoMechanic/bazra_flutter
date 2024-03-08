@@ -1,12 +1,9 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod/src/framework.dart';
 
 import '../../../../common/core/repositories/user_settings_repository.dart';
-import '../../../../utils/in_memory_store.dart';
 
-import '../../domain/user.dart';
-import '../../domain/user_back.dart';
+import '../../domain/user/user.dart';
 import 'remote_auth_repository.dart';
 
 class FakeRemoteAuthRepository implements RemoteAuthRepository {

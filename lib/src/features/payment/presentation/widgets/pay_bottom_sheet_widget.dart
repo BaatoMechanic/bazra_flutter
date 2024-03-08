@@ -3,8 +3,8 @@ import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
 class PayBottomSheetWidget extends StatelessWidget {
-  PayBottomSheetWidget({super.key, required this.children});
-  List<Widget> children;
+  const PayBottomSheetWidget({super.key, required this.children});
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {

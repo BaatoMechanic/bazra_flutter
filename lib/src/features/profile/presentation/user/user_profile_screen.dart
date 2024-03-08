@@ -10,9 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../auth/data/remote/fake_remote_auth_repository.dart';
 import '../../../menu/presentation/widgets/menu_tile_widget.dart';
-import '../../../auth/application/auth_service.dart';
 
 class UserProfileScreen extends ConsumerWidget {
   const UserProfileScreen({super.key});

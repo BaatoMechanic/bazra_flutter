@@ -1,16 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:bato_mechanic/src/features/services/data/service_type_repository.dart';
-import 'package:bato_mechanic/src/features/services/domain/service_type.dart';
-import 'package:bato_mechanic/src/utils/model_utils.dart';
+import 'package:bato_mechanic/src/features/services/domain/service/service.dart';
 
 class FakeServiceTypeRepository implements ServiceTypeRepository {
   @override
   Future<List<Service>> fetchAllServiceTypes() async {
     return Future.delayed(
         const Duration(seconds: 2),
-        () => serviceTypesFromJson([
+        () => servicesFromJson([
               {
                 "idx": "BWFdwSq9j2CZMh6wwRfwNm",
                 "name": "Painting",

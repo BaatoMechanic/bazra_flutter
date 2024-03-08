@@ -4,10 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bato_mechanic/src/features/auth/domain/user_back.dart';
-import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
-
-import '../../../auth/domain/mechanic.dart';
+import '../../../auth/domain/mechanic/mechanic.dart';
 
 // class RequestMechanicState {
 //   RequestMechanicState({

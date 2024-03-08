@@ -1,14 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:bato_mechanic/src/features/auth/domain/user.dart';
-import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
 import 'package:bato_mechanic/src/utils/constants/test_mechanics.dart';
 import 'package:bato_mechanic/src/features/core/data/mechanic_repository/mechanic_repository.dart';
 
-import 'package:bato_mechanic/src/utils/model_utils.dart';
-
-import '../../../auth/domain/mechanic.dart';
+import '../../../auth/domain/mechanic/mechanic.dart';
 
 class FakeMechanicRepository implements MechanicRepository {
   @override
@@ -54,11 +48,11 @@ class FakeMechanicRepository implements MechanicRepository {
   Future<ReviewAndRating> rateAndReviewMechanic(
       String mechanicId, int rating, String review) async {
     await Future.delayed(const Duration(seconds: 1));
-    return ReviewAndRating.fromJson(jsonEncode({
+    return ReviewAndRating.fromJson({
       "id": 1,
       "mechanic_id": 1,
       "rating": 2.4,
       "review": "This is a test review"
-    }));
+    });
   }
 }

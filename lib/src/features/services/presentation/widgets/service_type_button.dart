@@ -7,18 +7,17 @@ import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart'
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/service_type.dart';
+import '../../domain/service/service.dart';
 import '../../../../utils/constants/managers/color_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
-import '../../application/service_type_service.dart';
 
 class ServiceTypeButtonWidget extends ConsumerWidget {
-  ServiceTypeButtonWidget({
+  const ServiceTypeButtonWidget({
     required this.serviceType,
     Key? key,
   }) : super(key: key);
 
-  Service serviceType;
+  final Service serviceType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

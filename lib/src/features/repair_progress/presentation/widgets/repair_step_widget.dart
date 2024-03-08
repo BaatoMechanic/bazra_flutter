@@ -1,10 +1,9 @@
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../../utils/helpers/helper_functions.dart';
-import '../../domain/repair_step.dart';
+import '../../domain/repair_step/repair_step.dart';
 import 'repair_step_bottom_sheet.dart';
 
 class RepairStepWidget extends StatelessWidget {
@@ -21,7 +20,6 @@ class RepairStepWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(8),
       child: ListTile(
         title: Text(step.name),
         subtitle: Text(

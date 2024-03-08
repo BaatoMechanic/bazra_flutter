@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, constant_identifier_names
 import 'dart:io';
-
-import 'package:bato_mechanic/src/utils/model_utils.dart';
 
 enum ErrorAlertType { NOTIFICATION, CENTER_ALERT_DIALOGUE }
 
@@ -49,7 +47,7 @@ class BaseException implements Exception {
       statusCode: statusCode ?? this.statusCode,
       errorCode: errorCode ?? this.errorCode,
       redirectLink: redirectLink ?? this.redirectLink,
-      stackTrace: st ?? this.stackTrace,
+      stackTrace: st ?? stackTrace,
     );
   }
 }

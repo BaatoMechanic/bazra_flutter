@@ -1,16 +1,13 @@
 import 'dart:async';
 
-import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
-import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_state.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_widget_controller.dart';
+import 'package:bato_mechanic/src/logging/logger.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
-import 'package:bato_mechanic/src/utils/helpers/map_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -19,7 +16,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 import '../../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
-import '../../domain/osm_data.dart';
+import '../../domain/osm_data/osm_data.dart';
 
 class MapSearchWidget extends ConsumerStatefulWidget {
   const MapSearchWidget({super.key});
@@ -34,10 +31,11 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   late AnimationController _animationController;
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
-  List<OSMdata> _options = <OSMdata>[];
+  List<OSMData> _options = <OSMData>[];
   Timer? _debounce;
   late double width;
   late double height;
+  // ignore: unused_field
   String _selectedPlaceName = 'lol';
 
   // bool _isFetchingSearchLocations = false;
@@ -60,51 +58,32 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                 as LatLng);
       }
       if (event is MapEventMoveEnd) {
-        _showLocationName(event.center.latitude, event.center.longitude);
+        final double lat = event.center.latitude;
+        final double lon = event.center.longitude;
+
+        String? placeName = await ref
+            .read(searchMapWidgetControllerProvider.notifier)
+            .fetchLocationName(lat, lon);
+        _showLocationName(placeName);
+        ref
+            .read(requestMechanicScreenControllerProvider.notifier)
+            .setSelectedLocation({
+          "latitude": lat,
+          "longitude": lon,
+          "location_name": placeName,
+          "timestamp": DateTime.now().toString(),
+        });
       }
     });
   }
 
-  _showLocationName(double lat, double lon) async {
-    String? placeName = await ref
-        .read(searchMapWidgetControllerProvider.notifier)
-        .fetchLocationName(lat, lon);
+  _showLocationName(String? placeName) async {
     if (placeName != null) {
       _searchController.text = placeName;
       _selectedPlaceName = placeName;
-      // UserPosition? userPosition =
-      //     ref.read(authStateProvider).user?.currentLocation;
-
-      // if (userPosition != null) {
-      //   ref
-      //       .read(requestMechanicScreenControllerProvider.notifier)
-      //       .setSelectedLocation({
-      //     "latitude": lat,
-      //     "longitude": lon,
-      //     "location_name": placeName,
-      //     "accuracy": userPosition.accuracy,
-      //     "altitude": userPosition.altitude,
-      //     "timestamp": userPosition.timestamp.toString(),
-      //   });
-      // } else {
-      //   userPosition = await MapHelper.getUserLocation();
-      //   if (userPosition != null) {
-      //     ref
-      //         .read(requestMechanicScreenControllerProvider.notifier)
-      //         .setSelectedLocation({
-      //       "latitude": lat,
-      //       "longitude": lon,
-      //       "location_name": placeName,
-      //       "accuracy": userPosition.accuracy,
-      //       "altitude": userPosition.altitude,
-      //       "timestamp": userPosition.timestamp.toString(),
-      //     }
-
-      // );
-      // }
-      // }
     } else {
-      print('here');
+      final logger = BMLogger().logger;
+      logger.e("Place name not found".hardcoded());
     }
   }
 
@@ -172,7 +151,10 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             ref
                 .read(searchMapWidgetControllerProvider.notifier)
                 .setMarkerPosition(latLng);
-            await _showLocationName(latLng.latitude, latLng.longitude);
+            String? placeName = await ref
+                .read(searchMapWidgetControllerProvider.notifier)
+                .fetchLocationName(latLng.latitude, latLng.longitude);
+            await _showLocationName(placeName);
             _animatedMapMove(latLng, _mapController.zoom, mounted, this);
           },
           center:
@@ -251,12 +233,12 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   }
 
   Widget _buildSearchBar(SearchMapState state) {
-    OutlineInputBorder inputBorder = OutlineInputBorder(
-      borderSide: BorderSide(color: Theme.of(context).primaryColor),
-    );
-    OutlineInputBorder inputFocusBorder = OutlineInputBorder(
-      borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 3.0),
-    );
+    // OutlineInputBorder inputBorder = OutlineInputBorder(
+    //   borderSide: BorderSide(color: Theme.of(context).primaryColor),
+    // );
+    // OutlineInputBorder inputFocusBorder = OutlineInputBorder(
+    //   borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 3.0),
+    // );
 
     return Positioned(
       top: 0,
@@ -314,12 +296,12 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   if (mounted) {
                     setState(() {
                       _options = response
-                          .map((e) => OSMdata(
+                          .map((e) => OSMData(
                               displayname: e['display_name'],
                               latitude: double.parse(e['lat']),
                               longitude: double.parse(e['lon'])))
                           .toList()
-                          .cast<OSMdata>();
+                          .cast<OSMData>();
                       // _isFetchingSearchLocations = false;
                     });
                   }
@@ -333,28 +315,28 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
     );
   }
 
-  Widget _buildSelectButton() {
-    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 15,
-        ),
-        child: ElevatedButton(
-          onPressed: () {},
-          style: const ButtonStyle().copyWith(
-            // foregroundColor: isDarkTheme
-            //     ? MaterialStatePropertyAll<Color>(ThemeColor.black)
-            //     : null,
-            foregroundColor:
-                const MaterialStatePropertyAll<Color>(ThemeColor.black),
-          ),
-          child: Text('Select this location'.hardcoded()),
-        ),
-      ),
-    );
-  }
+  // Widget _buildSelectButton() {
+  //   // final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+  //   return Align(
+  //     alignment: Alignment.bottomCenter,
+  //     child: Padding(
+  //       padding: const EdgeInsets.only(
+  //         bottom: 15,
+  //       ),
+  //       child: ElevatedButton(
+  //         onPressed: () {},
+  //         style: const ButtonStyle().copyWith(
+  //           // foregroundColor: isDarkTheme
+  //           //     ? MaterialStatePropertyAll<Color>(ThemeColor.black)
+  //           //     : null,
+  //           foregroundColor:
+  //               const MaterialStatePropertyAll<Color>(ThemeColor.black),
+  //         ),
+  //         child: Text('Select this location'.hardcoded()),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildListView() {
     return Container(
@@ -395,26 +377,14 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   _mapController.center.latitude = positionToMove.latitude;
                   _mapController.center.longitude = positionToMove.longitude;
 
-                  // UserPosition? userPosition =
-                  //     ref.read(authStateProvider).user?.currentLocation;
-
-                  // if (userPosition == null) {
-                  //   userPosition = await MapHelper.getUserLocation();
-                  //   if (userPosition != null) {
-                  //     ref
-                  //         .read(
-                  //             requestMechanicScreenControllerProvider.notifier)
-                  //         .setSelectedLocation({
-                  //       "latitude": _options[index].latitude,
-                  //       "longitude": _options[index].longitude,
-                  //       "location_name": _options[index].displayname,
-                  //       "accuracy": userPosition.accuracy,
-                  //       "altitude": userPosition.altitude,
-                  //       "timestamp": userPosition.timestamp.toString(),
-                  //     });
-                  //     _searchController.text = _options[index].displayname;
-                  //   }
-                  // }
+                  ref
+                      .read(requestMechanicScreenControllerProvider.notifier)
+                      .setSelectedLocation({
+                    "latitude": _options[index].latitude,
+                    "longitude": _options[index].longitude,
+                    "location_name": _options[index].displayname,
+                    "timestamp": DateTime.now().toString()
+                  });
                   _searchController.text = _options[index].displayname;
 
                   _searchFocusNode.unfocus();

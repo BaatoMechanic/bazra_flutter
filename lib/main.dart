@@ -1,9 +1,12 @@
+import 'package:bato_mechanic/src/logging/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
 import 'src/common/core/repositories/user_settings_repository.dart';
+
+final logger = BMLogger().logger;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,4 +21,5 @@ void main() async {
   );
 }
 
+// ignore: constant_identifier_names
 const SHOW_FAKE = false;

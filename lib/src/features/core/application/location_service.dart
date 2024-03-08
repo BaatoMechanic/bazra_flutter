@@ -1,12 +1,9 @@
-import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
-import 'package:bato_mechanic/src/features/core/domain/user_position.dart';
+import 'package:bato_mechanic/src/features/core/domain/user_position/user_position.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../../utils/model_utils.dart';
-import '../../auth/domain/user_back.dart';
 
 class LocationService {
   LocationService({required this.ref});

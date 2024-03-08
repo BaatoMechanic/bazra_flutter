@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/review_mechanic_screen/review_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
@@ -12,15 +12,13 @@ import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/common/widgets/form_fields/description_field.dart';
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
-
-import '../../../../repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
 
 class ReviewMechanicScreen extends ConsumerStatefulWidget {
   const ReviewMechanicScreen({
@@ -77,9 +75,9 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
                           ),
                         ),
                       ),
-                      if (mechanic?.profilePic != null)
+                      if (mechanic.profilePic != null)
                         Image.network(
-                          mechanic!.profilePic!,
+                          mechanic.profilePic!,
                         )
                       else
                         Image.asset(
@@ -111,7 +109,7 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    mechanic!.name,
+                                    mechanic.name,
                                     style: Theme.of(context)
                                         .textTheme
                                         .displayMedium!

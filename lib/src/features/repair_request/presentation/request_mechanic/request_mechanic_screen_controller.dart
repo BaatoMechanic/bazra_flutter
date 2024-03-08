@@ -1,24 +1,17 @@
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/auth/domain/user_back.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/fake_repair_request_repository.dart';
 
-import 'package:bato_mechanic/src/features/services/application/service_type_service.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/vehicle_category/application/vechicle_category_service.dart';
-import 'package:bato_mechanic/src/features/vehicle_part/application/vehicle_parts_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 
 import 'package:bato_mechanic/src/utils/system_alerts_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../auth/domain/mechanic.dart';
-import '../../../core/domain/user_position.dart';
+import '../../../auth/domain/mechanic/mechanic.dart';
 import 'request_mechanic_state.dart';
 
 class RequestMechanicScreenController
@@ -36,11 +29,11 @@ class RequestMechanicScreenController
 
   Future<VehicleRepairRequest?> _createRepairRequest(
       Map<String, dynamic> requestInfo) async {
-    state = state.copyWith(value: AsyncLoading());
-    var response = await AsyncValue.guard(() => ref
+    state = state.copyWith(value: const AsyncLoading());
+    final response = await AsyncValue.guard(() => ref
         .read(repairRequestServiceProvider)
         .createVehicleRepairRequest(requestInfo));
-    state = state.copyWith(value: AsyncData(response));
+    state = state.copyWith(value: const AsyncData(null));
     return response.value;
   }
 

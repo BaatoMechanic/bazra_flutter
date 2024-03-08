@@ -1,9 +1,4 @@
-import 'package:bato_mechanic/src/features/mechanic_tips/applicatoin/mechanic_tips_service.dart';
-import 'package:bato_mechanic/src/features/mechanic_tips/domain/mechanic_tip.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/services/application/service_type_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
-import 'package:bato_mechanic/src/features/services/domain/service_type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../auth/application/auth_service.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:bato_mechanic/src/features/password_change/presentation/change_password_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/old_password_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
@@ -5,7 +7,6 @@ import 'package:bato_mechanic/src/features/profile/presentation/user/user_profil
 import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/active_repairs/presentation/active_repairs_list_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen.dart';
-import 'package:bato_mechanic/src/features/temp/pres/temp.dart';
 import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen.dart';
@@ -14,7 +15,6 @@ import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen.
 import 'package:bato_mechanic/src/features/payment/presentation/screens/payment_integration_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/mechanic/mechanic_profile_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/recent_repairs/presentation/recent_repairs_list_screen.dart';
-import 'package:bato_mechanic/src/features/repair_progress/presentation/screen/repair_progress_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/presentation/vehicles/vehicles_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/review_mechanic_screen/review_mechanic_screen.dart';
@@ -23,7 +23,7 @@ import 'package:bato_mechanic/src/features/support_chat/presentation/support_cha
 import 'package:go_router/go_router.dart';
 
 import '../features/vehicle_category/presentation/vehicle_category_screen.dart';
-import '../features/track_mechanic/presentation/track_mechanic_screen.dart';
+import '../features/repair_progress/presentation/repair_progress_screen.dart';
 
 enum APP_ROUTE {
   categories,
@@ -39,7 +39,6 @@ enum APP_ROUTE {
   editProfile,
   reviewMechanic,
   splash,
-  trackMechanic,
   supportChat,
   repairProgress,
   recentRepairs,
@@ -106,25 +105,25 @@ GoRouter goRouter() {
         builder: (context, state) => BuildHomeScreen(),
 
         routes: [
-          GoRoute(
-            path: 'track_mechanic',
-            name: APP_ROUTE.trackMechanic.name,
-            builder: (context, state) {
-              final repairRequestIdx =
-                  (state.extra as Map?)?["repairRequestIdx"];
+          // GoRoute(
+          //   path: 'repair_progress',
+          //   name: APP_ROUTE.repairProgress.name,
+          //   builder: (context, state) {
+          //     final repairRequestIdx =
+          //         (state.extra as Map?)?["repairRequestIdx"];
 
-              return TrackMechanicScreen(
-                repairRequestIdx: repairRequestIdx,
-              );
-            },
-            routes: [
-              GoRoute(
-                path: 'payment',
-                name: APP_ROUTE.payment.name,
-                builder: (context, state) => const PaymentIntegrationScreen(),
-              ),
-            ],
-          ),
+          //     return RepairProgressScreen(
+          //       repairRequestIdx: repairRequestIdx,
+          //     );
+          //   },
+          //   routes: [
+          //     GoRoute(
+          //       path: 'payment',
+          //       name: APP_ROUTE.payment.name,
+          //       builder: (context, state) => const PaymentIntegrationScreen(),
+          //     ),
+          //   ],
+          // ),
           GoRoute(
             path: 'confirm-old-password',
             name: APP_ROUTE.confirmOldPassword.name,
@@ -173,6 +172,11 @@ GoRouter goRouter() {
                       repairRequestIdx ?? "NqCYPG6oX2jrjsePXZg42Z");
             },
             routes: [
+              GoRoute(
+                path: 'payment',
+                name: APP_ROUTE.payment.name,
+                builder: (context, state) => const PaymentIntegrationScreen(),
+              ),
               GoRoute(
                   path: 'review_mechanic',
                   name: APP_ROUTE.reviewMechanic.name,
@@ -254,136 +258,6 @@ GoRouter goRouter() {
               }),
         ],
       ),
-
-      // GoRoute(
-      //   path: '/home',
-      //   name: appRoute.home.name,
-      //   // builder: (context, state) => HomeScreen(),
-      //   builder: (context, state) => BuildHomeScreen(),
-      //   routes: [
-      //     GoRoute(
-      //       path: 'track_mechanic',
-      //       name: appRoute.trackMechanic.name,
-      //       builder: (context, state) => const TrackMechanicScreen(),
-      //       routes: [
-      //         GoRoute(
-      //           path: 'payment',
-      //           name: appRoute.payment.name,
-      //           builder: (context, state) => const PaymentIntegrationScreen(),
-      //         ),
-      //       ],
-      //     ),
-      //     GoRoute(
-      //       path: 'confirm-old-password',
-      //       name: appRoute.confirmOldPassword.name,
-      //       builder: (context, state) => ConfirmOldPasswordScreen(),
-      //       routes: [
-      //         GoRoute(
-      //           path: 'confirm-top',
-      //           name: appRoute.confirmOTP.name,
-      //           builder: (context, state) => OTPConfirmationScreen(
-      //             otpType: OTPType.EMAIL,
-      //           ),
-      //           routes: [
-      //             GoRoute(
-      //               path: 'change-password',
-      //               name: appRoute.changePassword.name,
-      //               builder: (context, state) => ChangePasswordScreen(),
-      //             ),
-      //           ],
-      //         ),
-      //       ],
-      //     ),
-      //     GoRoute(
-      //       path: 'support-chat',
-      //       name: appRoute.supportChat.name,
-      //       builder: (context, state) => const SupportChatScreen(),
-      //     ),
-      //     GoRoute(
-      //       path: 'recent_repairs',
-      //       name: appRoute.recentRepairs.name,
-      //       builder: (context, state) => const RecentRepairsList(),
-      //     ),
-      //     GoRoute(
-      //       path: 'repair_progress',
-      //       name: appRoute.repairProgress.name,
-      //       builder: (context, state) =>
-      //           RepairProgressScreen(repairSteps: repairSteps),
-      //       routes: [
-      //         GoRoute(
-      //           path: 'review_mechanic',
-      //           name: appRoute.ReviewMechanic.name,
-      //           builder: (context, state) => ReviewMechanicScreen(),
-      //         ),
-      //       ],
-      //     ),
-      //     GoRoute(
-      //       path: 'mechanic-profile',
-      //       name: appRoute.mechanicProfile.name,
-      //       builder: (context, state) {
-      //         final mechanicIdx = (state.extra as Map)["mechanicIdx"];
-      //         return MechanicProfileScreen(
-      //           mechanicIdx: mechanicIdx ?? '4ebFHe3UfuBLr9WbEroijH',
-      //         );
-      //       },
-      //     ),
-      //     GoRoute(
-      //       path: 'customer-profile',
-      //       name: appRoute.customerProfile.name,
-      //       builder: (context, state) => UserProfileScreen(),
-      //     ),
-      //     GoRoute(
-      //       path: 'edit-profile',
-      //       name: appRoute.editProfile.name,
-      //       builder: (context, state) => EditProfileScreen(),
-      //     ),
-      //     GoRoute(
-      //       path: 'feedback',
-      //       name: appRoute.feedback.name,
-      //       builder: (context, state) => const FeedbackContactScreen(),
-      //     ),
-      //     GoRoute(
-      //       path: 'categories',
-      //       name: appRoute.categories.name,
-      //       builder: (context, state) => const VehicleCategoryScreen(),
-      //       routes: [
-      //         GoRoute(
-      //           path: 'vehicles',
-      //           name: appRoute.vehicles.name,
-      //           builder: (context, state) => const VehiclesScreen(),
-      //           routes: [
-      //             // GoRoute(
-      //             //   path: 'parts',
-      //             //   name: appRoute.parts.name,
-      //             //   builder: (context, state) => const VehiclePartsScreen(),
-      //             //   routes: [
-      //             //     GoRoute(
-      //             //       path: 'request',
-      //             //       name: appRoute.requestMechanic.name,
-      //             //       builder: (context, state) =>
-      //             //           const RequestMechanicScreen(),
-      //             //     ),
-      //             //   ],
-      //             // ),
-      //             GoRoute(
-      //               path: 'request',
-      //               name: appRoute.requestMechanic.name,
-      //               builder: (context, state) => const RequestMechanicScreen(),
-      //             ),
-      //           ],
-      //         ),
-      //       ],
-      //     ),
-      //     GoRoute(
-      //         path: 'mechanic-reviews',
-      //         name: appRoute.mechanicReviewsList.name,
-      //         builder: (context, state) {
-      //           final mechanicIdx = (state.extra as Map)["mechanicIdx"];
-      //           return MechanicReviewsListScreen(
-      //               mechanicIdx: mechanicIdx ?? '4ebFHe3UfuBLr9WbEroijH');
-      //         }),
-      //   ],
-      // ),
     ],
   );
 }

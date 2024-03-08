@@ -118,6 +118,7 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
               BaatoTextField(
                 controller: _issueTitleController,
                 focusNode: _issueTitleFocusNode,
+                nextFocusNode: _issueDescriptionFocusNode,
                 hintText: 'Describe the issue in concise',
               ),
               const SizedBox(height: 16),

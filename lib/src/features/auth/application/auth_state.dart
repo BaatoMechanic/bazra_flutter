@@ -23,16 +23,12 @@ class AuthState {
 @riverpod
 class AuthStateNotifier extends _$AuthStateNotifier {
   @override
-  dynamic build() {
+  AuthState build() {
     return AuthState(isAuthenticated: false);
   }
 
   void setUser(User? user) {
     state = state.copyWith(user: user);
-  }
-
-  User? get user {
-    return state.user;
   }
 
   void clearUser() {

@@ -157,8 +157,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             await _showLocationName(placeName);
             _animatedMapMove(latLng, _mapController.zoom, mounted, this);
           },
-          center:
-              ref.watch(searchMapWidgetControllerProvider).markerPosition.value,
+          center: ref.watch(searchMapWidgetControllerProvider).markerPosition,
           zoom: 15.0,
         ),
         nonRotatedChildren: [
@@ -199,10 +198,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             userAgentPackageName: 'dev.fleaflet.flutter_map.example',
             tileProvider: NetworkTileProvider(),
           ),
-          if (!ref
-              .watch(searchMapWidgetControllerProvider)
-              .markerPosition
-              .isLoading)
+          if (!ref.watch(searchMapWidgetControllerProvider).value.isLoading)
             MarkerLayer(
               rotate: true,
               markers: [
@@ -211,8 +207,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   height: 80,
                   point: ref
                       .watch(searchMapWidgetControllerProvider)
-                      .markerPosition
-                      .value as LatLng,
+                      .markerPosition as LatLng,
                   builder: (ctx) => const Icon(
                     Icons.location_on,
                     color: Colors.orange,
@@ -222,10 +217,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
               ],
             ),
           CurrentLocationLayer(),
-          if (ref
-              .watch(searchMapWidgetControllerProvider)
-              .markerPosition
-              .isLoading)
+          if (ref.watch(searchMapWidgetControllerProvider).value.isLoading)
             HelperFunctions.loadingInidicator(context),
         ],
       );
@@ -259,7 +251,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   const MaterialStatePropertyAll<Color>(ThemeColor.light),
               trailing: [
                 // _isFetchingSearchLocations
-                state.searchLocations.isLoading
+                state.value.isLoading
                     ? HelperFunctions.loadingInidicator(
                         context,
                         radius: AppHeight.h20,

@@ -21,6 +21,7 @@ _$VehicleRepairRequestImpl _$$VehicleRepairRequestImplFromJson(
       status: $enumDecode(_$VehicleRepairRequestStatusEnumMap, json['status']),
       advancePaymentStatus: $enumDecode(
           _$AdvancePaymentStatusEnumMap, json['advance_payment_status']),
+      advanceCharge: (json['advance_charge'] as num?)?.toDouble(),
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
@@ -39,6 +40,7 @@ Map<String, dynamic> _$$VehicleRepairRequestImplToJson(
       'status': _$VehicleRepairRequestStatusEnumMap[instance.status]!,
       'advance_payment_status':
           _$AdvancePaymentStatusEnumMap[instance.advancePaymentStatus]!,
+      'advance_charge': instance.advanceCharge,
       'created_at': instance.createdAt.toIso8601String(),
     };
 

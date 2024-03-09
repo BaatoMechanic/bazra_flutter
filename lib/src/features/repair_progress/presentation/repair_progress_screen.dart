@@ -314,53 +314,53 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                         height: 30,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 8.0,
-                        ),
-                        child: repairRequest.advancePaymentStatus ==
-                                AdvancePaymentStatus.COMPLETE
-                            ? const SizedBox.shrink()
-                            : const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    flex: 4,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Mechanic baato karcha',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                          child: (repairRequest.advancePaymentStatus !=
+                                      AdvancePaymentStatus.COMPLETE &&
+                                  repairRequest.advanceCharge != null)
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Flexible(
+                                      flex: 4,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Mechanic baato karcha',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          'Khaana included',
-                                          style: TextStyle(
-                                            fontSize: 14,
+                                          Text(
+                                            'Khaana included',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: Text(
-                                      'Rs. 3000',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: ThemeColor.primary,
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                      ),
+                                    Flexible(
+                                      flex: 1,
+                                      child: Text(
+                                        'Rs. ${repairRequest.advanceCharge}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: ThemeColor.primary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox.shrink()),
                       if (repairRequest.advancePaymentStatus ==
                           AdvancePaymentStatus.PAYMENT_ON_ARRIVAL)
                         Padding(

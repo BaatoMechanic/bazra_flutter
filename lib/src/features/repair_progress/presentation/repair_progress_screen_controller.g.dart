@@ -160,7 +160,7 @@ class _FetchRepairStepsProviderElement
 }
 
 String _$repairProgressScreenControllerHash() =>
-    r'dc764651236ae51ef431d6bc54f08be27366de84';
+    r'bec18516bfd87e581bc28d262636efb4ec6d0d3e';
 
 /// See also [RepairProgressScreenController].
 @ProviderFor(RepairProgressScreenController)

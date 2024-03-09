@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/constants/managers/api_values_manager.dart';
 
-import '../../../../common/core/repositories/user_settings_repository.dart';
+import '../../../common/repositories/user_settings_repository.dart';
 import '../../../auth/domain/user.dart';
 import 'user_repository.dart';
 import 'package:http/http.dart' as http;

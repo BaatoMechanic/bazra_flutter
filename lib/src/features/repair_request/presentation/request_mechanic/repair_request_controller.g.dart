@@ -7,7 +7,7 @@ part of 'repair_request_controller.dart';
 // **************************************************************************
 
 String _$repairRequestControllerHash() =>
-    r'a0634ab1328161082dc9938f2c2aa7c8bf7f78d4';
+    r'9564249f523a943a80262a272b299b5eed90942c';
 
 /// See also [RepairRequestController].
 @ProviderFor(RepairRequestController)

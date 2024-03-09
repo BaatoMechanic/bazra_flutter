@@ -29,3 +29,15 @@ RepairRequestRepository repairRequestRepository(
     SHOW_FAKE
         ? FakeRepairRequestRepository()
         : APIRepairRequestRepository(ref: ref);
+
+@riverpod
+Future<List<VehicleRepairRequest>> fetchUserRepairRequest(
+        FetchUserRepairRequestRef ref) =>
+    ref.watch(repairRequestRepositoryProvider).fetchUserRepairRequest();
+
+@riverpod
+Future<VehicleRepairRequest> fetchVechicleRepairRequest(
+        FetchVechicleRepairRequestRef ref, String repairRequestIdx) =>
+    ref
+        .watch(repairRequestRepositoryProvider)
+        .fetchVechicleRepairRequest(repairRequestIdx);

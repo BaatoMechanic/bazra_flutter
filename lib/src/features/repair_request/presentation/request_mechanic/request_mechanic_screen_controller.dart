@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
@@ -33,20 +34,20 @@ class RequestMechanicScreenController
       Map<String, dynamic> requestInfo) async {
     state = state.copyWith(value: const AsyncLoading());
     final response = await AsyncValue.guard(() => ref
-        .read(repairRequestServiceProvider)
-        .createVehicleRepairRequest(requestInfo));
+        .read(repairRequestRepositoryProvider)
+        .requestForVehicleRepair(requestInfo));
     state = state.copyWith(value: const AsyncData(null));
     return response.value;
   }
 
   Future<bool> _addImagesToRepairRequest(
-      String requestId, List<File> images) async {
+      String requestIdx, List<File> images) async {
     state = state.copyWith(selectedImages: images);
     state = state.copyWith(value: const AsyncLoading());
 
     final response = await AsyncValue.guard(() => ref
-        .read(repairRequestServiceProvider)
-        .addImagesToVechicleRepairRequest(requestId, images));
+        .read(repairRequestRepositoryProvider)
+        .addImagesToRepairRequest(requestIdx, images));
 
     if (response.hasError) {
       state = state.copyWith(

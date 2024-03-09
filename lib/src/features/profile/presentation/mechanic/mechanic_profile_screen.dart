@@ -1,5 +1,4 @@
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
-import 'package:bato_mechanic/src/features/reviews_and_rating/application/reviews_and_rating_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +10,7 @@ import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
+import '../../../reviews_and_rating/data/reviews_and_rating_repository.dart';
 import '../../../reviews_and_rating/presentation/widgets/mechanic_review_widget.dart';
 import 'mechanic_profile_screen_controller.dart';
 

@@ -20,3 +20,10 @@ ServiceTypeRepository serviceTypeRepository(ServiceTypeRepositoryRef ref) =>
 Future<List<Service>> fetchAllServiceTypes(FetchAllServiceTypesRef ref) {
   return ref.watch(serviceTypeRepositoryProvider).fetchAllServiceTypes();
 }
+
+@riverpod
+Future<Service> fetchRepairRequestServiceType(
+        FetchRepairRequestServiceTypeRef ref, String repairRequestIdx) =>
+    ref
+        .watch(serviceTypeRepositoryProvider)
+        .fetchRepairRequestServiceType(repairRequestIdx);

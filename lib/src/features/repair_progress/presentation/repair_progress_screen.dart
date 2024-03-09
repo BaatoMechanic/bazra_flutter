@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:bato_mechanic/src/features/services/application/service_type_service.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/repair_steps_widget.dart';
 import 'package:bato_mechanic/src/utils/extensions/enum_extensions.dart';
 import 'package:flip_card/flip_card_controller.dart';
@@ -30,6 +29,7 @@ import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 
 import '../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
 import '../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
+import '../../services/data/service_type_repository.dart';
 import '../data/api_track_mechanic_repository.dart';
 import 'repair_progress_screen_controller.dart';
 

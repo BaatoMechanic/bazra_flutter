@@ -17,3 +17,10 @@ ReviewsAndRatingRepository reviewsAndRatingRepository(
     SHOW_FAKE
         ? FakeReviewsAndRatingRepository()
         : ApiReviewsAndRatingRepository(ref);
+
+@riverpod
+Future<List<ReviewAndRating>> fetchMechanicReviews(
+        FetchMechanicReviewsRef ref, String mechanicIdx) =>
+    ref
+        .watch(reviewsAndRatingRepositoryProvider)
+        .fetchMechanicReviews(mechanicIdx);

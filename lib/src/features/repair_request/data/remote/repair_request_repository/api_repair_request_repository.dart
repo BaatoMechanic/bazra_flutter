@@ -8,7 +8,7 @@ import 'package:bato_mechanic/src/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../../../../../common/core/repositories/user_settings_repository.dart';
+import '../../../../common/repositories/user_settings_repository.dart';
 import '../../../../../utils/constants/managers/api_values_manager.dart';
 import '../../../../../utils/constants/managers/values_manager.dart';
 import 'repair_request_repository.dart';

@@ -7,7 +7,7 @@ part of 'search_map_widget_controller.dart';
 // **************************************************************************
 
 String _$searchMapWidgetControllerHash() =>
-    r'6a8069371e3548c7dbe8b112b0980499e99463a7';
+    r'4e55ac822242dab72dc332aaa777d9d56735c7fa';
 
 /// See also [SearchMapWidgetController].
 @ProviderFor(SearchMapWidgetController)

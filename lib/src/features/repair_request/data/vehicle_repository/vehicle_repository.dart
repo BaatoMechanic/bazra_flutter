@@ -10,8 +10,14 @@ abstract class VehicleRepository {
   Future<List<Vehicle>> fetchAllVehicles();
 }
 
-// final vehicleRepositoryProvider = Provider((ref) => FakeVehicleRepository());
-
 @riverpod
 VehicleRepository vehicleRepository(VehicleRepositoryRef ref) =>
     FakeVehicleRepository();
+
+@riverpod
+Future<List<Vehicle>> fetchVehiclesByCategory(
+    FetchVehiclesByCategoryRef ref, String categoryId) {
+  return ref
+      .watch(vehicleRepositoryProvider)
+      .fetchVehiclesByCategory(categoryId);
+}

@@ -7,7 +7,7 @@ part of 'request_mechanic_screen_controller.dart';
 // **************************************************************************
 
 String _$requestMechanicScreenControllerHash() =>
-    r'7a93428d8f086177d00ded0fd0cacdb7c9d4ec8a';
+    r'f1be1c36ef200098a344f2b105a670f756c8542e';
 
 /// See also [RequestMechanicScreenController].
 @ProviderFor(RequestMechanicScreenController)

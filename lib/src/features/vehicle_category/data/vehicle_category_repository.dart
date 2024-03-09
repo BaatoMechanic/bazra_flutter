@@ -18,3 +18,11 @@ VehicleCategoryRepository vehicleCategoryRepository(
     SHOW_FAKE
         ? FakeVehicleCategoryRepository()
         : APIVehicleCategoryRepository(ref: ref);
+
+@riverpod
+Future<List<VehicleCategory>> fetchVehicleCategoriesForService(
+    FetchVehicleCategoriesForServiceRef ref, String serviceIdx) {
+  return ref
+      .watch(vehicleCategoryRepositoryProvider)
+      .fetchVehicleCategoriesForService(serviceIdx);
+}

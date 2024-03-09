@@ -2,7 +2,7 @@ import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'widgets/error_message_widget.dart';
+import 'error_message_widget.dart';
 
 class FetchAndWatchAsyncValueWidget<T> extends StatelessWidget {
   const FetchAndWatchAsyncValueWidget(

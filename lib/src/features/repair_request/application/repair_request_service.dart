@@ -28,15 +28,6 @@ class RepairRequestService {
 
   Ref ref;
 
-  Future<VehicleRepairRequest> createVehicleRepairRequest(
-      Map<String, dynamic> requestInfo) async {
-    var response = await ref
-        .read(repairRequestRepositoryProvider)
-        .requestForVehicleRepair(requestInfo);
-
-    return response;
-  }
-
   Future<VehicleRepairRequest> fetchUserRepairRequest() async {
     var response = await ref
         .read(repairRequestRepositoryProvider)
@@ -48,35 +39,8 @@ class RepairRequestService {
 
     return response.first;
   }
-
-  Future<VehicleRepairRequest> updateVehicleRepairRequest(
-      String requestId, Map<String, dynamic> requestInfo) async {
-    var response = await ref
-        .read(repairRequestRepositoryProvider)
-        .updateRepairRequest(requestId, requestInfo);
-
-    return response;
-  }
-
-  Future<VehicleRepairRequest> addImagesToVechicleRepairRequest(
-      String requestId, List<File> images) async {
-    var response = await ref
-        .read(repairRequestRepositoryProvider)
-        .addImagesToRepairRequest(requestId, images);
-    return response;
-  }
 }
 
 @riverpod
 RepairRequestService repairRequestService(RepairRequestServiceRef ref) =>
     RepairRequestService(ref: ref);
-
-final fetchUserRepairRequestProvider = FutureProvider.autoDispose(
-    (ref) => ref.watch(repairRequestServiceProvider).fetchUserRepairRequest());
-
-@riverpod
-Future<VehicleRepairRequest> fetchVechicleRepairRequest(
-        FetchVechicleRepairRequestRef ref, String repairRequestIdx) =>
-    ref
-        .watch(repairRequestRepositoryProvider)
-        .fetchVechicleRepairRequest(repairRequestIdx);

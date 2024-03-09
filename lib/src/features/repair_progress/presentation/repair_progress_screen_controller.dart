@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:bato_mechanic/src/features/repair_progress/data/repair_step_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 
@@ -9,7 +11,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../utils/enums/repair_setp_status.dart';
-import '../application/repair_step_service.dart';
 import '../domain/repair_step.dart';
 part 'repair_progress_screen_controller.g.dart';
 
@@ -128,11 +129,11 @@ class RepairProgressScreenController extends _$RepairProgressScreenController {
     return 0;
   }
 
-  Future<bool> setAdvancePaymentOnArrival(String repairStepIdx) async {
+  Future<bool> setAdvancePaymentOnArrival(String repairRequestIdx) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() => ref
-            .read(repairRequestServiceProvider)
-            .updateVehicleRepairRequest(repairStepIdx, {
+            .read(repairRequestRepositoryProvider)
+            .updateRepairRequest(repairRequestIdx, {
           "advance_payment_status":
               AdvancePaymentStatus.PAYMENT_ON_ARRIVAL.name.toLowerCase(),
           "status": VehicleRepairRequestStatus.WAITING_FOR_MECHANIC.name
@@ -142,25 +143,27 @@ class RepairProgressScreenController extends _$RepairProgressScreenController {
   }
 
   Future<List<RepairStep>> fetchRepairSteps(String repairRequestIdx) async {
-    state = await AsyncValue.guard(() =>
-        ref.read(repairStepServiceProvider).fetchRepairSteps(repairRequestIdx));
+    state = await AsyncValue.guard(() => ref
+        .read(repairStepRepositoryProvider)
+        .fetchRepairSteps(repairRequestIdx));
 
     return state.value as List<RepairStep>;
   }
 
   Future<bool> updateRepairStepStatus(String repairRequest,
       String repairStepIdx, RepairStepStatus status) async {
+    String statusName = status.name.toLowerCase().replaceAll(" ", "_");
     state = await AsyncValue.guard(() => ref
-        .read(repairStepServiceProvider)
-        .updateRepairStepStatus(repairRequest, repairStepIdx, status));
+        .read(repairStepRepositoryProvider)
+        .updateRepairStepStatus(repairRequest, repairStepIdx, statusName));
     return !state.hasError;
   }
 
-  Future<bool> completeRepair(String repairStepIdx) async {
+  Future<bool> completeRepair(String repairRequestIdx) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() => ref
-        .read(repairRequestServiceProvider)
-        .updateVehicleRepairRequest(repairStepIdx,
+        .read(repairRequestRepositoryProvider)
+        .updateRepairRequest(repairRequestIdx,
             {"status": RepairStepStatus.COMPLETE.name.toLowerCase()}));
     return !state.hasError;
   }

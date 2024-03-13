@@ -1,5 +1,4 @@
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
-import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

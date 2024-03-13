@@ -1,6 +1,4 @@
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
-import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
 import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
 import 'package:flutter/material.dart';
 

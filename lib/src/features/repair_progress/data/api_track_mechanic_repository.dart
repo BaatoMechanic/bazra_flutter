@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:bato_mechanic/src/features/core/domain/user_position/user_position.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/features/repair_progress/data/track_mechanic_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 

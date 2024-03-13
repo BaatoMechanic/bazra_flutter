@@ -4,7 +4,6 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../utils/constants/managers/color_manager.dart';
 import '../../utils/constants/managers/values_manager.dart';
-import '../../utils/helpers/helper_functions.dart';
 
 class ShimmerWidget extends StatelessWidget {
   final double width;

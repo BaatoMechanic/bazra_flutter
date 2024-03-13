@@ -1,6 +1,5 @@
 import 'package:bato_mechanic/src/common/widgets/shimmer_widget.dart';
 import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
-import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/managers/color_manager.dart';

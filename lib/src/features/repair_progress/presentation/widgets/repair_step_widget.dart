@@ -2,7 +2,6 @@ import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/managers/values_manager.dart';
-import '../../../../utils/helpers/helper_functions.dart';
 import '../../domain/repair_step.dart';
 import 'repair_step_bottom_sheet.dart';
 

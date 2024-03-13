@@ -4,8 +4,6 @@ import 'package:bato_mechanic/src/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'main.dart';
-import 'src/utils/constants/managers/color_manager.dart';
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});

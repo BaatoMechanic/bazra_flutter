@@ -1,10 +1,6 @@
-import 'dart:async';
-import 'package:bato_mechanic/main.dart';
-import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/repair_steps_widget.dart';
 import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/enum_extensions.dart';
-import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';

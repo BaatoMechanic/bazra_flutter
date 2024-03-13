@@ -35,10 +35,6 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   Timer? _debounce;
   late double width;
   late double height;
-  // ignore: unused_field
-  String _selectedPlaceName = 'lol';
-
-  // bool _isFetchingSearchLocations = false;
 
   @override
   void initState() {
@@ -80,7 +76,6 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   _showLocationName(String? placeName) async {
     if (placeName != null) {
       _searchController.text = placeName;
-      _selectedPlaceName = placeName;
     } else {
       final logger = BMLogger().logger;
       logger.e("Place name not found".hardcoded());
@@ -157,18 +152,12 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             await _showLocationName(placeName);
             _animatedMapMove(latLng, _mapController.zoom, mounted, this);
           },
-          center:
-              ref.watch(searchMapWidgetControllerProvider).markerPosition.value,
+          center: ref.watch(searchMapWidgetControllerProvider).markerPosition,
           zoom: 15.0,
         ),
         nonRotatedChildren: [
           FlutterMapControlButtons(
             minZoom: 4,
-            // String placeName = await ref
-            //     .read(searchMapWidgetControllerProvider.notifier)
-            //     .getLocationName(latLng.latitude, latLng.longitude);
-            // selectedPlaceName = placeName;
-            // _animatedMapMove(latLng, _mapController.zoom, mounted, this);
             maxZoom: 19,
             mini: false,
             padding: 10,
@@ -176,22 +165,6 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             mapController: _mapController,
             animationController: _animationController,
           ),
-          // _buildSelectButton(),
-          // const RichAttributionWidget(
-          //   popupInitialDisplayDuration: const Duration(seconds: 5),
-          //   animationConfig: const ScaleRAWA(),
-          //   showFlutterMapAttribution: false,
-          //   attributions: [
-          //     TextSourceAttribution(
-          //       'Full Screen Mode',
-          //       prependCopyright: false,
-          //     ),
-          //     TextSourceAttribution(
-          //       'Tap on the map to show full screen map',
-          //       prependCopyright: false,
-          //     ),
-          //   ],
-          // ),
         ],
         children: [
           TileLayer(
@@ -199,10 +172,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             userAgentPackageName: 'dev.fleaflet.flutter_map.example',
             tileProvider: NetworkTileProvider(),
           ),
-          if (!ref
-              .watch(searchMapWidgetControllerProvider)
-              .markerPosition
-              .isLoading)
+          if (!ref.watch(searchMapWidgetControllerProvider).value.isLoading)
             MarkerLayer(
               rotate: true,
               markers: [
@@ -211,8 +181,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   height: 80,
                   point: ref
                       .watch(searchMapWidgetControllerProvider)
-                      .markerPosition
-                      .value as LatLng,
+                      .markerPosition as LatLng,
                   builder: (ctx) => const Icon(
                     Icons.location_on,
                     color: Colors.orange,
@@ -222,10 +191,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
               ],
             ),
           CurrentLocationLayer(),
-          if (ref
-              .watch(searchMapWidgetControllerProvider)
-              .markerPosition
-              .isLoading)
+          if (ref.watch(searchMapWidgetControllerProvider).value.isLoading)
             HelperFunctions.loadingInidicator(context),
         ],
       );
@@ -233,13 +199,6 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
   }
 
   Widget _buildSearchBar(SearchMapState state) {
-    // OutlineInputBorder inputBorder = OutlineInputBorder(
-    //   borderSide: BorderSide(color: Theme.of(context).primaryColor),
-    // );
-    // OutlineInputBorder inputFocusBorder = OutlineInputBorder(
-    //   borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 3.0),
-    // );
-
     return Positioned(
       top: 0,
       left: 0,
@@ -258,8 +217,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
               backgroundColor:
                   const MaterialStatePropertyAll<Color>(ThemeColor.light),
               trailing: [
-                // _isFetchingSearchLocations
-                state.searchLocations.isLoading
+                state.value.isLoading
                     ? HelperFunctions.loadingInidicator(
                         context,
                         radius: AppHeight.h20,
@@ -285,11 +243,6 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                 }
 
                 _debounce = Timer(const Duration(milliseconds: 20), () async {
-                  // if (mounted) {
-                  //   setState(() {
-                  //     _isFetchingSearchLocations = true;
-                  //   });
-                  // }
                   var response = await ref
                       .read(searchMapWidgetControllerProvider.notifier)
                       .fetchSearchLocations(_searchController.text);
@@ -302,7 +255,6 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                               longitude: double.parse(e['lon'])))
                           .toList()
                           .cast<OSMData>();
-                      // _isFetchingSearchLocations = false;
                     });
                   }
                 });

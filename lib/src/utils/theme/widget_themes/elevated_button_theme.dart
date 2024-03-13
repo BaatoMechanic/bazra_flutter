@@ -12,7 +12,6 @@ class BaatoElevatedButtonTheme {
   static final lightElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      // foregroundColor: ThemeColor.light,
       foregroundColor: ThemeColor.dark,
       backgroundColor: ThemeColor.primary,
       disabledForegroundColor: ThemeColor.darkGrey,
@@ -35,7 +34,6 @@ class BaatoElevatedButtonTheme {
   static final darkElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      // foregroundColor: ThemeColor.light,
       foregroundColor: ThemeColor.dark,
       backgroundColor: ThemeColor.primary,
       disabledForegroundColor: ThemeColor.darkGrey,

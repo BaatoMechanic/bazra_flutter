@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,10 @@ class ServiceTypeButtonWidget extends ConsumerWidget {
           ),
           child: IconButton(
             onPressed: () {
-              ref.read(selectedServiceProvider.notifier).state = serviceType;
+              ref
+                  .read(selectedServiceProvider.notifier)
+                  .setSelectedService(serviceType);
+
               context.pushNamed(APP_ROUTE.categories.name);
             },
             icon: Icon(serviceType.icon ?? Icons.hourglass_empty),

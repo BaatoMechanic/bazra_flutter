@@ -31,10 +31,7 @@ class BaatoOutlinedButtonTheme {
     style: OutlinedButton.styleFrom(
       foregroundColor: ThemeColor.primary,
       side: const BorderSide(color: ThemeColor.borderPrimary),
-      textStyle: const TextStyle(
-          fontSize: 16,
-          // color: ThemeColor.textWhite,
-          fontWeight: FontWeight.w600),
+      textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
       padding: const EdgeInsets.symmetric(
           vertical: DefaultManager.buttonHeight, horizontal: 20),
       shape: RoundedRectangleBorder(

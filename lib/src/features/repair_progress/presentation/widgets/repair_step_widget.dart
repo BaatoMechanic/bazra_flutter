@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/managers/values_manager.dart';
 import '../../../../utils/helpers/helper_functions.dart';
-import '../../domain/repair_step/repair_step.dart';
+import '../../domain/repair_step.dart';
 import 'repair_step_bottom_sheet.dart';
 
 class RepairStepWidget extends StatelessWidget {

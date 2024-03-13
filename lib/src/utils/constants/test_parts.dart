@@ -4,24 +4,22 @@ final mTestVehicleParts = [
   const VehiclePart(
     idx: "1",
     name: "wheel",
-    // image: http://localhost:8000/media/store/images/vehicle_part/wheel.png
-    image: "assets/images/parts/wheel.png", vehicleCategoryIdx: "1",
+    image: "assets/images/parts/wheel.png",
+    vehicleCategoryIdx: "1",
     isMultiple: true,
   ),
   const VehiclePart(
     idx: "2",
     name: "engine",
-
-    // image: http://localhost:8000/media/store/images/vehicle_part/engine.png
     image: "assets/images/parts/engine.png",
-    vehicleCategoryIdx: "1", isMultiple: true,
+    vehicleCategoryIdx: "1",
+    isMultiple: true,
   ),
   const VehiclePart(
     idx: "3",
     name: "body",
-
-    // image: http://localhost:8000/media/store/images/vehicle_part/body.png
     image: "assets/images/parts/body.png",
-    vehicleCategoryIdx: "1", isMultiple: true,
+    vehicleCategoryIdx: "1",
+    isMultiple: true,
   )
 ];

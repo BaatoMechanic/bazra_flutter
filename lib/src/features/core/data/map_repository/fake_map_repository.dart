@@ -11,7 +11,6 @@ import 'package:latlong2/latlong.dart';
 
 class FakeMapRepository implements MapRepository {
   @override
-  // Future<List<LatLng>> getRoute(
   Future<Map<String, dynamic>> getRoute(
       LatLng sourcePoint, LatLng destinationPoint) async {
     var url = Uri.parse(
@@ -34,7 +33,6 @@ class FakeMapRepository implements MapRepository {
     try {
       String url =
           'https://nominatim.openstreetmap.org/search?q=$searchText&format=json&polygon_geojson=1&addressdetails=1&accept-language=en';
-      // var response = await http.post(Uri.parse(url));
       var response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
@@ -62,7 +60,6 @@ class FakeMapRepository implements MapRepository {
         errorResponse: ApiStrings.invalidFormatString,
       );
     } catch (e) {
-      // return Failure(code: 103, errorResponse: e.toString());
       return Failure(
         code: ApiStatusCode.unknownError,
         stackTrace: StackTrace.current,
@@ -101,7 +98,6 @@ class FakeMapRepository implements MapRepository {
         errorResponse: ApiStrings.invalidFormatString,
       );
     } catch (e, st) {
-      // return Failure(code: 103, errorResponse: e.toString());
       return Failure(
         code: ApiStatusCode.unknownError,
         stackTrace: st,

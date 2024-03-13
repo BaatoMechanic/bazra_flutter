@@ -2,7 +2,7 @@ import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and
 import 'package:bato_mechanic/src/utils/constants/test_mechanics.dart';
 import 'package:bato_mechanic/src/features/core/data/mechanic_repository/mechanic_repository.dart';
 
-import '../../../auth/domain/mechanic/mechanic.dart';
+import '../../../auth/domain/mechanic.dart';
 
 class FakeMechanicRepository implements MechanicRepository {
   @override

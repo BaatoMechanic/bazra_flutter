@@ -34,9 +34,4 @@ class PricingCalculator {
     // Calculate the shipping cost based on various factors like distance, weight, etc.
     return 5.00; // Example shipping cost of $5
   }
-
-  /// -- Sum all cart values and return total amount
-  // static double calculateCartTotal(CartModel cart) {
-  //   return cart.items.map((e) => e.price).fold(0, (previousPrice, currentPrice) => previousPrice + (currentPrice ?? 0));
-  // }
 }

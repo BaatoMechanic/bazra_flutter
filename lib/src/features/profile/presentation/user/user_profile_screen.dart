@@ -19,7 +19,7 @@ class UserProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-    final user = ref.watch(authStateProvider).user;
+    final user = ref.watch(authStateNotifierProvider).user;
 
     List<MenuTile> infoTiles = [
       MenuTile(
@@ -110,11 +110,8 @@ class UserProfileScreen extends ConsumerWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const UserCircleAvatar(
-                        // radius: AppRadius.r60,
-                        ),
+                    const UserCircleAvatar(),
                     Text(
-                      // 'Krishna Rimal',
                       user?.name ?? "Unknown User".hardcoded(),
                       style: Theme.of(context).textTheme.displayLarge,
                     ),

@@ -1,11 +1,12 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/features/common/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/remote/remote_auth_repository.dart';
+
+part 'auth_service.g.dart';
 
 class AuthService {
   AuthService({
@@ -40,7 +41,7 @@ class AuthService {
   Future<void> fetchCurrentUserInfo(String accessToken) async {
     final response =
         await ref.read(authRepositoryProvider).getCurrentUserInfo(accessToken);
-    ref.read(authStateProvider.notifier).setUser(response);
+    ref.read(authStateNotifierProvider.notifier).setUser(response);
   }
 
   Future<void> createUserWithIdAndPassword(
@@ -49,7 +50,7 @@ class AuthService {
         .read(authRepositoryProvider)
         .createUserWithIdAndPassword(uId, password, fullName);
 
-    ref.read(authStateProvider.notifier).setUser(response);
+    ref.read(authStateNotifierProvider.notifier).setUser(response);
   }
 
   bool logOut() {
@@ -59,7 +60,7 @@ class AuthService {
   }
 }
 
-final authServiceProvider = Provider((ref) {
-  final service = AuthService(ref: ref);
-  return service;
-});
+@riverpod
+AuthService authService(AuthServiceRef ref) {
+  return AuthService(ref: ref);
+}

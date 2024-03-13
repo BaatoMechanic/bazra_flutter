@@ -20,7 +20,6 @@ class ShimmerWidget extends StatelessWidget {
       ),
     ),
   });
-  // mangalithin9
 
   const ShimmerWidget.circular({
     super.key,
@@ -36,16 +35,12 @@ class ShimmerWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppPadding.p2),
       child: Shimmer.fromColors(
-        // baseColor: Colors.grey[400]!,
-        // highlightColor: Colors.grey[300]!,
-
         baseColor: isDarkTheme ? ThemeColor.darkGrey : ThemeColor.grey,
         highlightColor: isDarkTheme ? ThemeColor.grey : ThemeColor.lightGrey,
         child: Container(
           width: width,
           height: height,
           decoration: ShapeDecoration(
-            // color: Colors.grey[300]!,
             color: isDarkTheme ? ThemeColor.grey : ThemeColor.lightGrey,
             shape: shapeBorder,
           ),

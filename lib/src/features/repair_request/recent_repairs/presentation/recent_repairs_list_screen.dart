@@ -15,7 +15,7 @@ class RecentRepairsListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final recentRepairsValue = ref.watch(fetchUserRecentRepairRequests);
+    final recentRepairsValue = ref.watch(fetchUserRecentRepairRequestsProvider);
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -24,7 +24,7 @@ class RecentRepairsListScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hi there, ${ref.watch(authStateProvider).user?.name}'
+                'Hi there, ${ref.watch(authStateNotifierProvider).user?.name}'
                     .hardcoded(),
                 style: Theme.of(context).textTheme.displayLarge,
               ),
@@ -63,10 +63,6 @@ class RecentRepairsListScreen extends ConsumerWidget {
                       itemCount: repairRequests.length,
                       itemBuilder: (context, index) =>
                           RecentRepairContainerWidget(
-                        // onPressed: () => context
-                        //     .pushNamed(APP_ROUTE.repairProgress.name, extra: {
-                        //   "repairRequestIdx": repairRequests[index].idx
-                        // }),
                         onPressed: () {},
                         repairRequest: repairRequests[index],
                       ),

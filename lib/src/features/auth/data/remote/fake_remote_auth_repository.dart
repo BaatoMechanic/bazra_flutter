@@ -1,21 +1,12 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common/core/repositories/user_settings_repository.dart';
+import '../../../common/repositories/user_settings_repository.dart';
 
-import '../../domain/user/user.dart';
+import '../../domain/user.dart';
 import 'remote_auth_repository.dart';
 
 class FakeRemoteAuthRepository implements RemoteAuthRepository {
-  // final _userState = InMemoryStore<User?>(null);
-
-  // Stream<User?> userStateChanges() => _userState.stream;
-  // User? get currentUser => _userState.value;
-
-  // void setCurrentUser(User? user) => _userState.value = user;
-
-  // void dispose() => _userState.close();
-
   @override
   Future<User> createUserWithIdAndPassword(
       String uId, String password, String fullName) async {
@@ -56,7 +47,6 @@ class FakeRemoteAuthRepository implements RemoteAuthRepository {
         "dob_type": "AD",
       },
     );
-    // setCurrentUser(user);
     return user;
   }
 
@@ -74,13 +64,3 @@ class FakeRemoteAuthRepository implements RemoteAuthRepository {
     );
   }
 }
-
-final fakeAuthRepositoryProvider = Provider<FakeRemoteAuthRepository>((ref) {
-  return FakeRemoteAuthRepository();
-});
-
-// final watchUserStateChangesProvider = StreamProvider.autoDispose<User?>((ref) {
-//   final authService = ref.watch(fakeAuthRepositoryProvider);
-//   ref.onDispose(() => authService.dispose());
-//   return authService.userStateChanges();
-// });

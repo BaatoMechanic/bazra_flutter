@@ -1,7 +1,6 @@
-
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
 
-import '../../../auth/domain/user/user.dart';
+import '../../../auth/domain/user.dart';
 import 'user_repository.dart';
 
 class FakeUserRepository extends UserRepository {

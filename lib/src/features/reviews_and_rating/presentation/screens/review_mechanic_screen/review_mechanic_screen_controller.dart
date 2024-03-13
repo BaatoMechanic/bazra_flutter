@@ -1,12 +1,14 @@
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+part 'review_mechanic_screen_controller.g.dart';
 
-class ReviewMechanicScreenController extends StateNotifier<AsyncValue<void>> {
-  ReviewMechanicScreenController({required this.ref})
-      : super(const AsyncData(null));
-
-  final Ref ref;
+@riverpod
+class ReviewMechanicScreenController extends _$ReviewMechanicScreenController {
+  @override
+  FutureOr<void> build() {
+    // pass
+  }
 
   Future<bool> reviewMechanic(String mechanicIdx, String repairRequestIdx,
       int stars, String reviewText) async {
@@ -17,18 +19,4 @@ class ReviewMechanicScreenController extends StateNotifier<AsyncValue<void>> {
             mechanicIdx, repairRequestIdx, stars, reviewText));
     return !state.hasError;
   }
-
-  // Future<User?> fetchMechanicInfo(String mechanicIdx) async {
-  //   state = const AsyncLoading();
-  //   state = await AsyncValue.guard(
-  //       () => ref.read(mechanicServiceProvider).fetchMechanicInfo(mechanicIdx));
-  //   // return state.value!;
-  //   return null;
-  // }
 }
-
-final reviewMechanicScreenControllerProvider =
-    StateNotifierProvider<ReviewMechanicScreenController, AsyncValue<void>>(
-        (ref) {
-  return ReviewMechanicScreenController(ref: ref);
-});

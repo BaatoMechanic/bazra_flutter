@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/review_mechanic_screen/review_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
@@ -190,11 +189,6 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
                   const SizedBox(
                     height: AppSize.s20,
                   ),
-                  // TextField(
-                  //   controller: _reviewTextController,
-                  //   maxLines: 10,
-                  //   decoration: const InputDecoration(hintText: 'Write a review'),
-                  // ),
                   DescriptionField(
                     controller: _reviewTextController,
                     focusNode: _reviewFocusNode,
@@ -257,12 +251,6 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
           'Thank you for the review'.hardcoded(),
         );
         context.goNamed(APP_ROUTE.home.name);
-
-        // } else {
-        // ToastHelper.showNotification(
-        //   context,
-        //   'Something went wrong, please try again'.hardcoded(),
-        // );
       }
     }
   }

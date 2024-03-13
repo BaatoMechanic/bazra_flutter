@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
-import 'src/common/core/repositories/user_settings_repository.dart';
+import 'src/features/common/repositories/user_settings_repository.dart';
 
 final logger = BMLogger().logger;
 

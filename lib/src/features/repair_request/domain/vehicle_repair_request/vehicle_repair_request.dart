@@ -1,4 +1,3 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part "vehicle_repair_request.freezed.dart";
@@ -54,6 +53,7 @@ class VehicleRepairRequest with _$VehicleRepairRequest {
     required VehicleRepairRequestStatus status,
     @JsonKey(name: "advance_payment_status")
     required AdvancePaymentStatus advancePaymentStatus,
+    @JsonKey(name: "advance_charge") required double? advanceCharge,
     @JsonKey(name: "created_at") required DateTime createdAt,
   }) = _VehicleRepairRequest;
 

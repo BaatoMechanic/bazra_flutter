@@ -1,4 +1,6 @@
 import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
+import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
@@ -37,14 +39,16 @@ class TipsCarousel extends StatelessWidget {
               ),
               SizedBox(
                 width: AppHeight.h75,
-                child: item.mechanic['image'] != null
+                child: item.mechanic.profilePic != null
                     ? GestureDetector(
-                        onTap: () => context.pushNamed(
-                                APP_ROUTE.mechanicProfile.name,
-                                extra: {
-                                  'mechanicIdx': item.mechanic['idx'],
-                                }),
-                        child: Image.network(item.mechanic['image']))
+                        onTap: () => context
+                            .pushNamed(APP_ROUTE.mechanicProfile.name, extra: {
+                          'mechanicIdx': item.mechanic.idx,
+                        }),
+                        // child: Image.network(item.mechanic.idx)
+                        child: HelperFunctions.renderImage(
+                            item.mechanic.profilePic!),
+                      )
                     : Image.asset(
                         "assets/images/no-profile.png",
                       ),

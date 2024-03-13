@@ -3,6 +3,9 @@ import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 
 class UserHelperFunctions {
   static getProfileImageUrl(String url) {
+    if (url[0] == '/') {
+      url = url.substring(1);
+    }
     return "${RemoteManager.BASE_URI}$url/";
   }
 

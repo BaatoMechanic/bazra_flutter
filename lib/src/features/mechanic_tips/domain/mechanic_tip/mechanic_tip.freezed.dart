@@ -21,8 +21,9 @@ MechanicTip _$MechanicTipFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MechanicTip {
   String get idx => throw _privateConstructorUsedError;
-  String get tip => throw _privateConstructorUsedError;
-  Map<String, dynamic> get mechanic => throw _privateConstructorUsedError;
+  String get tip =>
+      throw _privateConstructorUsedError; // required Map<String, dynamic> mechanic,
+  Mechanic get mechanic => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,9 @@ abstract class $MechanicTipCopyWith<$Res> {
           MechanicTip value, $Res Function(MechanicTip) then) =
       _$MechanicTipCopyWithImpl<$Res, MechanicTip>;
   @useResult
-  $Res call({String idx, String tip, Map<String, dynamic> mechanic});
+  $Res call({String idx, String tip, Mechanic mechanic});
+
+  $MechanicCopyWith<$Res> get mechanic;
 }
 
 /// @nodoc
@@ -68,8 +71,16 @@ class _$MechanicTipCopyWithImpl<$Res, $Val extends MechanicTip>
       mechanic: null == mechanic
           ? _value.mechanic
           : mechanic // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
+              as Mechanic,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MechanicCopyWith<$Res> get mechanic {
+    return $MechanicCopyWith<$Res>(_value.mechanic, (value) {
+      return _then(_value.copyWith(mechanic: value) as $Val);
+    });
   }
 }
 
@@ -81,7 +92,10 @@ abstract class _$$MechanicTipImplCopyWith<$Res>
       __$$MechanicTipImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String idx, String tip, Map<String, dynamic> mechanic});
+  $Res call({String idx, String tip, Mechanic mechanic});
+
+  @override
+  $MechanicCopyWith<$Res> get mechanic;
 }
 
 /// @nodoc
@@ -109,9 +123,9 @@ class __$$MechanicTipImplCopyWithImpl<$Res>
           : tip // ignore: cast_nullable_to_non_nullable
               as String,
       mechanic: null == mechanic
-          ? _value._mechanic
+          ? _value.mechanic
           : mechanic // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
+              as Mechanic,
     ));
   }
 }
@@ -120,10 +134,7 @@ class __$$MechanicTipImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MechanicTipImpl implements _MechanicTip {
   const _$MechanicTipImpl(
-      {required this.idx,
-      required this.tip,
-      required final Map<String, dynamic> mechanic})
-      : _mechanic = mechanic;
+      {required this.idx, required this.tip, required this.mechanic});
 
   factory _$MechanicTipImpl.fromJson(Map<String, dynamic> json) =>
       _$$MechanicTipImplFromJson(json);
@@ -132,13 +143,9 @@ class _$MechanicTipImpl implements _MechanicTip {
   final String idx;
   @override
   final String tip;
-  final Map<String, dynamic> _mechanic;
+// required Map<String, dynamic> mechanic,
   @override
-  Map<String, dynamic> get mechanic {
-    if (_mechanic is EqualUnmodifiableMapView) return _mechanic;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_mechanic);
-  }
+  final Mechanic mechanic;
 
   @override
   String toString() {
@@ -152,13 +159,13 @@ class _$MechanicTipImpl implements _MechanicTip {
             other is _$MechanicTipImpl &&
             (identical(other.idx, idx) || other.idx == idx) &&
             (identical(other.tip, tip) || other.tip == tip) &&
-            const DeepCollectionEquality().equals(other._mechanic, _mechanic));
+            (identical(other.mechanic, mechanic) ||
+                other.mechanic == mechanic));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, idx, tip, const DeepCollectionEquality().hash(_mechanic));
+  int get hashCode => Object.hash(runtimeType, idx, tip, mechanic);
 
   @JsonKey(ignore: true)
   @override
@@ -178,7 +185,7 @@ abstract class _MechanicTip implements MechanicTip {
   const factory _MechanicTip(
       {required final String idx,
       required final String tip,
-      required final Map<String, dynamic> mechanic}) = _$MechanicTipImpl;
+      required final Mechanic mechanic}) = _$MechanicTipImpl;
 
   factory _MechanicTip.fromJson(Map<String, dynamic> json) =
       _$MechanicTipImpl.fromJson;
@@ -187,8 +194,8 @@ abstract class _MechanicTip implements MechanicTip {
   String get idx;
   @override
   String get tip;
-  @override
-  Map<String, dynamic> get mechanic;
+  @override // required Map<String, dynamic> mechanic,
+  Mechanic get mechanic;
   @override
   @JsonKey(ignore: true)
   _$$MechanicTipImplCopyWith<_$MechanicTipImpl> get copyWith =>

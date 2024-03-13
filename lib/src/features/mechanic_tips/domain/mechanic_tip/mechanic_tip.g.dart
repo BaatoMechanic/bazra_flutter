@@ -10,7 +10,7 @@ _$MechanicTipImpl _$$MechanicTipImplFromJson(Map<String, dynamic> json) =>
     _$MechanicTipImpl(
       idx: json['idx'] as String,
       tip: json['tip'] as String,
-      mechanic: json['mechanic'] as Map<String, dynamic>,
+      mechanic: Mechanic.fromJson(json['mechanic'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$MechanicTipImplToJson(_$MechanicTipImpl instance) =>

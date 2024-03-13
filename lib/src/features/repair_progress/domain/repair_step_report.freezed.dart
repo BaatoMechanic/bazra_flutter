@@ -21,6 +21,7 @@ RepairStepReport _$RepairStepReportFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RepairStepReport {
   String get idx => throw _privateConstructorUsedError;
+  @JsonKey(name: "bill_images")
   List<Map<String, String>> get billImages =>
       throw _privateConstructorUsedError;
 
@@ -36,7 +37,9 @@ abstract class $RepairStepReportCopyWith<$Res> {
           RepairStepReport value, $Res Function(RepairStepReport) then) =
       _$RepairStepReportCopyWithImpl<$Res, RepairStepReport>;
   @useResult
-  $Res call({String idx, List<Map<String, String>> billImages});
+  $Res call(
+      {String idx,
+      @JsonKey(name: "bill_images") List<Map<String, String>> billImages});
 }
 
 /// @nodoc
@@ -76,7 +79,9 @@ abstract class _$$RepairStepReportImplCopyWith<$Res>
       __$$RepairStepReportImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String idx, List<Map<String, String>> billImages});
+  $Res call(
+      {String idx,
+      @JsonKey(name: "bill_images") List<Map<String, String>> billImages});
 }
 
 /// @nodoc
@@ -110,7 +115,9 @@ class __$$RepairStepReportImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RepairStepReportImpl implements _RepairStepReport {
   const _$RepairStepReportImpl(
-      {required this.idx, required final List<Map<String, String>> billImages})
+      {required this.idx,
+      @JsonKey(name: "bill_images")
+      required final List<Map<String, String>> billImages})
       : _billImages = billImages;
 
   factory _$RepairStepReportImpl.fromJson(Map<String, dynamic> json) =>
@@ -120,6 +127,7 @@ class _$RepairStepReportImpl implements _RepairStepReport {
   final String idx;
   final List<Map<String, String>> _billImages;
   @override
+  @JsonKey(name: "bill_images")
   List<Map<String, String>> get billImages {
     if (_billImages is EqualUnmodifiableListView) return _billImages;
     // ignore: implicit_dynamic_type
@@ -164,6 +172,7 @@ class _$RepairStepReportImpl implements _RepairStepReport {
 abstract class _RepairStepReport implements RepairStepReport {
   const factory _RepairStepReport(
           {required final String idx,
+          @JsonKey(name: "bill_images")
           required final List<Map<String, String>> billImages}) =
       _$RepairStepReportImpl;
 
@@ -173,6 +182,7 @@ abstract class _RepairStepReport implements RepairStepReport {
   @override
   String get idx;
   @override
+  @JsonKey(name: "bill_images")
   List<Map<String, String>> get billImages;
   @override
   @JsonKey(ignore: true)

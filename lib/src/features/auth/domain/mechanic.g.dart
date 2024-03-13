@@ -13,7 +13,7 @@ _$MechanicImpl _$$MechanicImplFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String?,
       phone: json['phone'] as String?,
       gender: json['gender'] as String?,
-      profilePic: json['profile_pic'] as String?,
+      profilePic: json['image'] as String?,
       dobType: $enumDecode(_$DOBTypeEnumMap, json['dob_type']),
       dateOfBirth: json['date_of_birth'] == null
           ? null
@@ -34,7 +34,7 @@ Map<String, dynamic> _$$MechanicImplToJson(_$MechanicImpl instance) =>
       'email': instance.email,
       'phone': instance.phone,
       'gender': instance.gender,
-      'profile_pic': instance.profilePic,
+      'image': instance.profilePic,
       'dob_type': _$DOBTypeEnumMap[instance.dobType]!,
       'date_of_birth': instance.dateOfBirth?.toIso8601String(),
       'primary_role': instance.primaryRole,

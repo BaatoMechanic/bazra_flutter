@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/features/auth/domain/mechanic.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'mechanic_tip.freezed.dart';
@@ -11,7 +12,8 @@ class MechanicTip with _$MechanicTip {
   const factory MechanicTip({
     required String idx,
     required String tip,
-    required Map<String, dynamic> mechanic,
+    // required Map<String, dynamic> mechanic,
+    required Mechanic mechanic,
   }) = _MechanicTip;
 
   factory MechanicTip.fromJson(Map<String, dynamic> json) =>

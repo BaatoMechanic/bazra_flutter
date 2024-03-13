@@ -16,7 +16,7 @@ class ApiReviewsAndRatingRepository implements ReviewsAndRatingRepository {
   @override
   Future<List<ReviewAndRating>> fetchMechanicReviews(String mechanicIdx) async {
     var url = Uri.parse(
-        '${RemoteManager.BASE_URI}autho/reviews/mechanic_reviews/?idx=$mechanicIdx');
+        '${RemoteManager.BASE_URI}vehicle-repair/reviews/mechanic_reviews/?idx=$mechanicIdx');
 
     final response = await HttpHelper.guard(
         () => http.get(url, headers: {

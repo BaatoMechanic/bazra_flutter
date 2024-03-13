@@ -12,9 +12,9 @@ _$ReviewAndRatingImpl _$$ReviewAndRatingImplFromJson(
       idx: json['idx'] as String,
       review: json['review'] as String,
       rating: (json['rating'] as num).toDouble(),
-      reviewerIdx: json['reviewer_idx'] as String,
-      reviewedIdx: json['reviewed_idx'] as String,
-      repairRequestIdx: json['repair_request_idx'] as String,
+      reviewerIdx: json['reviewer'] as String,
+      reviewedIdx: json['reviewed'] as String,
+      repairRequestIdx: json['repair_request'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
@@ -24,8 +24,8 @@ Map<String, dynamic> _$$ReviewAndRatingImplToJson(
       'idx': instance.idx,
       'review': instance.review,
       'rating': instance.rating,
-      'reviewer_idx': instance.reviewerIdx,
-      'reviewed_idx': instance.reviewedIdx,
-      'repair_request_idx': instance.repairRequestIdx,
+      'reviewer': instance.reviewerIdx,
+      'reviewed': instance.reviewedIdx,
+      'repair_request': instance.repairRequestIdx,
       'created_at': instance.createdAt.toIso8601String(),
     };

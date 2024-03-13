@@ -55,13 +55,6 @@ GoRouter goRouter() {
   return GoRouter(
     initialLocation: '/',
     routes: [
-      // GoRoute(
-      //   path: '/',
-      //   name: appRoute.home.name,
-      //   // builder: (context, state) => HomeScreen(),
-      //   builder: (context, state) => BuildHomeScreen(),
-      // ),
-
       GoRoute(
           path: '/login',
           name: APP_ROUTE.login.name,
@@ -73,7 +66,6 @@ GoRouter goRouter() {
               builder: (context, state) => SignUpScreen(),
             ),
           ]),
-
       GoRoute(
         path: '/',
         name: APP_ROUTE.home.name,

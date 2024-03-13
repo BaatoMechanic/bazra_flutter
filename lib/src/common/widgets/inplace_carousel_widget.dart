@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -62,7 +63,7 @@ class _CarouselWithIndicatorState extends State<InPlaceCarouselWidget> {
                         vertical: 8.0, horizontal: 4.0),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: (Theme.of(context).brightness == Brightness.dark
+                        color: (context.isDarkMode
                                 ? Colors.white
                                 : Colors.black)
                             .withOpacity(_current == entry.key ? 0.9 : 0.4)),

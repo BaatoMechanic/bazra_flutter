@@ -23,11 +23,11 @@ mixin _$ReviewAndRating {
   String get idx => throw _privateConstructorUsedError;
   String get review => throw _privateConstructorUsedError;
   double get rating => throw _privateConstructorUsedError;
-  @JsonKey(name: "reviewer_idx")
+  @JsonKey(name: "reviewer")
   String get reviewerIdx => throw _privateConstructorUsedError;
-  @JsonKey(name: "reviewed_idx")
+  @JsonKey(name: "reviewed")
   String get reviewedIdx => throw _privateConstructorUsedError;
-  @JsonKey(name: "repair_request_idx")
+  @JsonKey(name: "repair_request")
   String get repairRequestIdx => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -48,9 +48,9 @@ abstract class $ReviewAndRatingCopyWith<$Res> {
       {String idx,
       String review,
       double rating,
-      @JsonKey(name: "reviewer_idx") String reviewerIdx,
-      @JsonKey(name: "reviewed_idx") String reviewedIdx,
-      @JsonKey(name: "repair_request_idx") String repairRequestIdx,
+      @JsonKey(name: "reviewer") String reviewerIdx,
+      @JsonKey(name: "reviewed") String reviewedIdx,
+      @JsonKey(name: "repair_request") String repairRequestIdx,
       @JsonKey(name: "created_at") DateTime createdAt});
 }
 
@@ -120,9 +120,9 @@ abstract class _$$ReviewAndRatingImplCopyWith<$Res>
       {String idx,
       String review,
       double rating,
-      @JsonKey(name: "reviewer_idx") String reviewerIdx,
-      @JsonKey(name: "reviewed_idx") String reviewedIdx,
-      @JsonKey(name: "repair_request_idx") String repairRequestIdx,
+      @JsonKey(name: "reviewer") String reviewerIdx,
+      @JsonKey(name: "reviewed") String reviewedIdx,
+      @JsonKey(name: "repair_request") String repairRequestIdx,
       @JsonKey(name: "created_at") DateTime createdAt});
 }
 
@@ -185,9 +185,9 @@ class _$ReviewAndRatingImpl implements _ReviewAndRating {
       {required this.idx,
       required this.review,
       required this.rating,
-      @JsonKey(name: "reviewer_idx") required this.reviewerIdx,
-      @JsonKey(name: "reviewed_idx") required this.reviewedIdx,
-      @JsonKey(name: "repair_request_idx") required this.repairRequestIdx,
+      @JsonKey(name: "reviewer") required this.reviewerIdx,
+      @JsonKey(name: "reviewed") required this.reviewedIdx,
+      @JsonKey(name: "repair_request") required this.repairRequestIdx,
       @JsonKey(name: "created_at") required this.createdAt});
 
   factory _$ReviewAndRatingImpl.fromJson(Map<String, dynamic> json) =>
@@ -200,13 +200,13 @@ class _$ReviewAndRatingImpl implements _ReviewAndRating {
   @override
   final double rating;
   @override
-  @JsonKey(name: "reviewer_idx")
+  @JsonKey(name: "reviewer")
   final String reviewerIdx;
   @override
-  @JsonKey(name: "reviewed_idx")
+  @JsonKey(name: "reviewed")
   final String reviewedIdx;
   @override
-  @JsonKey(name: "repair_request_idx")
+  @JsonKey(name: "repair_request")
   final String repairRequestIdx;
   @override
   @JsonKey(name: "created_at")
@@ -257,15 +257,14 @@ class _$ReviewAndRatingImpl implements _ReviewAndRating {
 
 abstract class _ReviewAndRating implements ReviewAndRating {
   const factory _ReviewAndRating(
-          {required final String idx,
-          required final String review,
-          required final double rating,
-          @JsonKey(name: "reviewer_idx") required final String reviewerIdx,
-          @JsonKey(name: "reviewed_idx") required final String reviewedIdx,
-          @JsonKey(name: "repair_request_idx")
-          required final String repairRequestIdx,
-          @JsonKey(name: "created_at") required final DateTime createdAt}) =
-      _$ReviewAndRatingImpl;
+      {required final String idx,
+      required final String review,
+      required final double rating,
+      @JsonKey(name: "reviewer") required final String reviewerIdx,
+      @JsonKey(name: "reviewed") required final String reviewedIdx,
+      @JsonKey(name: "repair_request") required final String repairRequestIdx,
+      @JsonKey(name: "created_at")
+      required final DateTime createdAt}) = _$ReviewAndRatingImpl;
 
   factory _ReviewAndRating.fromJson(Map<String, dynamic> json) =
       _$ReviewAndRatingImpl.fromJson;
@@ -277,13 +276,13 @@ abstract class _ReviewAndRating implements ReviewAndRating {
   @override
   double get rating;
   @override
-  @JsonKey(name: "reviewer_idx")
+  @JsonKey(name: "reviewer")
   String get reviewerIdx;
   @override
-  @JsonKey(name: "reviewed_idx")
+  @JsonKey(name: "reviewed")
   String get reviewedIdx;
   @override
-  @JsonKey(name: "repair_request_idx")
+  @JsonKey(name: "repair_request")
   String get repairRequestIdx;
   @override
   @JsonKey(name: "created_at")

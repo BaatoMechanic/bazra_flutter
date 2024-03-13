@@ -33,7 +33,7 @@ class APIUserRepository extends UserRepository {
 
   @override
   Future<ReviewAndRating> rateAndReviewUser(Map<String, dynamic> body) async {
-    var url = Uri.parse('${RemoteManager.BASE_URI}autho/reviews/');
+    var url = Uri.parse('${RemoteManager.BASE_URI}vehicle-repair/reviews/');
     final response = await HttpHelper.guard(
         () => http.post(url,
             headers: {

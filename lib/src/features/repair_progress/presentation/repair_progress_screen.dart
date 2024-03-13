@@ -1,6 +1,10 @@
 import 'dart:async';
+import 'package:bato_mechanic/main.dart';
+import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/repair_steps_widget.dart';
+import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/enum_extensions.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -92,195 +96,255 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
 
     final routeValue = ref.watch(fetchMechanicRouteProvider);
 
-    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-
-    // return PopScope(
-    //   canPop: true,
-    //   onPopInvoked: (didPop) async {
-    //     if (mounted) {
-    //       if (widget.flipCardController != null) {
-    //         widget.flipCardController!.toggleCard();
-    //       }
-    //     }
-    //     return Future.value(false);
-    //   },
-    return WillPopScope(
-      onWillPop: () async {
-        if (mounted) {
-          if (widget.flipCardController != null) {
-            widget.flipCardController!.toggleCard();
-          }
-        }
-        return Future.value(false);
-      },
-      child: AsyncValueWidget(
-          value: repairRequestValue,
-          data: (repairRequest) {
-            return Scaffold(
-              appBar: AppBar(
-                title: const Center(child: Text('Track Mechanic')),
-              ),
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+    return AsyncValueWidget(
+        value: repairRequestValue,
+        data: (repairRequest) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Center(child: Text('Track Mechanic')),
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        if (repairRequest.assignedMechanicIdx != null)
+                          AsyncValueWidget(
+                            value: ref.watch(fetchMechanicInfoProvider(
+                                repairRequest.assignedMechanicIdx!)),
+                            data: (assignedMechanic) => Column(
+                              children: [
+                                TextButton(
+                                  onPressed: () => context.pushNamed(
+                                      APP_ROUTE.mechanicProfile.name,
+                                      extra: {
+                                        'mechanicIdx': assignedMechanic.idx
+                                      }),
+                                  style:
+                                      Theme.of(context).textButtonTheme.style,
+                                  child: Text(
+                                    assignedMechanic.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge!
+                                        .copyWith(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            backgroundColor:
+                                                ThemeColor.transparent),
+                                  ),
+                                ),
+                                if (repairRequest.status ==
+                                    VehicleRepairRequestStatus
+                                        .WAITING_FOR_MECHANIC)
+                                  Column(
+                                    children: [
+                                      const SizedBox(height: 4),
+                                      AsyncValueWidget(
+                                        value: ref.watch(
+                                            watchRepairRequestMechanicLocationProvider(
+                                                repairRequest.idx)),
+                                        data: (location) => Text(
+                                          location.locationName ??
+                                              "Place: Unknown".hardcoded(),
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                if (repairRequest.status ==
+                                    VehicleRepairRequestStatus
+                                        .WAITING_FOR_MECHANIC)
+                                  Column(
+                                    children: [
+                                      const SizedBox(height: 16),
+                                      AsyncValueWidget(
+                                        value: ref.watch(
+                                            watchRepairRequestMechanicLocationProvider(
+                                                repairRequest.idx)),
+                                        data: (location) => AnimatedContainer(
+                                          duration:
+                                              const Duration(milliseconds: 120),
+                                          height: _showBigScreenMap
+                                              ? MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.75
+                                              : 400,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20.0),
+                                            child: _showMechanicTrackMap(
+                                              context,
+                                              routeValue.value?[
+                                                      "routeCoordinates"] ??
+                                                  [],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
+                    if (repairRequest.status ==
+                        VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
                       Column(
                         children: [
-                          if (repairRequest.assignedMechanicIdx != null)
-                            AsyncValueWidget(
-                              value: ref.watch(fetchMechanicInfoProvider(
-                                  repairRequest.assignedMechanicIdx!)),
-                              data: (assignedMechanic) => Column(
-                                children: [
-                                  TextButton(
-                                    onPressed: () => context.pushNamed(
-                                        APP_ROUTE.mechanicProfile.name,
-                                        extra: {
-                                          'mechanicIdx': assignedMechanic.idx
-                                        }),
-                                    style:
-                                        Theme.of(context).textButtonTheme.style,
-                                    child: Text(
-                                      assignedMechanic.name,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineLarge!
-                                          .copyWith(
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.bold,
-                                              backgroundColor:
-                                                  ThemeColor.transparent),
+                          const SizedBox(height: 20),
+                          AsyncValueWidget(
+                            value: ref.watch(
+                                fetchRepairRequestServiceTypeProvider(
+                                    repairRequest.idx)),
+                            data: (service) => Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.amberAccent[200],
+                                    borderRadius: BorderRadius.circular(
+                                      20,
                                     ),
                                   ),
-                                  if (repairRequest.status ==
-                                      VehicleRepairRequestStatus
-                                          .WAITING_FOR_MECHANIC)
-                                    Column(
-                                      children: [
-                                        const SizedBox(height: 4),
-                                        AsyncValueWidget(
-                                          value: ref.watch(
-                                              watchRepairRequestMechanicLocationProvider(
-                                                  repairRequest.idx)),
-                                          data: (location) => Text(
-                                            location.locationName ??
-                                                "Place: Unknown".hardcoded(),
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
+                                  child: service.icon != null
+                                      ? Icon(service.icon)
+                                      : Image.asset(
+                                          'assets/images/parts/wheel.png',
                                         ),
-                                      ],
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                    text:
+                                        'Estimated Arrival Time: '.hardcoded(),
+                                    style: const TextStyle().copyWith(
+                                      color: context.isDarkMode
+                                          ? ThemeColor.white
+                                          : ThemeColor.black,
                                     ),
-                                  if (repairRequest.status ==
-                                      VehicleRepairRequestStatus
-                                          .WAITING_FOR_MECHANIC)
-                                    Column(
-                                      children: [
-                                        const SizedBox(height: 16),
-                                        AsyncValueWidget(
-                                          value: ref.watch(
-                                              watchRepairRequestMechanicLocationProvider(
-                                                  repairRequest.idx)),
-                                          data: (location) => AnimatedContainer(
-                                            duration: const Duration(
-                                                milliseconds: 120),
-                                            height: _showBigScreenMap
-                                                ? MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.75
-                                                : 400,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                              child: _showMechanicTrackMap(
-                                                context,
-                                                routeValue.value?[
-                                                        "routeCoordinates"] ??
-                                                    [],
-                                              ),
-                                            ),
-                                          ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: BaatoDateFormatter
+                                            .formatSecondsToGeneric(
+                                                routeValue.value?["duration"] ??
+                                                    -1),
+                                        style: const TextStyle(
+                                          color: ThemeColor.primary,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
                                         ),
-                                      ],
-                                    ),
-                                ],
-                              ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
+                          ),
                         ],
                       ),
-                      if (repairRequest.status ==
-                          VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
-                        Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            AsyncValueWidget(
-                              value: ref.watch(
-                                  fetchRepairRequestServiceTypeProvider(
-                                      repairRequest.idx)),
-                              data: (service) => Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                    ListTile(
+                      title: Text(
+                        repairRequest.title ?? "No title provided",
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                      subtitle: Text(
+                        repairRequest.description ?? "No description provided",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 8.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Status",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Flexible(
+                            child: Text(
+                              repairRequest.status.humanizeName,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: ThemeColor.primary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 8.0,
+                        ),
+                        child: (repairRequest.advancePaymentStatus !=
+                                    AdvancePaymentStatus.COMPLETE &&
+                                repairRequest.advanceCharge != null)
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    margin: const EdgeInsets.all(8),
-                                    padding: const EdgeInsets.all(8),
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.amberAccent[200],
-                                      borderRadius: BorderRadius.circular(
-                                        20,
-                                      ),
-                                    ),
-                                    child: service.icon != null
-                                        ? Icon(service.icon)
-                                        : Image.asset(
-                                            'assets/images/parts/wheel.png',
-                                          ),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'Estimated Arrival Time: '
-                                          .hardcoded(),
-                                      style: const TextStyle().copyWith(
-                                        color: isDarkTheme
-                                            ? ThemeColor.white
-                                            : ThemeColor.black,
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: BaatoDateFormatter
-                                              .formatSecondsToGeneric(routeValue
-                                                      .value?["duration"] ??
-                                                  -1),
-                                          style: const TextStyle(
-                                            color: ThemeColor.primary,
+                                  const Flexible(
+                                    flex: 4,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Mechanic baato karcha',
+                                          style: TextStyle(
+                                            fontSize: 16,
                                             fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Khaana included',
+                                          style: TextStyle(
                                             fontSize: 14,
                                           ),
                                         ),
                                       ],
                                     ),
-                                  )
+                                  ),
+                                  Flexible(
+                                    flex: 1,
+                                    child: Text(
+                                      'Rs. ${repairRequest.advanceCharge}',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: ThemeColor.primary,
+                                      ),
+                                    ),
+                                  ),
                                 ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ListTile(
-                        title: Text(
-                          repairRequest.title ?? "No title provided",
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ),
-                        subtitle: Text(
-                          repairRequest.description ??
-                              "No description provided",
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
+                              )
+                            : const SizedBox.shrink()),
+                    if (repairRequest.advancePaymentStatus ==
+                        AdvancePaymentStatus.PAYMENT_ON_ARRIVAL)
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16.0,
@@ -290,7 +354,7 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              "Status",
+                              "Baato Kharcha",
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 fontSize: 16,
@@ -299,7 +363,7 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                             ),
                             Flexible(
                               child: Text(
-                                repairRequest.status.humanizeName,
+                                repairRequest.advancePaymentStatus.humanizeName,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -310,192 +374,106 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                    const SizedBox(
+                      height: AppHeight.h12,
+                    ),
+                    if (repairRequest.status ==
+                        VehicleRepairRequestStatus.WAITING_FOR_ADVANCE_PAYMENT)
+                      ..._buildBaatoKharcha(context, repairRequest.idx)
+                    else if (repairRequest.status ==
+                        VehicleRepairRequestStatus.COMPLETE)
+                      SubmitButton(
+                        showSpinner: false,
+                        label: 'Review Mechanic'.hardcoded(),
+                        onPressed: () => context
+                            .pushNamed(APP_ROUTE.reviewMechanic.name, extra: {
+                          "repairRequestIdx": repairRequest.idx,
+                          "mechanicIdx": repairRequest.assignedMechanicIdx,
+                        }),
+                      )
+                    else if (repairRequest.status ==
+                        VehicleRepairRequestStatus.IN_PROGRESS)
                       Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                            vertical: 8.0,
-                          ),
-                          child: (repairRequest.advancePaymentStatus !=
-                                      AdvancePaymentStatus.COMPLETE &&
-                                  repairRequest.advanceCharge != null)
-                              ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Flexible(
-                                      flex: 4,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Mechanic baato karcha',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Khaana included',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Flexible(
-                                      flex: 1,
-                                      child: Text(
-                                        'Rs. ${repairRequest.advanceCharge}',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: ThemeColor.primary,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : const SizedBox.shrink()),
-                      if (repairRequest.advancePaymentStatus ==
-                          AdvancePaymentStatus.PAYMENT_ON_ARRIVAL)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                            vertical: 8.0,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Baato Kharcha",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  repairRequest
-                                      .advancePaymentStatus.humanizeName,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: ThemeColor.primary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 8.0,
                         ),
-                      const SizedBox(
-                        height: AppHeight.h12,
-                      ),
-                      if (repairRequest.status ==
-                          VehicleRepairRequestStatus
-                              .WAITING_FOR_ADVANCE_PAYMENT)
-                        ..._buildBaatoKharcha(context, repairRequest.idx)
-                      else if (repairRequest.status ==
-                          VehicleRepairRequestStatus.COMPLETE)
-                        SubmitButton(
-                          showSpinner: false,
-                          label: 'Review Mechanic'.hardcoded(),
-                          onPressed: () => context
-                              .pushNamed(APP_ROUTE.reviewMechanic.name, extra: {
-                            "repairRequestIdx": repairRequest.idx,
-                            "mechanicIdx": repairRequest.assignedMechanicIdx,
-                          }),
-                        )
-                      else if (repairRequest.status ==
-                          VehicleRepairRequestStatus.IN_PROGRESS)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                            vertical: 8.0,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Repair Steps".hardcoded(),
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Repair Steps".hardcoded(),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
-                              RepairStepsWidget(
-                                  repairRequestIdx: repairRequest.idx)
-                            ],
-                          ),
-                        )
-                    ],
-                  ),
-                ),
-              ),
-              bottomSheet: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPadding.p16,
-                ),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Consumer(builder: (context, ref, child) {
-                    final repairRequestValue = ref
-                        .watch(watchRepairRequestProvider(repairRequest.idx));
-                    return AsyncValueWidget(
-                      value: repairRequestValue,
-                      data: (repairRequest) => Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          if (repairRequest.status ==
-                              VehicleRepairRequestStatus
-                                  .WAITING_FOR_COMPLETION_ACCEPTANCE)
-                            SubmitButton(
-                              label: 'Complete the process'.hardcoded(),
-                              showSpinner: ref
-                                  .watch(repairProgressScreenControllerProvider)
-                                  .isLoading,
-                              onPressed: () async {
-                                if (await ref
-                                    .read(repairProgressScreenControllerProvider
-                                        .notifier)
-                                    .completeRepair(repairRequest.idx)) {
-                                  context.pushNamed(
-                                      APP_ROUTE.reviewMechanic.name,
-                                      extra: {
-                                        'repairRequestIdx': repairRequest.idx,
-                                        "mechanicIdx":
-                                            repairRequest.assignedMechanicIdx
-                                      });
-                                }
-                              },
                             ),
-                          if (repairRequest.status ==
-                              VehicleRepairRequestStatus.COMPLETE)
-                            ElevatedButton(
-                                child: Text('Review the mechanic'.hardcoded()),
-                                onPressed: () {
-                                  context.goNamed(APP_ROUTE.reviewMechanic.name,
-                                      extra: {
-                                        'repairRequestIdx': repairRequest.idx,
-                                        "mechanicIdx":
-                                            repairRequest.assignedMechanicIdx
-                                      });
-                                }),
-                        ],
-                      ),
-                    );
-                  }),
+                            RepairStepsWidget(
+                                repairRequestIdx: repairRequest.idx)
+                          ],
+                        ),
+                      )
+                  ],
                 ),
               ),
-            );
-          }),
-    );
+            ),
+            bottomSheet: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppPadding.p16,
+              ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Consumer(builder: (context, ref, child) {
+                  final repairRequestValue =
+                      ref.watch(watchRepairRequestProvider(repairRequest.idx));
+                  return AsyncValueWidget(
+                    value: repairRequestValue,
+                    data: (repairRequest) => Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (repairRequest.status ==
+                            VehicleRepairRequestStatus
+                                .WAITING_FOR_COMPLETION_ACCEPTANCE)
+                          SubmitButton(
+                            label: 'Complete the process'.hardcoded(),
+                            showSpinner: ref
+                                .watch(repairProgressScreenControllerProvider)
+                                .isLoading,
+                            onPressed: () async {
+                              if (await ref
+                                  .read(repairProgressScreenControllerProvider
+                                      .notifier)
+                                  .completeRepair(repairRequest.idx)) {
+                                context.pushNamed(APP_ROUTE.reviewMechanic.name,
+                                    extra: {
+                                      'repairRequestIdx': repairRequest.idx,
+                                      "mechanicIdx":
+                                          repairRequest.assignedMechanicIdx
+                                    });
+                              }
+                            },
+                          ),
+                        if (repairRequest.status ==
+                            VehicleRepairRequestStatus.COMPLETE)
+                          ElevatedButton(
+                              child: Text('Review the mechanic'.hardcoded()),
+                              onPressed: () {
+                                context.goNamed(APP_ROUTE.reviewMechanic.name,
+                                    extra: {
+                                      'repairRequestIdx': repairRequest.idx,
+                                      "mechanicIdx":
+                                          repairRequest.assignedMechanicIdx
+                                    });
+                              }),
+                      ],
+                    ),
+                  );
+                }),
+              ),
+            ),
+          );
+        });
   }
 
   List<Widget> _buildBaatoKharcha(

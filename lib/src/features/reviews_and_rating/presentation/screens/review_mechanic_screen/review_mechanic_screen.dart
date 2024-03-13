@@ -1,8 +1,11 @@
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/review_mechanic_screen/review_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
+import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -75,9 +78,7 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
                         ),
                       ),
                       if (mechanic.profilePic != null)
-                        Image.network(
-                          mechanic.profilePic!,
-                        )
+                        WidgetUtils.renderImage(mechanic.profilePic!)
                       else
                         Image.asset(
                           'assets/images/no-profile.png',
@@ -250,6 +251,8 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
           context,
           'Thank you for the review'.hardcoded(),
         );
+        // ref.read(flipControllerProvider).toggleCardWithoutAnimation();
+        ref.read(cardSideProvider.notifier).state = CardSide.FRONT;
         context.goNamed(APP_ROUTE.home.name);
       }
     }

@@ -27,6 +27,18 @@ import '../../../services/data/service_type_repository.dart';
 import '../../../repair_progress/presentation/repair_progress_screen.dart';
 import '../widget/service_buttons_grid.dart';
 
+// final flipControllerProvider = Provider<FlipCardController>((ref) {
+//   return FlipCardController();
+// });
+
+// final cardSideProvider = Provider<CardSide>((ref) {
+//   return CardSide.FRONT;
+// });
+
+final cardSideProvider = StateProvider<CardSide>((ref) {
+  return CardSide.FRONT;
+});
+
 class BuildHomeScreen extends ConsumerWidget {
   BuildHomeScreen({super.key});
   final controller = FlipCardController();
@@ -41,6 +53,7 @@ class BuildHomeScreen extends ConsumerWidget {
       speed: 300,
       direction: FlipDirection.HORIZONTAL,
       flipOnTouch: false,
+      side: ref.watch(cardSideProvider),
       controller: controller,
       front: HomeScreen(flipCardController: controller),
       back: activeRepair == null
@@ -181,7 +194,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     //   canPop: true,
     //   onPopInvoked: (didPop) => ToastHelper.onWillPopToast(context),
     return WillPopScope(
-      onWillPop: () => ToastHelper.onWillPopToast(context),
+      onWillPop: () {
+        if (widget.flipCardController.state?.isFront == false) {
+          widget.flipCardController.toggleCard();
+          return Future.value(false);
+        }
+        return ToastHelper.onWillPopToast(context);
+      },
       child: SafeArea(
         child: Scaffold(
           floatingActionButton:

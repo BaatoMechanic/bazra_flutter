@@ -1,8 +1,10 @@
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
+import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen.dart';
 import 'package:bato_mechanic/src/features/menu/presentation/widgets/menu_tile_section_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
+import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
@@ -17,8 +19,6 @@ class UserProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-
     final user = ref.watch(authStateNotifierProvider).user;
 
     List<MenuTile> infoTiles = [
@@ -28,7 +28,7 @@ class UserProfileScreen extends ConsumerWidget {
         trailingWidget: Text(
           user?.email ?? "No Email".hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
+                color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
               ),
         ),
       ),
@@ -38,7 +38,7 @@ class UserProfileScreen extends ConsumerWidget {
         trailingWidget: Text(
           user?.phone ?? "No phone".hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
+                color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
               ),
         ),
       ),
@@ -48,7 +48,7 @@ class UserProfileScreen extends ConsumerWidget {
         trailingWidget: Text(
           'Kathmandu'.hardcoded(),
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
+                color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
               ),
         ),
         isLast: true,
@@ -63,7 +63,7 @@ class UserProfileScreen extends ConsumerWidget {
           iconSize: FontSize.s20,
           icon: Icon(
             Icons.arrow_forward_ios_outlined,
-            color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
+            color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
           onPressed: () {},
         ),
@@ -75,7 +75,7 @@ class UserProfileScreen extends ConsumerWidget {
           iconSize: FontSize.s20,
           icon: Icon(
             Icons.arrow_forward_ios_outlined,
-            color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
+            color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
           onPressed: () => context.pushNamed(APP_ROUTE.confirmOldPassword.name),
         ),
@@ -88,7 +88,7 @@ class UserProfileScreen extends ConsumerWidget {
           iconSize: FontSize.s20,
           icon: Icon(
             Icons.arrow_forward_ios_outlined,
-            color: isDarkTheme ? ThemeColor.light : ThemeColor.dark,
+            color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
           onPressed: () {},
         ),

@@ -37,8 +37,8 @@ class MechanicService {
     Map<String, dynamic> body = {
       "rating": stars.toString(),
       "review": review,
-      "user": mechanicIdx,
-      "repair_request": repairRequestIdx,
+      "mechanic": mechanicIdx,
+      "repair_request_idx": repairRequestIdx,
     };
     return await ref.read(userRepositoryProvider).rateAndReviewUser(body);
   }

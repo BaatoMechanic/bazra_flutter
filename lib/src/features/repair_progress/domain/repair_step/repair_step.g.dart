@@ -33,6 +33,6 @@ Map<String, dynamic> _$$RepairStepImplToJson(_$RepairStepImpl instance) =>
 const _$RepairStepStatusEnumMap = {
   RepairStepStatus.PENDING: 'pending',
   RepairStepStatus.IN_PROGRESS: 'in_progress',
-  RepairStepStatus.COMPLETE: 'completed',
+  RepairStepStatus.COMPLETE: 'complete',
   RepairStepStatus.CANCELLED: 'cancelled',
 };

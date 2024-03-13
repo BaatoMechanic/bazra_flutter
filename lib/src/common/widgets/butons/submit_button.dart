@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/style_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 
 import '../../../utils/constants/managers/color_manager.dart';
 import '../../../utils/constants/managers/values_manager.dart';

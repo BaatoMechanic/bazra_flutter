@@ -27,16 +27,9 @@ import '../../../services/data/service_type_repository.dart';
 import '../../../repair_progress/presentation/repair_progress_screen.dart';
 import '../widget/service_buttons_grid.dart';
 
-// final flipControllerProvider = Provider<FlipCardController>((ref) {
-//   return FlipCardController();
-// });
-
-// final cardSideProvider = Provider<CardSide>((ref) {
-//   return CardSide.FRONT;
-// });
-
-final cardSideProvider = StateProvider<CardSide>((ref) {
-  return CardSide.FRONT;
+final flipControllerProvider = Provider<FlipCardController>((ref) {
+  // Everything works properly without this for home screen and repair progress screen (uncomment the controllers). But what if we need to flip home screen from another page? Like from review mechanic screen which is accessed from repair progress screen. So when we navigate to home screen from there we go to repair progress screen. so with this approach first we flip to home screen and then navigate.
+  return FlipCardController();
 });
 
 class BuildHomeScreen extends ConsumerWidget {
@@ -53,14 +46,16 @@ class BuildHomeScreen extends ConsumerWidget {
       speed: 300,
       direction: FlipDirection.HORIZONTAL,
       flipOnTouch: false,
-      side: ref.watch(cardSideProvider),
-      controller: controller,
-      front: HomeScreen(flipCardController: controller),
+      // controller: controller,
+      controller: ref.watch(flipControllerProvider),
+      // front: HomeScreen(flipCardController: controller),
+      front: HomeScreen(flipCardController: ref.watch(flipControllerProvider)),
       back: activeRepair == null
           ? Container()
           : RepairProgressScreen(
               repairRequestIdx: activeRepair.idx,
-              flipCardController: controller),
+              // flipCardController: controller),
+              flipCardController: ref.watch(flipControllerProvider)),
     );
   }
 }

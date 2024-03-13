@@ -1,4 +1,3 @@
-import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
 import 'package:flutter/material.dart';
 
 class HelperFunctions {

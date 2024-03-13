@@ -1,7 +1,6 @@
 import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step_report.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
 import 'package:flutter/material.dart';

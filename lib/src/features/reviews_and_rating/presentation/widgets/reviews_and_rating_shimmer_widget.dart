@@ -2,7 +2,6 @@
 import 'package:bato_mechanic/src/common/widgets/shimmer_widget.dart';
 import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
-import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';

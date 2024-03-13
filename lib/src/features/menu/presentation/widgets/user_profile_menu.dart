@@ -4,7 +4,6 @@ import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
-import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
 import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,6 @@ import 'menu_tile_section_widget.dart';
 import 'menu_tile_widget.dart';
 import '../../../../utils/constants/managers/color_manager.dart';
 import '../../../../utils/constants/managers/values_manager.dart';
-import '../../../../utils/helpers/helper_functions.dart';
 
 class UserProfileMenu extends ConsumerWidget {
   const UserProfileMenu({super.key});

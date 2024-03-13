@@ -63,7 +63,7 @@ class RepairStepBottomSheet extends ConsumerWidget {
 
             const SizedBox(height: AppHeight.h4),
             Text(
-              'Status: ${HelperFunctions.humanizeString(step.status.name).capitalize()}',
+              'Status: ${step.status.name.humanizeUnderscores().capitalize()}',
               style: Theme.of(context).textTheme.titleSmall,
             ),
             const SizedBox(height: AppHeight.h16),
@@ -119,7 +119,7 @@ class RepairStepBottomSheet extends ConsumerWidget {
 Widget _buildReport(RepairStepReport report) {
   return Row(
     children: [
-      Text(HelperFunctions.humanizeString("Bill images").capitalize()),
+      Text("Bill images".humanizeUnderscores().capitalize()),
       Expanded(
         child: SingleChildScrollView(
           child: Row(

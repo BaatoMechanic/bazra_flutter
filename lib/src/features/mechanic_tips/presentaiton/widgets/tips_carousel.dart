@@ -1,6 +1,7 @@
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
+import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
@@ -46,8 +47,8 @@ class TipsCarousel extends StatelessWidget {
                           'mechanicIdx': item.mechanic.idx,
                         }),
                         // child: Image.network(item.mechanic.idx)
-                        child: HelperFunctions.renderImage(
-                            item.mechanic.profilePic!),
+                        child:
+                            WidgetUtils.renderImage(item.mechanic.profilePic!),
                       )
                     : Image.asset(
                         "assets/images/no-profile.png",

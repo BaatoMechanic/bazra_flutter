@@ -6,6 +6,7 @@ import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/vehicle_category/presentation/vehicle_category_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
+import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -63,7 +64,7 @@ class VehicleCategoryScreen extends ConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                HelperFunctions.renderImage(
+                                WidgetUtils.renderImage(
                                   vehicleCategories[index].image,
                                   width: 150,
                                 ),

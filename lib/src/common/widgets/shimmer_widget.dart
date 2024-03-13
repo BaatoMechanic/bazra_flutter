@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -30,18 +31,17 @@ class ShimmerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme = HelperFunctions.isDarkMode(context);
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppPadding.p2),
       child: Shimmer.fromColors(
-        baseColor: isDarkTheme ? ThemeColor.darkGrey : ThemeColor.grey,
-        highlightColor: isDarkTheme ? ThemeColor.grey : ThemeColor.lightGrey,
+        baseColor: context.isDarkMode ? ThemeColor.darkGrey : ThemeColor.grey,
+        highlightColor:
+            context.isDarkMode ? ThemeColor.grey : ThemeColor.lightGrey,
         child: Container(
           width: width,
           height: height,
           decoration: ShapeDecoration(
-            color: isDarkTheme ? ThemeColor.grey : ThemeColor.lightGrey,
+            color: context.isDarkMode ? ThemeColor.grey : ThemeColor.lightGrey,
             shape: shapeBorder,
           ),
         ),

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/common/widgets/shimmer_widget.dart';
+import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -61,13 +62,13 @@ class ReviewsAndRatingShimmerWidget extends ConsumerWidget {
             height: AppHeight.h8,
           ),
           ShimmerWidget.roundedRectangular(
-            width: HelperFunctions.screenWidth(context) * 0.7,
+            width: DeviceUtils.getScreenWidth(context) * 0.7,
           ),
           ShimmerWidget.roundedRectangular(
-            width: HelperFunctions.screenWidth(context) * 0.7,
+            width: DeviceUtils.getScreenWidth(context) * 0.7,
           ),
           ShimmerWidget.roundedRectangular(
-            width: HelperFunctions.screenWidth(context) * 0.7,
+            width: DeviceUtils.getScreenWidth(context) * 0.7,
           ),
         ],
       ),

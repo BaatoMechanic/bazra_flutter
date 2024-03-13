@@ -8,6 +8,7 @@ import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
+import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -192,7 +193,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             ),
           CurrentLocationLayer(),
           if (ref.watch(searchMapWidgetControllerProvider).value.isLoading)
-            HelperFunctions.loadingInidicator(context),
+            WidgetUtils.loadingInidicator(context),
         ],
       );
     });
@@ -218,7 +219,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   const MaterialStatePropertyAll<Color>(ThemeColor.light),
               trailing: [
                 state.value.isLoading
-                    ? HelperFunctions.loadingInidicator(
+                    ? WidgetUtils.loadingInidicator(
                         context,
                         radius: AppHeight.h20,
                       )

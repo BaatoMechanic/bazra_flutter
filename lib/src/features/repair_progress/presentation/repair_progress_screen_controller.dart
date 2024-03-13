@@ -1,24 +1,25 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:bato_mechanic/src/features/repair_progress/data/repair_step_repository.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
+import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../utils/enums/repair_setp_status.dart';
-import '../application/repair_step_service.dart';
-import '../domain/repair_step/repair_step.dart';
+import '../domain/repair_step.dart';
+part 'repair_progress_screen_controller.g.dart';
 
-class RepairProgressScreenController extends StateNotifier<AsyncValue<void>> {
-  RepairProgressScreenController({required this.ref})
-      : super(const AsyncValue.data(null));
-  final Ref ref;
-
-  // final StreamController<UserPosition> mechanicPositionStreamController =
-  //     StreamController<UserPosition>();
+@riverpod
+class RepairProgressScreenController extends _$RepairProgressScreenController {
+  @override
+  FutureOr<void> build() {
+    // pass
+  }
 
   Future<void> initializeLocation() async {
     bool serviceEnabled;
@@ -128,11 +129,11 @@ class RepairProgressScreenController extends StateNotifier<AsyncValue<void>> {
     return 0;
   }
 
-  Future<bool> setAdvancePaymentOnArrival(String repairStepIdx) async {
+  Future<bool> setAdvancePaymentOnArrival(String repairRequestIdx) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() => ref
-            .read(repairRequestServiceProvider)
-            .updateVehicleRepairRequest(repairStepIdx, {
+            .read(repairRequestRepositoryProvider)
+            .updateRepairRequest(repairRequestIdx, {
           "advance_payment_status":
               AdvancePaymentStatus.PAYMENT_ON_ARRIVAL.name.toLowerCase(),
           "status": VehicleRepairRequestStatus.WAITING_FOR_MECHANIC.name
@@ -142,25 +143,27 @@ class RepairProgressScreenController extends StateNotifier<AsyncValue<void>> {
   }
 
   Future<List<RepairStep>> fetchRepairSteps(String repairRequestIdx) async {
-    state = await AsyncValue.guard(() =>
-        ref.read(repairStepServiceProvider).fetchRepairSteps(repairRequestIdx));
+    state = await AsyncValue.guard(() => ref
+        .read(repairStepRepositoryProvider)
+        .fetchRepairSteps(repairRequestIdx));
 
     return state.value as List<RepairStep>;
   }
 
   Future<bool> updateRepairStepStatus(String repairRequest,
       String repairStepIdx, RepairStepStatus status) async {
+    String statusName = status.name.toLowerCase().replaceAll(" ", "_");
     state = await AsyncValue.guard(() => ref
-        .read(repairStepServiceProvider)
-        .updateRepairStepStatus(repairRequest, repairStepIdx, status));
+        .read(repairStepRepositoryProvider)
+        .updateRepairStepStatus(repairRequest, repairStepIdx, statusName));
     return !state.hasError;
   }
 
-  Future<bool> completeRepair(String repairStepIdx) async {
+  Future<bool> completeRepair(String repairRequestIdx) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() => ref
-        .read(repairRequestServiceProvider)
-        .updateVehicleRepairRequest(repairStepIdx,
+        .read(repairRequestRepositoryProvider)
+        .updateRepairRequest(repairRequestIdx,
             {"status": RepairStepStatus.COMPLETE.name.toLowerCase()}));
     return !state.hasError;
   }
@@ -183,14 +186,9 @@ double calculateHaversineDistance(
   return earthRadius * c;
 }
 
-final repairProgressScreenControllerProvider =
-    StateNotifierProvider.autoDispose<RepairProgressScreenController,
-        AsyncValue<void>>((ref) => RepairProgressScreenController(ref: ref));
-
-final fetchRepairStepsProvider = FutureProvider.autoDispose
-    .family<List<RepairStep>, String>((ref, repairStepIdx) {
-  return ref
-      // .watch(repairProgressScreenControllerProvider.notifier)
-      .watch(repairProgressScreenControllerProvider.notifier)
-      .fetchRepairSteps(repairStepIdx);
-});
+@riverpod
+Future<List<RepairStep>> fetchRepairSteps(
+        FetchRepairStepsRef ref, String repairStepIdx) =>
+    ref
+        .watch(repairProgressScreenControllerProvider.notifier)
+        .fetchRepairSteps(repairStepIdx);

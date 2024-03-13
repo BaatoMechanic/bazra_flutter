@@ -38,6 +38,8 @@ mixin _$VehicleRepairRequest {
   @JsonKey(name: "advance_payment_status")
   AdvancePaymentStatus get advancePaymentStatus =>
       throw _privateConstructorUsedError;
+  @JsonKey(name: "advance_charge")
+  double? get advanceCharge => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   DateTime get createdAt => throw _privateConstructorUsedError;
 
@@ -66,6 +68,7 @@ abstract class $VehicleRepairRequestCopyWith<$Res> {
       VehicleRepairRequestStatus status,
       @JsonKey(name: "advance_payment_status")
       AdvancePaymentStatus advancePaymentStatus,
+      @JsonKey(name: "advance_charge") double? advanceCharge,
       @JsonKey(name: "created_at") DateTime createdAt});
 }
 
@@ -94,6 +97,7 @@ class _$VehicleRepairRequestCopyWithImpl<$Res,
     Object? location = freezed,
     Object? status = null,
     Object? advancePaymentStatus = null,
+    Object? advanceCharge = freezed,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -141,6 +145,10 @@ class _$VehicleRepairRequestCopyWithImpl<$Res,
           ? _value.advancePaymentStatus
           : advancePaymentStatus // ignore: cast_nullable_to_non_nullable
               as AdvancePaymentStatus,
+      advanceCharge: freezed == advanceCharge
+          ? _value.advanceCharge
+          : advanceCharge // ignore: cast_nullable_to_non_nullable
+              as double?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -170,6 +178,7 @@ abstract class _$$VehicleRepairRequestImplCopyWith<$Res>
       VehicleRepairRequestStatus status,
       @JsonKey(name: "advance_payment_status")
       AdvancePaymentStatus advancePaymentStatus,
+      @JsonKey(name: "advance_charge") double? advanceCharge,
       @JsonKey(name: "created_at") DateTime createdAt});
 }
 
@@ -195,6 +204,7 @@ class __$$VehicleRepairRequestImplCopyWithImpl<$Res>
     Object? location = freezed,
     Object? status = null,
     Object? advancePaymentStatus = null,
+    Object? advanceCharge = freezed,
     Object? createdAt = null,
   }) {
     return _then(_$VehicleRepairRequestImpl(
@@ -242,6 +252,10 @@ class __$$VehicleRepairRequestImplCopyWithImpl<$Res>
           ? _value.advancePaymentStatus
           : advancePaymentStatus // ignore: cast_nullable_to_non_nullable
               as AdvancePaymentStatus,
+      advanceCharge: freezed == advanceCharge
+          ? _value.advanceCharge
+          : advanceCharge // ignore: cast_nullable_to_non_nullable
+              as double?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -266,6 +280,7 @@ class _$VehicleRepairRequestImpl implements _VehicleRepairRequest {
       required this.status,
       @JsonKey(name: "advance_payment_status")
       required this.advancePaymentStatus,
+      @JsonKey(name: "advance_charge") required this.advanceCharge,
       @JsonKey(name: "created_at") required this.createdAt})
       : _location = location;
 
@@ -309,12 +324,15 @@ class _$VehicleRepairRequestImpl implements _VehicleRepairRequest {
   @JsonKey(name: "advance_payment_status")
   final AdvancePaymentStatus advancePaymentStatus;
   @override
+  @JsonKey(name: "advance_charge")
+  final double? advanceCharge;
+  @override
   @JsonKey(name: "created_at")
   final DateTime createdAt;
 
   @override
   String toString() {
-    return 'VehicleRepairRequest(idx: $idx, title: $title, description: $description, userIdx: $userIdx, vehicleCategoryIdx: $vehicleCategoryIdx, serviceTypeIdx: $serviceTypeIdx, preferredMechanicIdx: $preferredMechanicIdx, assignedMechanicIdx: $assignedMechanicIdx, location: $location, status: $status, advancePaymentStatus: $advancePaymentStatus, createdAt: $createdAt)';
+    return 'VehicleRepairRequest(idx: $idx, title: $title, description: $description, userIdx: $userIdx, vehicleCategoryIdx: $vehicleCategoryIdx, serviceTypeIdx: $serviceTypeIdx, preferredMechanicIdx: $preferredMechanicIdx, assignedMechanicIdx: $assignedMechanicIdx, location: $location, status: $status, advancePaymentStatus: $advancePaymentStatus, advanceCharge: $advanceCharge, createdAt: $createdAt)';
   }
 
   @override
@@ -339,6 +357,8 @@ class _$VehicleRepairRequestImpl implements _VehicleRepairRequest {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.advancePaymentStatus, advancePaymentStatus) ||
                 other.advancePaymentStatus == advancePaymentStatus) &&
+            (identical(other.advanceCharge, advanceCharge) ||
+                other.advanceCharge == advanceCharge) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
@@ -358,6 +378,7 @@ class _$VehicleRepairRequestImpl implements _VehicleRepairRequest {
       const DeepCollectionEquality().hash(_location),
       status,
       advancePaymentStatus,
+      advanceCharge,
       createdAt);
 
   @JsonKey(ignore: true)
@@ -392,6 +413,7 @@ abstract class _VehicleRepairRequest implements VehicleRepairRequest {
       required final VehicleRepairRequestStatus status,
       @JsonKey(name: "advance_payment_status")
       required final AdvancePaymentStatus advancePaymentStatus,
+      @JsonKey(name: "advance_charge") required final double? advanceCharge,
       @JsonKey(name: "created_at")
       required final DateTime createdAt}) = _$VehicleRepairRequestImpl;
 
@@ -426,6 +448,9 @@ abstract class _VehicleRepairRequest implements VehicleRepairRequest {
   @override
   @JsonKey(name: "advance_payment_status")
   AdvancePaymentStatus get advancePaymentStatus;
+  @override
+  @JsonKey(name: "advance_charge")
+  double? get advanceCharge;
   @override
   @JsonKey(name: "created_at")
   DateTime get createdAt;

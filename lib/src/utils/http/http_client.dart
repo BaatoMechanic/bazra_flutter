@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/features/common/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/logging/logger.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -21,8 +21,8 @@ class HttpHelper {
 
       if (response.statusCode == 401) {
         logger.e("Unauthorized request");
-        String code = jsonDecode(response.body)['code'];
-        if (code == 'token_not_valid'.hardcoded()) {
+        String? code = jsonDecode(response.body)['code'];
+        if (code != null && code == 'token_not_valid'.hardcoded()) {
           String? refreshToken =
               ref.read(sharedPreferencesProvider).getString('refresh');
           if (refreshToken == null) {
@@ -54,19 +54,9 @@ class HttpHelper {
     } on HttpException {
       logger.e("Http error");
       throw HttpError(stackTrace: StackTrace.current);
-      // return Failure(
-      //   code: HttpStatus.httpVersionNotSupported,
-      //   stackTrace: StackTrace.current,
-      //   errorResponse: ApiStrings.httpErrorString,
-      // );
     } on FormatException {
       logger.e("Format error");
       throw FormatError(stackTrace: StackTrace.current);
-      // return Failure(
-      //   code: HttpStatus.unprocessableEntity,
-      //   stackTrace: StackTrace.current,
-      //   errorResponse: ApiStrings.invalidFormatString,
-      // );
     } catch (exp, st) {
       if (exp is BaseException) {
         logger.e(exp.message);
@@ -109,7 +99,7 @@ class HttpHelper {
     }
 
     throw BaseException(
-      message: message,
+      message: message ?? response.reasonPhrase,
       statusCode: response.statusCode,
       stackTrace: StackTrace.current,
     );

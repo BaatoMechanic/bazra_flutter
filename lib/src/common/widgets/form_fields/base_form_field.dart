@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -105,8 +104,8 @@ class BaseFormField extends StatelessWidget {
                   autovalidateMode:
                       autovalidateMode ?? AutovalidateMode.onUserInteraction,
                   validator: (value) => validator(value),
-                  style:
-                      textStyle ?? const TextStyle().copyWith(color: ThemeColor.dark),
+                  style: textStyle ??
+                      const TextStyle().copyWith(color: ThemeColor.dark),
                   textInputAction: nextFocusNode == null
                       ? TextInputAction.done
                       : TextInputAction.next,
@@ -118,7 +117,6 @@ class BaseFormField extends StatelessWidget {
                       horizontal: AppPadding.p12,
                       vertical: AppPadding.p0,
                     ),
-                    // labelStyle: labelStyle,
                   ),
                   onFieldSubmitted: (_) {
                     if (nextFocusNode != null) {

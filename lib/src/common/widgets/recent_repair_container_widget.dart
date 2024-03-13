@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
@@ -83,7 +82,6 @@ class RecentRepairContainerWidget extends StatelessWidget {
                         color: ThemeColor.dark,
                       ),
                       Text(
-                        // '18th November, 2022'.hardcoded(),
                         BaatoDateFormatter.humanizeDateTime(
                             repairRequest.createdAt),
                         style: Theme.of(context)

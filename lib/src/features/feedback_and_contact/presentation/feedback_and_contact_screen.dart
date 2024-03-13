@@ -50,9 +50,7 @@ class FeedbackContactScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32.0),
             ElevatedButton(
-              onPressed: () {
-                // Handle form submission
-              },
+              onPressed: () {},
               child: const Text('Submit'),
             ),
             const SizedBox(height: 16.0),

@@ -31,21 +31,7 @@ class VehicleDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  // Text(
-                  //   'Type: ${vehicle.type}',
-                  //   style: TextStyle(
-                  //     fontSize: 16,
-                  //     color: Colors.grey[600],
-                  //   ),
-                  // ),
                   const SizedBox(height: 8),
-                  // Text(
-                  //   'Tagline: ${vehicle.tagLine}',
-                  //   style: TextStyle(
-                  //     fontSize: 16,
-                  //     color: Colors.grey[600],
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -78,7 +64,6 @@ class VehicleDetailsScreen extends StatelessWidget {
                   buildBulletPoint('Specification 1'),
                   buildBulletPoint('Specification 2'),
                   buildBulletPoint('Specification 3'),
-                  // Add more specifications as needed
                 ],
               ),
             ),
@@ -101,7 +86,6 @@ class VehicleDetailsScreen extends StatelessWidget {
                   buildBulletPoint('Problem 1'),
                   buildBulletPoint('Problem 2'),
                   buildBulletPoint('Problem 3'),
-                  // Add more common problems as needed
                 ],
               ),
             ),
@@ -124,7 +108,6 @@ class VehicleDetailsScreen extends StatelessWidget {
                   buildBulletPoint('Maintenance Tip 1'),
                   buildBulletPoint('Maintenance Tip 2'),
                   buildBulletPoint('Maintenance Tip 3'),
-                  // Add more maintenance tips as needed
                 ],
               ),
             ),
@@ -148,7 +131,6 @@ class VehicleDetailsScreen extends StatelessWidget {
                       'Answer to Frequently Asked Question 1'),
                   buildFAQ('Frequently Asked Question 2',
                       'Answer to Frequently Asked Question 2'),
-                  // Add more FAQs as needed
                 ],
               ),
             ),

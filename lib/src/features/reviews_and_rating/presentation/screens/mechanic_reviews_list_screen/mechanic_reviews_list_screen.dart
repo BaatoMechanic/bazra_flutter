@@ -1,6 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/features/reviews_and_rating/application/reviews_and_rating_service.dart';
+import 'package:bato_mechanic/src/features/reviews_and_rating/data/reviews_and_rating_repository.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/reviews_and_rating_shimmer_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +17,6 @@ class MechanicReviewsListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ref.listen(mechanicProfileScreenControllerProvider,
-    //     (previous, state) => state.showError(context));
-
     final reviewsValue = ref.watch(fetchMechanicReviewsProvider(mechanicIdx));
 
     return SafeArea(

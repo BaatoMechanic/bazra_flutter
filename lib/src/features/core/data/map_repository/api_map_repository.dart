@@ -1,4 +1,3 @@
-
 import 'package:bato_mechanic/src/features/core/data/map_repository/map_repository.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/api_values_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,7 +25,6 @@ class APIMapRepository implements MapRepository {
   }
 
   @override
-  // Future<List<LatLng>> getRoute(
   Future<Map<String, dynamic>> getRoute(
       LatLng sourcePoint, LatLng destinationPoint) async {
     var url = Uri.parse(
@@ -34,7 +32,6 @@ class APIMapRepository implements MapRepository {
 
     final response = await HttpHelper.guard(() => http.get(url), ref);
     var listOfCoordinatePoints = [];
-    // data['routes'][0]["legs"][0]["steps"][0]['geometry'];
     for (var i = 0; i < response['routes'][0]["legs"][0]["steps"].length; i++) {
       var innerList = response['routes'][0]["legs"][0]["steps"][i]['geometry'];
       listOfCoordinatePoints.addAll(innerList);

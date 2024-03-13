@@ -91,38 +91,4 @@ class BaatoInputDecorationTheme {
       borderSide: const BorderSide(width: 1.3, color: ThemeColor.error),
     ),
   );
-
-  // static InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
-  //   errorMaxLines: 2,
-  //   prefixIconColor: ThemeColor.darkGrey,
-  //   suffixIconColor: ThemeColor.darkGrey,
-  //   // constraints: const BoxConstraints.expand(height: TSizes.inputFieldHeight),
-  //   labelStyle: const TextStyle()
-  //       .copyWith(fontSize: FontSize.s16, color: ThemeColor.white),
-  //   hintStyle: const TextStyle()
-  //       // .copyWith(fontSize: FontSize.s14, color: ThemeColor.white),
-  //       .copyWith(fontSize: FontSize.s14, color: ThemeColor.error),
-  //   floatingLabelStyle:
-  //       const TextStyle().copyWith(color: ThemeColor.white.withOpacity(0.8)),
-  //   border: const OutlineInputBorder().copyWith(
-  //     borderRadius: BorderRadius.circular(DefaultManager.inputFieldRadius),
-  //     borderSide: const BorderSide(width: 1, color: ThemeColor.darkGrey),
-  //   ),
-  //   enabledBorder: const OutlineInputBorder().copyWith(
-  //     borderRadius: BorderRadius.circular(DefaultManager.inputFieldRadius),
-  //     borderSide: const BorderSide(width: 1, color: ThemeColor.darkGrey),
-  //   ),
-  //   focusedBorder: const OutlineInputBorder().copyWith(
-  //     borderRadius: BorderRadius.circular(DefaultManager.inputFieldRadius),
-  //     borderSide: const BorderSide(width: 1, color: ThemeColor.white),
-  //   ),
-  //   errorBorder: const OutlineInputBorder().copyWith(
-  //     borderRadius: BorderRadius.circular(DefaultManager.inputFieldRadius),
-  //     borderSide: const BorderSide(width: 1, color: ThemeColor.warning),
-  //   ),
-  //   focusedErrorBorder: const OutlineInputBorder().copyWith(
-  //     borderRadius: BorderRadius.circular(DefaultManager.inputFieldRadius),
-  //     borderSide: const BorderSide(width: 2, color: ThemeColor.warning),
-  //   ),
-  // );
 }

@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step/repair_step.dart';
+import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
 import 'package:bato_mechanic/src/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../../../../../common/core/repositories/user_settings_repository.dart';
+import '../../../../common/repositories/user_settings_repository.dart';
 import '../../../../../utils/constants/managers/api_values_manager.dart';
 import '../../../../../utils/constants/managers/values_manager.dart';
 import 'repair_request_repository.dart';
@@ -68,14 +68,12 @@ class APIRepairRequestRepository implements RepairRequestRepository {
     for (var i = 0; i < images.length; i++) {
       var pic = await http.MultipartFile.fromPath(
         'images',
-        // 'image ${i + 1}',
         images[i].path,
       );
       request.files.add(pic);
     }
 
     request.headers.addAll({
-      // HttpHeaders.authorizationHeader: "SL " + loggedinSession.accessToken,
       HttpHeaders.authorizationHeader:
           'BM ${ref.read(sharedPreferencesProvider).getString('access')!}',
       "Accept": "application/json; charset=utf-8",
@@ -84,11 +82,6 @@ class APIRepairRequestRepository implements RepairRequestRepository {
     });
 
     var response = await request.send();
-
-    //Get the response from the server
-    // var responseData = await response.stream.toBytes();
-
-    // var responseBody = String.fromCharCodes(responseData);
 
     if (response.statusCode == ApiStatusCode.responseCreated) {
       return await fetchVechicleRepairRequest(repairRequestId);
@@ -109,7 +102,7 @@ class APIRepairRequestRepository implements RepairRequestRepository {
     final response = await HttpHelper.guard(
         () => http.get(url, headers: {
               HttpHeaders.authorizationHeader:
-                  "BM ${ref.read(sharedPreferencesProvider).getString('access')!}",
+                  "BM ${ref.read(sharedPreferencesProvider).getString('access')}",
             }),
         ref);
     return vehicleRepairRequestsFromJson(response);
@@ -130,7 +123,7 @@ class APIRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
-  Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequest() async {
+  Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequests() async {
     var url = Uri.parse(
         '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/user_recent_repair_requests/');
 

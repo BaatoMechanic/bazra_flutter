@@ -1,26 +1,23 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class LoginScreenController extends StateNotifier<AsyncValue<void>> {
-  LoginScreenController(
-    this.ref,
-  ) : super(const AsyncValue.data(null));
+part 'login_screen_controller.g.dart';
 
-  final Ref ref;
+@riverpod
+class LoginScreenController extends _$LoginScreenController {
+  bool _mounted = true;
+
+  @override
+  FutureOr<void> build() {
+    ref.onDispose(() => _mounted = false);
+  }
 
   Future<bool> signInWithIdAndPassword(String uId, String password) async {
     state = const AsyncValue.loading();
-    if (mounted) {
+    if (_mounted) {
       state = await AsyncValue.guard(() =>
           ref.read(authServiceProvider).signInWithIdAndPassword(uId, password));
     }
     return !state.hasError;
   }
 }
-
-final loginScreenControllerProvider =
-    StateNotifierProvider.autoDispose<LoginScreenController, AsyncValue<void>>(
-        (ref) {
-  return LoginScreenController(ref);
-});

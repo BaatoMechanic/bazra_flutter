@@ -4,29 +4,17 @@ import 'package:bato_mechanic/src/features/core/domain/user_position/user_positi
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/features/repair_progress/data/track_mechanic_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../utils/constants/managers/api_values_manager.dart';
+part 'api_track_mechanic_repository.g.dart';
 
-class APITrackMechanicRepository implements TrackMechanicRepository {
-  // @override
-  // Stream<dynamic> watchUsersLocation(String repairRequestId) async {
-  //   var url = Uri.parse(
-  //       "${RemoteManager.WEB_SOCKET_BASE_URI}repair_userslocation/$repairRequestId");
-  //   final channel = WebSocketChannel.connect(url);
+class APITrackMechanicRepository implements TrackMechanicRepository {}
 
-  //   await channel.ready;
-
-  //   channel.stream.listen((message) {
-  //     print(message);
-  //     channel.sink.add('received!');
-  //     channel.sink.close(status.goingAway);
-  //   });
-  // }
-}
-
-final watchRepairRequestProvider = StreamProvider.autoDispose
-    .family<VehicleRepairRequest, String>((ref, repairRequestIdx) async* {
+@riverpod
+Stream<VehicleRepairRequest> watchRepairRequest(
+    WatchRepairRequestRef ref, String repairRequestIdx) async* {
   var url = Uri.parse(
       "${RemoteManager.WEB_SOCKET_BASE_URI}repair-request/$repairRequestIdx");
   final channel = WebSocketChannel.connect(url);
@@ -43,10 +31,11 @@ final watchRepairRequestProvider = StreamProvider.autoDispose
       yield VehicleRepairRequest.fromJson(jsonDecode(value));
     }
   }
-});
+}
 
-final watchRepairRequestMechanicLocationProvider = StreamProvider.autoDispose
-    .family<UserPosition, String>((ref, repairRequestIdx) async* {
+@riverpod
+Stream<UserPosition> watchRepairRequestMechanicLocation(
+    WatchRepairRequestMechanicLocationRef ref, String repairRequestIdx) async* {
   var url = Uri.parse(
       "${RemoteManager.WEB_SOCKET_BASE_URI}repair-request-mechanic-location/$repairRequestIdx");
   final channel = WebSocketChannel.connect(url);
@@ -55,13 +44,6 @@ final watchRepairRequestMechanicLocationProvider = StreamProvider.autoDispose
 
   await for (final value in channel.stream) {
     final Map<String, dynamic> locations = jsonDecode(value);
-    // final UserPosition userLocation =
-    //     UserPosition.fromJson(jsonEncode(locations['user_location']));
     yield UserPosition.fromJson(locations['mechanic_location']);
-
-    // yield {
-    //   'user_location': userLocation,
-    //   'mechanic_location': mechanicLocation
-    // };
   }
-});
+}

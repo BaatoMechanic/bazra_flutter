@@ -164,32 +164,4 @@ class BaatoTextTheme {
       color: ThemeColor.light.withOpacity(0.5),
     ),
   );
-  // static TextTheme darkTextTheme = TextTheme(
-  //   headlineLarge: const TextStyle().copyWith(
-  //       fontSize: 32.0, fontWeight: FontWeight.bold, color: ThemeColor.light),
-  //   headlineMedium: const TextStyle().copyWith(
-  //       fontSize: 24.0, fontWeight: FontWeight.w600, color: ThemeColor.light),
-  //   headlineSmall: const TextStyle().copyWith(
-  //       fontSize: 18.0, fontWeight: FontWeight.w600, color: ThemeColor.light),
-  //   titleLarge: const TextStyle().copyWith(
-  //       fontSize: 16.0, fontWeight: FontWeight.w600, color: ThemeColor.light),
-  //   titleMedium: const TextStyle().copyWith(
-  //       fontSize: 16.0, fontWeight: FontWeight.w500, color: ThemeColor.light),
-  //   titleSmall: const TextStyle().copyWith(
-  //       fontSize: 16.0, fontWeight: FontWeight.w400, color: ThemeColor.light),
-  //   bodyLarge: const TextStyle().copyWith(
-  //       fontSize: 14.0, fontWeight: FontWeight.w500, color: ThemeColor.light),
-  //   bodyMedium: const TextStyle().copyWith(
-  //       fontSize: 14.0, fontWeight: FontWeight.normal, color: ThemeColor.light),
-  //   bodySmall: const TextStyle().copyWith(
-  //       fontSize: 14.0,
-  //       fontWeight: FontWeight.w500,
-  //       color: ThemeColor.light.withOpacity(0.5)),
-  //   labelLarge: const TextStyle().copyWith(
-  //       fontSize: 12.0, fontWeight: FontWeight.normal, color: ThemeColor.light),
-  //   labelMedium: const TextStyle().copyWith(
-  //       fontSize: 12.0,
-  //       fontWeight: FontWeight.normal,
-  //       color: ThemeColor.light.withOpacity(0.5)),
-  // );
 }

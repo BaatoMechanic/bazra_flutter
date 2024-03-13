@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
-import 'package:bato_mechanic/src/features/services/application/service_type_service.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/repair_steps_widget.dart';
 import 'package:bato_mechanic/src/utils/extensions/enum_extensions.dart';
 import 'package:flip_card/flip_card_controller.dart';
@@ -31,6 +29,7 @@ import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 
 import '../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
 import '../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
+import '../../services/data/service_type_repository.dart';
 import '../data/api_track_mechanic_repository.dart';
 import 'repair_progress_screen_controller.dart';
 
@@ -221,7 +220,7 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                             const SizedBox(height: 20),
                             AsyncValueWidget(
                               value: ref.watch(
-                                  fetchRepairRequestServiceProvider(
+                                  fetchRepairRequestServiceTypeProvider(
                                       repairRequest.idx)),
                               data: (service) => Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -253,12 +252,6 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                                       ),
                                       children: <TextSpan>[
                                         TextSpan(
-                                          // text: BaatoDateFormatter
-                                          //     .formatMinutesToGeneric(ref
-                                          //         .read(
-                                          //             trackMechanicScreenControllerProvider
-                                          //                 .notifier)
-                                          //         .getEstimateArrivalTime()),
                                           text: BaatoDateFormatter
                                               .formatSecondsToGeneric(routeValue
                                                       .value?["duration"] ??
@@ -277,7 +270,6 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                             ),
                           ],
                         ),
-
                       ListTile(
                         title: Text(
                           repairRequest.title ?? "No title provided",
@@ -322,53 +314,53 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                         height: 30,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 8.0,
-                        ),
-                        child: repairRequest.advancePaymentStatus ==
-                                AdvancePaymentStatus.COMPLETE
-                            ? const SizedBox.shrink()
-                            : const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    flex: 4,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Mechanic baato karcha',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                          child: (repairRequest.advancePaymentStatus !=
+                                      AdvancePaymentStatus.COMPLETE &&
+                                  repairRequest.advanceCharge != null)
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Flexible(
+                                      flex: 4,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Mechanic baato karcha',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          'Khaana included',
-                                          style: TextStyle(
-                                            fontSize: 14,
+                                          Text(
+                                            'Khaana included',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: Text(
-                                      'Rs. 3000',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: ThemeColor.primary,
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                      ),
+                                    Flexible(
+                                      flex: 1,
+                                      child: Text(
+                                        'Rs. ${repairRequest.advanceCharge}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: ThemeColor.primary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox.shrink()),
                       if (repairRequest.advancePaymentStatus ==
                           AdvancePaymentStatus.PAYMENT_ON_ARRIVAL)
                         Padding(
@@ -441,19 +433,6 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                             ],
                           ),
                         )
-
-                      // else if (repairRequest.status ==
-                      //         VehicleRepairRequestStatus.PENDING ||
-                      //     repairRequest.status ==
-                      //         VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
-                      //   Container()
-                      // else
-                      //   SubmitButton(
-                      //     label: 'Check Progress'.hardcoded(),
-                      //     onPressed: () => context.pushNamed(
-                      //         APP_ROUTE.repairProgress.name,
-                      //         extra: {"repairRequestIdx": repairRequest.idx}),
-                      //   )
                     ],
                   ),
                 ),
@@ -486,7 +465,6 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                                     .read(repairProgressScreenControllerProvider
                                         .notifier)
                                     .completeRepair(repairRequest.idx)) {
-                                  // ignore: use_build_context_synchronously
                                   context.pushNamed(
                                       APP_ROUTE.reviewMechanic.name,
                                       extra: {
@@ -581,11 +559,9 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
 
                       if (updated) {
                         // Use the captured context within the async block
-                        // ignore: use_build_context_synchronously
                         Navigator.of(currentContext).pop();
 
                         ToastHelper.showNotification(
-                          // ignore: use_build_context_synchronously
                           currentContext,
                           "Mechanic is on the way".hardcoded(),
                         );
@@ -602,8 +578,7 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
   Widget _showMechanicTrackMap(
       BuildContext context, List<LatLng> routeCoordinates) {
     LatLng cameraCenter = LatLng(27.703292452047425, 85.33033043146135);
-    // final mechanicPositionValue = ref.watch(assignedMechanicProvider);
-    // final userMarkerValue = ref.watch(watchUserPositionMarkerProvider);
+
     final mechanicLocationValue = ref.watch(
         watchRepairRequestMechanicLocationProvider(widget.repairRequestIdx));
 
@@ -618,21 +593,6 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
             _showBigScreenMap = !_showBigScreenMap;
           });
         },
-        // onTap: (tapPosition, latLng) {
-        //   showDialog(
-        //     context: context,
-        //     builder: (BuildContext context) {
-        //       return AlertDialog(
-        //         insetPadding: EdgeInsets.zero,
-        //         contentPadding: EdgeInsets.zero,
-        //         content: SizedBox(
-        //             height: MediaQuery.of(context).size.height,
-        //             width: MediaQuery.of(context).size.width,
-        //             child: _showMechanicTrackMap(context)),
-        //       );
-        //     },
-        //   );
-        // },
         center: cameraCenter,
         zoom: 15.0,
         bounds: LatLngBounds(LatLng(27.703292452047425, 85.33033043146135),
@@ -738,26 +698,6 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
             ],
           ),
         ),
-        // AsyncValueWidget(
-        //     value: routeCoordinates,
-        //     data: (routeCoordinatePoints) {
-        //       // data: (points) {
-        //       // List<LatLng> routeCoordinatePoints = points
-        //       //     .map((point) =>
-        //       //         LatLng(point[1].toDouble(), point[0].toDouble()))
-        //       //     .toList()
-        //       //     .cast<LatLng>();
-
-        //       return PolylineLayer(
-        //         polylines: [
-        //           Polyline(
-        //             points: routeCoordinates,
-        //             strokeWidth: 4,
-        //             color: Colors.purple,
-        //           ),
-        //         ],
-        //       );
-        //     })
         PolylineLayer(
           polylines: [
             Polyline(

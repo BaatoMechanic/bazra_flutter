@@ -21,7 +21,6 @@ class MenuTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return Container(
       padding: const EdgeInsets.symmetric(),
       decoration: BoxDecoration(

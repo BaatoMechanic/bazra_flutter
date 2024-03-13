@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
@@ -16,7 +15,6 @@ class GoogleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return ElevatedButton(
       onPressed: onPressed,
       style: const ButtonStyle().copyWith(
@@ -36,7 +34,6 @@ class GoogleButton extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(4.0),
-              // child: Text('google logo here'),
               child: SvgPicture.asset(
                 'assets/icons/google_logo.svg',
                 height: 35,

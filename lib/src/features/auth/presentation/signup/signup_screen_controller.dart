@@ -1,13 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class SignUpScreenController extends StateNotifier<AsyncValue<void>> {
-  SignUpScreenController(
-    this.ref,
-  ) : super(const AsyncValue.data(null));
+part 'signup_screen_controller.g.dart';
 
-  final Ref ref;
+@riverpod
+class SignUpScreenController extends _$SignUpScreenController {
+  @override
+  AsyncValue<void> build() {
+    return const AsyncValue.data(null);
+  }
 
   Future<bool> createUserWithIdAndPassword(
       String uId, String password, String fullName) async {
@@ -18,9 +19,3 @@ class SignUpScreenController extends StateNotifier<AsyncValue<void>> {
     return !state.hasError;
   }
 }
-
-final signupScreenControllerProvider =
-    StateNotifierProvider.autoDispose<SignUpScreenController, AsyncValue<void>>(
-        (ref) {
-  return SignUpScreenController(ref);
-});

@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/features/common/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/splash/presentation/splash_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
@@ -42,7 +42,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final isLoggedIn = ref.watch(authStateProvider).isAuthenticated;
+      final isLoggedIn = ref.watch(authStateNotifierProvider).isAuthenticated;
       if (!isLoggedIn) {
         _navigateToLogin(context);
         return;
@@ -54,13 +54,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
       if (accessToken != null) {
         if (!await _fetchUserInfoWithAccessToken(ref, accessToken)) {
-          // ignore: use_build_context_synchronously
           _navigateToLogin(context);
           return;
         }
       } else if (refreshToken != null) {
         if (!await _refreshTokenAndFetchUserInfo(ref, refreshToken)) {
-          // ignore: use_build_context_synchronously
           _navigateToLogin(context);
           return;
         }
@@ -89,7 +87,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       // }
 
       if (mounted) context.replaceNamed(APP_ROUTE.home.name);
-      // if (mounted) context.replaceNamed(appRoute.buildHome.name);
       return;
     });
   }

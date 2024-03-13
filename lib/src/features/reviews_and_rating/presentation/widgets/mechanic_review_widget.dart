@@ -53,8 +53,8 @@ class MechanicReviewWidget extends ConsumerWidget {
                     children: [
                       CircleAvatar(
                         radius: AppHeight.h20,
-                        child: reviewer?.profilePic != null
-                            ? Image.network(reviewer!.profilePic!)
+                        child: reviewer.profilePic != null
+                            ? Image.network(reviewer.profilePic!)
                             : Image.asset(
                                 'assets/images/no-profile.png',
                                 width: 30.0.doubleHardcoded(),
@@ -68,7 +68,7 @@ class MechanicReviewWidget extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              UserHelperFunctions.getUserName(reviewer?.name),
+                              UserHelperFunctions.getUserName(reviewer.name),
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                             RatingStarsWidget(rating: review.rating),

@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/features/common/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +58,7 @@ class MyApp extends ConsumerWidget {
         routerConfig: goRouter(),
         theme: BaatoAppTheme.lightTheme,
         darkTheme: BaatoAppTheme.darkTheme,
-        themeMode: ref.watch(themeModeProvider),
+        themeMode: ref.watch(bThemeModeProvider),
         title: 'Bato Mechanic',
       ),
     );

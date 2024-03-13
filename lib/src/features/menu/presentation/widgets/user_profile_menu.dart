@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/features/common/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
@@ -41,7 +41,6 @@ class UserProfileMenu extends ConsumerWidget {
           iconSize: AppSize.s20,
           icon: const Icon(Icons.arrow_forward_ios_outlined),
           color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
-          // onPressed: () => context.pushNamed(APP_ROUTE.repairProgress.name),
           onPressed: () => context.pushNamed(APP_ROUTE.activeRepairs.name),
         ),
       ),
@@ -76,7 +75,7 @@ class UserProfileMenu extends ConsumerWidget {
                 ),
                 onTap: () {
                   ref
-                      .read(userSettingsRepositoryProvider)
+                      .read(bThemeModeProvider.notifier)
                       .setThemeMode(ThemeMode.dark);
                   return;
                 });
@@ -91,7 +90,7 @@ class UserProfileMenu extends ConsumerWidget {
                 ),
                 onTap: () {
                   ref
-                      .read(userSettingsRepositoryProvider)
+                      .read(bThemeModeProvider.notifier)
                       .setThemeMode(ThemeMode.light);
                   return;
                 });
@@ -106,7 +105,7 @@ class UserProfileMenu extends ConsumerWidget {
                 ),
                 onTap: () {
                   ref
-                      .read(userSettingsRepositoryProvider)
+                      .read(bThemeModeProvider.notifier)
                       .setThemeMode(ThemeMode.system);
                   return;
                 });
@@ -221,7 +220,7 @@ class UserProfileMenu extends ConsumerWidget {
       ),
     ];
 
-    final user = ref.watch(authStateProvider).user;
+    final user = ref.watch(authStateNotifierProvider).user;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(

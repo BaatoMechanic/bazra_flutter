@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/common/core/repositories/user_settings_repository.dart';
+import 'package:bato_mechanic/src/features/common/repositories/user_settings_repository.dart';
 import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 import '../../../services/data/service_type_repository.dart';
 import '../../../repair_progress/presentation/repair_progress_screen.dart';
 import '../widget/service_buttons_grid.dart';
@@ -122,8 +123,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       setState(() {
         _loadingData = true;
       });
-      // final isLoggedIn = ref.watch(authServiceProvider).currentUser != null;
-      final isLoggedIn = ref.watch(authStateProvider).user != null;
+      final isLoggedIn = ref.watch(authStateNotifierProvider).user != null;
 
       if (!isLoggedIn) {
         final sharedPreferences = ref.read(sharedPreferencesProvider);
@@ -163,26 +163,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       await ref
           .read(homeScreenControllerProvider.notifier)
           .fetchUserRepairRequests();
-      // if (result) {
-      //   VehicleRepairRequest? repairRequest =
-      //       ref.read(repairRequestServiceProvider).activeRepairRequest;
 
-      //   if (repairRequest != null) {
-      //     if (repairRequest.status == VehicleRepairRequestStatus.IN_PROGRESS) {
-      //       // if (mounted) context.pushNamed(appRoute.repairProgress.name);
-      //       if (mounted) context.goNamed(appRoute.repairProgress.name);
-      //       return;
-      //     }
-      //     // if (mounted) context.pushNamed(appRoute.trackMechanic.name);
-      //     if (mounted) context.goNamed(appRoute.trackMechanic.name);
-      //     return;
-      //   }
-      // }
       setState(() {
         _loadingData = false;
       });
-      // if (mounted) context.replaceNamed(appRoute.home.name);
-      // if (mounted) context.replaceNamed(appRoute.buildHome.name);
     });
   }
 
@@ -292,7 +276,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   ],
                 ),
                 Consumer(builder: (context, ref, child) {
-                  final servicesValue = ref.watch(fetchAllServiceTypeProvider);
+                  final servicesValue = ref.watch(fetchAllServiceTypesProvider);
                   return AsyncValueWidget(
                     loadingShimmer: const ServiceButtonsGridShimmerWidget(),
                     value: servicesValue,

@@ -1,5 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:bato_mechanic/src/features/auth/domain/mechanic/mechanic.dart';
+import 'package:bato_mechanic/src/features/auth/domain/mechanic.dart';
 import 'package:bato_mechanic/src/features/core/data/user_repository/user_repository.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,11 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bato_mechanic/src/utils/in_memory_store.dart';
 
 import "package:latlong2/latlong.dart";
-import '../../auth/domain/user/user.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../auth/domain/user.dart';
 import '../data/map_repository/map_repository.dart';
 import '../data/mechanic_repository/mechanic_repository.dart';
 
-final assignedMechanicProvider = StateProvider<User?>((ref) => null);
+part 'mechanic_service.g.dart';
+
+// do not delete this line
+// final assignedMechanicProvider = StateProvider<User?>((ref) => null);
 
 class MechanicService {
   MechanicService({
@@ -21,33 +24,12 @@ class MechanicService {
   final _mechanicState = InMemoryStore<User?>(null);
   final Ref ref;
 
-  // Future<List<User>> fetchRecommendedMechanics(
-  //     String vehicleCategoryId, String vehiclePartId) async {
-  //   final response = await ref
-  //       .watch(userRepositoryProvider)
-  //       .fetchRecommendedMechanics(vehicleCategoryId, vehiclePartId);
+  // Future<void> fetchAssignedMechanic(String mechanicIdx) async {
+  //   final response =
+  //       await ref.watch(userRepositoryProvider).fetchUserInfo(mechanicIdx);
 
-  //   if (response is Success) {
-  //     return response.response as List<User>;
-  //   }
-  //   if (response is Failure) {
-  //     throw BaseException(
-  //       message: response.errorResponse.toString(),
-  //       stackTrace: StackTrace.current,
-  //     );
-  //   }
-  //   return [];
-  // }
-
-  Future<void> fetchAssignedMechanic(String mechanicIdx) async {
-    final response =
-        await ref.watch(userRepositoryProvider).fetchUserInfo(mechanicIdx);
-
-    ref.read(assignedMechanicProvider.notifier).state = response;
-  }
-
-  // Future<User?> fetchMechanicInfo(String mechanicId) async {
-  //   return await _fetchMechanic(mechanicId);
+  // do not delete this line
+  // ref.read(assignedMechanicProvider.notifier).state = response;
   // }
 
   Future<ReviewAndRating> rateAndReviewMechanic(String mechanicIdx,
@@ -64,25 +46,28 @@ class MechanicService {
   void dispose() => _mechanicState.close();
 }
 
-final mechanicServiceProvider = Provider((ref) {
-  final mechanicService = MechanicService(ref: ref);
-  ref.onDispose(() => mechanicService.dispose());
-  return mechanicService;
-});
+@riverpod
+MechanicService mechanicService(MechanicServiceRef ref) {
+  final service = MechanicService(ref: ref);
+  ref.onDispose(() => service.dispose());
+  return service;
+}
 
-final fetchMechanicInfoProvider =
-    FutureProvider.autoDispose.family<Mechanic, String>((ref, mechanicId) {
+@riverpod
+Future<Mechanic> fetchMechanicInfo(
+    FetchMechanicInfoRef ref, String mechanicId) {
   return ref.watch(mechanicRepositoryProvider).fetchMechanicInfo(mechanicId);
-});
+}
 
-final fetchMechanicRouteProvider = FutureProvider.autoDispose((ref) => ref
-    .watch(mapRepositoryProvider)
-    .getRoute(LatLng(27.987731866277297, 85.05683898925781),
-        LatLng(27.697740170751363, 85.3749704360962)));
+@riverpod
+Future<Map<String, dynamic>> fetchMechanicRoute(FetchMechanicRouteRef ref) =>
+    ref.watch(mapRepositoryProvider).getRoute(
+        LatLng(27.987731866277297, 85.05683898925781),
+        LatLng(27.697740170751363, 85.3749704360962));
 
-final fetchRecommendedMechanicsProvider = FutureProvider.autoDispose
-    .family<List<User>, Map<String, dynamic>>((ref, info) {
-  return ref
-      .watch(userRepositoryProvider)
-      .fetchRecommendedMechanics(info['vehicle_category'], info['service']);
-});
+@riverpod
+Future<List<User>> fetchRecommendedMechanics(FetchRecommendedMechanicsRef ref,
+        String vehicleCategoryIdx, String serviceIdx) =>
+    ref
+        .watch(userRepositoryProvider)
+        .fetchRecommendedMechanics(vehicleCategoryIdx, serviceIdx);

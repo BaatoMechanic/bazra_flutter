@@ -17,7 +17,7 @@ class Mechanic extends AbstractUserModel with _$Mechanic {
     required String? email,
     required String? phone,
     required String? gender,
-    @JsonKey(name: 'profile_pic') required String? profilePic,
+    @JsonKey(name: 'image') required String? profilePic,
     @JsonKey(name: 'dob_type') required DOBType dobType,
     @JsonKey(name: "date_of_birth") required DateTime? dateOfBirth,
     @JsonKey(name: "primary_role") required String? primaryRole,

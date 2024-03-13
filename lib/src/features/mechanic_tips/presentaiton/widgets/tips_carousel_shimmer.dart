@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/common/widgets/shimmer_widget.dart';
+import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -34,19 +35,19 @@ class TipsCarouselShimmer extends StatelessWidget {
               Column(
                 children: [
                   ShimmerWidget.roundedRectangular(
-                    width: HelperFunctions.screenWidth(context) * 0.72,
+                    width: DeviceUtils.getScreenWidth(context) * 0.72,
                   ),
                   const SizedBox(
                     height: AppHeight.h8,
                   ),
                   ShimmerWidget.roundedRectangular(
-                    width: HelperFunctions.screenWidth(context) * 0.72,
+                    width: DeviceUtils.getScreenWidth(context) * 0.72,
                   ),
                   const SizedBox(
                     height: AppHeight.h8,
                   ),
                   ShimmerWidget.roundedRectangular(
-                    width: HelperFunctions.screenWidth(context) * 0.72,
+                    width: DeviceUtils.getScreenWidth(context) * 0.72,
                   ),
                   const SizedBox(
                     height: AppHeight.h8,

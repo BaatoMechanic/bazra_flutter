@@ -17,7 +17,8 @@ class APIMechanicTipsRepository implements MechanicTipsRepository {
 
   @override
   Future<List<MechanicTip>> fetchMechanicTips() async {
-    var url = Uri.parse('${RemoteManager.BASE_URI}autho/mechanic_tips/');
+    var url =
+        Uri.parse('${RemoteManager.BASE_URI}vehicle-repair/mechanic_tips/');
 
     final response = await HttpHelper.guard(
         () => http.get(url, headers: {

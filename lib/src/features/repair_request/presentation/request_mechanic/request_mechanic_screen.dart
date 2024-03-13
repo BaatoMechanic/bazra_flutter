@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
 import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
@@ -253,9 +254,9 @@ class _RequestMechanicScreenState extends ConsumerState<RequestMechanicScreen>
                           child: Container(
                             constraints: BoxConstraints(
                               maxWidth:
-                                  HelperFunctions.screenWidth(context) * 0.5,
+                                  DeviceUtils.getScreenWidth(context) * 0.5,
                               maxHeight:
-                                  HelperFunctions.screenHeight(context) * 0.2,
+                                  DeviceUtils.getScreenHeight(context) * 0.2,
                             ),
                             child: AspectRatio(
                               aspectRatio: _videoController!.value.aspectRatio,

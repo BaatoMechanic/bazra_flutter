@@ -7,7 +7,7 @@ part 'repair_step_report.g.dart';
 class RepairStepReport with _$RepairStepReport {
   const factory RepairStepReport({
     required String idx,
-    required List<Map<String, String>> billImages,
+    @JsonKey(name: "bill_images") required List<Map<String, String>> billImages,
   }) = _RepairStepReport;
 
   factory RepairStepReport.fromJson(Map<String, dynamic> json) =>

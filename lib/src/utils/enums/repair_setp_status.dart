@@ -7,7 +7,7 @@ enum RepairStepStatus {
   PENDING,
   @JsonValue("in_progress")
   IN_PROGRESS,
-  @JsonValue("completed")
+  @JsonValue("complete")
   COMPLETE,
   @JsonValue("cancelled")
   CANCELLED,

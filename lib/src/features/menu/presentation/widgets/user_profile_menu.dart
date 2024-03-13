@@ -4,6 +4,8 @@ import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
+import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
+import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,8 +23,6 @@ class UserProfileMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkMode = HelperFunctions.isDarkMode(context);
-
     List<MenuTile> profileTiles = [
       MenuTile(
         leadingIcon: Icons.person,
@@ -30,7 +30,7 @@ class UserProfileMenu extends ConsumerWidget {
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
           icon: const Icon(Icons.arrow_forward_ios_outlined),
-          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () => context.pushNamed(APP_ROUTE.customerProfile.name),
         ),
       ),
@@ -40,7 +40,7 @@ class UserProfileMenu extends ConsumerWidget {
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
           icon: const Icon(Icons.arrow_forward_ios_outlined),
-          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () => context.pushNamed(APP_ROUTE.activeRepairs.name),
         ),
       ),
@@ -50,7 +50,7 @@ class UserProfileMenu extends ConsumerWidget {
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
           icon: const Icon(Icons.arrow_forward_ios_outlined),
-          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () => context.pushNamed(APP_ROUTE.recentRepairs.name),
         ),
       ),
@@ -63,7 +63,7 @@ class UserProfileMenu extends ConsumerWidget {
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
           icon: const Icon(Icons.arrow_forward_ios_outlined),
-          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () {
             final darkTile = ListTile(
                 title: Text(
@@ -121,7 +121,7 @@ class UserProfileMenu extends ConsumerWidget {
         trailingWidget: IconButton(
           iconSize: AppSize.s20,
           icon: const Icon(Icons.arrow_forward_ios_outlined),
-          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () {},
         ),
         isLast: true,
@@ -137,7 +137,7 @@ class UserProfileMenu extends ConsumerWidget {
           onPressed: () {},
           icon: Icon(
             Icons.arrow_forward_ios,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+            color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
         ),
       ),
@@ -149,7 +149,7 @@ class UserProfileMenu extends ConsumerWidget {
           onPressed: () => context.pushNamed(APP_ROUTE.supportChat.name),
           icon: Icon(
             Icons.arrow_forward_ios,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+            color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
         ),
       ),
@@ -161,7 +161,7 @@ class UserProfileMenu extends ConsumerWidget {
           onPressed: () => context.pushNamed(APP_ROUTE.feedback.name),
           icon: Icon(
             Icons.arrow_forward_ios,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+            color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
         ),
       ),
@@ -173,7 +173,7 @@ class UserProfileMenu extends ConsumerWidget {
           onPressed: () => context.pushNamed(APP_ROUTE.supportChat.name),
           icon: Icon(
             Icons.arrow_forward_ios,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+            color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
         ),
       ),
@@ -185,7 +185,7 @@ class UserProfileMenu extends ConsumerWidget {
           onPressed: () => context.pushNamed(APP_ROUTE.supportChat.name),
           icon: Icon(
             Icons.arrow_forward_ios,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+            color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
         ),
         isLast: true,
@@ -200,7 +200,7 @@ class UserProfileMenu extends ConsumerWidget {
           iconSize: AppSize.s20,
           icon: Icon(
             Icons.arrow_forward_ios_outlined,
-            color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+            color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
           onPressed: () => context.pushNamed(APP_ROUTE.feedback.name),
         ),
@@ -213,7 +213,7 @@ class UserProfileMenu extends ConsumerWidget {
           icon: const Icon(
             Icons.arrow_forward_ios_outlined,
           ),
-          color: isDarkMode ? ThemeColor.light : ThemeColor.dark,
+          color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           onPressed: () => context.pushNamed(APP_ROUTE.supportChat.name),
         ),
         isLast: true,

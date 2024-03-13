@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
+import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,8 +27,6 @@ class MechanicProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(mechanicProfileScreenControllerProvider,
         (previous, state) => state.showError(context));
-
-    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     final mechanicValue = ref.watch(fetchMechanicInfoProvider(mechanicIdx));
 
@@ -324,7 +323,7 @@ class MechanicProfileScreen extends ConsumerWidget {
                             Icon(
                               Icons.arrow_forward_ios,
                               size: AppSize.s16,
-                              color: isDarkTheme
+                              color: context.isDarkMode
                                   ? ThemeColor.light
                                   : ThemeColor.dark,
                             ),

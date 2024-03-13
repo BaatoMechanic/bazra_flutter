@@ -10,7 +10,7 @@ _$RepairStepReportImpl _$$RepairStepReportImplFromJson(
         Map<String, dynamic> json) =>
     _$RepairStepReportImpl(
       idx: json['idx'] as String,
-      billImages: (json['billImages'] as List<dynamic>)
+      billImages: (json['bill_images'] as List<dynamic>)
           .map((e) => Map<String, String>.from(e as Map))
           .toList(),
     );
@@ -19,5 +19,5 @@ Map<String, dynamic> _$$RepairStepReportImplToJson(
         _$RepairStepReportImpl instance) =>
     <String, dynamic>{
       'idx': instance.idx,
-      'billImages': instance.billImages,
+      'bill_images': instance.billImages,
     };

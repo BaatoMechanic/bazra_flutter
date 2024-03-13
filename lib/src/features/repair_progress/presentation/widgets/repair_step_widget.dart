@@ -23,7 +23,7 @@ class RepairStepWidget extends StatelessWidget {
       child: ListTile(
         title: Text(step.name),
         subtitle: Text(
-            'Status: ${HelperFunctions.humanizeString(step.status.name).capitalize()}'),
+            'Status: ${(step.status.name).humanizeUnderscores().capitalize()}'),
         trailing: IconButton(
           icon: const Icon(Icons.info),
           onPressed: () {

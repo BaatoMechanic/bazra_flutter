@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
+import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,13 +21,12 @@ class FetchAndWatchAsyncValueWidget<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (fetchValue.isLoading) {
-      return loadingShimmer ?? HelperFunctions.loadingInidicator(context);
+      return loadingShimmer ?? WidgetUtils.loadingInidicator(context);
     }
     return watchValue.when(
       data: data,
       error: (e, st) => Center(child: ErrorMessageWidget(e.toString())),
-      loading: () =>
-          loadingShimmer ?? HelperFunctions.loadingInidicator(context),
+      loading: () => loadingShimmer ?? WidgetUtils.loadingInidicator(context),
     );
   }
 }

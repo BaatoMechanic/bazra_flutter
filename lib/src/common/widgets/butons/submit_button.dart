@@ -1,3 +1,4 @@
+import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
@@ -32,7 +33,6 @@ class _SubmitButtonState extends State<SubmitButton> {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return ElevatedButton(
       onPressed: isLoading
           ? null
@@ -70,7 +70,9 @@ class _SubmitButtonState extends State<SubmitButton> {
                   widget.spinnerText ?? ''.hardcoded(),
                   style: getBoldStyle().copyWith(
                     fontSize: FontSize.s16,
-                    color: isDarkTheme ? ThemeColor.white : ThemeColor.black,
+                    color: context.isDarkMode
+                        ? ThemeColor.white
+                        : ThemeColor.black,
                   ),
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -55,7 +56,6 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkTheme = HelperFunctions.isDarkMode(context);
     return Row(
       children: [
         IconButton(
@@ -71,7 +71,7 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
             backgroundColor: const MaterialStatePropertyAll<Color>(
               ThemeColor.transparent,
             ),
-            iconColor: isDarkTheme
+            iconColor: context.isDarkMode
                 ? const MaterialStatePropertyAll<Color>(ThemeColor.light)
                 : const MaterialStatePropertyAll<Color>(ThemeColor.black),
           ),

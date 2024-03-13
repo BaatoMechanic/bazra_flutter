@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/common/widgets/shimmer_widget.dart';
+import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
+import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +17,6 @@ class ReviewsAndRatingShimmerWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-
     return Container(
       padding: const EdgeInsets.all(AppPadding.p8),
       decoration: BoxDecoration(
@@ -24,8 +24,9 @@ class ReviewsAndRatingShimmerWidget extends ConsumerWidget {
           //     ? Border.all(color: ThemeColor.darkContainer)
           //     : Border.all(color: ThemeColor.darkContainer),
           border: Border.all(color: ThemeColor.darkContainer),
-          color:
-              isDarkTheme ? ThemeColor.transparent : ColorManager.primaryTint60,
+          color: context.isDarkMode
+              ? ThemeColor.transparent
+              : ColorManager.primaryTint60,
           borderRadius: BorderRadius.circular(AppRadius.r8)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,13 +62,13 @@ class ReviewsAndRatingShimmerWidget extends ConsumerWidget {
             height: AppHeight.h8,
           ),
           ShimmerWidget.roundedRectangular(
-            width: HelperFunctions.screenWidth(context) * 0.7,
+            width: DeviceUtils.getScreenWidth(context) * 0.7,
           ),
           ShimmerWidget.roundedRectangular(
-            width: HelperFunctions.screenWidth(context) * 0.7,
+            width: DeviceUtils.getScreenWidth(context) * 0.7,
           ),
           ShimmerWidget.roundedRectangular(
-            width: HelperFunctions.screenWidth(context) * 0.7,
+            width: DeviceUtils.getScreenWidth(context) * 0.7,
           ),
         ],
       ),

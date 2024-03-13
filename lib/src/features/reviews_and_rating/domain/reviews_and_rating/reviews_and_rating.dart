@@ -13,9 +13,9 @@ class ReviewAndRating with _$ReviewAndRating {
     required String idx,
     required String review,
     required double rating,
-    @JsonKey(name: "reviewer_idx") required String reviewerIdx,
-    @JsonKey(name: "reviewed_idx") required String reviewedIdx,
-    @JsonKey(name: "repair_request_idx") required String repairRequestIdx,
+    @JsonKey(name: "reviewer") required String reviewerIdx,
+    @JsonKey(name: "reviewed") required String reviewedIdx,
+    @JsonKey(name: "repair_request") required String repairRequestIdx,
     @JsonKey(name: "created_at") required DateTime createdAt,
   }) = _ReviewAndRating;
 

@@ -1,5 +1,6 @@
 import 'package:bato_mechanic/src/common/widgets/shimmer_widget.dart';
 import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class RepairStepShimmerWidget extends StatelessWidget {
           ),
         ),
       ),
-      width: HelperFunctions.screenWidth(context),
+      width: DeviceUtils.getScreenWidth(context),
       child: const Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

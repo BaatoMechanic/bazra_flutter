@@ -25,7 +25,7 @@ mixin _$Mechanic {
   String? get email => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
-  @JsonKey(name: 'profile_pic')
+  @JsonKey(name: 'image')
   String? get profilePic => throw _privateConstructorUsedError;
   @JsonKey(name: 'dob_type')
   DOBType get dobType => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $MechanicCopyWith<$Res> {
       String? email,
       String? phone,
       String? gender,
-      @JsonKey(name: 'profile_pic') String? profilePic,
+      @JsonKey(name: 'image') String? profilePic,
       @JsonKey(name: 'dob_type') DOBType dobType,
       @JsonKey(name: "date_of_birth") DateTime? dateOfBirth,
       @JsonKey(name: "primary_role") String? primaryRole,
@@ -175,7 +175,7 @@ abstract class _$$MechanicImplCopyWith<$Res>
       String? email,
       String? phone,
       String? gender,
-      @JsonKey(name: 'profile_pic') String? profilePic,
+      @JsonKey(name: 'image') String? profilePic,
       @JsonKey(name: 'dob_type') DOBType dobType,
       @JsonKey(name: "date_of_birth") DateTime? dateOfBirth,
       @JsonKey(name: "primary_role") String? primaryRole,
@@ -283,7 +283,7 @@ class _$MechanicImpl implements _Mechanic {
       required this.email,
       required this.phone,
       required this.gender,
-      @JsonKey(name: 'profile_pic') required this.profilePic,
+      @JsonKey(name: 'image') required this.profilePic,
       @JsonKey(name: 'dob_type') required this.dobType,
       @JsonKey(name: "date_of_birth") required this.dateOfBirth,
       @JsonKey(name: "primary_role") required this.primaryRole,
@@ -310,7 +310,7 @@ class _$MechanicImpl implements _Mechanic {
   @override
   final String? gender;
   @override
-  @JsonKey(name: 'profile_pic')
+  @JsonKey(name: 'image')
   final String? profilePic;
   @override
   @JsonKey(name: 'dob_type')
@@ -420,7 +420,7 @@ abstract class _Mechanic implements Mechanic {
           required final String? email,
           required final String? phone,
           required final String? gender,
-          @JsonKey(name: 'profile_pic') required final String? profilePic,
+          @JsonKey(name: 'image') required final String? profilePic,
           @JsonKey(name: 'dob_type') required final DOBType dobType,
           @JsonKey(name: "date_of_birth") required final DateTime? dateOfBirth,
           @JsonKey(name: "primary_role") required final String? primaryRole,
@@ -448,7 +448,7 @@ abstract class _Mechanic implements Mechanic {
   @override
   String? get gender;
   @override
-  @JsonKey(name: 'profile_pic')
+  @JsonKey(name: 'image')
   String? get profilePic;
   @override
   @JsonKey(name: 'dob_type')

@@ -3,6 +3,7 @@ import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step_re
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/helper_functions.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -63,7 +64,7 @@ class RepairStepBottomSheet extends ConsumerWidget {
 
             const SizedBox(height: AppHeight.h4),
             Text(
-              'Status: ${HelperFunctions.humanizeString(step.status.name).capitalize()}',
+              'Status: ${step.status.name.humanizeUnderscores().capitalize()}',
               style: Theme.of(context).textTheme.titleSmall,
             ),
             const SizedBox(height: AppHeight.h16),
@@ -119,7 +120,7 @@ class RepairStepBottomSheet extends ConsumerWidget {
 Widget _buildReport(RepairStepReport report) {
   return Row(
     children: [
-      Text(HelperFunctions.humanizeString("Bill images").capitalize()),
+      Text("Bill images".humanizeUnderscores().capitalize()),
       Expanded(
         child: SingleChildScrollView(
           child: Row(
@@ -140,7 +141,7 @@ Widget _buildReportImage(String url) {
     child: SizedBox(
       width: AppWidth.h75,
       height: AppWidth.h200,
-      child: url.startsWith('http') ? Image.network(url) : Image.asset(url),
+      child: WidgetUtils.renderImage(url),
     ),
   );
 }

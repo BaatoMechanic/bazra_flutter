@@ -31,6 +31,10 @@ class DeviceUtils {
         enable ? SystemUiMode.immersiveSticky : SystemUiMode.edgeToEdge);
   }
 
+  static Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
+
   static double getScreenHeight(BuildContext context) {
     return MediaQuery.of(context).size.height;
   }

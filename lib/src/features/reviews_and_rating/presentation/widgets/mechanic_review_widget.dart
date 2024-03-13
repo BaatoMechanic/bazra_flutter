@@ -3,6 +3,7 @@ import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/rating_stars_widget.dart';
 import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/reviews_and_rating_shimmer_widget.dart';
+import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
 import 'package:bato_mechanic/src/utils/extensions/datetime_extensions.dart';
 import 'package:bato_mechanic/src/utils/helpers/user_helper.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class MechanicReviewWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     final reviewerInfoValue =
         ref.watch(fetchUserInfoProvider(review.reviewerIdx));
     return AsyncValueWidget(
@@ -37,7 +37,7 @@ class MechanicReviewWidget extends ConsumerWidget {
             //     ? Border.all(color: ThemeColor.lightGrey)
             //     : Border.all(color: ThemeColor.grey),
             border: Border.all(color: ThemeColor.darkContainer),
-            color: isDarkTheme
+            color: context.isDarkMode
                 ? ThemeColor.transparent
                 : ColorManager.primaryTint60,
             borderRadius: BorderRadius.circular(AppRadius.r8)),
@@ -90,7 +90,7 @@ class MechanicReviewWidget extends ConsumerWidget {
               child: Text(
                 // 'Hello This is about Krishna who is a trained and professional mechanic with more dthan 10 years of experience',
                 review.review,
-                style: !isDarkTheme
+                style: !context.isDarkMode
                     ? Theme.of(context)
                         .textTheme
                         .labelSmall!

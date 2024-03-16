@@ -4,11 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
+import 'flavors.dart';
 import 'src/shared/providers/user_settings_repository.dart';
 
 final logger = BMLogger().logger;
 
-void main() async {
+Future<void> mainApp(Flavor flavor) async {
+  F.appFlavor = flavor;
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await SharedPreferences.getInstance();
   runApp(

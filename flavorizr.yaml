@@ -1,0 +1,35 @@
+flavors:
+  dev:
+    app:
+      name: "KR Dev"
+
+    android:
+      applicationId: "com.example.bato_mechanic.dev.kr"  
+    ios:
+      bundleId: "com.example.bato_mechanic.dev.kr"
+    macos:
+      bundleId: "com.example.bato_mechanic.dev.kr" 
+
+  staging:
+    app:
+    
+      name: "BM Staging"
+
+    android:
+      applicationId: "com.example.bato_mechanic.staging"  
+    ios:
+      bundleId: "com.example.bato_mechanic.staging"
+    macos:
+      bundleId: "com.example.bato_mechanic.staging"
+    
+  prod:
+    app:
+      name: "BM Prod"
+
+    android:
+      applicationId: "com.example.bato_mechanic"  
+    ios:
+      bundleId: "com.example.bato_mechanic"
+    macos:
+      bundleId: "com.example.bato_mechanic"
+  

@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
 /// Simple not found screen used for 404 errors (page not found on web)

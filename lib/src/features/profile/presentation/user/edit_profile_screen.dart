@@ -1,15 +1,15 @@
 import 'dart:io';
-import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
-import 'package:bato_mechanic/src/common/widgets/form_fields/email_field.dart';
-import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
-import 'package:bato_mechanic/src/common/widgets/form_fields/phone_number_field.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/shared/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/shared/widgets/form_fields/email_field.dart';
+import 'package:bato_mechanic/src/shared/widgets/form_fields/baato_text_field.dart';
+import 'package:bato_mechanic/src/shared/widgets/form_fields/phone_number_field.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../utils/constants/managers/font_manager.dart';
-import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../../shared/utils/constants/managers/font_manager.dart';
+import '../../../../shared/utils/constants/managers/values_manager.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);

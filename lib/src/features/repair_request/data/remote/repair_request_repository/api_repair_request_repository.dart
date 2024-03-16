@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
-import 'package:bato_mechanic/src/utils/exceptions/base_exception.dart';
-import 'package:bato_mechanic/src/utils/http/http_client.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/shared/utils/exceptions/base_exception.dart';
+import 'package:bato_mechanic/src/shared/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../../../../common/repositories/user_settings_repository.dart';
-import '../../../../../utils/constants/managers/api_values_manager.dart';
-import '../../../../../utils/constants/managers/values_manager.dart';
+import '../../../../../shared/providers/user_settings.dart';
+import '../../../../../shared/utils/constants/managers/api_values_manager.dart';
+import '../../../../../shared/utils/constants/managers/values_manager.dart';
 import 'repair_request_repository.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,7 +1,5 @@
-
-
-import '../../../../utils/constants/test_vehicles.dart';
-import '../../domain/vehicle/vehicle.dart';
+import '../../../../shared/utils/constants/test_vehicles.dart';
+import '../../domain/vehicle.dart';
 import 'vehicle_repository.dart';
 
 class FakeVehicleRepository implements VehicleRepository {

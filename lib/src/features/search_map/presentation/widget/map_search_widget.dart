@@ -4,10 +4,10 @@ import 'package:bato_mechanic/src/features/repair_request/presentation/request_m
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_state.dart';
 import 'package:bato_mechanic/src/features/search_map/presentation/widget/search_map_widget_controller.dart';
 import 'package:bato_mechanic/src/logging/logger.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/shared/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -15,7 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 
-import '../../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
+import '../../../../shared/widgets/flutter_map/control_buttons/control_buttons.dart';
 import '../../domain/osm_data/osm_data.dart';
 
 class MapSearchWidget extends ConsumerStatefulWidget {
@@ -192,7 +192,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
             ),
           CurrentLocationLayer(),
           if (ref.watch(searchMapWidgetControllerProvider).value.isLoading)
-            WidgetUtils.loadingInidicator(context),
+            LoadingInidicator(context),
         ],
       );
     });
@@ -218,7 +218,7 @@ class _MapSearchWidgetState extends ConsumerState<MapSearchWidget>
                   const MaterialStatePropertyAll<Color>(ThemeColor.light),
               trailing: [
                 state.value.isLoading
-                    ? WidgetUtils.loadingInidicator(
+                    ? LoadingInidicator(
                         context,
                         radius: AppHeight.h20,
                       )

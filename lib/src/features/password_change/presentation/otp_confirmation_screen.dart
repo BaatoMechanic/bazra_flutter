@@ -1,14 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/shared/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/enums/otp_type.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bato_mechanic/src/common/widgets/form_fields/otp_field.dart';
+import 'package:bato_mechanic/src/shared/widgets/form_fields/otp_field.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../utils/constants/managers/color_manager.dart';
+import '../../../shared/utils/constants/managers/color_manager.dart';
 
 class OTPConfirmationScreen extends StatelessWidget {
   const OTPConfirmationScreen({

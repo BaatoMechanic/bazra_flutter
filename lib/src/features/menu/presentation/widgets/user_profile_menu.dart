@@ -1,20 +1,20 @@
-import 'package:bato_mechanic/src/features/common/repositories/user_settings_repository.dart';
-import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
+import 'package:bato_mechanic/src/shared/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_service.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/font_manager.dart';
-import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
-import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/font_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/build_context_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../common/widgets/butons/submit_button.dart';
+import '../../../../shared/providers/user_settings.dart';
+import '../../../../shared/widgets/butons/submit_button.dart';
 import 'menu_tile_section_widget.dart';
 import 'menu_tile_widget.dart';
-import '../../../../utils/constants/managers/color_manager.dart';
-import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../../shared/utils/constants/managers/color_manager.dart';
+import '../../../../shared/utils/constants/managers/values_manager.dart';
 
 class UserProfileMenu extends ConsumerWidget {
   const UserProfileMenu({super.key});

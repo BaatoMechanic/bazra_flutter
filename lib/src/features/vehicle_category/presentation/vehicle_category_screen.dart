@@ -1,16 +1,16 @@
-import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/shared/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/async_value_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/vehicle_category/presentation/vehicle_category_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
+import 'package:bato_mechanic/src/shared/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../utils/constants/managers/values_manager.dart';
+import '../../../shared/utils/constants/managers/values_manager.dart';
 import '../data/vehicle_category_repository.dart';
 
 class VehicleCategoryScreen extends ConsumerWidget {
@@ -63,7 +63,7 @@ class VehicleCategoryScreen extends ConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                WidgetUtils.renderImage(
+                                ImageWidget(
                                   vehicleCategories[index].image,
                                   width: 150,
                                 ),

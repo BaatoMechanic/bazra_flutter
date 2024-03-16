@@ -1,9 +1,9 @@
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/double_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../utils/constants/managers/color_manager.dart';
-import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../../shared/utils/constants/managers/color_manager.dart';
+import '../../../../shared/utils/constants/managers/values_manager.dart';
 
 class MenuTile extends ConsumerWidget {
   const MenuTile({

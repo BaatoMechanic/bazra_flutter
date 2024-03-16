@@ -1,8 +1,8 @@
-import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
-import 'package:bato_mechanic/src/common/widgets/form_fields/password_field.dart';
+import 'package:bato_mechanic/src/shared/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/shared/widgets/form_fields/password_field.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

@@ -1,6 +1,6 @@
-import 'package:bato_mechanic/src/features/common/repositories/user_settings_repository.dart';
-import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/common/widgets/user_circle_avatar.dart';
+import 'package:bato_mechanic/src/shared/providers/system_alerts_controller.dart';
+import 'package:bato_mechanic/src/shared/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/shared/widgets/user_circle_avatar.dart';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/home/presentation/screen/home_screen_controller.dart';
 import 'package:bato_mechanic/src/features/home/presentation/widget/service_buttons_grid_shimmer.dart';
@@ -8,24 +8,25 @@ import 'package:bato_mechanic/src/features/mechanic_tips/data/mechanic_tips_repo
 import 'package:bato_mechanic/src/features/mechanic_tips/presentaiton/widgets/tips_carousel_shimmer.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/default_manager.dart';
-import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/default_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/async_value_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/presentaiton/widgets/tips_carousel.dart';
 import 'package:bato_mechanic/src/features/menu/presentation/widgets/user_profile_menu.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../common/providers.dart';
+import '../../../../shared/providers/network_connectivity_checker.dart';
+import '../../../../shared/providers/user_settings.dart';
+import '../../../repair_progress/presentation/screens/repair_progress_screen.dart';
 import '../../../repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 import '../../../services/data/service_type_repository.dart';
-import '../../../repair_progress/presentation/repair_progress_screen.dart';
 import '../widget/service_buttons_grid.dart';
 
 final flipControllerProvider = Provider<FlipCardController>((ref) {
@@ -41,7 +42,7 @@ class BuildHomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // ref.listen(watchRepairRequestProvider,
     //     (previousState, state) => state.showError(context));
-    ref.listen(connectivityStatusProvider, (previous, next) {
+    ref.listen(networkConnectivityCheckerProvider, (previous, next) {
       if (next == NetworkStatus.On) {
         if (ModalRoute.of(context)?.isCurrent != true) {
           Navigator.pop(context);

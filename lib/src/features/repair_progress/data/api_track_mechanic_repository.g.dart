@@ -7,7 +7,7 @@ part of 'api_track_mechanic_repository.dart';
 // **************************************************************************
 
 String _$watchRepairRequestHash() =>
-    r'ec6de86234945cff2dca5fc86313c0557763d562';
+    r'c916a856c6a4ec19048ad8db07c639ea6e3da722';
 
 /// Copied from Dart SDK
 class _SystemHash {

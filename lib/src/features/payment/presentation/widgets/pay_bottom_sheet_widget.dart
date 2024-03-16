@@ -1,5 +1,5 @@
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
 import 'package:flutter/material.dart';
 
 class PayBottomSheetWidget extends StatelessWidget {

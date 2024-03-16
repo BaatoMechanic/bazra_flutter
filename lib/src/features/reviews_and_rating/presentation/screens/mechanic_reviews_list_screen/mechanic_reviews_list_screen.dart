@@ -1,10 +1,10 @@
-import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/shared/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/data/reviews_and_rating_repository.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/reviews_and_rating_shimmer_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/mechanic_review_widget.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MechanicReviewsListScreen extends ConsumerWidget {

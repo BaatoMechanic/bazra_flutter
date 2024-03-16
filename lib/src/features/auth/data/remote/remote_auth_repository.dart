@@ -3,7 +3,7 @@ import 'package:bato_mechanic/src/features/auth/data/remote/api_remote_auth_repo
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../domain/user.dart';
+import '../../../../shared/domain/user.dart';
 import 'fake_remote_auth_repository.dart';
 
 part 'remote_auth_repository.g.dart';

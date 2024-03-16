@@ -7,7 +7,7 @@ part of 'recent_repairs_list_controller.dart';
 // **************************************************************************
 
 String _$fetchUserRecentRepairRequestsHash() =>
-    r'ab8a24a4a100d718ac9e33f0de01c900a586b4d8';
+    r'd771b4265553c83980cc5d42135b53ea74e4e1e8';
 
 /// See also [fetchUserRecentRepairRequests].
 @ProviderFor(fetchUserRecentRepairRequests)

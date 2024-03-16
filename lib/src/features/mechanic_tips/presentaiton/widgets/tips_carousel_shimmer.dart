@@ -1,9 +1,9 @@
-import 'package:bato_mechanic/src/common/widgets/shimmer_widget.dart';
-import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
+import 'package:bato_mechanic/src/shared/widgets/shimmer_widget.dart';
+import 'package:bato_mechanic/src/shared/utils/helpers/device_utility.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/constants/managers/color_manager.dart';
-import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../../shared/utils/constants/managers/color_manager.dart';
+import '../../../../shared/utils/constants/managers/values_manager.dart';
 
 const String title = 'Best Mechanic Tips';
 

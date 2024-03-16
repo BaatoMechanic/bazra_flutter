@@ -3,9 +3,10 @@ import 'package:bato_mechanic/src/features/password_change/presentation/old_pass
 import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/user_profile_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
+import 'package:bato_mechanic/src/features/repair_progress/presentation/screens/repair_progress_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/active_repairs/presentation/active_repairs_list_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen.dart';
-import 'package:bato_mechanic/src/utils/enums/otp_type.dart';
+import 'package:bato_mechanic/src/shared/utils/enums/otp_type.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/login/login_screen.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen.dart';
 import 'package:bato_mechanic/src/features/feedback_and_contact/presentation/feedback_and_contact_screen.dart';
@@ -21,7 +22,6 @@ import 'package:bato_mechanic/src/features/support_chat/presentation/support_cha
 import 'package:go_router/go_router.dart';
 
 import '../features/vehicle_category/presentation/vehicle_category_screen.dart';
-import '../features/repair_progress/presentation/repair_progress_screen.dart';
 
 enum APP_ROUTE {
   categories,

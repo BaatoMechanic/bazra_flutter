@@ -1,5 +1,6 @@
-import 'package:bato_mechanic/src/features/auth/domain/mechanic.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../../shared/domain/mechanic.dart';
 
 part 'mechanic_tip.freezed.dart';
 part 'mechanic_tip.g.dart';

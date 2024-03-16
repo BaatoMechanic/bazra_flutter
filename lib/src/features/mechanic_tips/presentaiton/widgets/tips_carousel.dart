@@ -1,14 +1,14 @@
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
+import 'package:bato_mechanic/src/shared/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bato_mechanic/src/common/widgets/inplace_carousel_widget.dart';
+import 'package:bato_mechanic/src/shared/widgets/inplace_carousel_widget.dart';
 import 'package:bato_mechanic/src/features/mechanic_tips/domain/mechanic_tip/mechanic_tip.dart';
-import 'package:bato_mechanic/src/utils/extensions/double_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/double_extensions.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../utils/constants/managers/color_manager.dart';
-import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../../shared/utils/constants/managers/color_manager.dart';
+import '../../../../shared/utils/constants/managers/values_manager.dart';
 
 const String title = 'Best Mechanic Tips';
 
@@ -45,8 +45,7 @@ class TipsCarousel extends StatelessWidget {
                           'mechanicIdx': item.mechanic.idx,
                         }),
                         // child: Image.network(item.mechanic.idx)
-                        child:
-                            WidgetUtils.renderImage(item.mechanic.profilePic!),
+                        child: ImageWidget(item.mechanic.profilePic!),
                       )
                     : Image.asset(
                         "assets/images/no-profile.png",

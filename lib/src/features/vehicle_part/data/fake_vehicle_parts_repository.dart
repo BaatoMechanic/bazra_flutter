@@ -1,6 +1,6 @@
 import 'package:bato_mechanic/src/features/vehicle_part/domain/vehicle_part/vehicle_part.dart';
 
-import '../../../utils/constants/test_parts.dart';
+import '../../../shared/utils/constants/test_parts.dart';
 import 'vehicle_parts_repository.dart';
 
 class FakeVehiclePartsRepository implements VehiclePartsRepository {

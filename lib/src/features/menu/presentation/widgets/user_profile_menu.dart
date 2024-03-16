@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../shared/providers/user_settings_repository.dart';
+import '../../../../shared/providers/user_settings.dart';
 import '../../../../shared/widgets/butons/submit_button.dart';
 import 'menu_tile_section_widget.dart';
 import 'menu_tile_widget.dart';

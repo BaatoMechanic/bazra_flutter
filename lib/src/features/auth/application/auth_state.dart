@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../domain/user.dart';
+import '../../../shared/domain/user.dart';
 part 'auth_state.g.dart';
 
 class AuthState {

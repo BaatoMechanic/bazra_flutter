@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bato_mechanic/src/shared/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/rating_stars_widget.dart';
-import 'package:bato_mechanic/src/features/core/application/user_service.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/widgets/reviews_and_rating_shimmer_widget.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/build_context_extensions.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/datetime_extensions.dart';
@@ -14,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../shared/utils/constants/managers/color_manager.dart';
 import '../../../../shared/utils/constants/managers/values_manager.dart';
+import '../../../../shared/repositories/user_repository/user_repository.dart';
 
 class MechanicReviewWidget extends ConsumerWidget {
   const MechanicReviewWidget({

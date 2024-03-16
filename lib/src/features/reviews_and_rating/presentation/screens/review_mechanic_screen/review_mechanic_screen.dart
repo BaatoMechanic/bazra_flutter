@@ -10,9 +10,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:bato_mechanic/src/shared/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/shared/widgets/form_fields/description_field.dart';
-import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/shared/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/shared/utils/constants/managers/font_manager.dart';
@@ -20,6 +19,7 @@ import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager
 import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
 
+import '../../../../../shared/repositories/mechanic_repository/mechanic_repository.dart';
 import '../../../../home/presentation/screen/home_screen.dart';
 
 class ReviewMechanicScreen extends ConsumerStatefulWidget {

@@ -4,14 +4,14 @@ import 'package:bato_mechanic/src/features/repair_request/application/providers.
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 
 import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 
-import 'package:bato_mechanic/src/shared/utils/system_alerts_controller.dart';
+import 'package:bato_mechanic/src/shared/providers/system_alerts_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../auth/domain/mechanic.dart';
+import '../../../../shared/domain/mechanic.dart';
 import 'request_mechanic_state.dart';
 
 part 'request_mechanic_screen_controller.g.dart';

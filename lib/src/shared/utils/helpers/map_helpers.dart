@@ -1,6 +1,7 @@
-import 'package:bato_mechanic/src/features/core/data/map_repository/fake_map_repository.dart';
-import 'package:bato_mechanic/src/features/core/domain/user_position/user_position.dart';
+import 'package:bato_mechanic/src/shared/repositories/map_repository/fake_map_repository.dart';
 import 'package:geolocator/geolocator.dart';
+
+import '../../domain/user_position.dart';
 
 class MapHelper {
   static Future<UserPosition?> getUserLocation() async {

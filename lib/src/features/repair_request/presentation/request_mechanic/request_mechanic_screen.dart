@@ -8,7 +8,7 @@ import 'package:bato_mechanic/src/shared/utils/extensions/async_value_extensions
 
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/shared/utils/system_alerts_controller.dart';
+import 'package:bato_mechanic/src/shared/providers/system_alerts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

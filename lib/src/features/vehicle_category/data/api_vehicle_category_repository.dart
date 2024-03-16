@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:bato_mechanic/src/features/vehicle_category/domain/vehicle_category/vehicle_category.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../shared/providers/user_settings_repository.dart';
+import '../../../shared/providers/user_settings.dart';
 import '../../../shared/utils/constants/managers/api_values_manager.dart';
 import '../../../shared/utils/http/http_client.dart';
 import 'vehicle_category_repository.dart';

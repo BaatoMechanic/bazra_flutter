@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
 import 'flavors.dart';
-import 'src/shared/providers/user_settings_repository.dart';
+import 'src/shared/providers/user_settings.dart';
 
 final logger = BMLogger().logger;
 

@@ -9,7 +9,7 @@ import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart'
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 
-import '../../providers/user_settings_repository.dart';
+import '../../providers/user_settings.dart';
 
 class HttpHelper {
   static Future<dynamic> guard(

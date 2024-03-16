@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'flavors.dart';
-import 'src/shared/providers/user_settings_repository.dart';
+import 'src/shared/providers/user_settings.dart';
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});

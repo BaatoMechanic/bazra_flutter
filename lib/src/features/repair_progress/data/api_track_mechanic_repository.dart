@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:bato_mechanic/src/features/core/domain/user_position/user_position.dart';
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/features/repair_progress/data/track_mechanic_repository.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/auto_dispose_provider_extensions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import '../../../shared/domain/user_position.dart';
 import '../../../shared/utils/constants/managers/api_values_manager.dart';
 part 'api_track_mechanic_repository.g.dart';
 

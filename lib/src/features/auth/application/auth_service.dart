@@ -3,7 +3,7 @@ import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../shared/providers/user_settings_repository.dart';
+import '../../../shared/providers/user_settings.dart';
 import '../data/remote/remote_auth_repository.dart';
 
 part 'auth_service.g.dart';

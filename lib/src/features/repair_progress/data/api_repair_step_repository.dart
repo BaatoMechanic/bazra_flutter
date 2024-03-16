@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:bato_mechanic/src/shared/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../shared/providers/user_settings_repository.dart';
+import '../../../shared/providers/user_settings.dart';
 import '../../../shared/utils/constants/managers/api_values_manager.dart';
 import 'repair_step_repository.dart';
 import 'package:http/http.dart' as http;

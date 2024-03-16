@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
+import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';
 import 'package:bato_mechanic/src/shared/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';

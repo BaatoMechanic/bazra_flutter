@@ -13,7 +13,7 @@ import '../../../../shared/utils/constants/managers/style_manager.dart';
 import '../../../../shared/utils/constants/managers/values_manager.dart';
 import '../../../../shared/utils/enums/repair_setp_status.dart';
 import '../../domain/repair_step.dart';
-import '../repair_progress_screen_controller.dart';
+import '../screens/repair_progress_screen_controller.dart';
 
 class RepairStepBottomSheet extends ConsumerWidget {
   const RepairStepBottomSheet({

@@ -5,7 +5,7 @@ import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../system_alerts_controller.dart';
+import '../../providers/system_alerts_controller.dart';
 
 class ToastHelper {
   static showLoading(BuildContext ctx) {

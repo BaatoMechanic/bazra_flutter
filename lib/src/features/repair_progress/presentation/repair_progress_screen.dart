@@ -99,248 +99,171 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
             appBar: AppBar(
               title: const Center(child: Text('Track Mechanic')),
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: [
-                        if (repairRequest.assignedMechanicIdx != null)
-                          AsyncValueWidget(
-                            value: ref.watch(fetchMechanicInfoProvider(
-                                repairRequest.assignedMechanicIdx!)),
-                            data: (assignedMechanic) => Column(
-                              children: [
-                                TextButton(
-                                  onPressed: () => context.pushNamed(
-                                      APP_ROUTE.mechanicProfile.name,
-                                      extra: {
-                                        'mechanicIdx': assignedMechanic.idx
-                                      }),
-                                  style:
-                                      Theme.of(context).textButtonTheme.style,
-                                  child: Text(
-                                    assignedMechanic.name,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge!
-                                        .copyWith(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            backgroundColor:
-                                                ThemeColor.transparent),
+            body: RefreshIndicator(
+              onRefresh: () => ref.refresh(
+                  watchRepairRequestProvider(widget.repairRequestIdx).future),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          if (repairRequest.assignedMechanicIdx != null)
+                            AsyncValueWidget(
+                              value: ref.watch(fetchMechanicInfoProvider(
+                                  repairRequest.assignedMechanicIdx!)),
+                              data: (assignedMechanic) => Column(
+                                children: [
+                                  TextButton(
+                                    onPressed: () => context.pushNamed(
+                                        APP_ROUTE.mechanicProfile.name,
+                                        extra: {
+                                          'mechanicIdx': assignedMechanic.idx
+                                        }),
+                                    style:
+                                        Theme.of(context).textButtonTheme.style,
+                                    child: Text(
+                                      assignedMechanic.name,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineLarge!
+                                          .copyWith(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              backgroundColor:
+                                                  ThemeColor.transparent),
+                                    ),
                                   ),
-                                ),
-                                if (repairRequest.status ==
-                                    VehicleRepairRequestStatus
-                                        .WAITING_FOR_MECHANIC)
-                                  Column(
-                                    children: [
-                                      const SizedBox(height: 4),
-                                      AsyncValueWidget(
-                                        value: ref.watch(
-                                            watchRepairRequestMechanicLocationProvider(
-                                                repairRequest.idx)),
-                                        data: (location) => Text(
-                                          location.locationName ??
-                                              "Place: Unknown".hardcoded(),
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                if (repairRequest.status ==
-                                    VehicleRepairRequestStatus
-                                        .WAITING_FOR_MECHANIC)
-                                  Column(
-                                    children: [
-                                      const SizedBox(height: 16),
-                                      AsyncValueWidget(
-                                        value: ref.watch(
-                                            watchRepairRequestMechanicLocationProvider(
-                                                repairRequest.idx)),
-                                        data: (location) => AnimatedContainer(
-                                          duration:
-                                              const Duration(milliseconds: 120),
-                                          height: _showBigScreenMap
-                                              ? MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.75
-                                              : 400,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                            child: _showMechanicTrackMap(
-                                              context,
-                                              routeValue.value?[
-                                                      "routeCoordinates"] ??
-                                                  [],
+                                  if (repairRequest.status ==
+                                      VehicleRepairRequestStatus
+                                          .WAITING_FOR_MECHANIC)
+                                    Column(
+                                      children: [
+                                        const SizedBox(height: 4),
+                                        AsyncValueWidget(
+                                          value: ref.watch(
+                                              watchRepairRequestMechanicLocationProvider(
+                                                  repairRequest.idx)),
+                                          data: (location) => Text(
+                                            location.locationName ??
+                                                "Place: Unknown".hardcoded(),
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                    if (repairRequest.status ==
-                        VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
-                      Column(
-                        children: [
-                          const SizedBox(height: 20),
-                          AsyncValueWidget(
-                            value: ref.watch(
-                                fetchRepairRequestServiceTypeProvider(
-                                    repairRequest.idx)),
-                            data: (service) => Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.all(8),
-                                  padding: const EdgeInsets.all(8),
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.amberAccent[200],
-                                    borderRadius: BorderRadius.circular(
-                                      20,
+                                      ],
                                     ),
-                                  ),
-                                  child: service.icon != null
-                                      ? Icon(service.icon)
-                                      : Image.asset(
-                                          'assets/images/parts/wheel.png',
-                                        ),
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                    text:
-                                        'Estimated Arrival Time: '.hardcoded(),
-                                    style: const TextStyle().copyWith(
-                                      color: context.isDarkMode
-                                          ? ThemeColor.white
-                                          : ThemeColor.black,
-                                    ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: BaatoDateFormatter
-                                            .formatSecondsToGeneric(
-                                                routeValue.value?["duration"] ??
-                                                    -1),
-                                        style: const TextStyle(
-                                          color: ThemeColor.primary,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ListTile(
-                      title: Text(
-                        repairRequest.title ?? "No title provided",
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                      subtitle: Text(
-                        repairRequest.description ?? "No description provided",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 8.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Status",
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Flexible(
-                            child: Text(
-                              repairRequest.status.humanizeName,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: ThemeColor.primary,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 8.0,
-                        ),
-                        child: (repairRequest.advancePaymentStatus !=
-                                    AdvancePaymentStatus.COMPLETE &&
-                                repairRequest.advanceCharge != null)
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Flexible(
-                                    flex: 4,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                  if (repairRequest.status ==
+                                      VehicleRepairRequestStatus
+                                          .WAITING_FOR_MECHANIC)
+                                    Column(
                                       children: [
-                                        Text(
-                                          'Mechanic baato karcha',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                                        const SizedBox(height: 16),
+                                        AsyncValueWidget(
+                                          value: ref.watch(
+                                              watchRepairRequestMechanicLocationProvider(
+                                                  repairRequest.idx)),
+                                          data: (location) => AnimatedContainer(
+                                            duration: const Duration(
+                                                milliseconds: 120),
+                                            height: _showBigScreenMap
+                                                ? MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.75
+                                                : 400,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              child: _showMechanicTrackMap(
+                                                context,
+                                                routeValue.value?[
+                                                        "routeCoordinates"] ??
+                                                    [],
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                        Text(
-                                          'Khaana included',
-                                          style: TextStyle(
+                                      ],
+                                    ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                      if (repairRequest.status ==
+                          VehicleRepairRequestStatus.WAITING_FOR_MECHANIC)
+                        Column(
+                          children: [
+                            const SizedBox(height: 20),
+                            AsyncValueWidget(
+                              value: ref.watch(
+                                  fetchRepairRequestServiceTypeProvider(
+                                      repairRequest.idx)),
+                              data: (service) => Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.amberAccent[200],
+                                      borderRadius: BorderRadius.circular(
+                                        20,
+                                      ),
+                                    ),
+                                    child: service.icon != null
+                                        ? Icon(service.icon)
+                                        : Image.asset(
+                                            'assets/images/parts/wheel.png',
+                                          ),
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      text: 'Estimated Arrival Time: '
+                                          .hardcoded(),
+                                      style: const TextStyle().copyWith(
+                                        color: context.isDarkMode
+                                            ? ThemeColor.white
+                                            : ThemeColor.black,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: BaatoDateFormatter
+                                              .formatSecondsToGeneric(routeValue
+                                                      .value?["duration"] ??
+                                                  -1),
+                                          style: const TextStyle(
+                                            color: ThemeColor.primary,
+                                            fontWeight: FontWeight.bold,
                                             fontSize: 14,
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: Text(
-                                      'Rs. ${repairRequest.advanceCharge}',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: ThemeColor.primary,
-                                      ),
-                                    ),
-                                  ),
+                                  )
                                 ],
-                              )
-                            : const SizedBox.shrink()),
-                    if (repairRequest.advancePaymentStatus ==
-                        AdvancePaymentStatus.PAYMENT_ON_ARRIVAL)
+                              ),
+                            ),
+                          ],
+                        ),
+                      ListTile(
+                        title: Text(
+                          repairRequest.title ?? "No title provided",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        subtitle: Text(
+                          repairRequest.description ??
+                              "No description provided",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16.0,
@@ -350,7 +273,7 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              "Baato Kharcha",
+                              "Status",
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 fontSize: 16,
@@ -359,7 +282,7 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                             ),
                             Flexible(
                               child: Text(
-                                repairRequest.advancePaymentStatus.humanizeName,
+                                repairRequest.status.humanizeName,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -370,46 +293,131 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                           ],
                         ),
                       ),
-                    const SizedBox(
-                      height: AppHeight.h12,
-                    ),
-                    if (repairRequest.status ==
-                        VehicleRepairRequestStatus.WAITING_FOR_ADVANCE_PAYMENT)
-                      ..._buildBaatoKharcha(context, repairRequest.idx)
-                    else if (repairRequest.status ==
-                        VehicleRepairRequestStatus.COMPLETE)
-                      SubmitButton(
-                        showSpinner: false,
-                        label: 'Review Mechanic'.hardcoded(),
-                        onPressed: () => context
-                            .pushNamed(APP_ROUTE.reviewMechanic.name, extra: {
-                          "repairRequestIdx": repairRequest.idx,
-                          "mechanicIdx": repairRequest.assignedMechanicIdx,
-                        }),
-                      )
-                    else if (repairRequest.status ==
-                        VehicleRepairRequestStatus.IN_PROGRESS)
+                      const SizedBox(
+                        height: 30,
+                      ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 8.0,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Repair Steps".hardcoded(),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                          child: (repairRequest.advancePaymentStatus !=
+                                      AdvancePaymentStatus.COMPLETE &&
+                                  repairRequest.advanceCharge != null)
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Flexible(
+                                      flex: 4,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Mechanic baato karcha',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Khaana included',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 1,
+                                      child: Text(
+                                        'Rs. ${repairRequest.advanceCharge}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: ThemeColor.primary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox.shrink()),
+                      if (repairRequest.advancePaymentStatus ==
+                          AdvancePaymentStatus.PAYMENT_ON_ARRIVAL)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Baato Kharcha",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            RepairStepsWidget(
-                                repairRequestIdx: repairRequest.idx)
-                          ],
+                              Flexible(
+                                child: Text(
+                                  repairRequest
+                                      .advancePaymentStatus.humanizeName,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: ThemeColor.primary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      )
-                  ],
+                      const SizedBox(
+                        height: AppHeight.h12,
+                      ),
+                      if (repairRequest.status ==
+                          VehicleRepairRequestStatus
+                              .WAITING_FOR_ADVANCE_PAYMENT)
+                        ..._buildBaatoKharcha(context, repairRequest.idx)
+                      else if (repairRequest.status ==
+                          VehicleRepairRequestStatus.COMPLETE)
+                        SubmitButton(
+                          showSpinner: false,
+                          label: 'Review Mechanic'.hardcoded(),
+                          onPressed: () => context
+                              .pushNamed(APP_ROUTE.reviewMechanic.name, extra: {
+                            "repairRequestIdx": repairRequest.idx,
+                            "mechanicIdx": repairRequest.assignedMechanicIdx,
+                          }),
+                        )
+                      else if (repairRequest.status ==
+                          VehicleRepairRequestStatus.IN_PROGRESS)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Repair Steps".hardcoded(),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              RepairStepsWidget(
+                                  repairRequestIdx: repairRequest.idx)
+                            ],
+                          ),
+                        )
+                    ],
+                  ),
                 ),
               ),
             ),

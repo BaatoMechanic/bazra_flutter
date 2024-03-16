@@ -2,12 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
-import 'package:bato_mechanic/src/utils/http/http_client.dart';
+import 'package:bato_mechanic/src/shared/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../utils/constants/managers/api_values_manager.dart';
-
-import '../../../common/repositories/user_settings_repository.dart';
+import '../../../../shared/providers/user_settings_repository.dart';
+import '../../../../shared/utils/constants/managers/api_values_manager.dart';
 import '../../../auth/domain/user.dart';
 import 'user_repository.dart';
 import 'package:http/http.dart' as http;

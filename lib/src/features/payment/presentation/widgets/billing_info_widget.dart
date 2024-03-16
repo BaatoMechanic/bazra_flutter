@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../utils/constants/managers/color_manager.dart';
-import '../../../../utils/constants/managers/font_manager.dart';
-import '../../../../utils/constants/managers/style_manager.dart';
-import '../../../../utils/constants/managers/values_manager.dart';
+import '../../../../shared/utils/constants/managers/color_manager.dart';
+import '../../../../shared/utils/constants/managers/font_manager.dart';
+import '../../../../shared/utils/constants/managers/style_manager.dart';
+import '../../../../shared/utils/constants/managers/values_manager.dart';
 
 class BillingInfoWidget extends StatefulWidget {
   const BillingInfoWidget({Key? key}) : super(key: key);

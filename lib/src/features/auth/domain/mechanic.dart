@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:bato_mechanic/src/features/core/domain/abstract_user_model.dart';
-import '../../../utils/enums/dob_type.dart';
+import '../../../shared/utils/enums/dob_type.dart';
 
 part 'mechanic.freezed.dart';
 part 'mechanic.g.dart';

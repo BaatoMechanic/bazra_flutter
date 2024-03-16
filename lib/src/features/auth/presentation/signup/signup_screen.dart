@@ -1,21 +1,21 @@
-import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
-import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
-import 'package:bato_mechanic/src/common/widgets/form_fields/password_field.dart';
-import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/shared/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/shared/widgets/form_fields/baato_text_field.dart';
+import 'package:bato_mechanic/src/shared/widgets/form_fields/password_field.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/async_value_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/features/auth/presentation/signup/signup_screen_controller.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../common/widgets/butons/facebook_button.dart';
-import '../../../../common/widgets/butons/google_button.dart';
-import '../../../../common/widgets/form_fields/divider_field.dart';
-import '../../../../common/widgets/form_fields/id_field.dart';
-import '../../../../utils/constants/managers/default_manager.dart';
+import '../../../../shared/widgets/butons/facebook_button.dart';
+import '../../../../shared/widgets/butons/google_button.dart';
+import '../../../../shared/widgets/form_fields/divider_field.dart';
+import '../../../../shared/widgets/form_fields/id_field.dart';
+import '../../../../shared/utils/constants/managers/default_manager.dart';
 import '../widgets/login_signup_label.dart';
 
 class SignUpScreen extends ConsumerWidget {

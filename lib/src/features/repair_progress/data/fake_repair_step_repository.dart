@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:bato_mechanic/src/utils/model_utils.dart';
-
 import 'repair_step_repository.dart';
 
 class FakeRepairStepRepository extends RepairStepRepository {
@@ -9,32 +7,29 @@ class FakeRepairStepRepository extends RepairStepRepository {
   Future fetchRepairSteps(String repairStepIdx) async {
     return await Future.delayed(
       const Duration(seconds: 2),
-      () => Success(
-        code: 200,
-        response: jsonEncode(
-          [
-            {
-              "idx": "Mny3256qjXQtRPCkpUVTn6",
-              "name": "Inception",
-              "text_description": "Did the inception",
-              "audio_description": null,
-              "status": "pending",
-              "report": {
-                "idx": "ek8YjiGrjgArEF7YX6t9GK",
-                "bill_images": [
-                  {
-                    "idx": "DMCNzJ6svpWmBiAc4To4Ck",
-                    "image": "assets/images/vehicle/bus.png"
-                  },
-                  {
-                    "idx": "XfSqdMrvV75FNYfUkWHkJK",
-                    "image": "assets/images/vehicle/car.png"
-                  }
-                ]
-              }
+      () => jsonEncode(
+        [
+          {
+            "idx": "Mny3256qjXQtRPCkpUVTn6",
+            "name": "Inception",
+            "text_description": "Did the inception",
+            "audio_description": null,
+            "status": "pending",
+            "report": {
+              "idx": "ek8YjiGrjgArEF7YX6t9GK",
+              "bill_images": [
+                {
+                  "idx": "DMCNzJ6svpWmBiAc4To4Ck",
+                  "image": "assets/images/vehicle/bus.png"
+                },
+                {
+                  "idx": "XfSqdMrvV75FNYfUkWHkJK",
+                  "image": "assets/images/vehicle/car.png"
+                }
+              ]
             }
-          ],
-        ),
+          }
+        ],
       ),
     );
   }
@@ -44,30 +39,27 @@ class FakeRepairStepRepository extends RepairStepRepository {
       String repairRequestIdx, String repairStepIdx, String status) async {
     return Future.delayed(
       const Duration(seconds: 2),
-      () => Success(
-        code: 200,
-        response: jsonEncode(
-          {
-            "idx": "Mny3256qjXQtRPCkpUVTn6",
-            "name": "Inception",
-            "text_description": "Did the inception",
-            "audio_description": null,
-            "status": "completed",
-            "report": {
-              "idx": "ek8YjiGrjgArEF7YX6t9GK",
-              "bill_images": [
-                {
-                  "idx": "DMCNzJ6svpWmBiAc4To4Ck",
-                  "image": "assets/images/vehicle/car.png"
-                },
-                {
-                  "idx": "XfSqdMrvV75FNYfUkWHkJK",
-                  "image": "assets/images/vehicle/bus.png"
-                }
-              ]
-            }
-          },
-        ),
+      () => jsonEncode(
+        {
+          "idx": "Mny3256qjXQtRPCkpUVTn6",
+          "name": "Inception",
+          "text_description": "Did the inception",
+          "audio_description": null,
+          "status": "completed",
+          "report": {
+            "idx": "ek8YjiGrjgArEF7YX6t9GK",
+            "bill_images": [
+              {
+                "idx": "DMCNzJ6svpWmBiAc4To4Ck",
+                "image": "assets/images/vehicle/car.png"
+              },
+              {
+                "idx": "XfSqdMrvV75FNYfUkWHkJK",
+                "image": "assets/images/vehicle/bus.png"
+              }
+            ]
+          }
+        },
       ),
     );
   }

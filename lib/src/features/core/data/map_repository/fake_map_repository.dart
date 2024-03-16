@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bato_mechanic/src/shared/utils/exceptions/base_exception.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../utils/constants/managers/strings_manager.dart';
-import '../../../../utils/constants/managers/values_manager.dart';
-import '../../../../utils/model_utils.dart';
+import '../../../../shared/utils/constants/managers/strings_manager.dart';
+import '../../../../shared/utils/constants/managers/values_manager.dart';
 import 'map_repository.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -36,35 +36,26 @@ class FakeMapRepository implements MapRepository {
       var response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        return Success(
-          code: response.statusCode,
-          response:
-              jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>,
-        );
+        return jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
       }
-      return Failure(
-        code: ApiStatusCode.invalidResponse,
+      return BaseException(
         stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.invalidResponseString,
+        message: ApiStrings.invalidResponseString,
       );
     } on HttpException {
-      return Failure(
-        code: ApiStatusCode.httpError,
+      return BaseException(
         stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.noInternetString,
+        message: ApiStrings.noInternetString,
       );
     } on FormatException {
-      return Failure(
-        code: ApiStatusCode.invalidResponse,
+      return BaseException(
         stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.invalidFormatString,
+        message: ApiStrings.invalidFormatString,
       );
     } catch (e) {
-      return Failure(
-        code: ApiStatusCode.unknownError,
-        stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.unknownErrorString,
-      );
+      throw BaseException(
+          message: ApiStrings.unknownErrorString,
+          stackTrace: StackTrace.current);
     }
   }
 
@@ -75,33 +66,26 @@ class FakeMapRepository implements MapRepository {
           'https://nominatim.openstreetmap.org/reverse?format=json&lat=$latitude&lon=$longitude&zoom=18&addressdetails=1&accept-language=en';
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == ApiStatusCode.responseSuccess) {
-        return Success(
-          code: response.statusCode,
-          response: json.decode(response.body)['display_name'],
-        );
+        return json.decode(response.body)['display_name'];
       }
-      return Failure(
-        code: ApiStatusCode.invalidResponse,
+      throw BaseException(
         stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.invalidResponseString,
+        message: ApiStrings.invalidResponseString,
       );
     } on HttpException {
-      return Failure(
-        code: ApiStatusCode.httpError,
+      throw BaseException(
         stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.noInternetString,
+        message: ApiStrings.noInternetString,
       );
     } on FormatException {
-      return Failure(
-        code: ApiStatusCode.invalidResponse,
+      throw BaseException(
         stackTrace: StackTrace.current,
-        errorResponse: ApiStrings.invalidFormatString,
+        message: ApiStrings.invalidFormatString,
       );
     } catch (e, st) {
-      return Failure(
-        code: ApiStatusCode.unknownError,
+      throw BaseException(
         stackTrace: st,
-        errorResponse: ApiStrings.unknownErrorString,
+        message: ApiStrings.unknownErrorString,
       );
     }
   }

@@ -1,4 +1,4 @@
-import 'package:bato_mechanic/src/utils/enums/dob_type.dart';
+import 'package:bato_mechanic/src/shared/utils/enums/dob_type.dart';
 
 abstract class AbstractUserModel {
   final String idx;

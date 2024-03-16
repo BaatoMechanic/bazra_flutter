@@ -9,7 +9,7 @@ import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../utils/enums/repair_setp_status.dart';
+import '../../../shared/utils/enums/repair_setp_status.dart';
 import '../domain/repair_step.dart';
 part 'repair_progress_screen_controller.g.dart';
 

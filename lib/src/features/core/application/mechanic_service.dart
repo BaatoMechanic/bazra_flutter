@@ -3,8 +3,6 @@ import 'package:bato_mechanic/src/features/core/data/user_repository/user_reposi
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bato_mechanic/src/utils/in_memory_store.dart';
-
 import "package:latlong2/latlong.dart";
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../auth/domain/user.dart';
@@ -21,7 +19,6 @@ class MechanicService {
     required this.ref,
   });
 
-  final _mechanicState = InMemoryStore<User?>(null);
   final Ref ref;
 
   // Future<void> fetchAssignedMechanic(String mechanicIdx) async {
@@ -42,14 +39,11 @@ class MechanicService {
     };
     return await ref.read(userRepositoryProvider).rateAndReviewUser(body);
   }
-
-  void dispose() => _mechanicState.close();
 }
 
 @riverpod
 MechanicService mechanicService(MechanicServiceRef ref) {
   final service = MechanicService(ref: ref);
-  ref.onDispose(() => service.dispose());
   return service;
 }
 

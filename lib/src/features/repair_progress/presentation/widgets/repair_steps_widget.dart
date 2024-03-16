@@ -3,7 +3,7 @@ import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_req
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common/widgets/async_value_widget.dart';
+import '../../../../shared/widgets/async_value_widget.dart';
 import 'repair_step_widget.dart';
 
 class RepairStepsWidget extends ConsumerWidget {

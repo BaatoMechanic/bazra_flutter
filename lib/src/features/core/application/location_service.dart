@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../utils/model_utils.dart';
-
 part 'location_service.g.dart';
 
 class LocationService {
@@ -57,14 +55,7 @@ class LocationService {
   fetchLocationName(double lat, double lon) async {
     var response =
         await ref.read(mapRepositoryProvider).fetchLocationName(lat, lon);
-
-    if (response is Success) {
-      return response.response;
-    }
-
-    if (response is Failure) {}
-
-    return null;
+    return response;
   }
 }
 

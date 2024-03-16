@@ -5,9 +5,9 @@ import 'package:bato_mechanic/src/features/core/data/mechanic_repository/mechani
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../common/repositories/user_settings_repository.dart';
-import '../../../../utils/constants/managers/api_values_manager.dart';
-import '../../../../utils/http/http_client.dart';
+import '../../../../shared/providers/user_settings_repository.dart';
+import '../../../../shared/utils/constants/managers/api_values_manager.dart';
+import '../../../../shared/utils/http/http_client.dart';
 import 'package:http/http.dart' as http;
 
 class APIMechanicRepository extends MechanicRepository {

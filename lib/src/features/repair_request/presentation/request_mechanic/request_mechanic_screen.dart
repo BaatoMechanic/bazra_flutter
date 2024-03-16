@@ -1,22 +1,22 @@
 import 'dart:io';
 
-import 'package:bato_mechanic/src/common/widgets/form_fields/baato_text_field.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:bato_mechanic/src/utils/helpers/device_utility.dart';
-import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
+import 'package:bato_mechanic/src/shared/widgets/form_fields/baato_text_field.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/helpers/device_utility.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/async_value_extensions.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/presentation/request_mechanic/request_mechanic_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/system_alerts_controller.dart';
+import 'package:bato_mechanic/src/shared/utils/system_alerts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../../common/widgets/form_fields/description_field.dart';
-import '../../../../utils/helpers/toast_helper.dart';
+import '../../../../shared/widgets/form_fields/description_field.dart';
+import '../../../../shared/utils/helpers/toast_helper.dart';
 
 import '../../../search_map/presentation/widget/map_search_widget.dart';
 

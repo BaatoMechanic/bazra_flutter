@@ -1,5 +1,5 @@
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
-import 'package:bato_mechanic/src/utils/constants/test_mechanics.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/test_mechanics.dart';
 import 'package:bato_mechanic/src/features/core/data/mechanic_repository/mechanic_repository.dart';
 
 import '../../../auth/domain/mechanic.dart';

@@ -1,6 +1,6 @@
 import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/repair_steps_widget.dart';
-import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/enum_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/build_context_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/enum_extensions.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -10,25 +10,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
-import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
-import 'package:bato_mechanic/src/common/widgets/butons/esewa_button.dart';
-import 'package:bato_mechanic/src/common/widgets/butons/khalti_button.dart';
-import 'package:bato_mechanic/src/common/widgets/butons/pay_button.dart';
-import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/shared/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/shared/widgets/butons/esewa_button.dart';
+import 'package:bato_mechanic/src/shared/widgets/butons/khalti_button.dart';
+import 'package:bato_mechanic/src/shared/widgets/butons/pay_button.dart';
+import 'package:bato_mechanic/src/shared/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/payment/presentation/widgets/pay_bottom_sheet_widget.dart';
 import 'package:bato_mechanic/src/features/core/application/location_service.dart';
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request/vehicle_repair_request.dart';
 
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/utils/foramtters/date_formatter.dart';
-import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/shared/utils/foramtters/date_formatter.dart';
+import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
 
-import '../../../common/widgets/flutter_map/control_buttons/control_buttons.dart';
-import '../../../common/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
+import '../../../shared/widgets/flutter_map/control_buttons/control_buttons.dart';
+import '../../../shared/widgets/flutter_map/scale_layer/scale_layer_plugin_option.dart';
 import '../../services/data/service_type_repository.dart';
 import '../data/api_track_mechanic_repository.dart';
 import 'repair_progress_screen_controller.dart';

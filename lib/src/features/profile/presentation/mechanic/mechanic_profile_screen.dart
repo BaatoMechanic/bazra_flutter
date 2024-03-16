@@ -1,15 +1,15 @@
 import 'package:bato_mechanic/src/features/core/application/mechanic_service.dart';
-import 'package:bato_mechanic/src/utils/extensions/build_context_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:bato_mechanic/src/common/widgets/async_value_widget.dart';
+import 'package:bato_mechanic/src/shared/widgets/async_value_widget.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/color_manager.dart';
-import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
-import 'package:bato_mechanic/src/utils/extensions/async_value_extensions.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/color_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/async_value_extensions.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 
 import '../../../reviews_and_rating/data/reviews_and_rating_repository.dart';
 import '../../../reviews_and_rating/presentation/widgets/mechanic_review_widget.dart';

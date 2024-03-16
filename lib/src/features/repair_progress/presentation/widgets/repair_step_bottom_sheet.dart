@@ -1,17 +1,17 @@
-import 'package:bato_mechanic/src/common/widgets/butons/submit_button.dart';
+import 'package:bato_mechanic/src/shared/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/features/repair_progress/domain/repair_step_report.dart';
-import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
-import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
-import 'package:bato_mechanic/src/utils/helpers/utility_widgets.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
+import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/shared/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../common/widgets/audio_widget.dart';
-import '../../../../utils/constants/managers/font_manager.dart';
-import '../../../../utils/constants/managers/style_manager.dart';
-import '../../../../utils/constants/managers/values_manager.dart';
-import '../../../../utils/enums/repair_setp_status.dart';
+import '../../../../shared/widgets/audio_widget.dart';
+import '../../../../shared/utils/constants/managers/font_manager.dart';
+import '../../../../shared/utils/constants/managers/style_manager.dart';
+import '../../../../shared/utils/constants/managers/values_manager.dart';
+import '../../../../shared/utils/enums/repair_setp_status.dart';
 import '../../domain/repair_step.dart';
 import '../repair_progress_screen_controller.dart';
 
@@ -140,7 +140,7 @@ Widget _buildReportImage(String url) {
     child: SizedBox(
       width: AppWidth.h75,
       height: AppWidth.h200,
-      child: WidgetUtils.renderImage(url),
+      child: ImageWidget(url),
     ),
   );
 }

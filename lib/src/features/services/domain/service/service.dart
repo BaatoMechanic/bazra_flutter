@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../../../utils/enums/service_type_options.dart';
+import '../../../../shared/utils/enums/service_type_options.dart';
 
 part 'service.freezed.dart';
 part 'service.g.dart';

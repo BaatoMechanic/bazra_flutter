@@ -20,6 +20,8 @@ import 'package:bato_mechanic/src/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/utils/helpers/toast_helper.dart';
 
+import '../../../../home/presentation/screen/home_screen.dart';
+
 class ReviewMechanicScreen extends ConsumerStatefulWidget {
   const ReviewMechanicScreen({
     super.key,
@@ -249,7 +251,7 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
           context,
           'Thank you for the review'.hardcoded(),
         );
-        // ref.read(flipControllerProvider).toggleCardWithoutAnimation();
+        ref.read(flipControllerProvider).toggleCardWithoutAnimation();
         context.goNamed(APP_ROUTE.home.name);
       }
     }

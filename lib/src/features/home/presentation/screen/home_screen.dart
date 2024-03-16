@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../common/providers.dart';
 import '../../../repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 import '../../../services/data/service_type_repository.dart';
 import '../../../repair_progress/presentation/repair_progress_screen.dart';
@@ -40,6 +41,17 @@ class BuildHomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // ref.listen(watchRepairRequestProvider,
     //     (previousState, state) => state.showError(context));
+    ref.listen(connectivityStatusProvider, (previous, next) {
+      if (next == NetworkStatus.On) {
+        if (ModalRoute.of(context)?.isCurrent != true) {
+          Navigator.pop(context);
+        }
+      }
+      if (next == NetworkStatus.Off) {
+        String message = "No Internet Connection".hardcoded();
+        ToastHelper.showCenterAlert(context, message);
+      }
+    });
 
     final activeRepair = ref.watch(activeRepairRequestProvider);
     return FlipCard(

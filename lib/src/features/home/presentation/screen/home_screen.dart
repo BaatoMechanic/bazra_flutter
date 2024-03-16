@@ -238,80 +238,85 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
             ],
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                if (_loadingData)
-                  LinearProgressIndicator(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                        Colors.grey,
-                      )),
-                Stack(
-                  children: [
-                    Container(
-                      height: AppHeight.h150,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft:
-                                Radius.circular(DefaultManager.borderRadiusMd),
-                            bottomRight:
-                                Radius.circular(DefaultManager.borderRadiusMd)),
+          body: RefreshIndicator(
+            onRefresh: () => ref.refresh(fetchAllServiceTypesProvider.future),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  if (_loadingData)
+                    LinearProgressIndicator(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                          Colors.grey,
+                        )),
+                  Stack(
+                    children: [
+                      Container(
+                        height: AppHeight.h150,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(
+                                  DefaultManager.borderRadiusMd),
+                              bottomRight: Radius.circular(
+                                  DefaultManager.borderRadiusMd)),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppPadding.p16,
-                        vertical: AppPadding.p12,
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: AppHeight.h40,
-                            child: SearchBar(
-                              controller: _searchTextController,
-                              focusNode: _searchFocusNode,
-                              hintText: 'Search'.hardcoded(),
-                              leading: const Icon(Icons.search,
-                                  color: ThemeColor.dark),
-                              onChanged: (value) {
-                                _searchTextController.text = value;
-                              },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppPadding.p16,
+                          vertical: AppPadding.p12,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: AppHeight.h40,
+                              child: SearchBar(
+                                controller: _searchTextController,
+                                focusNode: _searchFocusNode,
+                                hintText: 'Search'.hardcoded(),
+                                leading: const Icon(Icons.search,
+                                    color: ThemeColor.dark),
+                                onChanged: (value) {
+                                  _searchTextController.text = value;
+                                },
+                              ),
                             ),
-                          ),
-                          if (mechanicTipsVAlue.hasValue &&
-                              mechanicTipsVAlue.value != null &&
-                              mechanicTipsVAlue.value!.isNotEmpty)
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: AppPadding.p24),
-                              child: Consumer(builder: (context, ref, child) {
-                                return AsyncValueWidget(
-                                  loadingShimmer: const TipsCarouselShimmer(),
-                                  value: mechanicTipsVAlue,
-                                  data: (tips) => TipsCarousel(
-                                    tips: tips,
-                                  ),
-                                );
-                              }),
-                            )
-                        ],
+                            if (mechanicTipsVAlue.hasValue &&
+                                mechanicTipsVAlue.value != null &&
+                                mechanicTipsVAlue.value!.isNotEmpty)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: AppPadding.p24),
+                                child: Consumer(builder: (context, ref, child) {
+                                  return AsyncValueWidget(
+                                    loadingShimmer: const TipsCarouselShimmer(),
+                                    value: mechanicTipsVAlue,
+                                    data: (tips) => TipsCarousel(
+                                      tips: tips,
+                                    ),
+                                  );
+                                }),
+                              )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Consumer(builder: (context, ref, child) {
-                  final servicesValue = ref.watch(fetchAllServiceTypesProvider);
-                  return AsyncValueWidget(
-                    loadingShimmer: const ServiceButtonsGridShimmerWidget(),
-                    value: servicesValue,
-                    data: (services) => ServiceButtonsGridWidget(
-                      services: services,
-                    ),
-                  );
-                }),
-              ],
+                    ],
+                  ),
+                  Consumer(builder: (context, ref, child) {
+                    final servicesValue =
+                        ref.watch(fetchAllServiceTypesProvider);
+                    return AsyncValueWidget(
+                      loadingShimmer: const ServiceButtonsGridShimmerWidget(),
+                      value: servicesValue,
+                      data: (services) => ServiceButtonsGridWidget(
+                        services: services,
+                      ),
+                    );
+                  }),
+                ],
+              ),
             ),
           ),
         ),

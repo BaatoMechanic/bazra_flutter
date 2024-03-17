@@ -18,6 +18,7 @@ class BaatoTextField extends StatelessWidget {
     this.onSaved,
     this.onChanged,
     this.validator,
+    this.editable = true,
   }) : super(key: key);
 
   final String? initialValue;
@@ -32,11 +33,13 @@ class BaatoTextField extends StatelessWidget {
   final Function(String?)? onSaved;
   final Function(String?)? onChanged;
   final String? Function(String?)? validator;
+  final bool editable;
 
   @override
   Widget build(BuildContext context) {
     return BaseFormField(
       initialValue: initialValue,
+      editable: editable,
       title: title,
       labelText: labelText,
       hintText: hintText,

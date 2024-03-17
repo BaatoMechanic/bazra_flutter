@@ -1,8 +1,8 @@
-import 'package:bato_mechanic/src/features/password_change/presentation/change_password_screen.dart';
+import 'package:bato_mechanic/src/features/password_change/presentation/change_password_screen/change_password_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/old_password_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/user_profile_screen.dart';
-import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
+import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile/edit_profile_screen.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/screens/repair_progress_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/active_repairs/presentation/active_repairs_list_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen.dart';
@@ -70,6 +70,10 @@ GoRouter goRouter() {
         path: '/',
         name: APP_ROUTE.home.name,
         builder: (context, state) => BuildHomeScreen(),
+        // builder: (context, state) => const ChangePasswordScreen(
+        //   oldPassword: "hello",
+        // ),
+
         routes: [
           GoRoute(
             path: 'confirm-old-password',
@@ -86,7 +90,15 @@ GoRouter goRouter() {
                   GoRoute(
                     path: 'change-password',
                     name: APP_ROUTE.changePassword.name,
-                    builder: (context, state) => const ChangePasswordScreen(),
+                    // builder: (context, state) => const ChangePasswordScreen(),
+                    builder: (context, state) {
+                      final String oldPass =
+                          (state.extra as Map?)?["oldPassword"];
+
+                      return ChangePasswordScreen(
+                        oldPassword: oldPass,
+                      );
+                    },
                   ),
                 ],
               ),
@@ -154,10 +166,14 @@ GoRouter goRouter() {
             builder: (context, state) => const UserProfileScreen(),
           ),
           GoRoute(
-            path: 'edit-profile',
-            name: APP_ROUTE.editProfile.name,
-            builder: (context, state) => const EditProfileScreen(),
-          ),
+              path: 'edit-profile',
+              name: APP_ROUTE.editProfile.name,
+              builder: (context, state) {
+                final user = (state.extra as Map)["user"];
+                return EditProfileScreen(
+                  user: user,
+                );
+              }),
           GoRoute(
             path: 'feedback',
             name: APP_ROUTE.feedback.name,

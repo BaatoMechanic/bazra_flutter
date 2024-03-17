@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bato_mechanic/src/features/reviews_and_rating/domain/reviews_and_rating/reviews_and_rating.dart';
+import 'package:bato_mechanic/src/shared/utils/exceptions/base_exception.dart';
 import 'package:bato_mechanic/src/shared/utils/http/http_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -60,5 +61,26 @@ class APIUserRepository extends UserRepository {
         ref);
 
     return usersFromJson(jsonDecode(response));
+  }
+
+  @override
+  Future<void> changePassword(String oldPass, String newPass) async {
+    await Future.delayed(Duration(seconds: 1), () {}
+        // () => throw BaseException(
+        //   message: "Couldn't change password",
+        //   stackTrace: StackTrace.current,
+        // ),
+        );
+  }
+
+  @override
+  Future<User> updateProfile(Map<String, dynamic> info) async {
+    await Future.delayed(
+      Duration(seconds: 1),
+      () => throw BaseException(
+        message: "Couldn't change password",
+        stackTrace: StackTrace.current,
+      ),
+    );
   }
 }

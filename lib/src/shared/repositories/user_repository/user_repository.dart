@@ -13,6 +13,8 @@ abstract class UserRepository {
   Future<ReviewAndRating> rateAndReviewUser(Map<String, dynamic> body);
   Future<List<User>> fetchRecommendedMechanics(
       String vehicleCategoryIdx, String serviceIdx);
+  Future<void> changePassword(String oldPass, String newPass);
+  Future<User> updateProfile(Map<String, dynamic> info);
 }
 
 @riverpod

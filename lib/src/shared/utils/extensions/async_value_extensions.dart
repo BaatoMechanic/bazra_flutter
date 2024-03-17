@@ -8,7 +8,7 @@ import '../helpers/toast_helper.dart';
 extension AsyncValueExtensions on AsyncValue {
   void showError(BuildContext context,
       {ErrorAlertType alertType = ErrorAlertType.NOTIFICATION}) {
-    if (!isRefreshing && hasError) {
+    if (!isLoading && hasError) {
       if (error is BaseException) {
         final err = error as BaseException;
         if (alertType == ErrorAlertType.NOTIFICATION) {

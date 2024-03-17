@@ -1,5 +1,7 @@
+import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/shared/utils/constants/managers/default_manager.dart';
@@ -30,11 +32,21 @@ class ServiceTypeButtonWidget extends ConsumerWidget {
           ),
           child: IconButton(
             onPressed: () {
-              ref
-                  .read(selectedServiceProvider.notifier)
-                  .setSelectedService(serviceType);
+              if (ref.read(authStateNotifierProvider).user?.phone == null) {
+                ToastHelper.showNotificationWithLinkButton(
+                    context,
+                    "Please verify your phone to request for repair",
+                    APP_ROUTE.editProfile,
+                    extraParams: {
+                      "user": ref.watch(authStateNotifierProvider).user
+                    });
+              } else {
+                ref
+                    .read(selectedServiceProvider.notifier)
+                    .setSelectedService(serviceType);
 
-              context.pushNamed(APP_ROUTE.categories.name);
+                context.pushNamed(APP_ROUTE.categories.name);
+              }
             },
             icon: Icon(serviceType.icon ?? Icons.hourglass_empty),
           ),

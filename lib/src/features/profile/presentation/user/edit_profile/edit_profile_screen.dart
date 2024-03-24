@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
+import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile/edit_profile_screen_controller.dart';
+import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/shared/widgets/butons/submit_button.dart';
 import 'package:bato_mechanic/src/shared/widgets/form_fields/email_field.dart';
 import 'package:bato_mechanic/src/shared/widgets/form_fields/baato_text_field.dart';
@@ -6,32 +10,36 @@ import 'package:bato_mechanic/src/shared/widgets/form_fields/phone_number_field.
 import 'package:bato_mechanic/src/shared/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../shared/utils/constants/managers/font_manager.dart';
-import '../../../../shared/utils/constants/managers/values_manager.dart';
+import '../../../../../shared/domain/user.dart';
+import '../../../../../shared/utils/constants/managers/font_manager.dart';
+import '../../../../../shared/utils/constants/managers/values_manager.dart';
 
-class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({Key? key}) : super(key: key);
+class EditProfileScreen extends ConsumerStatefulWidget {
+  const EditProfileScreen({required this.user, Key? key}) : super(key: key);
+  final User user;
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
-  final _form = GlobalKey<FormState>();
-  // final _nameController = TextEditingController();
-  // final _emailController = TextEditingController();
-  // final _phoneController = TextEditingController();
-  // final _liscenseNumberController = TextEditingController();
-
-  final _nameFocusNode = FocusNode();
-  final _emailFocusNode = FocusNode();
-  final _phoneFocusNode = FocusNode();
-  final _liscenseNumberFocusNode = FocusNode();
-
-  String profileImage = 'assets/images/no-profile.png';
+class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
+  String profileImage = 'assets/images/no-profile.png'.hardcoded();
   File? imageFile;
+
+  final _form = GlobalKey<FormState>();
+  late TextEditingController _nameController;
+  late TextEditingController _emailController;
+  late TextEditingController _phoneController;
+  late TextEditingController _liscenseNumberController;
+
+  late FocusNode _nameFocusNode;
+  late FocusNode _emailFocusNode;
+  late FocusNode _phoneFocusNode;
+  late FocusNode _liscenseNumberFocusNode;
 
   Future<void> _pickProfileImage(ImageSource source) async {
     final XFile? image = await ImagePicker().pickImage(
@@ -42,6 +50,70 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         imageFile = File(image.path);
       });
     }
+  }
+
+  _updateProfile() async {
+    if (_form.currentState!.validate()) {
+      final bool nameUpdated = _nameController.text != widget.user.name;
+      final bool emailUpdated = _emailController.text != widget.user.email;
+      final bool phoneUpdated = _phoneController.text != widget.user.phone;
+      // final bool liscenseNumberUpdated = _liscenseNumberController.text != widget.user.licenseNumber;
+      final bool liscenseNumberUpdated = false;
+      Map<String, dynamic> data = <String, dynamic>{};
+      if (nameUpdated) {
+        data["name"] = _nameController.text;
+      }
+      if (emailUpdated) {
+        data["email"] = _emailController.text;
+      }
+      if (phoneUpdated) {
+        data["phone"] = _phoneController.text;
+      }
+      if (liscenseNumberUpdated) {
+        data["license_Number"] = _liscenseNumberController.text;
+      }
+
+      if (await ref
+          .read(editProfileScreenControllerProvider.notifier)
+          .updateProfile(data)) {
+        context.pop();
+        ToastHelper.showNotification(
+            context, "Profile updated successfully".hardcoded());
+      } else {
+        ToastHelper.showNotification(
+            context, "Failed to update profile".hardcoded());
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.user.name);
+    _emailController = TextEditingController(text: widget.user.email);
+    _phoneController = TextEditingController(text: widget.user.phone);
+    // _liscenseNumberController = TextEditingController(text: widget.user.licenseNumber);
+    _liscenseNumberController = TextEditingController(text: "3396");
+
+    // _liscenseNumberController.text = widget.user.licenseNumber ?? "";
+
+    _nameFocusNode = FocusNode();
+    _emailFocusNode = FocusNode();
+    _phoneFocusNode = FocusNode();
+    _liscenseNumberFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _liscenseNumberController.dispose();
+    _nameFocusNode.dispose();
+    _emailFocusNode.dispose();
+    _phoneFocusNode.dispose();
+    _liscenseNumberFocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -122,7 +194,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: BaatoTextField(
-                        initialValue: 'Krishna Rimal',
+                        controller: _nameController,
+                        // editable: false,
                         labelText: 'Full Name',
                         focusNode: _nameFocusNode,
                         nextFocusNode: _emailFocusNode,
@@ -141,7 +214,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: EmailField(
-                              initialValue: 'mail@test.com',
+                              controller: _emailController,
+                              // editable: _emailController.text.isEmpty,
                               labelText: 'Your email',
                               focusNode: _emailFocusNode,
                               nextFocusNode: _phoneFocusNode,
@@ -152,7 +226,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: PhoneNumberField(
-                              initialValue: '9736472839',
+                              controller: _phoneController,
+                              // editable: _phoneController.text.isEmpty,
                               focusNode: _phoneFocusNode,
                               labelText: 'Your mobile number',
                             ),
@@ -177,7 +252,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SubmitButton(
-                          label: 'Update profile', onPressed: () {}),
+                          label: 'Update profile', onPressed: _updateProfile),
                     ),
                   ],
                 ),

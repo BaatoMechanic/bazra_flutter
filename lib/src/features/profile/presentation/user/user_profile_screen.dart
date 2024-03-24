@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../auth/application/auth_service.dart';
 import '../../../menu/presentation/widgets/menu_tile_widget.dart';
 
 class UserProfileScreen extends ConsumerWidget {
@@ -76,7 +77,8 @@ class UserProfileScreen extends ConsumerWidget {
             Icons.arrow_forward_ios_outlined,
             color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
-          onPressed: () => context.pushNamed(APP_ROUTE.confirmOldPassword.name),
+          onPressed: () => context.pushNamed(APP_ROUTE.confirmUserId.name,
+              extra: {"recoveryType": "password"}),
         ),
         isLast: true,
       ),
@@ -89,7 +91,12 @@ class UserProfileScreen extends ConsumerWidget {
             Icons.arrow_forward_ios_outlined,
             color: context.isDarkMode ? ThemeColor.light : ThemeColor.dark,
           ),
-          onPressed: () {},
+          onPressed: () {
+            final result = ref.read(authServiceProvider).logOut();
+            if (result) {
+              context.goNamed(APP_ROUTE.login.name);
+            }
+          },
         ),
         isLast: true,
       ),
@@ -138,8 +145,10 @@ class UserProfileScreen extends ConsumerWidget {
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     TextButton(
-                      onPressed: () =>
-                          context.pushNamed(APP_ROUTE.editProfile.name),
+                      onPressed: () => context.pushNamed(
+                        APP_ROUTE.editProfile.name,
+                        extra: {"user": user},
+                      ),
                       child: Row(
                         children: [
                           const Icon(

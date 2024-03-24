@@ -1,9 +1,11 @@
+import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/shared/utils/constants/managers/color_manager.dart';
 import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/int_extensions.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../providers/system_alerts_controller.dart';
 
@@ -248,6 +250,36 @@ class ToastHelper {
         textColor: ThemeColor.dark,
         onPressed: () {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
+    ));
+  }
+
+  static showNotificationWithLinkButton(
+      BuildContext context, String message, APP_ROUTE route,
+      {String label = "Go", int? notificationDuration, Object? extraParams}) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Theme.of(context).primaryColor,
+      dismissDirection: DismissDirection.horizontal,
+      content: Text(
+        message.capitalize(),
+        textAlign: TextAlign.center,
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall!
+            .copyWith(color: ThemeColor.dark),
+
+        // ),
+      ),
+      duration: notificationDuration != null
+          ? Duration(seconds: notificationDuration)
+          // Making it seem like the durationis infinite
+          : Duration(days: 9999999.intHardcoded()),
+      action: SnackBarAction(
+        label: label,
+        textColor: ThemeColor.dark,
+        onPressed: () {
+          context.goNamed(route.name, extra: extraParams);
         },
       ),
     ));

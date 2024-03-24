@@ -69,7 +69,6 @@ class _FlutterMapControlButtonsState extends State<FlutterMapControlButtons>
 
   @override
   void dispose() {
-    widget.animationController.dispose();
     super.dispose();
   }
 

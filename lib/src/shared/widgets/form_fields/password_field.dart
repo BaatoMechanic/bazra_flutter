@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../utils/constants/managers/color_manager.dart';
 import '../../utils/constants/managers/values_manager.dart';
+import '../../utils/validators/validation.dart';
 
 class PasswordField extends StatefulWidget {
   const PasswordField({
@@ -15,6 +16,7 @@ class PasswordField extends StatefulWidget {
     required this.controller,
     required this.focusNode,
     this.nextFocusNode,
+    this.validator,
   }) : super(key: key);
   final String? title;
   final String? labelText;
@@ -22,6 +24,8 @@ class PasswordField extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final FocusNode? nextFocusNode;
+  // take parameter name validator which is a function that return string or null
+  final String? Function(String?)? validator;
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -98,7 +102,9 @@ class _PasswordFieldState extends State<PasswordField> {
                   style: const TextStyle().copyWith(color: ThemeColor.dark),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   // TODO: uncomment this line to enable validation after development
-                  // validator: (value) => AppValidator.validatePassword(value),
+                  // validator: (value) => widget.validator != null
+                  //     ? widget.validator!(value)
+                  //     : AppValidator.validatePassword(value),
                   textInputAction: widget.nextFocusNode == null
                       ? TextInputAction.done
                       : TextInputAction.next,

@@ -1,8 +1,8 @@
-import 'package:bato_mechanic/src/features/password_change/presentation/change_password_screen.dart';
-import 'package:bato_mechanic/src/features/password_change/presentation/old_password_confirmation_screen.dart';
-import 'package:bato_mechanic/src/features/password_change/presentation/otp_confirmation_screen.dart';
+import 'package:bato_mechanic/src/features/account_recovery/presentation/recover_password_screen/recover_password_screen.dart';
+import 'package:bato_mechanic/src/features/account_recovery/presentation/recovery_otp_confirmation_screen/recovery_otp_confirmation_screen.dart';
+import 'package:bato_mechanic/src/features/account_recovery/presentation/user_id_confirmation_screen/user_id_confirmation_screen.dart';
 import 'package:bato_mechanic/src/features/profile/presentation/user/user_profile_screen.dart';
-import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile_screen.dart';
+import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile/edit_profile_screen.dart';
 import 'package:bato_mechanic/src/features/repair_progress/presentation/screens/repair_progress_screen.dart';
 import 'package:bato_mechanic/src/features/repair_request/active_repairs/presentation/active_repairs_list_screen.dart';
 import 'package:bato_mechanic/src/features/reviews_and_rating/presentation/screens/mechanic_reviews_list_screen/mechanic_reviews_list_screen.dart';
@@ -46,9 +46,9 @@ enum APP_ROUTE {
   login,
   signup,
   mechanicReviewsList,
-  confirmOldPassword,
-  confirmOTP,
-  changePassword,
+  confirmUserId,
+  confirmRecoveryOTP,
+  recoverPassword,
 }
 
 GoRouter goRouter() {
@@ -72,26 +72,32 @@ GoRouter goRouter() {
         builder: (context, state) => BuildHomeScreen(),
         routes: [
           GoRoute(
-            path: 'confirm-old-password',
-            name: APP_ROUTE.confirmOldPassword.name,
-            builder: (context, state) => const ConfirmOldPasswordScreen(),
-            routes: [
-              GoRoute(
-                path: 'confirm-top',
-                name: APP_ROUTE.confirmOTP.name,
-                builder: (context, state) => const OTPConfirmationScreen(
-                  otpType: OTPType.EMAIL,
-                ),
-                routes: [
-                  GoRoute(
-                    path: 'change-password',
-                    name: APP_ROUTE.changePassword.name,
-                    builder: (context, state) => const ChangePasswordScreen(),
+              path: 'confirm-uid',
+              name: APP_ROUTE.confirmUserId.name,
+              builder: (context, state) {
+                final String? recoveryType =
+                    (state.extra as Map?)?["recoveryType"];
+                if (recoveryType != null) {
+                  return UserIdConfirmationScreen(
+                    recoveryType: recoveryType,
+                  );
+                }
+                return const UserIdConfirmationScreen();
+              },
+              routes: [
+                GoRoute(
+                  path: 'confirm-recovery-otp',
+                  name: APP_ROUTE.confirmRecoveryOTP.name,
+                  builder: (context, state) => RecoveryOTPConfirmationScreen(
+                    otpType: OTPType.EMAIL,
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+                GoRoute(
+                  path: 'recover-password',
+                  name: APP_ROUTE.recoverPassword.name,
+                  builder: (context, state) => const RecoverPasswordScreen(),
+                ),
+              ]),
           GoRoute(
             path: 'support-chat',
             name: APP_ROUTE.supportChat.name,
@@ -154,10 +160,14 @@ GoRouter goRouter() {
             builder: (context, state) => const UserProfileScreen(),
           ),
           GoRoute(
-            path: 'edit-profile',
-            name: APP_ROUTE.editProfile.name,
-            builder: (context, state) => const EditProfileScreen(),
-          ),
+              path: 'edit-profile',
+              name: APP_ROUTE.editProfile.name,
+              builder: (context, state) {
+                final user = (state.extra as Map)["user"];
+                return EditProfileScreen(
+                  user: user,
+                );
+              }),
           GoRoute(
             path: 'feedback',
             name: APP_ROUTE.feedback.name,

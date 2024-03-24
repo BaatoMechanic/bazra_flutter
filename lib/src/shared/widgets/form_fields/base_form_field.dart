@@ -7,24 +7,25 @@ import '../../utils/constants/managers/color_manager.dart';
 import '../../utils/constants/managers/values_manager.dart';
 
 class BaseFormField extends StatelessWidget {
-  const BaseFormField(
-      {Key? key,
-      this.title,
-      this.labelText,
-      this.hintText,
-      this.controller,
-      this.focusNode,
-      this.initialValue,
-      this.nextFocusNode,
-      this.autovalidateMode,
-      required this.validator,
-      this.textStyle,
-      required this.textInputType,
-      this.onSaved,
-      this.onChanged,
-      this.textAlign,
-      this.maxLines})
-      : super(key: key);
+  const BaseFormField({
+    Key? key,
+    this.title,
+    this.labelText,
+    this.hintText,
+    this.controller,
+    this.focusNode,
+    this.initialValue,
+    this.nextFocusNode,
+    this.autovalidateMode,
+    required this.validator,
+    this.textStyle,
+    required this.textInputType,
+    this.onSaved,
+    this.onChanged,
+    this.textAlign,
+    this.maxLines,
+    this.editable = true,
+  }) : super(key: key);
 
   final String? title;
   final String? labelText;
@@ -41,6 +42,7 @@ class BaseFormField extends StatelessWidget {
   final TextStyle? textStyle;
   final TextAlign? textAlign;
   final int? maxLines;
+  final bool editable;
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +98,7 @@ class BaseFormField extends StatelessWidget {
                   },
                 )
               : TextFormField(
+                  readOnly: !editable,
                   textAlign: textAlign ?? TextAlign.start,
                   initialValue: initialValue,
                   focusNode: focusNode,

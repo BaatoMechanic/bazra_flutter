@@ -75,4 +75,16 @@ class FakeUserRepository extends UserRepository {
       ],
     );
   }
+
+  @override
+  Future<void> changePassword(String oldPass, String newPass) {
+    // TODO: implement changePassword
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> updateProfile(Map<String, dynamic> info) {
+    // TODO: implement updateProfile
+    throw UnimplementedError();
+  }
 }

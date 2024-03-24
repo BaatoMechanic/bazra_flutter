@@ -88,8 +88,26 @@ class HttpHelper {
           stackTrace: StackTrace.current);
     }
 
-    final message = jsonDecode(response.body)['details'] ??
-        jsonDecode(response.body)['detail'];
+    Map<String, dynamic> decodedResponse = jsonDecode(response.body);
+    if (decodedResponse["detail"] == null &&
+        decodedResponse["details"] == null) {
+      var firstValue = decodedResponse.entries.first.value;
+      if (firstValue is List) {
+        throw BaseException(
+          message: firstValue[0],
+          statusCode: response.statusCode,
+          stackTrace: StackTrace.current,
+        );
+      }
+
+      throw BaseException(
+        message: firstValue ?? response.reasonPhrase,
+        statusCode: response.statusCode,
+        stackTrace: StackTrace.current,
+      );
+    }
+
+    final message = decodedResponse['details'] ?? decodedResponse['detail'];
 
     if (message is List) {
       throw BaseException(

@@ -13,7 +13,12 @@ class UserService {
   final Ref ref;
 
   Future<User> updateUserProfile(Map<String, dynamic> data) async {
-    User user = await ref.read(userRepositoryProvider).updateProfile(data);
+    final bool updated =
+        await ref.read(userRepositoryProvider).updateProfile(data);
+
+    final User user = await ref
+        .read(userRepositoryProvider)
+        .fetchUserInfo(ref.read(authStateNotifierProvider).user!.idx);
 
     ref.read(authStateNotifierProvider.notifier).setUser(user);
     return user;

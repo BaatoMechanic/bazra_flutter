@@ -1,4 +1,5 @@
-import 'package:bato_mechanic/src/features/password_change/presentation/change_password_screen/change_password_screen_controller.dart';
+import 'package:bato_mechanic/src/features/account_recovery/presentation/recover_password_screen/recover_password_screen_controller.dart';
+import 'package:bato_mechanic/src/features/account_recovery/providers.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/async_value_extensions.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
@@ -10,17 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ChangePasswordScreen extends ConsumerStatefulWidget {
-  const ChangePasswordScreen({required this.oldPassword, super.key});
-
-  final String oldPassword;
+class RecoverPasswordScreen extends ConsumerStatefulWidget {
+  const RecoverPasswordScreen({super.key});
 
   @override
-  ConsumerState<ChangePasswordScreen> createState() =>
-      _ChangePasswordScreenState();
+  ConsumerState<RecoverPasswordScreen> createState() =>
+      _RecoverPasswordScreenState();
 }
 
-class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
+class _RecoverPasswordScreenState extends ConsumerState<RecoverPasswordScreen> {
+  late String oldPassword;
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _newPasswordController = TextEditingController();
@@ -48,19 +48,31 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
     if (_formKey.currentState!.validate()) {
       if (checkPassword()) {
         if (await ref
-            .read(changePasswordScreenControllerProvider.notifier)
-            .changePassword(widget.oldPassword, _newPasswordController.text)) {
+            .read(recoverPasswordScreenControllerProvider.notifier)
+            .changePassword(_newPasswordController.text)) {
           context.goNamed(APP_ROUTE.login.name);
-          ToastHelper.showNotification(context, "Password changed");
         }
       }
     }
   }
 
   @override
+  void initState() {
+    super.initState();
+    String? oldPass = ref.read(userIdentifierProvider);
+    if (oldPass != null) {
+      oldPassword = oldPass;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    ref.listen(changePasswordScreenControllerProvider, (previousState, state) {
-      state.showError(context);
+    ref.listen(recoverPasswordScreenControllerProvider, (previousState, state) {
+      if (state.hasValue && state.value != null) {
+        ToastHelper.showNotification(context, state.value!);
+      } else {
+        state.showError(context);
+      }
     });
 
     return Scaffold(
@@ -105,6 +117,9 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
               //   child: const Text('Change Password'),
               // ),
               SubmitButton(
+                showSpinner: ref
+                    .watch(recoverPasswordScreenControllerProvider)
+                    .isLoading,
                 label: 'Change Password'.hardcoded(),
                 onPressed: _changePassword,
               )

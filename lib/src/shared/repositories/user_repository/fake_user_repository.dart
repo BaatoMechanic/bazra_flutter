@@ -83,7 +83,7 @@ class FakeUserRepository extends UserRepository {
   }
 
   @override
-  Future<User> updateProfile(Map<String, dynamic> info) {
+  Future<bool> updateProfile(Map<String, dynamic> info) {
     // TODO: implement updateProfile
     throw UnimplementedError();
   }

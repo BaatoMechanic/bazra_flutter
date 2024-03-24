@@ -13,6 +13,7 @@ import 'package:bato_mechanic/src/shared/utils/constants/managers/values_manager
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -86,6 +87,18 @@ class LoginScreen extends ConsumerWidget {
                         hintText: "Enter your password".hardcoded(),
                         controller: _passwordController,
                         focusNode: _passwordFocusNode,
+                      ),
+                      const SizedBox(
+                        height: AppHeight.h30,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: () =>
+                              context.pushNamed(APP_ROUTE.confirmUserId.name),
+                          child: Text("Forget Password?".hardcoded(),
+                              style: Theme.of(context).textTheme.bodySmall),
+                        ),
                       ),
                       const SizedBox(
                         height: AppHeight.h30,

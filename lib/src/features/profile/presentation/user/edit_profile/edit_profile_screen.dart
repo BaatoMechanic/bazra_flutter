@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
+import 'package:bato_mechanic/src/features/profile/presentation/user/edit_profile/edit_profile_screen_controller.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/shared/widgets/butons/submit_button.dart';
@@ -70,6 +71,17 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       }
       if (liscenseNumberUpdated) {
         data["license_Number"] = _liscenseNumberController.text;
+      }
+
+      if (await ref
+          .read(editProfileScreenControllerProvider.notifier)
+          .updateProfile(data)) {
+        context.pop();
+        ToastHelper.showNotification(
+            context, "Profile updated successfully".hardcoded());
+      } else {
+        ToastHelper.showNotification(
+            context, "Failed to update profile".hardcoded());
       }
     }
   }
@@ -183,7 +195,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: BaatoTextField(
                         controller: _nameController,
-                        editable: false,
+                        // editable: false,
                         labelText: 'Full Name',
                         focusNode: _nameFocusNode,
                         nextFocusNode: _emailFocusNode,
@@ -203,7 +215,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: EmailField(
                               controller: _emailController,
-                              editable: _emailController.text.isEmpty,
+                              // editable: _emailController.text.isEmpty,
                               labelText: 'Your email',
                               focusNode: _emailFocusNode,
                               nextFocusNode: _phoneFocusNode,
@@ -215,7 +227,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: PhoneNumberField(
                               controller: _phoneController,
-                              editable: _phoneController.text.isEmpty,
+                              // editable: _phoneController.text.isEmpty,
                               focusNode: _phoneFocusNode,
                               labelText: 'Your mobile number',
                             ),

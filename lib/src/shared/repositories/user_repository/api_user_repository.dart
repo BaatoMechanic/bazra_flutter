@@ -19,7 +19,9 @@ class APIUserRepository extends UserRepository {
 
   @override
   Future<User> fetchUserInfo(String userIdx) async {
-    var url = Uri.parse('${RemoteManager.BASE_URI}autho/user_info/$userIdx');
+    // var url = Uri.parse('${RemoteManager.BASE_URI}autho/user_info/$userIdx');
+    var url =
+        Uri.parse('${RemoteManager.BASE_URI}vehicle-repair/customers/$userIdx');
 
     final response = await HttpHelper.guard(
         () => http.get(url, headers: {
@@ -65,22 +67,33 @@ class APIUserRepository extends UserRepository {
 
   @override
   Future<void> changePassword(String oldPass, String newPass) async {
-    await Future.delayed(Duration(seconds: 1), () {}
-        // () => throw BaseException(
-        //   message: "Couldn't change password",
-        //   stackTrace: StackTrace.current,
-        // ),
-        );
+    var url = Uri.parse(
+        '${RemoteManager.BASE_URI}autho/users_management/change_password/');
+    await HttpHelper.guard(
+        () => http.post(url, headers: {
+              HttpHeaders.authorizationHeader:
+                  'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
+            }, body: {
+              "old_password": oldPass,
+              "new_password": newPass,
+            }),
+        ref);
   }
 
   @override
-  Future<User> updateProfile(Map<String, dynamic> info) async {
-    await Future.delayed(
-      Duration(seconds: 1),
-      () => throw BaseException(
-        message: "Couldn't change password",
-        stackTrace: StackTrace.current,
-      ),
-    );
+  Future<bool> updateProfile(Map<String, dynamic> info) async {
+    var url = Uri.parse('${RemoteManager.BASE_URI}autho/user_info/me/');
+    await HttpHelper.guard(
+        () => http.patch(
+              url,
+              headers: {
+                HttpHeaders.authorizationHeader:
+                    'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
+              },
+              body: info,
+            ),
+        ref);
+    // directly return true because if error occurs then it will throw an exception before reaching here
+    return true;
   }
 }

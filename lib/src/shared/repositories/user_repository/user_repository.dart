@@ -14,7 +14,8 @@ abstract class UserRepository {
   Future<List<User>> fetchRecommendedMechanics(
       String vehicleCategoryIdx, String serviceIdx);
   Future<void> changePassword(String oldPass, String newPass);
-  Future<User> updateProfile(Map<String, dynamic> info);
+  // Update profile returns bool because server returns only the user object and not the customer which can't be used to construct the user here. Service should fetch the customer data after updating the profile successfully
+  Future<bool> updateProfile(Map<String, dynamic> info);
 }
 
 @riverpod

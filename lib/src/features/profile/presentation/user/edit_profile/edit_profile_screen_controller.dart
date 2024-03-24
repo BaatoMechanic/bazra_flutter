@@ -7,14 +7,25 @@ part "edit_profile_screen_controller.g.dart";
 
 @riverpod
 class EditProfileScreenController extends _$EditProfileScreenController {
+  late Object? key;
   @override
-  FutureOr<void> build() {}
+  FutureOr<void> build() {
+    key = Object();
+    ref.onDispose(() {
+      key = null;
+    });
+  }
 
   Future<bool> updateProfile(Map<String, dynamic> data) async {
     state = const AsyncLoading();
+    final key = this.key;
 
-    state = await AsyncValue.guard(
+    var resp = await AsyncValue.guard(
         () => ref.read(userServiceProvider).updateUserProfile(data));
+
+    if (key == this.key) {
+      state = resp;
+    }
 
     return !state.hasError;
   }

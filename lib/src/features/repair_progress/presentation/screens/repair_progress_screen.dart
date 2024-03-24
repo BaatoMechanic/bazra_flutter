@@ -74,6 +74,14 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
   // final bool _isFirstTime = true;
 
   @override
+  void dispose() {
+    _mapController.dispose();
+    _animationController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // ref.listen(watchRepairRequestStateChangesProvider, (previous, state) {
     //   if (!state.isRefreshing && state.hasValue) {

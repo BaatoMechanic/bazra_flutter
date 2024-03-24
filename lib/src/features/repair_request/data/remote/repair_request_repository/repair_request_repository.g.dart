@@ -25,7 +25,7 @@ final repairRequestRepositoryProvider =
 typedef RepairRequestRepositoryRef
     = AutoDisposeProviderRef<RepairRequestRepository>;
 String _$fetchUserRepairRequestHash() =>
-    r'e77e16c363a81654291061d859883465f7c70672';
+    r'721b2da17adf3539c84f416b801a91e6b2c56aab';
 
 /// See also [fetchUserRepairRequest].
 @ProviderFor(fetchUserRepairRequest)

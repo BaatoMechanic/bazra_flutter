@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:bato_mechanic/src/features/repair_progress/data/repair_step_repository.dart';
+import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/features/repair_request/data/remote/repair_request_repository/repair_request_repository.dart';
 
 import 'package:bato_mechanic/src/features/repair_request/domain/vehicle_repair_request.dart';

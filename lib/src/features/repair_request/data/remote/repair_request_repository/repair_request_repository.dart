@@ -16,8 +16,8 @@ abstract class RepairRequestRepository {
       Map<String, dynamic> requestInfo);
   Future<dynamic> addImagesToRepairRequest(
       String repairRequestId, List<File> images);
-  Future<List<VehicleRepairRequest>> fetchUserRepairRequest();
-  Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequest();
+  Future<List<VehicleRepairRequest>> fetchUserRepairRequests();
+  Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequests();
   Future<List<VehicleRepairRequest>> fetchUserRecentRepairRequests();
   Future<VehicleRepairRequest> updateRepairRequest(
       String repairRequestId, Map<String, dynamic> requestInfo);
@@ -33,7 +33,7 @@ RepairRequestRepository repairRequestRepository(
 @riverpod
 Future<List<VehicleRepairRequest>> fetchUserRepairRequest(
         FetchUserRepairRequestRef ref) =>
-    ref.watch(repairRequestRepositoryProvider).fetchUserRepairRequest();
+    ref.watch(repairRequestRepositoryProvider).fetchUserRepairRequests();
 
 @riverpod
 Future<VehicleRepairRequest> fetchVechicleRepairRequest(

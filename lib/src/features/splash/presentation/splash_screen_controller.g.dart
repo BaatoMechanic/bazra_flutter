@@ -7,7 +7,7 @@ part of 'splash_screen_controller.dart';
 // **************************************************************************
 
 String _$splashScreenControllerHash() =>
-    r'74339ba1ba5290825cbed9cfe80b2dc2fc2283a9';
+    r'99741582de8cefc096651c84fee0094b92efd5e8';
 
 /// See also [SplashScreenController].
 @ProviderFor(SplashScreenController)

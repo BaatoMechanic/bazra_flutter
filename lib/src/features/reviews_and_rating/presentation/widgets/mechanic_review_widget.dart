@@ -26,7 +26,7 @@ class MechanicReviewWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reviewerInfoValue =
-        ref.watch(fetchUserInfoProvider(review.reviewerIdx));
+        ref.watch(fetchUserInfoByUidxProvider(review.reviewerIdx));
     return AsyncValueWidget(
       loadingShimmer: const ReviewsAndRatingShimmerWidget(),
       value: reviewerInfoValue,

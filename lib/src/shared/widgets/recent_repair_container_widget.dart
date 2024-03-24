@@ -5,6 +5,7 @@ import 'package:bato_mechanic/src/shared/utils/constants/managers/color_manager.
 import 'package:bato_mechanic/src/shared/utils/extensions/double_extensions.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/string_extension.dart';
 import 'package:bato_mechanic/src/shared/utils/foramtters/date_formatter.dart';
+import 'package:flutter/widgets.dart';
 
 import '../utils/constants/managers/values_manager.dart';
 
@@ -32,16 +33,16 @@ class RecentRepairContainerWidget extends StatelessWidget {
           padding: const EdgeInsets.all(AppPadding.p12),
           child: Stack(
             children: [
-              Positioned(
-                // bottom: AppHeight.h0,
-                bottom: -15.0.doubleHardcoded(),
-                // right: AppHeight.h0,
-                right: -75.0.doubleHardcoded(),
-                child: Image.asset(
-                  'assets/images/vehicle/car.png', // Replace with your image path
-                  // fit: BoxFit.cover,
-                ),
-              ),
+              // Positioned(
+              //   // bottom: AppHeight.h0,
+              //   bottom: -15.0.doubleHardcoded(),
+              //   // right: AppHeight.h0,
+              //   right: -75.0.doubleHardcoded(),
+              //   child: Image.asset(
+              //     'assets/images/vehicle/car.png', // Replace with your image path
+              //     // fit: BoxFit.cover,
+              //   ),
+              // ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -62,12 +63,14 @@ class RecentRepairContainerWidget extends StatelessWidget {
                         Icons.location_on_outlined,
                         color: ThemeColor.dark,
                       ),
-                      Text(
-                        repairRequest.location?["locationName"] ?? "Unknown",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(color: ThemeColor.dark),
+                      Flexible(
+                        child: Text(
+                          repairRequest.location?["location_name"] ?? "Unknown",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(color: ThemeColor.dark),
+                        ),
                       )
                     ],
                   ),
@@ -94,22 +97,22 @@ class RecentRepairContainerWidget extends StatelessWidget {
                   const SizedBox(
                     height: AppHeight.h4,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Icon(
-                        Icons.car_repair,
-                        color: ThemeColor.dark,
-                      ),
-                      Text(
-                        'Audi S3 model'.hardcoded(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(color: ThemeColor.dark),
-                      )
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   children: [
+                  //     const Icon(
+                  //       Icons.car_repair,
+                  //       color: ThemeColor.dark,
+                  //     ),
+                  //     Text(
+                  //       'Audi S3 model'.hardcoded(),
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .headlineSmall!
+                  //           .copyWith(color: ThemeColor.dark),
+                  //     )
+                  //   ],
+                  // ),
                 ],
               ),
             ],

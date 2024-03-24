@@ -11,10 +11,17 @@ class HomeScreenController extends _$HomeScreenController {
     // pass
   }
 
+  Future<bool> fetchUserActiveRequest() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() =>
+        ref.read(repairRequestServiceProvider).fetchUserActiveRepairRequest());
+    return !state.hasError;
+  }
+
   Future<bool> fetchUserRepairRequests() async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(
-        () => ref.read(repairRequestServiceProvider).fetchUserRepairRequest());
+        () => ref.read(repairRequestServiceProvider).fetchUserRepairRequests());
     return !state.hasError;
   }
 

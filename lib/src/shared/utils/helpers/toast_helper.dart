@@ -212,6 +212,7 @@ class ToastHelper {
       {notificationDuration = 3}) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      key: UniqueKey(),
       backgroundColor: Theme.of(context).primaryColor,
       dismissDirection: DismissDirection.horizontal,
       content: Text(

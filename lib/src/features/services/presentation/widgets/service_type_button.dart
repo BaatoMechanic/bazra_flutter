@@ -1,7 +1,9 @@
 import 'package:bato_mechanic/src/features/auth/application/auth_state.dart';
 import 'package:bato_mechanic/src/features/repair_request/application/providers.dart';
 import 'package:bato_mechanic/src/routing/app_router.dart';
+import 'package:bato_mechanic/src/shared/utils/helpers/helper_functions.dart';
 import 'package:bato_mechanic/src/shared/utils/helpers/toast_helper.dart';
+import 'package:bato_mechanic/src/shared/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bato_mechanic/src/shared/utils/constants/managers/default_manager.dart';
@@ -48,7 +50,13 @@ class ServiceTypeButtonWidget extends ConsumerWidget {
                 context.pushNamed(APP_ROUTE.categories.name);
               }
             },
-            icon: Icon(serviceType.icon ?? Icons.hourglass_empty),
+            // icon: serviceType.image != null
+            //     ? ImageWidget(serviceType.image!)
+            //     : Icon(serviceType.icon ?? Icons.hourglass_empty),
+            icon: serviceType.image != null
+                ? ImageWidget(serviceType.image!)
+                : HelperFunctions.generateIcon(
+                    serviceType.icon ?? "hourglass_empty"),
           ),
         ),
         const SizedBox(

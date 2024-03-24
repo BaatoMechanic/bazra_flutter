@@ -57,20 +57,22 @@ class RecentRepairsListScreen extends ConsumerWidget {
                     )
                   ],
                 ),
-                Expanded(
-                  child: Flexible(
-                    child: AsyncValueWidget(
-                      value: recentRepairsValue,
-                      data: (repairRequests) => ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: repairRequests.length,
-                        itemBuilder: (context, index) =>
-                            RecentRepairContainerWidget(
-                          onPressed: () {},
-                          repairRequest: repairRequests[index],
-                        ),
-                      ),
-                    ),
+                Flexible(
+                  child: AsyncValueWidget(
+                    value: recentRepairsValue,
+                    data: (repairRequests) => repairRequests.isEmpty
+                        ? Center(
+                            child: Text("No recent repairs".hardcoded()),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: repairRequests.length,
+                            itemBuilder: (context, index) =>
+                                RecentRepairContainerWidget(
+                              onPressed: () {},
+                              repairRequest: repairRequests[index],
+                            ),
+                          ),
                   ),
                 ),
               ],

@@ -95,7 +95,7 @@ class APIRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
-  Future<List<VehicleRepairRequest>> fetchUserRepairRequest() async {
+  Future<List<VehicleRepairRequest>> fetchUserRepairRequests() async {
     var url =
         Uri.parse('${RemoteManager.BASE_URI}vehicle-repair/repair_requests/');
 
@@ -109,7 +109,7 @@ class APIRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
-  Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequest() async {
+  Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequests() async {
     var url = Uri.parse(
         '${RemoteManager.BASE_URI}vehicle-repair/repair_requests/user_active_repair_requests/');
 

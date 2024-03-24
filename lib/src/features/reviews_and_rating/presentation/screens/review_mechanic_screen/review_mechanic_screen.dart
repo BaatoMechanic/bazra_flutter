@@ -251,6 +251,10 @@ class _ReviewMechanicScreenState extends ConsumerState<ReviewMechanicScreen> {
           context,
           'Thank you for the review'.hardcoded(),
         );
+
+        ref
+            .read(activeRepairRequestProvider.notifier)
+            .setActiveRepairRequest(null);
         ref.read(flipControllerProvider).toggleCardWithoutAnimation();
         context.goNamed(APP_ROUTE.home.name);
       }

@@ -10,6 +10,7 @@ part 'user_repository.g.dart';
 
 abstract class UserRepository {
   Future<User> fetchUserInfo(String userIdx);
+  Future<User> fetchUserInfoByUidx(String uIdx);
   Future<ReviewAndRating> rateAndReviewUser(Map<String, dynamic> body);
   Future<List<User>> fetchRecommendedMechanics(
       String vehicleCategoryIdx, String serviceIdx);
@@ -25,3 +26,6 @@ UserRepository userRepository(UserRepositoryRef ref) =>
 @riverpod
 Future<User> fetchUserInfo(FetchUserInfoRef ref, String userIdx) =>
     ref.watch(userRepositoryProvider).fetchUserInfo(userIdx);
+@riverpod
+Future<User> fetchUserInfoByUidx(FetchUserInfoByUidxRef ref, String uIdx) =>
+    ref.watch(userRepositoryProvider).fetchUserInfoByUidx(uIdx);

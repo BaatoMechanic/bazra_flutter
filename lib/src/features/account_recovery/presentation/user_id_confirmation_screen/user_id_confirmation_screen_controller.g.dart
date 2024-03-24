@@ -7,7 +7,7 @@ part of 'user_id_confirmation_screen_controller.dart';
 // **************************************************************************
 
 String _$userIdConfirmationScreenControllerHash() =>
-    r'0bc39b55e36eaf3e76fd843ba2ed75c400098635';
+    r'de1fa6e40a6ac985dcd9e2fbba981b6d3aad50a2';
 
 /// See also [UserIdConfirmationScreenController].
 @ProviderFor(UserIdConfirmationScreenController)

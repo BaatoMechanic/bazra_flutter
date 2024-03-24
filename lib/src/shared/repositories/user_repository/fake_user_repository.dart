@@ -87,4 +87,10 @@ class FakeUserRepository extends UserRepository {
     // TODO: implement updateProfile
     throw UnimplementedError();
   }
+
+  @override
+  Future<User> fetchUserInfoByUidx(String uIdx) {
+    // TODO: implement fetchUserInfoByUidx
+    throw UnimplementedError();
+  }
 }

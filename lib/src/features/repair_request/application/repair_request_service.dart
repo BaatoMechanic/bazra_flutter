@@ -14,7 +14,7 @@ class ActiveRepairRequest extends _$ActiveRepairRequest {
     return null;
   }
 
-  void setActiveRepairRequest(VehicleRepairRequest request) {
+  void setActiveRepairRequest(VehicleRepairRequest? request) {
     state = request;
   }
 }
@@ -26,11 +26,18 @@ class RepairRequestService {
 
   Ref ref;
 
-  Future<VehicleRepairRequest> fetchUserRepairRequest() async {
+  Future<List<VehicleRepairRequest>> fetchUserRepairRequests() async {
     var response = await ref
         .read(repairRequestRepositoryProvider)
-        .fetchUserRepairRequest();
+        .fetchUserRepairRequests();
+    return response;
+  }
 
+  Future<VehicleRepairRequest?> fetchUserActiveRepairRequest() async {
+    var response = await ref
+        .read(repairRequestRepositoryProvider)
+        .fetchUserActiveRepairRequests();
+    if (response.isEmpty) return null;
     ref
         .read(activeRepairRequestProvider.notifier)
         .setActiveRepairRequest(response.first);

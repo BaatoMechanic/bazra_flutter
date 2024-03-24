@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/features/repair_progress/presentation/widgets/repair_steps_widget.dart';
+import 'package:bato_mechanic/src/features/repair_request/application/repair_request_service.dart';
 import 'package:bato_mechanic/src/shared/providers/location_service.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/build_context_extensions.dart';
 import 'package:bato_mechanic/src/shared/utils/extensions/enum_extensions.dart';
@@ -228,7 +229,12 @@ class _RepairProgressScreenState extends ConsumerState<RepairProgressScreen>
                                       ),
                                     ),
                                     child: service.icon != null
-                                        ? Icon(service.icon)
+                                        // ? Icon(service.icon)
+                                        ? Text(
+                                            service.icon!,
+                                            style: const TextStyle(
+                                                fontFamily: "MaterialIcons"),
+                                          )
                                         : Image.asset(
                                             'assets/images/parts/wheel.png',
                                           ),

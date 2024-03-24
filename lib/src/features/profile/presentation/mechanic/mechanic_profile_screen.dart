@@ -1,4 +1,5 @@
 import 'package:bato_mechanic/src/shared/utils/extensions/build_context_extensions.dart';
+import 'package:bato_mechanic/src/shared/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -48,7 +49,7 @@ class MechanicProfileScreen extends ConsumerWidget {
                       CircleAvatar(
                         radius: AppHeight.h30,
                         child: mechanic.profilePic != null
-                            ? Image.network(mechanic.profilePic!)
+                            ? ImageWidget(mechanic.profilePic!)
                             : Image.asset(
                                 'assets/images/no-profile.png'.hardcoded(),
                                 width: AppHeight.h50,

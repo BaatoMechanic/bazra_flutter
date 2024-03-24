@@ -169,5 +169,134 @@ class _FetchUserInfoProviderElement
   @override
   String get userIdx => (origin as FetchUserInfoProvider).userIdx;
 }
+
+String _$fetchUserInfoByUidxHash() =>
+    r'8b466c006fad93415163581355fe71cc813e092d';
+
+/// See also [fetchUserInfoByUidx].
+@ProviderFor(fetchUserInfoByUidx)
+const fetchUserInfoByUidxProvider = FetchUserInfoByUidxFamily();
+
+/// See also [fetchUserInfoByUidx].
+class FetchUserInfoByUidxFamily extends Family<AsyncValue<User>> {
+  /// See also [fetchUserInfoByUidx].
+  const FetchUserInfoByUidxFamily();
+
+  /// See also [fetchUserInfoByUidx].
+  FetchUserInfoByUidxProvider call(
+    String uIdx,
+  ) {
+    return FetchUserInfoByUidxProvider(
+      uIdx,
+    );
+  }
+
+  @override
+  FetchUserInfoByUidxProvider getProviderOverride(
+    covariant FetchUserInfoByUidxProvider provider,
+  ) {
+    return call(
+      provider.uIdx,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fetchUserInfoByUidxProvider';
+}
+
+/// See also [fetchUserInfoByUidx].
+class FetchUserInfoByUidxProvider extends AutoDisposeFutureProvider<User> {
+  /// See also [fetchUserInfoByUidx].
+  FetchUserInfoByUidxProvider(
+    String uIdx,
+  ) : this._internal(
+          (ref) => fetchUserInfoByUidx(
+            ref as FetchUserInfoByUidxRef,
+            uIdx,
+          ),
+          from: fetchUserInfoByUidxProvider,
+          name: r'fetchUserInfoByUidxProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$fetchUserInfoByUidxHash,
+          dependencies: FetchUserInfoByUidxFamily._dependencies,
+          allTransitiveDependencies:
+              FetchUserInfoByUidxFamily._allTransitiveDependencies,
+          uIdx: uIdx,
+        );
+
+  FetchUserInfoByUidxProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.uIdx,
+  }) : super.internal();
+
+  final String uIdx;
+
+  @override
+  Override overrideWith(
+    FutureOr<User> Function(FetchUserInfoByUidxRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FetchUserInfoByUidxProvider._internal(
+        (ref) => create(ref as FetchUserInfoByUidxRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        uIdx: uIdx,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<User> createElement() {
+    return _FetchUserInfoByUidxProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FetchUserInfoByUidxProvider && other.uIdx == uIdx;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, uIdx.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin FetchUserInfoByUidxRef on AutoDisposeFutureProviderRef<User> {
+  /// The parameter `uIdx` of this provider.
+  String get uIdx;
+}
+
+class _FetchUserInfoByUidxProviderElement
+    extends AutoDisposeFutureProviderElement<User> with FetchUserInfoByUidxRef {
+  _FetchUserInfoByUidxProviderElement(super.provider);
+
+  @override
+  String get uIdx => (origin as FetchUserInfoByUidxProvider).uIdx;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

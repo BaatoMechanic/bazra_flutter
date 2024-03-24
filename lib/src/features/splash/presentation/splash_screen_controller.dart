@@ -16,7 +16,7 @@ class SplashScreenController extends _$SplashScreenController {
     await Future.delayed(const Duration(seconds: 2));
     final response = await ref
         .read(repairRequestRepositoryProvider)
-        .fetchUserRepairRequest();
+        .fetchUserRepairRequests();
 
     return response.isNotEmpty;
   }

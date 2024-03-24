@@ -21,25 +21,29 @@ class MechanicReviewsListScreen extends ConsumerWidget {
 
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppPadding.p20,
-            vertical: AppPadding.p20,
-          ),
-          child: AsyncValueWidget(
-            loadingShimmer: const ReviewsAndRatingShimmerWidget(),
-            value: reviewsValue,
-            data: (reviews) => ListView.builder(
-                shrinkWrap: true,
-                itemCount: reviews.length,
-                itemBuilder: (_, idx) {
-                  return Padding(
-                    padding: const EdgeInsets.all(AppPadding.p8),
-                    child: MechanicReviewWidget(
-                      review: reviews[idx],
-                    ),
-                  );
-                }),
+        body: RefreshIndicator(
+          onRefresh: () =>
+              ref.refresh(fetchMechanicReviewsProvider(mechanicIdx).future),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppPadding.p20,
+              vertical: AppPadding.p20,
+            ),
+            child: AsyncValueWidget(
+              loadingShimmer: const ReviewsAndRatingShimmerWidget(),
+              value: reviewsValue,
+              data: (reviews) => ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: reviews.length,
+                  itemBuilder: (_, idx) {
+                    return Padding(
+                      padding: const EdgeInsets.all(AppPadding.p8),
+                      child: MechanicReviewWidget(
+                        review: reviews[idx],
+                      ),
+                    );
+                  }),
+            ),
           ),
         ),
       ),

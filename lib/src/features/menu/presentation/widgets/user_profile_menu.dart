@@ -286,13 +286,14 @@ class UserProfileMenu extends ConsumerWidget {
                   height: AppHeight.h30,
                 ),
                 SubmitButton(
-                    label: 'Logout',
-                    onPressed: () {
-                      final result = ref.read(authServiceProvider).logOut();
-                      if (result) {
-                        context.goNamed(APP_ROUTE.login.name);
-                      }
-                    })
+                  label: 'Logout',
+                  onPressed: () {
+                    final result = ref.read(authServiceProvider).logOut();
+                    if (result) {
+                      context.goNamed(APP_ROUTE.login.name);
+                    }
+                  },
+                )
               ],
             ),
           ),

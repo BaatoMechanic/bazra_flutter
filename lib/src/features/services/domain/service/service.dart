@@ -28,7 +28,8 @@ class Service with _$Service {
     required String idx,
     required String name,
     required ServiceTypeOption type,
-    required IconData? icon,
+    required String? image,
+    @JsonKey(name: "icon_data") required String? icon,
     @JsonKey(name: 'parts_included') required List<String> partsIncludedIdx,
   }) = _Service;
 

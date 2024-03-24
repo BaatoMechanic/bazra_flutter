@@ -36,14 +36,18 @@ class _SubmitButtonState extends State<SubmitButton> {
       onPressed: isLoading
           ? null
           : () async {
-              setState(() {
-                isLoading = true;
-              });
+              if (mounted) {
+                setState(() {
+                  isLoading = true;
+                });
+              }
 
               await widget.onPressed();
-              setState(() {
-                isLoading = false;
-              });
+              if (mounted) {
+                setState(() {
+                  isLoading = false;
+                });
+              }
             },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

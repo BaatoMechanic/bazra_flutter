@@ -24,7 +24,7 @@ final repairRequestServiceProvider =
 
 typedef RepairRequestServiceRef = AutoDisposeProviderRef<RepairRequestService>;
 String _$activeRepairRequestHash() =>
-    r'93c439020da680b246b739f0a03b68d9e161706c';
+    r'5955f58c647f09278b79cf845b1d3f6de0670cb2';
 
 /// See also [ActiveRepairRequest].
 @ProviderFor(ActiveRepairRequest)

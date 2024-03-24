@@ -96,7 +96,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
-  Future<List<VehicleRepairRequest>> fetchUserRepairRequest() async {
+  Future<List<VehicleRepairRequest>> fetchUserRepairRequests() async {
     final response = [
       {
         "idx": "8aMD5vyNQZqpySEm9T38Y2",
@@ -138,7 +138,7 @@ class FakeRepairRequestRepository implements RepairRequestRepository {
   }
 
   @override
-  Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequest() async {
+  Future<List<VehicleRepairRequest>> fetchUserActiveRepairRequests() async {
     final response = [
       {
         "idx": "8aMD5vyNQZqpySEm9T38Y2",

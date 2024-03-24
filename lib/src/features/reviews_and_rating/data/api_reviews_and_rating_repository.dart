@@ -24,6 +24,6 @@ class ApiReviewsAndRatingRepository implements ReviewsAndRatingRepository {
                   'BM ${ref.read(sharedPreferencesProvider).getString("access")}',
             }),
         ref);
-    return reviewsAndRatingsFromJson(jsonDecode(response));
+    return reviewsAndRatingsFromJson(response);
   }
 }

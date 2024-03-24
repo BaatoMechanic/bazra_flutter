@@ -73,6 +73,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         data["license_Number"] = _liscenseNumberController.text;
       }
 
+      if (imageFile != null) {
+        data["image"] = imageFile;
+      }
+
       if (await ref
           .read(editProfileScreenControllerProvider.notifier)
           .updateProfile(data)) {
@@ -195,7 +199,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: BaatoTextField(
                         controller: _nameController,
-                        // editable: false,
+                        editable: false,
                         labelText: 'Full Name',
                         focusNode: _nameFocusNode,
                         nextFocusNode: _emailFocusNode,
@@ -215,7 +219,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: EmailField(
                               controller: _emailController,
-                              // editable: _emailController.text.isEmpty,
+                              editable: _emailController.text.isEmpty,
                               labelText: 'Your email',
                               focusNode: _emailFocusNode,
                               nextFocusNode: _phoneFocusNode,
@@ -227,7 +231,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: PhoneNumberField(
                               controller: _phoneController,
-                              // editable: _phoneController.text.isEmpty,
+                              editable: _phoneController.text.isEmpty,
                               focusNode: _phoneFocusNode,
                               labelText: 'Your mobile number',
                             ),

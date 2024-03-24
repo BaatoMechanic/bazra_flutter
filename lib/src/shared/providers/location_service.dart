@@ -56,6 +56,9 @@ class LocationService {
   fetchLocationName(double lat, double lon) async {
     var response =
         await ref.read(mapRepositoryProvider).fetchLocationName(lat, lon);
+    if (response is Map) {
+      return response["display_name"];
+    }
     return response;
   }
 }

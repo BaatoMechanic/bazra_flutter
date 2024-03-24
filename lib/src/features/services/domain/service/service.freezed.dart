@@ -23,7 +23,9 @@ mixin _$Service {
   String get idx => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   ServiceTypeOption get type => throw _privateConstructorUsedError;
-  IconData? get icon => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
+  @JsonKey(name: "icon_data")
+  String? get icon => throw _privateConstructorUsedError;
   @JsonKey(name: 'parts_included')
   List<String> get partsIncludedIdx => throw _privateConstructorUsedError;
 
@@ -41,7 +43,8 @@ abstract class $ServiceCopyWith<$Res> {
       {String idx,
       String name,
       ServiceTypeOption type,
-      IconData? icon,
+      String? image,
+      @JsonKey(name: "icon_data") String? icon,
       @JsonKey(name: 'parts_included') List<String> partsIncludedIdx});
 }
 
@@ -61,6 +64,7 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
     Object? idx = null,
     Object? name = null,
     Object? type = null,
+    Object? image = freezed,
     Object? icon = freezed,
     Object? partsIncludedIdx = null,
   }) {
@@ -77,10 +81,14 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as ServiceTypeOption,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
       icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as IconData?,
+              as String?,
       partsIncludedIdx: null == partsIncludedIdx
           ? _value.partsIncludedIdx
           : partsIncludedIdx // ignore: cast_nullable_to_non_nullable
@@ -100,7 +108,8 @@ abstract class _$$ServiceImplCopyWith<$Res> implements $ServiceCopyWith<$Res> {
       {String idx,
       String name,
       ServiceTypeOption type,
-      IconData? icon,
+      String? image,
+      @JsonKey(name: "icon_data") String? icon,
       @JsonKey(name: 'parts_included') List<String> partsIncludedIdx});
 }
 
@@ -118,6 +127,7 @@ class __$$ServiceImplCopyWithImpl<$Res>
     Object? idx = null,
     Object? name = null,
     Object? type = null,
+    Object? image = freezed,
     Object? icon = freezed,
     Object? partsIncludedIdx = null,
   }) {
@@ -134,10 +144,14 @@ class __$$ServiceImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as ServiceTypeOption,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
       icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as IconData?,
+              as String?,
       partsIncludedIdx: null == partsIncludedIdx
           ? _value._partsIncludedIdx
           : partsIncludedIdx // ignore: cast_nullable_to_non_nullable
@@ -154,7 +168,8 @@ class _$ServiceImpl implements _Service {
       {required this.idx,
       required this.name,
       required this.type,
-      required this.icon,
+      required this.image,
+      @JsonKey(name: "icon_data") required this.icon,
       @JsonKey(name: 'parts_included')
       required final List<String> partsIncludedIdx})
       : _partsIncludedIdx = partsIncludedIdx;
@@ -169,7 +184,10 @@ class _$ServiceImpl implements _Service {
   @override
   final ServiceTypeOption type;
   @override
-  final IconData? icon;
+  final String? image;
+  @override
+  @JsonKey(name: "icon_data")
+  final String? icon;
   final List<String> _partsIncludedIdx;
   @override
   @JsonKey(name: 'parts_included')
@@ -182,7 +200,7 @@ class _$ServiceImpl implements _Service {
 
   @override
   String toString() {
-    return 'Service(idx: $idx, name: $name, type: $type, icon: $icon, partsIncludedIdx: $partsIncludedIdx)';
+    return 'Service(idx: $idx, name: $name, type: $type, image: $image, icon: $icon, partsIncludedIdx: $partsIncludedIdx)';
   }
 
   @override
@@ -193,6 +211,7 @@ class _$ServiceImpl implements _Service {
             (identical(other.idx, idx) || other.idx == idx) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.type, type) || other.type == type) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.icon, icon) || other.icon == icon) &&
             const DeepCollectionEquality()
                 .equals(other._partsIncludedIdx, _partsIncludedIdx));
@@ -200,7 +219,7 @@ class _$ServiceImpl implements _Service {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, idx, name, type, icon,
+  int get hashCode => Object.hash(runtimeType, idx, name, type, image, icon,
       const DeepCollectionEquality().hash(_partsIncludedIdx));
 
   @JsonKey(ignore: true)
@@ -222,7 +241,8 @@ abstract class _Service implements Service {
       {required final String idx,
       required final String name,
       required final ServiceTypeOption type,
-      required final IconData? icon,
+      required final String? image,
+      @JsonKey(name: "icon_data") required final String? icon,
       @JsonKey(name: 'parts_included')
       required final List<String> partsIncludedIdx}) = _$ServiceImpl;
 
@@ -235,7 +255,10 @@ abstract class _Service implements Service {
   @override
   ServiceTypeOption get type;
   @override
-  IconData? get icon;
+  String? get image;
+  @override
+  @JsonKey(name: "icon_data")
+  String? get icon;
   @override
   @JsonKey(name: 'parts_included')
   List<String> get partsIncludedIdx;

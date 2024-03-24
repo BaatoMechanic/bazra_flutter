@@ -11,5 +11,5 @@ Future<List<VehicleRepairRequest>> fetchActiveRepairRequests(
   ref.cache();
   return ref
       .watch(repairRequestRepositoryProvider)
-      .fetchUserActiveRepairRequest();
+      .fetchUserActiveRepairRequests();
 }

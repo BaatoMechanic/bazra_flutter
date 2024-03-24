@@ -40,4 +40,17 @@ class HelperFunctions {
   static List<T> removeDuplicates<T>(List<T> list) {
     return list.toSet().toList();
   }
+
+  static Icon generateIcon(String value) {
+    switch (value) {
+      case 'painting':
+        return const Icon(Icons.format_paint);
+      case 'engine_repair':
+        return const Icon(Icons.engineering);
+      case 'wash':
+        return const Icon(Icons.local_car_wash);
+      default:
+        return const Icon(Icons.hourglass_empty);
+    }
+  }
 }

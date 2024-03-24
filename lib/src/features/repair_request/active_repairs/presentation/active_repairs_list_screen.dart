@@ -57,23 +57,25 @@ class ActiveRepairsListScreen extends ConsumerWidget {
                     )
                   ],
                 ),
-                Expanded(
-                  child: Flexible(
-                    child: AsyncValueWidget(
-                      value: recentRepairsValue,
-                      data: (repairRequests) => ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: repairRequests.length,
-                        itemBuilder: (context, index) =>
-                            RecentRepairContainerWidget(
-                          onPressed: () => context
-                              .pushNamed(APP_ROUTE.repairProgress.name, extra: {
-                            "repairRequestIdx": repairRequests[index].idx
-                          }),
-                          repairRequest: repairRequests[index],
-                        ),
-                      ),
-                    ),
+                Flexible(
+                  child: AsyncValueWidget(
+                    value: recentRepairsValue,
+                    data: (repairRequests) => repairRequests.isEmpty
+                        ? Center(child: Text('No active repairs'.hardcoded()))
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: repairRequests.length,
+                            itemBuilder: (context, index) =>
+                                RecentRepairContainerWidget(
+                              onPressed: () => context.pushNamed(
+                                  APP_ROUTE.repairProgress.name,
+                                  extra: {
+                                    "repairRequestIdx":
+                                        repairRequests[index].idx
+                                  }),
+                              repairRequest: repairRequests[index],
+                            ),
+                          ),
                   ),
                 ),
               ],

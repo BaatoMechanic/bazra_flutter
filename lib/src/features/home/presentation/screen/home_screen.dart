@@ -180,10 +180,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         }
       }
 
-      // Fetch user repair requests when the app starts
+      // Fetch user's active repair request when the app starts
       await ref
           .read(homeScreenControllerProvider.notifier)
-          .fetchUserRepairRequests();
+          .fetchUserActiveRequest();
 
       setState(() {
         _loadingData = false;
@@ -211,20 +211,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       },
       child: SafeArea(
         child: Scaffold(
-          floatingActionButton:
-              ref.watch(fetchUserRepairRequestProvider).value == null
-                  ? null
-                  : FloatingActionButton(
-                      heroTag: "unique_tag_for_front_fab",
-                      onPressed: () {
-                        widget.flipCardController.toggleCard();
-                      },
-                      shape: const RoundedRectangleBorder().copyWith(
-                          borderRadius: BorderRadius.circular(
-                        DefaultManager.borderRadiusFull,
-                      )),
-                      child: Image.asset('assets/images/parts/wheel.png'),
-                    ),
+          floatingActionButton: ref.watch(activeRepairRequestProvider) == null
+              ? null
+              : FloatingActionButton(
+                  heroTag: "unique_tag_for_front_fab",
+                  onPressed: () {
+                    widget.flipCardController.toggleCard();
+                  },
+                  shape: const RoundedRectangleBorder().copyWith(
+                      borderRadius: BorderRadius.circular(
+                    DefaultManager.borderRadiusFull,
+                  )),
+                  child: Image.asset('assets/images/parts/wheel.png'),
+                ),
           drawer: const Drawer(
             child: UserProfileMenu(),
           ),
